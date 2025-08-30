@@ -10,11 +10,15 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹' },
+  { code: 'en-US', name: 'English (US)', flag: '🇺🇸' },
+  { code: 'en-GB', name: 'English (UK)', flag: '🇬🇧' },
+  { code: 'es-ES', name: 'Español (España)', flag: '🇪🇸' },
+  { code: 'es-MX', name: 'Español (México)', flag: '🇲🇽' },
+  { code: 'fr-FR', name: 'Français (France)', flag: '🇫🇷' },
+  { code: 'fr-CA', name: 'Français (Canada)', flag: '🇨🇦' },
+  { code: 'de-DE', name: 'Deutsch (Deutschland)', flag: '🇩🇪' },
+  { code: 'pt-BR', name: 'Português (Brasil)', flag: '🇧🇷' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' },
 ]
 
 export function LanguageSwitcher() {

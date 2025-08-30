@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { organizationApi } from '@/lib/api'
-import { useAuthStore } from '@/stores/auth-store'
+// import { useAuth } from '@/stores/auth-store' // TODO: Use when organization functionality is fully implemented
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -40,7 +40,7 @@ interface CreateOrganizationDialogProps {
 export function CreateOrganizationDialog({ open, onOpenChange }: Readonly<CreateOrganizationDialogProps>) {
   const [error, setError] = useState<string | null>(null)
   const queryClient = useQueryClient()
-  const { auth } = useAuthStore()
+  // const { user } = useAuth() // TODO: Use when organization functionality is fully implemented
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -52,12 +52,12 @@ export function CreateOrganizationDialog({ open, onOpenChange }: Readonly<Create
 
   const createMutation = useMutation({
     mutationFn: organizationApi.create,
-    onSuccess: (newOrganization) => {
+    onSuccess: (_newOrganization) => {
       // Update organizations list
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
       
-      // Add to auth store
-      auth.addOrganization(newOrganization)
+      // TODO: Add organization to auth store when organization plugin is properly configured
+      // auth.addOrganization(newOrganization)
       
       toast.success('Organization created successfully')
       form.reset()

@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from '@tanstack/react-router'
@@ -6,9 +5,8 @@ import { Loader2, LogIn } from 'lucide-react'
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { IconFacebook, IconGithub } from '@/assets/brand-icons'
-import { useAuthStore } from '@/stores/auth-store'
-import { authApi } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
+import { loginSchema, type LoginFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -21,6 +19,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
+import { SocialLogin } from '@/components/auth/social-login'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLFormElement> {
   readonly redirectTo?: string
@@ -33,20 +32,10 @@ export function UserAuthForm({
 }: Readonly<UserAuthFormProps>) {
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { auth } = useAuthStore()
+  const { login } = useAuth()
 
-  const formSchema = z.object({
-    email: z.email({
-      error: (iss) => (iss.input === '' ? t('auth.emailRequired') : t('auth.emailInvalid')),
-    }),
-    password: z
-      .string()
-      .min(1, t('auth.passwordRequired'))
-      .min(8, t('auth.passwordTooShort')),
-  })
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -54,44 +43,20 @@ export function UserAuthForm({
   })
 
   const loginMutation = useMutation({
-    mutationFn: authApi.signIn,
-    onSuccess: async (authResponse) => {
+    mutationFn: ({ email, password }: LoginFormData) => login(email, password),
+    onSuccess: () => {
       // Clear any form errors on success
       form.clearErrors()
       
-      // Set Better Auth state
-      auth.setBetterAuth(authResponse.user, authResponse.session)
-      
       // Redirect to the stored location or default to dashboard
-      const targetPath = redirectTo || '/'
+      const targetPath = redirectTo || '/dashboard'
       navigate({ to: targetPath, replace: true })
       
-      toast.success(`Welcome back, ${authResponse.user.name || authResponse.user.email}!`)
+      toast.success(t('auth.welcome'))
     },
     onError: (error: unknown) => {
-      // eslint-disable-next-line no-console
-      console.error('Login error:', error)
-      
-      const axiosError = error as { 
-        response?: { 
-          status?: number; 
-          data?: { 
-            detail?: { error?: string; message?: string }; 
-            error?: string; 
-            message?: string 
-          } 
-        } 
-      }
-      
-      let errorMessage = 'Login failed. Please try again.'
-      
-      if (axiosError.response?.status === 400) {
-        // Handle nested detail structure from backend
-        const detail = axiosError.response.data?.detail
-        errorMessage = detail?.message || axiosError.response.data?.message || t('auth.invalidCredentials')
-      } else if (axiosError.response?.status === 422) {
-        errorMessage = t('auth.emailInvalid')
-      }
+      // Handle error from Better Auth login
+      const errorMessage = error instanceof Error ? error.message : t('auth.invalidCredentials')
       
       // Set inline error on form root
       form.setError('root', {
@@ -104,7 +69,7 @@ export function UserAuthForm({
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  function onSubmit(data: LoginFormData) {
     // Clear any previous root errors when submitting
     if (form.formState.errors.root) {
       form.clearErrors('root')
@@ -182,25 +147,10 @@ export function UserAuthForm({
           {t('auth.signIn')}
         </Button>
 
-        <div className='relative my-2'>
-          <div className='absolute inset-0 flex items-center'>
-            <span className='w-full border-t' />
-          </div>
-          <div className='relative flex justify-center text-xs uppercase'>
-            <span className='bg-background text-muted-foreground px-2'>
-              {t('auth.orContinueWith')}
-            </span>
-          </div>
-        </div>
-
-        <div className='grid grid-cols-2 gap-2'>
-          <Button variant='outline' type='button' disabled={loginMutation.isPending}>
-            <IconGithub className='h-4 w-4' /> {t('auth.signInWithGitHub')}
-          </Button>
-          <Button variant='outline' type='button' disabled={loginMutation.isPending}>
-            <IconFacebook className='h-4 w-4' /> {t('auth.signInWithFacebook')}
-          </Button>
-        </div>
+        <SocialLogin 
+          className="mt-2" 
+          redirectTo={redirectTo || '/dashboard'}
+        />
       </form>
     </Form>
   )

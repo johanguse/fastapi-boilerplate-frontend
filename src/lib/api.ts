@@ -1,6 +1,6 @@
 import axios, { type AxiosResponse } from 'axios'
 import { useAuthStore } from '@/stores/auth-store'
-import { getCookie as getCookieUtil, deleteCookie as deleteCookieUtil } from '@/lib/utils'
+import { deleteCookie as deleteCookieUtil } from '@/lib/utils'
 
 const API_BASE_URL = 'http://localhost:8000/api/v1'
 
@@ -15,22 +15,14 @@ const apiClient = axios.create({
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
   (config) => {
-    // Try Better Auth session cookie first, then fallback to auth store
-    let token = getCookieUtil('ba_session')
-    if (!token) {
-      token = useAuthStore.getState().auth.accessToken
-    }
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
+    // Better Auth handles authentication via HTTP-only cookies automatically
+    // No need to manually add tokens
     return config
   },
-  (error) => {
-    return Promise.reject(new Error(error.message || 'Request failed'))
-  }
+  (error) => Promise.reject(error)
 )
 
-// Response interceptor to handle auth errors
+// Response interceptor for handling auth errors
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -38,7 +30,7 @@ apiClient.interceptors.response.use(
       // Clear auth tokens
       deleteCookieUtil('ba_session')
       deleteCookieUtil('ba_active_org')
-      useAuthStore.getState().auth.reset()
+      useAuthStore.getState().reset()
       // Emit logout event for Better Auth compatibility
       window.dispatchEvent(new CustomEvent('auth:logout'))
     }

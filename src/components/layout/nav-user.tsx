@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import useDialogState from '@/hooks/use-dialog-state'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuth } from '@/stores/auth-store'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -44,15 +44,15 @@ export function NavUser() {
   const { isMobile } = useSidebar()
   const [open, setOpen] = useDialogState()
   const { t, i18n } = useTranslation()
-  const { betterAuthUser, user } = useAuthStore((state) => state.auth)
+  const { user } = useAuth()
 
-  // Use Better Auth user data first, fallback to legacy user
-  const currentUser = betterAuthUser || user
+  // Use current user data
+  const currentUser = user
   const userName = currentUser?.name || 'User'
   const userEmail = currentUser?.email || 'user@example.com'
   const userInitials = userName
     .split(' ')
-    .map(name => name[0])
+    .map((name: string) => name[0])
     .join('')
     .toUpperCase()
     .slice(0, 2)

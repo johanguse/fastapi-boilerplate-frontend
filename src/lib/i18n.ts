@@ -8,7 +8,18 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
+    fallbackLng: {
+      'en-US': ['en-US', 'en'],
+      'en-GB': ['en-GB', 'en'],
+      'es-ES': ['es-ES', 'es'],
+      'es-MX': ['es-MX', 'es'],
+      'fr-FR': ['fr-FR', 'fr'],
+      'fr-CA': ['fr-CA', 'fr'],
+      'de-DE': ['de-DE', 'de'],
+      'pt-BR': ['pt-BR', 'pt'],
+      'pt-PT': ['pt-PT', 'pt'],
+      'default': ['en-US']
+    },
     debug: import.meta.env.DEV,
     
     interpolation: {

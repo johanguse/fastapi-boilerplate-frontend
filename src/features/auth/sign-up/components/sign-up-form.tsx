@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
@@ -6,8 +5,8 @@ import { Loader2, UserPlus } from 'lucide-react'
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { IconFacebook, IconGithub } from '@/assets/brand-icons'
-import { authApi } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
+import { registerSchema, type RegisterFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,6 +19,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/password-input'
+import { SocialLogin } from '@/components/auth/social-login'
 
 export function SignUpForm({
   className,
@@ -27,26 +27,10 @@ export function SignUpForm({
 }: Readonly<React.HTMLAttributes<HTMLFormElement>>) {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const { register } = useAuth()
 
-  const formSchema = z
-    .object({
-      name: z.string().min(1, t('auth.signUpNameRequired')),
-      email: z.email({
-        error: (iss) => (iss.input === '' ? t('auth.signUpEmailRequired') : t('auth.emailInvalid')),
-      }),
-      password: z
-        .string()
-        .min(1, t('auth.signUpPasswordRequired'))
-        .min(7, t('auth.signUpPasswordTooShort7')),
-      confirmPassword: z.string().min(1, t('auth.signUpConfirmPasswordRequired')),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: t('auth.signUpPasswordsDontMatch'),
-      path: ['confirmPassword'],
-    })
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -56,12 +40,12 @@ export function SignUpForm({
   })
 
   const registerMutation = useMutation({
-    mutationFn: authApi.signUp,
-    onSuccess: (authResponse) => {
+    mutationFn: ({ name, email, password }: RegisterFormData) => register(email, password, name),
+    onSuccess: () => {
       // Clear any form errors on success
       form.clearErrors()
       
-      toast.success(t('auth.signUpWelcome', { name: authResponse.user.name }))
+      toast.success(t('auth.signUpWelcome', { name: form.getValues('name') }))
       navigate({ to: '/sign-in' })
     },
     onError: (error: unknown) => {
@@ -108,11 +92,12 @@ export function SignUpForm({
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  function onSubmit(data: RegisterFormData) {
     registerMutation.mutate({
       name: data.name,
       email: data.email,
       password: data.password,
+      confirmPassword: data.confirmPassword,
     })
   }
 
@@ -185,35 +170,10 @@ export function SignUpForm({
           {t('auth.signUpCreateAccount')}
         </Button>
 
-        <div className='relative my-2'>
-          <div className='absolute inset-0 flex items-center'>
-            <span className='w-full border-t' />
-          </div>
-          <div className='relative flex justify-center text-xs uppercase'>
-            <span className='bg-background text-muted-foreground px-2'>
-              {t('auth.orContinueWithSignUp')}
-            </span>
-          </div>
-        </div>
-
-        <div className='grid grid-cols-2 gap-2'>
-          <Button
-            variant='outline'
-            className='w-full'
-            type='button'
-            disabled={registerMutation.isPending}
-          >
-            <IconGithub className='h-4 w-4' /> GitHub
-          </Button>
-          <Button
-            variant='outline'
-            className='w-full'
-            type='button'
-            disabled={registerMutation.isPending}
-          >
-            <IconFacebook className='h-4 w-4' /> Facebook
-          </Button>
-        </div>
+        <SocialLogin 
+          className="mt-2" 
+          redirectTo="/dashboard"
+        />
       </form>
     </Form>
   )

@@ -23,15 +23,13 @@ import {
   Building2,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuth } from '@/stores/auth-store'
 
 export function useSidebarData(): SidebarData {
   const { t } = useTranslation()
-  const { auth } = useAuthStore()
+  const { user } = useAuth()
 
-  // Use Better Auth user if available, fallback to legacy user
-  const user = auth.betterAuthUser || auth.user
-  const activeOrganization = auth.activeOrganization
+  // Note: Organizations will need to be implemented separately
 
   return useMemo((): SidebarData => ({
     user: {
@@ -41,7 +39,7 @@ export function useSidebarData(): SidebarData {
     },
     teams: [
       {
-        name: activeOrganization?.name || t('organizations.title'),
+        name: t('organizations.title'), // TODO: Use actual organization name when implemented
         logo: Building2,
         plan: 'Starter',
       },
@@ -187,5 +185,5 @@ export function useSidebarData(): SidebarData {
         ],
       },
     ],
-  }), [t, user, activeOrganization])
+  }), [t, user])
 }

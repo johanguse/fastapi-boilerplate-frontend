@@ -34,6 +34,10 @@ import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_auth
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
+import { Route as authOauthMicrosoftCallbackRouteImport } from './routes/(auth)/oauth/microsoft/callback'
+import { Route as authOauthGoogleCallbackRouteImport } from './routes/(auth)/oauth/google/callback'
+import { Route as authOauthGithubCallbackRouteImport } from './routes/(auth)/oauth/github/callback'
+import { Route as authOauthAppleCallbackRouteImport } from './routes/(auth)/oauth/apple/callback'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -168,6 +172,27 @@ const AuthenticatedErrorsErrorRoute =
     path: '/errors/$error',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const authOauthMicrosoftCallbackRoute =
+  authOauthMicrosoftCallbackRouteImport.update({
+    id: '/(auth)/oauth/microsoft/callback',
+    path: '/oauth/microsoft/callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const authOauthGoogleCallbackRoute = authOauthGoogleCallbackRouteImport.update({
+  id: '/(auth)/oauth/google/callback',
+  path: '/oauth/google/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authOauthGithubCallbackRoute = authOauthGithubCallbackRouteImport.update({
+  id: '/(auth)/oauth/github/callback',
+  path: '/oauth/github/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authOauthAppleCallbackRoute = authOauthAppleCallbackRouteImport.update({
+  id: '/(auth)/oauth/apple/callback',
+  path: '/oauth/apple/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
@@ -194,6 +219,10 @@ export interface FileRoutesByFullPath {
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/oauth/apple/callback': typeof authOauthAppleCallbackRoute
+  '/oauth/github/callback': typeof authOauthGithubCallbackRoute
+  '/oauth/google/callback': typeof authOauthGoogleCallbackRoute
+  '/oauth/microsoft/callback': typeof authOauthMicrosoftCallbackRoute
 }
 export interface FileRoutesByTo {
   '/forgot-password': typeof authForgotPasswordRoute
@@ -219,6 +248,10 @@ export interface FileRoutesByTo {
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/tasks': typeof AuthenticatedTasksIndexRoute
   '/users': typeof AuthenticatedUsersIndexRoute
+  '/oauth/apple/callback': typeof authOauthAppleCallbackRoute
+  '/oauth/github/callback': typeof authOauthGithubCallbackRoute
+  '/oauth/google/callback': typeof authOauthGoogleCallbackRoute
+  '/oauth/microsoft/callback': typeof authOauthMicrosoftCallbackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -247,6 +280,10 @@ export interface FileRoutesById {
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/_authenticated/tasks/': typeof AuthenticatedTasksIndexRoute
   '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
+  '/(auth)/oauth/apple/callback': typeof authOauthAppleCallbackRoute
+  '/(auth)/oauth/github/callback': typeof authOauthGithubCallbackRoute
+  '/(auth)/oauth/google/callback': typeof authOauthGoogleCallbackRoute
+  '/(auth)/oauth/microsoft/callback': typeof authOauthMicrosoftCallbackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -275,6 +312,10 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/tasks'
     | '/users'
+    | '/oauth/apple/callback'
+    | '/oauth/github/callback'
+    | '/oauth/google/callback'
+    | '/oauth/microsoft/callback'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/forgot-password'
@@ -300,6 +341,10 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tasks'
     | '/users'
+    | '/oauth/apple/callback'
+    | '/oauth/github/callback'
+    | '/oauth/google/callback'
+    | '/oauth/microsoft/callback'
   id:
     | '__root__'
     | '/_authenticated'
@@ -327,6 +372,10 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/'
     | '/_authenticated/tasks/'
     | '/_authenticated/users/'
+    | '/(auth)/oauth/apple/callback'
+    | '/(auth)/oauth/github/callback'
+    | '/(auth)/oauth/google/callback'
+    | '/(auth)/oauth/microsoft/callback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -341,6 +390,10 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  authOauthAppleCallbackRoute: typeof authOauthAppleCallbackRoute
+  authOauthGithubCallbackRoute: typeof authOauthGithubCallbackRoute
+  authOauthGoogleCallbackRoute: typeof authOauthGoogleCallbackRoute
+  authOauthMicrosoftCallbackRoute: typeof authOauthMicrosoftCallbackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -520,6 +573,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/(auth)/oauth/microsoft/callback': {
+      id: '/(auth)/oauth/microsoft/callback'
+      path: '/oauth/microsoft/callback'
+      fullPath: '/oauth/microsoft/callback'
+      preLoaderRoute: typeof authOauthMicrosoftCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/oauth/google/callback': {
+      id: '/(auth)/oauth/google/callback'
+      path: '/oauth/google/callback'
+      fullPath: '/oauth/google/callback'
+      preLoaderRoute: typeof authOauthGoogleCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/oauth/github/callback': {
+      id: '/(auth)/oauth/github/callback'
+      path: '/oauth/github/callback'
+      fullPath: '/oauth/github/callback'
+      preLoaderRoute: typeof authOauthGithubCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/oauth/apple/callback': {
+      id: '/(auth)/oauth/apple/callback'
+      path: '/oauth/apple/callback'
+      fullPath: '/oauth/apple/callback'
+      preLoaderRoute: typeof authOauthAppleCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -585,6 +666,10 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  authOauthAppleCallbackRoute: authOauthAppleCallbackRoute,
+  authOauthGithubCallbackRoute: authOauthGithubCallbackRoute,
+  authOauthGoogleCallbackRoute: authOauthGoogleCallbackRoute,
+  authOauthMicrosoftCallbackRoute: authOauthMicrosoftCallbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
