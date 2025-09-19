@@ -7,10 +7,10 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { toast } from 'sonner'
+import { Toaster, toast } from 'sonner'
 import { useAuthStore } from '@/stores/auth-store'
 import { handleServerError } from '@/lib/handle-server-error'
-import { AuthProvider } from '@/components/auth-provider'
+
 import { DirectionProvider } from './context/direction-provider'
 import { FontProvider } from './context/font-provider'
 import { ThemeProvider } from './context/theme-provider'
@@ -25,8 +25,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: (failureCount, error) => {
-        // eslint-disable-next-line no-console
-        if (import.meta.env.DEV) console.log({ failureCount, error })
+
 
         if (failureCount >= 0 && import.meta.env.DEV) return false
         if (failureCount > 3 && import.meta.env.PROD) return false
@@ -41,9 +40,14 @@ const queryClient = new QueryClient({
     },
     mutations: {
       onError: (error) => {
-        handleServerError(error)
+        // Suppress global toasts for auth endpoints; the forms show inline errors
+        const url = (error as unknown as { config?: { url?: string } })?.config?.url || ''
+        const isAuth = /\/api\/v1\/auth\//.test(url)
+        if (!isAuth) {
+          handleServerError(error)
+        }
 
-        if (error instanceof AxiosError) {
+        if (!isAuth && error instanceof AxiosError) {
           if (error.response?.status === 304) {
             toast.error('Content not modified!')
           }
@@ -53,19 +57,21 @@ const queryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: (error) => {
+      const url = (error as unknown as { config?: { url?: string } })?.config?.url || ''
+      const isAuth = /\/api\/v1\/auth\//.test(url)
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
-          toast.error('Session expired!')
-          useAuthStore.getState().auth.reset()
+          if (!isAuth) toast.error('Session expired!')
+          useAuthStore.getState().reset()
           const redirect = `${router.history.location.href}`
           router.navigate({ to: '/sign-in', search: { redirect } })
         }
         if (error.response?.status === 500) {
-          toast.error('Internal Server Error!')
+          if (!isAuth) toast.error('Internal Server Error!')
           router.navigate({ to: '/500' })
         }
         if (error.response?.status === 403) {
-          toast.error('Access forbidden!')
+          // router.navigate("/forbidden", { replace: true });
         }
       }
     },
@@ -97,9 +103,8 @@ if (!rootElement.innerHTML) {
         <ThemeProvider>
           <FontProvider>
             <DirectionProvider>
-              <AuthProvider>
-                <RouterProvider router={router} />
-              </AuthProvider>
+              <RouterProvider router={router} />
+              <Toaster position="top-right" richColors closeButton />
             </DirectionProvider>
           </FontProvider>
         </ThemeProvider>

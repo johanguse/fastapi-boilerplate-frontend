@@ -33,6 +33,7 @@
     "forgotPassword": "Passwort vergessen?",
     "resetPassword": "Passwort Zurücksetzen",
     "signIn": "Anmelden",
+    "loginSuccess": "Willkommen zurück!",
     "signInWithGoogle": "Mit Google anmelden",
     "signInWithGitHub": "Mit GitHub anmelden",
     "signInWithFacebook": "Mit Facebook anmelden",

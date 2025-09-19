@@ -4,11 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { Loader2, LogIn } from 'lucide-react'
 import { toast } from 'sonner'
-import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { IconFacebook, IconGithub } from '@/assets/brand-icons'
 import { useAuthStore } from '@/stores/auth-store'
-import { authApi } from '@/lib/api'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -33,16 +31,11 @@ export function UserAuthForm({
 }: Readonly<UserAuthFormProps>) {
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { auth } = useAuthStore()
+  const { login, isLoading } = useAuthStore()
 
   const formSchema = z.object({
-    email: z.email({
-      error: (iss) => (iss.input === '' ? t('auth.emailRequired') : t('auth.emailInvalid')),
-    }),
-    password: z
-      .string()
-      .min(1, t('auth.passwordRequired'))
-      .min(8, t('auth.passwordTooShort')),
+    email: z.string().email(t('auth.emailInvalid')).min(1, t('auth.emailRequired')),
+    password: z.string().min(1, t('auth.passwordRequired')),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,45 +46,28 @@ export function UserAuthForm({
     },
   })
 
-  const loginMutation = useMutation({
-    mutationFn: authApi.signIn,
-    onSuccess: async (authResponse) => {
-      // Clear any form errors on success
-      form.clearErrors()
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    try {
+      // Clear any previous root errors when submitting
+      if (form.formState.errors.root) {
+        form.clearErrors('root')
+      }
       
-      // Set Better Auth state
-      auth.setBetterAuth(authResponse.user, authResponse.session)
+      await login(data.email, data.password)
       
-      // Redirect to the stored location or default to dashboard
+      // Success - redirect to the stored location or default to dashboard
       const targetPath = redirectTo || '/'
-      navigate({ to: targetPath, replace: true })
       
-      toast.success(`Welcome back, ${authResponse.user.name || authResponse.user.email}!`)
-    },
-    onError: (error: unknown) => {
-      // eslint-disable-next-line no-console
-      console.error('Login error:', error)
-      
-      const axiosError = error as { 
-        response?: { 
-          status?: number; 
-          data?: { 
-            detail?: { error?: string; message?: string }; 
-            error?: string; 
-            message?: string 
-          } 
-        } 
+      // Use window.location for more reliable navigation after auth
+      if (redirectTo && redirectTo !== '/') {
+        window.location.href = redirectTo
+      } else {
+        navigate({ to: targetPath, replace: true })
       }
       
-      let errorMessage = 'Login failed. Please try again.'
-      
-      if (axiosError.response?.status === 400) {
-        // Handle nested detail structure from backend
-        const detail = axiosError.response.data?.detail
-        errorMessage = detail?.message || axiosError.response.data?.message || t('auth.invalidCredentials')
-      } else if (axiosError.response?.status === 422) {
-        errorMessage = t('auth.emailInvalid')
-      }
+      toast.success(t('auth.loginSuccess') || 'Welcome back!')
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Login failed. Please try again.'
       
       // Set inline error on form root
       form.setError('root', {
@@ -101,15 +77,7 @@ export function UserAuthForm({
       
       // Also show toast for better UX
       toast.error(errorMessage)
-    },
-  })
-
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    // Clear any previous root errors when submitting
-    if (form.formState.errors.root) {
-      form.clearErrors('root')
     }
-    loginMutation.mutate(data)
   }
 
   // Clear root errors when user types
@@ -177,8 +145,8 @@ export function UserAuthForm({
             </FormItem>
           )}
         />
-        <Button className='mt-2' disabled={loginMutation.isPending}>
-          {loginMutation.isPending ? <Loader2 className='animate-spin' /> : <LogIn />}
+        <Button className='mt-2' disabled={isLoading}>
+          {isLoading ? <Loader2 className='animate-spin' /> : <LogIn />}
           {t('auth.signIn')}
         </Button>
 
@@ -194,10 +162,10 @@ export function UserAuthForm({
         </div>
 
         <div className='grid grid-cols-2 gap-2'>
-          <Button variant='outline' type='button' disabled={loginMutation.isPending}>
+          <Button variant='outline' type='button' disabled={isLoading}>
             <IconGithub className='h-4 w-4' /> {t('auth.signInWithGitHub')}
           </Button>
-          <Button variant='outline' type='button' disabled={loginMutation.isPending}>
+          <Button variant='outline' type='button' disabled={isLoading}>
             <IconFacebook className='h-4 w-4' /> {t('auth.signInWithFacebook')}
           </Button>
         </div>

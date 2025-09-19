@@ -33,6 +33,7 @@
     "forgotPassword": "Mot de passe oublié ?",
     "resetPassword": "Réinitialiser le Mot de Passe",
     "signIn": "Se Connecter",
+    "loginSuccess": "Bon retour !",
     "signInWithGoogle": "Se connecter avec Google",
     "signInWithGitHub": "Se connecter avec GitHub",
     "signInWithFacebook": "Se connecter avec Facebook",

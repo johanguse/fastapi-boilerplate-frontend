@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { Loader2, UserPlus } from 'lucide-react'
 import { toast } from 'sonner'
-import { useMutation } from '@tanstack/react-query'
+
 import { useTranslation } from 'react-i18next'
 import { IconFacebook, IconGithub } from '@/assets/brand-icons'
-import { authApi } from '@/lib/api'
+import { useAuthStore } from '@/stores/auth-store'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -27,6 +27,7 @@ export function SignUpForm({
 }: Readonly<React.HTMLAttributes<HTMLFormElement>>) {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const { register, isLoading } = useAuthStore()
 
   const formSchema = z
     .object({
@@ -55,65 +56,29 @@ export function SignUpForm({
     },
   })
 
-  const registerMutation = useMutation({
-    mutationFn: authApi.signUp,
-    onSuccess: (authResponse) => {
-      // Clear any form errors on success
-      form.clearErrors()
-      
-      toast.success(t('auth.signUpWelcome', { name: authResponse.user.name }))
-      navigate({ to: '/sign-in' })
-    },
-    onError: (error: unknown) => {
-      // eslint-disable-next-line no-console
-      console.error('Registration error:', error)
-      
-      const axiosError = error as { response?: { status?: number; data?: { detail?: { error?: string; message?: string }; error?: string; message?: string } } }
-      
-      if (axiosError.response?.status === 400) {
-        // Handle nested detail structure from backend
-        const detail = axiosError.response.data?.detail
-        const errorData = detail || axiosError.response.data
-        
-        if (errorData?.error === 'USER_EXISTS') {
-          const errorMessage = t('auth.signUpEmailExists')
-          form.setError('root', {
-            type: 'manual',
-            message: errorMessage,
-          })
-          toast.error(errorMessage)
-        } else {
-          const errorMessage = errorData?.message || t('auth.signUpRegistrationFailed')
-          form.setError('root', {
-            type: 'manual',
-            message: errorMessage,
-          })
-          toast.error(errorMessage)
-        }
-      } else if (axiosError.response?.status === 422) {
-        const errorMessage = t('auth.signUpCheckInformation')
-        form.setError('root', {
-          type: 'manual',
-          message: errorMessage,
-        })
-        toast.error(errorMessage)
-      } else {
-        const errorMessage = t('auth.signUpRegistrationFailed')
-        form.setError('root', {
-          type: 'manual',
-          message: errorMessage,
-        })
-        toast.error(errorMessage)
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    try {
+      // Clear any previous root errors when submitting
+      if (form.formState.errors.root) {
+        form.clearErrors('root')
       }
-    },
-  })
-
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    registerMutation.mutate({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-    })
+      
+      await register(data.email, data.password, data.name)
+      
+      toast.success(t('auth.signUpWelcome', { name: data.name }))
+      navigate({ to: '/sign-in' })
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : t('auth.signUpRegistrationFailed')
+      
+      // Set inline error on form root
+      form.setError('root', {
+        type: 'manual',
+        message: errorMessage,
+      })
+      
+      // Also show toast for better UX
+      toast.error(errorMessage)
+    }
   }
 
   return (
@@ -180,8 +145,8 @@ export function SignUpForm({
             </FormItem>
           )}
         />
-        <Button className='mt-2' disabled={registerMutation.isPending}>
-          {registerMutation.isPending ? <Loader2 className='animate-spin' /> : <UserPlus />}
+        <Button className='mt-2' disabled={isLoading}>
+          {isLoading ? <Loader2 className='animate-spin' /> : <UserPlus />}
           {t('auth.signUpCreateAccount')}
         </Button>
 
@@ -201,7 +166,7 @@ export function SignUpForm({
             variant='outline'
             className='w-full'
             type='button'
-            disabled={registerMutation.isPending}
+            disabled={isLoading}
           >
             <IconGithub className='h-4 w-4' /> GitHub
           </Button>
@@ -209,7 +174,7 @@ export function SignUpForm({
             variant='outline'
             className='w-full'
             type='button'
-            disabled={registerMutation.isPending}
+            disabled={isLoading}
           >
             <IconFacebook className='h-4 w-4' /> Facebook
           </Button>

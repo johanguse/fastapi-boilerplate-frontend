@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import useDialogState from '@/hooks/use-dialog-state'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuth } from '@/hooks/use-auth'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -44,18 +44,24 @@ export function NavUser() {
   const { isMobile } = useSidebar()
   const [open, setOpen] = useDialogState()
   const { t, i18n } = useTranslation()
-  const { betterAuthUser, user } = useAuthStore((state) => state.auth)
-
-  // Use Better Auth user data first, fallback to legacy user
-  const currentUser = betterAuthUser || user
-  const userName = currentUser?.name || 'User'
-  const userEmail = currentUser?.email || 'user@example.com'
+  const { user: currentUser, isLoading } = useAuth()
+  const userName = currentUser?.name || (isLoading ? 'Loading...' : 'User')
+  const userEmail = currentUser?.email || (isLoading ? '' : 'user@example.com')
   const userInitials = userName
     .split(' ')
     .map(name => name[0])
     .join('')
     .toUpperCase()
     .slice(0, 2)
+
+  const avatarSrc = (() => {
+    if (!currentUser) return '/avatars/shadcn.jpg'
+    const legacy = currentUser as unknown as { avatar_url?: string }
+    if (legacy.avatar_url) return legacy.avatar_url
+    const better = currentUser as unknown as { avatarUrl?: string }
+    if (better.avatarUrl) return better.avatarUrl
+    return '/avatars/shadcn.jpg'
+  })()
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0]
 
@@ -74,7 +80,7 @@ export function NavUser() {
                 className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
               >
                 <Avatar className='h-8 w-8 rounded-lg'>
-                  <AvatarImage src='/avatars/shadcn.jpg' alt={userName} />
+                  <AvatarImage src={avatarSrc} alt={userName} />
                   <AvatarFallback className='rounded-lg'>{userInitials}</AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-start text-sm leading-tight'>
@@ -92,8 +98,8 @@ export function NavUser() {
             >
               <DropdownMenuLabel className='p-0 font-normal'>
                 <div className='flex items-center gap-2 px-1 py-1.5 text-start text-sm'>
-                  <Avatar className='h-8 w-8 rounded-lg'>
-                    <AvatarImage src='/avatars/shadcn.jpg' alt={userName} />
+                    <Avatar className='h-8 w-8 rounded-lg'>
+                    <AvatarImage src={avatarSrc} alt={userName} />
                     <AvatarFallback className='rounded-lg'>{userInitials}</AvatarFallback>
                   </Avatar>
                   <div className='grid flex-1 text-start text-sm leading-tight'>

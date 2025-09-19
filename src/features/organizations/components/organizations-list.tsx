@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { MoreHorizontal, Plus, Building2, Settings, Trash2, Edit } from 'lucide-react'
 import { toast } from 'sonner'
-import { organizationApi, type Organization } from '@/lib/api'
+import { organization, type Organization } from '@/lib/api/auth'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -41,13 +41,27 @@ export function OrganizationsList() {
   
   const queryClient = useQueryClient()
 
-  const { data: organizations = [], isLoading } = useQuery({
+  const { data: organizationsData, isLoading } = useQuery({
     queryKey: ['organizations'],
-    queryFn: organizationApi.list,
+    queryFn: async () => {
+      const result = await organization.list()
+      if (result.error) {
+        throw new Error('Failed to fetch organizations')
+      }
+      return result.data || []
+    },
   })
 
+  const organizations = organizationsData as Organization[] || []
+
   const deleteMutation = useMutation({
-    mutationFn: organizationApi.delete,
+    mutationFn: async (organizationId: string) => {
+      const result = await organization.delete({ organizationId })
+      if (result.error) {
+        throw new Error('Failed to delete organization')
+      }
+      return result.data
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
       toast.success('Organization deleted successfully')
@@ -55,8 +69,7 @@ export function OrganizationsList() {
       setSelectedOrganization(null)
     },
     onError: (error: unknown) => {
-      const axiosError = error as { response?: { data?: { detail?: { message?: string } } } }
-      const errorMessage = axiosError.response?.data?.detail?.message || 'Failed to delete organization'
+      const errorMessage = error instanceof Error ? error.message : 'Failed to delete organization'
       toast.error(errorMessage)
     },
   })

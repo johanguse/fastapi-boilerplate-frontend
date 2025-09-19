@@ -6,7 +6,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { ArrowRight, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
-import { sleep, cn } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -17,6 +17,24 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+
+// Email API function
+const forgotPassword = async (email: string) => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/forgot-password`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  })
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}))
+    throw new Error(errorData.detail || 'Failed to send reset email')
+  }
+
+  return response.json()
+}
 
 export function ForgotPasswordForm({
   className,
@@ -37,21 +55,21 @@ export function ForgotPasswordForm({
     defaultValues: { email: '' },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    // eslint-disable-next-line no-console
-    console.log(data)
 
-    toast.promise(sleep(2000), {
-      loading: t('auth.forgotPasswordSendingEmail'),
-      success: () => {
-        setIsLoading(false)
-        form.reset()
-        navigate({ to: '/otp' })
-        return t('auth.forgotPasswordEmailSent', { email: data.email })
-      },
-      error: t('common.error'),
-    })
+    try {
+      await forgotPassword(data.email)
+      
+      toast.success(t('auth.forgotPasswordEmailSent', { email: data.email }))
+      form.reset()
+      navigate({ to: '/sign-in' })
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : t('common.error')
+      toast.error(errorMessage)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { organizationApi, type Organization } from '@/lib/api'
+import { organization as organizationClient, type Organization } from '@/lib/api/auth'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -37,30 +37,40 @@ interface EditOrganizationDialogProps {
   onOpenChange: (open: boolean) => void
 }
 
-export function EditOrganizationDialog({ organization, open, onOpenChange }: Readonly<EditOrganizationDialogProps>) {
+export function EditOrganizationDialog({ organization: org, open, onOpenChange }: Readonly<EditOrganizationDialogProps>) {
   const [error, setError] = useState<string | null>(null)
   const queryClient = useQueryClient()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: organization.name,
-      slug: organization.slug,
+      name: org.name,
+      slug: org.slug,
     },
   })
 
   // Update form when organization changes
   useEffect(() => {
-    if (organization) {
+    if (org) {
       form.reset({
-        name: organization.name,
-        slug: organization.slug,
+        name: org.name,
+        slug: org.slug,
       })
     }
-  }, [organization, form])
+  }, [org, form])
 
   const updateMutation = useMutation({
-    mutationFn: (data: FormData) => organizationApi.update(organization.id, data),
+    mutationFn: async (data: FormData) => {
+      const result = await organizationClient.update({
+        organizationId: org.id,
+        name: data.name,
+        slug: data.slug,
+      })
+      if (result.error) {
+        throw new Error('Failed to update organization')
+      }
+      return result.data
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
       toast.success('Organization updated successfully')
@@ -68,8 +78,7 @@ export function EditOrganizationDialog({ organization, open, onOpenChange }: Rea
       onOpenChange(false)
     },
     onError: (error: unknown) => {
-      const axiosError = error as { response?: { data?: { detail?: { message?: string } } } }
-      const errorMessage = axiosError.response?.data?.detail?.message || 'Failed to update organization'
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update organization'
       setError(errorMessage)
       toast.error(errorMessage)
     },
@@ -90,8 +99,8 @@ export function EditOrganizationDialog({ organization, open, onOpenChange }: Rea
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen && !updateMutation.isPending) {
       form.reset({
-        name: organization.name,
-        slug: organization.slug,
+        name: org.name,
+        slug: org.slug,
       })
       setError(null)
     }

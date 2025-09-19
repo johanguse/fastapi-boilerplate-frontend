@@ -27,11 +27,7 @@ import { useAuthStore } from '@/stores/auth-store'
 
 export function useSidebarData(): SidebarData {
   const { t } = useTranslation()
-  const { auth } = useAuthStore()
-
-  // Use Better Auth user if available, fallback to legacy user
-  const user = auth.betterAuthUser || auth.user
-  const activeOrganization = auth.activeOrganization
+  const { user, activeOrganization } = useAuthStore()
 
   return useMemo((): SidebarData => ({
     user: {

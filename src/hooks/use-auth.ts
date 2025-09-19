@@ -1,53 +1,62 @@
 import { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useAuthStore } from '@/stores/auth-store'
-import { organizationApi } from '@/lib/api'
+import { organization } from '@/lib/api/auth'
 
 export function useAuth() {
-  const authStore = useAuthStore((state) => state.auth)
   const {
-    betterAuthUser,
-    betterAuthSession,
     user,
-    accessToken,
+    organizations,
+    activeOrganization,
+    isAuthenticated,
     setOrganizations,
     setActiveOrganization,
-    isAuthenticated,
-  } = authStore
+  } = useAuthStore()
 
   // Check if user is authenticated
   const authenticated = isAuthenticated()
 
-  // Fetch organizations when authenticated (but not session data since that's handled globally)
-  const { data: organizations, isLoading: organizationsLoading } = useQuery({
+  // Fetch organizations when authenticated using Better Auth client
+  const { data: organizationsData, isLoading: organizationsLoading } = useQuery({
     queryKey: ['organizations'],
-    queryFn: organizationApi.list,
+    queryFn: async () => {
+      const result = await organization.list()
+      if (result.error) {
+        throw new Error('Failed to fetch organizations')
+      }
+      return result.data || []
+    },
     enabled: authenticated,
     staleTime: 1000 * 60 * 5, // 5 minutes
+    retry: (failureCount, error) => {
+      // Don't retry on 401 errors to avoid logout loops
+      const axiosError = error as { response?: { status?: number } }
+      if (axiosError?.response?.status === 401) {
+        return false
+      }
+      return failureCount < 3
+    },
   })
 
   // Update organizations in store
   useEffect(() => {
-    if (organizations) {
-      setOrganizations(organizations)
+    if (organizationsData) {
+      setOrganizations(organizationsData)
       // Set active organization if none selected
-      if (!authStore.activeOrganization && organizations.length > 0) {
-        setActiveOrganization(organizations[0])
+      if (!activeOrganization && organizationsData.length > 0) {
+        setActiveOrganization(organizationsData[0])
       }
     }
-  }, [organizations, setOrganizations, authStore.activeOrganization, setActiveOrganization])
+  }, [organizationsData, setOrganizations, activeOrganization, setActiveOrganization])
 
   return {
     // Auth state
-    user: betterAuthUser || user,
-    accessToken,
-    betterAuthUser,
-    betterAuthSession,
+    user,
     isAuthenticated: authenticated,
     
     // Organizations
-    organizations: authStore.organizations,
-    activeOrganization: authStore.activeOrganization,
+    organizations,
+    activeOrganization,
     
     // Loading states
     isLoading: organizationsLoading,

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { organizationApi } from '@/lib/api'
+import { organization } from '@/lib/api/auth'
 import { useAuthStore } from '@/stores/auth-store'
 import { Button } from '@/components/ui/button'
 import {
@@ -40,7 +40,7 @@ interface CreateOrganizationDialogProps {
 export function CreateOrganizationDialog({ open, onOpenChange }: Readonly<CreateOrganizationDialogProps>) {
   const [error, setError] = useState<string | null>(null)
   const queryClient = useQueryClient()
-  const { auth } = useAuthStore()
+  const { addOrganization } = useAuthStore()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -51,13 +51,21 @@ export function CreateOrganizationDialog({ open, onOpenChange }: Readonly<Create
   })
 
   const createMutation = useMutation({
-    mutationFn: organizationApi.create,
+    mutationFn: async (data: { name: string; slug: string }) => {
+      const result = await organization.create(data)
+      if (result.error) {
+        throw new Error('Failed to create organization')
+      }
+      return result.data
+    },
     onSuccess: (newOrganization) => {
       // Update organizations list
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
       
       // Add to auth store
-      auth.addOrganization(newOrganization)
+      if (newOrganization) {
+        addOrganization(newOrganization)
+      }
       
       toast.success('Organization created successfully')
       form.reset()
@@ -65,8 +73,7 @@ export function CreateOrganizationDialog({ open, onOpenChange }: Readonly<Create
       onOpenChange(false)
     },
     onError: (error: unknown) => {
-      const axiosError = error as { response?: { data?: { detail?: { message?: string } } } }
-      const errorMessage = axiosError.response?.data?.detail?.message || 'Failed to create organization'
+      const errorMessage = error instanceof Error ? error.message : 'Failed to create organization'
       setError(errorMessage)
       toast.error(errorMessage)
     },

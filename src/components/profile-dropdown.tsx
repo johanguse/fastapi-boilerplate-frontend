@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import useDialogState from '@/hooks/use-dialog-state'
-import { useAuthStore } from '@/stores/auth-store'
+import { useAuth } from '@/hooks/use-auth'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,12 +17,9 @@ import { SignOutDialog } from '@/components/sign-out-dialog'
 
 export function ProfileDropdown() {
   const [open, setOpen] = useDialogState()
-  const { betterAuthUser, user } = useAuthStore((state) => state.auth)
-
-  // Use Better Auth user data first, fallback to legacy user
-  const currentUser = betterAuthUser || user
-  const userName = currentUser?.name || 'User'
-  const userEmail = currentUser?.email || 'user@example.com'
+  const { user: currentUser, isLoading } = useAuth()
+  const userName = currentUser?.name || (isLoading ? 'Loading...' : 'User')
+  const userEmail = currentUser?.email || (isLoading ? '' : 'user@example.com')
   const userInitials = userName
     .split(' ')
     .map(name => name[0])
@@ -30,13 +27,25 @@ export function ProfileDropdown() {
     .toUpperCase()
     .slice(0, 2)
 
+  // Determine avatar source from known shapes to avoid `any` usage
+  const avatarSrc = (() => {
+    if (!currentUser) return '/avatars/01.png'
+    // legacy user shape may have `avatar_url`
+    const legacy = currentUser as unknown as { avatar_url?: string }
+    if (legacy.avatar_url) return legacy.avatar_url
+    // better auth user shape may include `avatarUrl` or none
+    const better = currentUser as unknown as { avatarUrl?: string }
+    if (better.avatarUrl) return better.avatarUrl
+    return '/avatars/01.png'
+  })()
+
   return (
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
+            <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
             <Avatar className='h-8 w-8'>
-              <AvatarImage src='/avatars/01.png' alt={userName} />
+              <AvatarImage src={avatarSrc} alt={userName} />
               <AvatarFallback>{userInitials}</AvatarFallback>
             </Avatar>
           </Button>

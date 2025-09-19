@@ -1,8 +1,8 @@
-import * as React from 'react'
+
 import { ChevronsUpDown, Plus, Building2 } from 'lucide-react'
-import { useAuthStore } from '@/stores/auth-store'
-import { organizationApi } from '@/lib/api'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useAuth } from '@/hooks/use-auth'
+import { organization } from '@/lib/api/auth'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import {
   DropdownMenu,
@@ -23,38 +23,26 @@ import {
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
   const queryClient = useQueryClient()
-  const { 
-    organizations, 
-    activeOrganization, 
-    setOrganizations, 
-    setActiveOrganization 
-  } = useAuthStore((state) => state.auth)
+  const { organizations, activeOrganization, setActiveOrganization, isAuthenticated } = useAuth()
 
-  // Fetch organizations
-  const { data: fetchedOrganizations, isLoading } = useQuery({
-    queryKey: ['organizations'],
-    queryFn: organizationApi.list,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  })
-
-  // Update organizations in store when fetched
-  React.useEffect(() => {
-    if (fetchedOrganizations) {
-      setOrganizations(fetchedOrganizations)
-      // Set active organization if none selected
-      if (!activeOrganization && fetchedOrganizations.length > 0) {
-        setActiveOrganization(fetchedOrganizations[0])
-      }
-    }
-  }, [fetchedOrganizations, setOrganizations, activeOrganization, setActiveOrganization])
+  // Organizations are fetched via the useAuth hook, so we can use the loading state from there
+  const isLoading = !isAuthenticated
 
   // Create organization mutation
   const createOrganizationMutation = useMutation({
-    mutationFn: (name: string) => organizationApi.create({ name }),
+    mutationFn: async (name: string) => {
+      const result = await organization.create({ name })
+      if (result.error) {
+        throw new Error('Failed to create organization')
+      }
+      return result.data
+    },
     onSuccess: (newOrg) => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
-      setActiveOrganization(newOrg)
-      toast.success(`${newOrg.name} has been created successfully.`)
+      if (newOrg) {
+        setActiveOrganization(newOrg)
+        toast.success(`${(newOrg as { name: string }).name} has been created successfully.`)
+      }
     },
     onError: () => {
       toast.error('Failed to create organization. Please try again.')
@@ -63,7 +51,13 @@ export function TeamSwitcher() {
 
   // Set active organization mutation
   const setActiveMutation = useMutation({
-    mutationFn: (organizationId: string) => organizationApi.setActive(organizationId),
+    mutationFn: async (organizationId: string) => {
+      const result = await organization.setActive({ organizationId })
+      if (result.error) {
+        throw new Error('Failed to set active organization')
+      }
+      return result.data
+    },
     onSuccess: (_, organizationId) => {
       const selectedOrg = organizations.find(org => org.id === organizationId)
       if (selectedOrg) {
