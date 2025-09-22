@@ -119,7 +119,7 @@ cp .env.example .env.local
 Edit `.env.local` with your configuration:
 
 ```env
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=
 VITE_APP_NAME="Your App Name"
 ```
 
