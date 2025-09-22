@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { Loader2, UserPlus } from 'lucide-react'
-import { toast } from 'sonner'
-import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { useAuth } from '@/stores/auth-store'
 import { registerSchema, type RegisterFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
@@ -18,8 +18,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { PasswordInput } from '@/components/password-input'
 import { SocialLogin } from '@/components/auth/social-login'
+import { PasswordInput } from '@/components/password-input'
 
 export function SignUpForm({
   className,
@@ -40,25 +40,35 @@ export function SignUpForm({
   })
 
   const registerMutation = useMutation({
-    mutationFn: ({ name, email, password }: RegisterFormData) => register(email, password, name),
+    mutationFn: ({ name, email, password }: RegisterFormData) =>
+      register(email, password, name),
     onSuccess: () => {
       // Clear any form errors on success
       form.clearErrors()
-      
+
       toast.success(t('auth.signUpWelcome', { name: form.getValues('name') }))
       navigate({ to: '/sign-in' })
     },
     onError: (error: unknown) => {
       // eslint-disable-next-line no-console
       console.error('Registration error:', error)
-      
-      const axiosError = error as { response?: { status?: number; data?: { detail?: { error?: string; message?: string }; error?: string; message?: string } } }
-      
+
+      const axiosError = error as {
+        response?: {
+          status?: number
+          data?: {
+            detail?: { error?: string; message?: string }
+            error?: string
+            message?: string
+          }
+        }
+      }
+
       if (axiosError.response?.status === 400) {
         // Handle nested detail structure from backend
         const detail = axiosError.response.data?.detail
         const errorData = detail || axiosError.response.data
-        
+
         if (errorData?.error === 'USER_EXISTS') {
           const errorMessage = t('auth.signUpEmailExists')
           form.setError('root', {
@@ -67,7 +77,8 @@ export function SignUpForm({
           })
           toast.error(errorMessage)
         } else {
-          const errorMessage = errorData?.message || t('auth.signUpRegistrationFailed')
+          const errorMessage =
+            errorData?.message || t('auth.signUpRegistrationFailed')
           form.setError('root', {
             type: 'manual',
             message: errorMessage,
@@ -109,8 +120,10 @@ export function SignUpForm({
         {...props}
       >
         {form.formState.errors.root && (
-          <div className='rounded-md border border-destructive bg-destructive/10 p-3 mb-4'>
-            <p className='text-sm font-medium text-destructive'>{form.formState.errors.root.message}</p>
+          <div className='border-destructive bg-destructive/10 mb-4 rounded-md border p-3'>
+            <p className='text-destructive text-sm font-medium'>
+              {form.formState.errors.root.message}
+            </p>
           </div>
         )}
         <FormField
@@ -120,7 +133,10 @@ export function SignUpForm({
             <FormItem>
               <FormLabel>{t('auth.signUpFullName')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('auth.signUpFullNamePlaceholder')} {...field} />
+                <Input
+                  placeholder={t('auth.signUpFullNamePlaceholder')}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -133,7 +149,10 @@ export function SignUpForm({
             <FormItem>
               <FormLabel>{t('auth.email')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('auth.signUpEmailPlaceholder')} {...field} />
+                <Input
+                  placeholder={t('auth.signUpEmailPlaceholder')}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -146,7 +165,10 @@ export function SignUpForm({
             <FormItem>
               <FormLabel>{t('auth.password')}</FormLabel>
               <FormControl>
-                <PasswordInput placeholder={t('auth.signUpPasswordPlaceholder')} {...field} />
+                <PasswordInput
+                  placeholder={t('auth.signUpPasswordPlaceholder')}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -159,21 +181,25 @@ export function SignUpForm({
             <FormItem>
               <FormLabel>{t('auth.confirmPassword')}</FormLabel>
               <FormControl>
-                <PasswordInput placeholder={t('auth.signUpConfirmPasswordPlaceholder')} {...field} />
+                <PasswordInput
+                  placeholder={t('auth.signUpConfirmPasswordPlaceholder')}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button className='mt-2' disabled={registerMutation.isPending}>
-          {registerMutation.isPending ? <Loader2 className='animate-spin' /> : <UserPlus />}
+          {registerMutation.isPending ? (
+            <Loader2 className='animate-spin' />
+          ) : (
+            <UserPlus />
+          )}
           {t('auth.signUpCreateAccount')}
         </Button>
 
-        <SocialLogin 
-          className="mt-2" 
-          redirectTo="/dashboard"
-        />
+        <SocialLogin className='mt-2' redirectTo='/dashboard' />
       </form>
     </Form>
   )

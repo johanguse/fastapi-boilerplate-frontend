@@ -13,8 +13,8 @@ export function useAuthInit() {
     checkSession()
   }, [checkSession])
 
-  return { 
+  return {
     isInitialized,
-    isAuthenticated 
+    isAuthenticated,
   }
 }

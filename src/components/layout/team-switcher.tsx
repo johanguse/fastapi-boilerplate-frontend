@@ -16,50 +16,54 @@ import {
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
-  
+
   // Organization functionality temporarily disabled during auth migration
   // TODO: Re-implement organization support with Better Auth
-  
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              size='lg'
+              className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <Building2 className="size-4" />
+              <div className='bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+                <Building2 className='size-4' />
               </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">Default Organization</span>
-                <span className="truncate text-xs">Starter Plan</span>
+              <div className='grid flex-1 text-left text-sm leading-tight'>
+                <span className='truncate font-semibold'>
+                  Default Organization
+                </span>
+                <span className='truncate text-xs'>Starter Plan</span>
               </div>
-              <ChevronsUpDown className="ml-auto" />
+              <ChevronsUpDown className='ml-auto' />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            align="start"
-            side={isMobile ? "bottom" : "right"}
+            className='w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg'
+            align='start'
+            side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-xs text-muted-foreground">
+            <DropdownMenuLabel className='text-muted-foreground text-xs'>
               Organizations
             </DropdownMenuLabel>
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-sm border">
-                <Building2 className="size-4 shrink-0" />
+            <DropdownMenuItem className='gap-2 p-2'>
+              <div className='flex size-6 items-center justify-center rounded-sm border'>
+                <Building2 className='size-4 shrink-0' />
               </div>
               Default Organization
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2" disabled>
-              <div className="flex size-6 items-center justify-center rounded-md border bg-background">
-                <Plus className="size-4" />
+            <DropdownMenuItem className='gap-2 p-2' disabled>
+              <div className='bg-background flex size-6 items-center justify-center rounded-md border'>
+                <Plus className='size-4' />
               </div>
-              <div className="font-medium text-muted-foreground">Add organization (coming soon)</div>
+              <div className='text-muted-foreground font-medium'>
+                Add organization (coming soon)
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

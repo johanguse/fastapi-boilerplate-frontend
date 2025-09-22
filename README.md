@@ -76,7 +76,7 @@ This project uses Shadcn UI components, with some customized for better RTL supp
 ### Modified Components
 
 - **scroll-area**: General updates for better UX
-- **sonner**: Toast notification customizations  
+- **sonner**: Toast notification customizations
 - **separator**: Layout improvements
 
 ### RTL Updated Components
@@ -188,7 +188,7 @@ Add new languages by:
 The application automatically restores user sessions on page reload through:
 
 - **AuthProvider Component**: Wraps the app and checks for existing sessions on startup
-- **Cookie-based Storage**: Uses HTTP-only cookies for secure session management  
+- **Cookie-based Storage**: Uses HTTP-only cookies for secure session management
 - **Automatic Restoration**: Fetches user data from backend if session cookie exists
 - **Loading States**: Shows loading spinner during session check
 

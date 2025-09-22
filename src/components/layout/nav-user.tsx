@@ -9,8 +9,8 @@ import {
   Languages,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import useDialogState from '@/hooks/use-dialog-state'
 import { useAuth } from '@/stores/auth-store'
+import useDialogState from '@/hooks/use-dialog-state'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -57,7 +57,8 @@ export function NavUser() {
     .toUpperCase()
     .slice(0, 2)
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0]
+  const currentLanguage =
+    languages.find((lang) => lang.code === i18n.language) || languages[0]
 
   const changeLanguage = (langCode: string) => {
     i18n.changeLanguage(langCode)
@@ -75,7 +76,9 @@ export function NavUser() {
               >
                 <Avatar className='h-8 w-8 rounded-lg'>
                   <AvatarImage src='/avatars/shadcn.jpg' alt={userName} />
-                  <AvatarFallback className='rounded-lg'>{userInitials}</AvatarFallback>
+                  <AvatarFallback className='rounded-lg'>
+                    {userInitials}
+                  </AvatarFallback>
                 </Avatar>
                 <div className='grid flex-1 text-start text-sm leading-tight'>
                   <span className='truncate font-semibold'>{userName}</span>
@@ -94,7 +97,9 @@ export function NavUser() {
                 <div className='flex items-center gap-2 px-1 py-1.5 text-start text-sm'>
                   <Avatar className='h-8 w-8 rounded-lg'>
                     <AvatarImage src='/avatars/shadcn.jpg' alt={userName} />
-                    <AvatarFallback className='rounded-lg'>{userInitials}</AvatarFallback>
+                    <AvatarFallback className='rounded-lg'>
+                      {userInitials}
+                    </AvatarFallback>
                   </Avatar>
                   <div className='grid flex-1 text-start text-sm leading-tight'>
                     <span className='truncate font-semibold'>{userName}</span>
@@ -114,19 +119,21 @@ export function NavUser() {
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>
                     <Languages />
-                    <span>{currentLanguage.flag} {t('settings.language')}</span>
+                    <span>
+                      {currentLanguage.flag} {t('settings.language')}
+                    </span>
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
                     {languages.map((language) => (
                       <DropdownMenuItem
                         key={language.code}
                         onClick={() => changeLanguage(language.code)}
-                        className="flex items-center gap-2"
+                        className='flex items-center gap-2'
                       >
                         <span>{language.flag}</span>
                         <span>{language.name}</span>
                         {i18n.language === language.code && (
-                          <span className="ml-auto">✓</span>
+                          <span className='ml-auto'>✓</span>
                         )}
                       </DropdownMenuItem>
                     ))}

@@ -1,6 +1,6 @@
 import i18n from 'i18next'
-import Backend from 'i18next-http-backend'
 import LanguageDetector from 'i18next-browser-languagedetector'
+import Backend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
 i18n
@@ -18,19 +18,19 @@ i18n
       'de-DE': ['de-DE', 'de'],
       'pt-BR': ['pt-BR', 'pt'],
       'pt-PT': ['pt-PT', 'pt'],
-      'default': ['en-US']
+      default: ['en-US'],
     },
     debug: import.meta.env.DEV,
-    
+
     interpolation: {
       escapeValue: false, // React already escapes values
     },
-    
+
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag'],
       caches: ['localStorage'],
     },
-    
+
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
       // Add cache busting to force reload of translation files

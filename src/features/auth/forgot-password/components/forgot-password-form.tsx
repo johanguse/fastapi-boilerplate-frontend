@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { ArrowRight, Loader2 } from 'lucide-react'
-import { toast } from 'sonner'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { sleep, cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -28,7 +28,10 @@ export function ForgotPasswordForm({
 
   const formSchema = z.object({
     email: z.email({
-      error: (iss) => (iss.input === '' ? t('auth.forgotPasswordEmailRequired') : t('auth.emailInvalid')),
+      error: (iss) =>
+        iss.input === ''
+          ? t('auth.forgotPasswordEmailRequired')
+          : t('auth.emailInvalid'),
     }),
   })
 
@@ -68,7 +71,10 @@ export function ForgotPasswordForm({
             <FormItem>
               <FormLabel>{t('auth.email')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('auth.forgotPasswordEmailPlaceholder')} {...field} />
+                <Input
+                  placeholder={t('auth.forgotPasswordEmailPlaceholder')}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

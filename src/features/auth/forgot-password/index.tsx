@@ -13,7 +13,7 @@ import { ForgotPasswordForm } from './components/forgot-password-form'
 
 export function ForgotPassword() {
   const { t } = useTranslation()
-  
+
   return (
     <AuthLayout>
       <Card className='gap-4'>

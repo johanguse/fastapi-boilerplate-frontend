@@ -1,11 +1,11 @@
-import { createAuthClient } from "better-auth/react"
-import { organizationClient } from "better-auth/client/plugins"
-import { z } from "zod"
+import { z } from 'zod'
+import { organizationClient } from 'better-auth/client/plugins'
+import { createAuthClient } from 'better-auth/react'
 
 // Better Auth client configuration with organization plugin
 export const authClient = createAuthClient({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8000", // Your FastAPI backend
-  basePath: "/auth", // Match the FastAPI backend auth routes
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000', // Your FastAPI backend
+  basePath: '/auth', // Match the FastAPI backend auth routes
   fetchOptions: {
     // Send cookies for session persistence across refreshes
     credentials: 'include',
@@ -116,19 +116,21 @@ export interface Invitation {
 
 // Validation schemas
 export const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  email: z.string().email('Please enter a valid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 })
 
-export const registerSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-})
+export const registerSchema = z
+  .object({
+    email: z.string().email('Please enter a valid email address'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    name: z.string().min(2, 'Name must be at least 2 characters'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  })
 
 export type LoginFormData = z.infer<typeof loginSchema>
 export type RegisterFormData = z.infer<typeof registerSchema>

@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { Loader2, LogIn } from 'lucide-react'
-import { toast } from 'sonner'
-import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { useAuth } from '@/stores/auth-store'
 import { loginSchema, type LoginFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
@@ -18,8 +18,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { PasswordInput } from '@/components/password-input'
 import { SocialLogin } from '@/components/auth/social-login'
+import { PasswordInput } from '@/components/password-input'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLFormElement> {
   readonly redirectTo?: string
@@ -47,23 +47,24 @@ export function UserAuthForm({
     onSuccess: () => {
       // Clear any form errors on success
       form.clearErrors()
-      
+
       // Redirect to the stored location or default to dashboard
       const targetPath = redirectTo || '/dashboard'
       navigate({ to: targetPath, replace: true })
-      
+
       toast.success(t('auth.welcome'))
     },
     onError: (error: unknown) => {
       // Handle error from Better Auth login
-      const errorMessage = error instanceof Error ? error.message : t('auth.invalidCredentials')
-      
+      const errorMessage =
+        error instanceof Error ? error.message : t('auth.invalidCredentials')
+
       // Set inline error on form root
       form.setError('root', {
         type: 'manual',
         message: errorMessage,
       })
-      
+
       // Also show toast for better UX
       toast.error(errorMessage)
     },
@@ -92,8 +93,10 @@ export function UserAuthForm({
         {...props}
       >
         {form.formState.errors.root && (
-          <div className='rounded-md border border-destructive bg-destructive/10 p-3 mb-4'>
-            <p className='text-sm font-medium text-destructive'>{form.formState.errors.root.message}</p>
+          <div className='border-destructive bg-destructive/10 mb-4 rounded-md border p-3'>
+            <p className='text-destructive text-sm font-medium'>
+              {form.formState.errors.root.message}
+            </p>
           </div>
         )}
         <FormField
@@ -103,9 +106,9 @@ export function UserAuthForm({
             <FormItem>
               <FormLabel>{t('auth.email')}</FormLabel>
               <FormControl>
-                <Input 
+                <Input
                   placeholder={t('auth.emailPlaceholder')}
-                  {...field} 
+                  {...field}
                   onChange={(e) => {
                     field.onChange(e)
                     clearRootError()
@@ -123,9 +126,9 @@ export function UserAuthForm({
             <FormItem className='relative'>
               <FormLabel>{t('auth.password')}</FormLabel>
               <FormControl>
-                <PasswordInput 
+                <PasswordInput
                   placeholder={t('auth.passwordPlaceholder')}
-                  {...field} 
+                  {...field}
                   onChange={(e) => {
                     field.onChange(e)
                     clearRootError()
@@ -143,14 +146,15 @@ export function UserAuthForm({
           )}
         />
         <Button className='mt-2' disabled={loginMutation.isPending}>
-          {loginMutation.isPending ? <Loader2 className='animate-spin' /> : <LogIn />}
+          {loginMutation.isPending ? (
+            <Loader2 className='animate-spin' />
+          ) : (
+            <LogIn />
+          )}
           {t('auth.signIn')}
         </Button>
 
-        <SocialLogin 
-          className="mt-2" 
-          redirectTo={redirectTo || '/dashboard'}
-        />
+        <SocialLogin className='mt-2' redirectTo={redirectTo || '/dashboard'} />
       </form>
     </Form>
   )

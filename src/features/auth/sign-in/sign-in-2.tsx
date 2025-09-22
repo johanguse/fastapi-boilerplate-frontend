@@ -4,7 +4,7 @@ import { UserAuthForm } from './components/user-auth-form'
 
 export function SignIn2() {
   const { t } = useTranslation()
-  
+
   return (
     <div className='relative container grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
       <div className='bg-muted relative hidden h-full flex-col p-10 text-white lg:flex dark:border-e'>
@@ -47,7 +47,9 @@ export function SignIn2() {
       <div className='lg:p-8'>
         <div className='mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]'>
           <div className='flex flex-col space-y-2 text-start'>
-            <h1 className='text-2xl font-semibold tracking-tight'>{t('auth.loginTitle')}</h1>
+            <h1 className='text-2xl font-semibold tracking-tight'>
+              {t('auth.loginTitle')}
+            </h1>
             <p className='text-muted-foreground text-sm'>
               {t('auth.loginDescription')}
             </p>

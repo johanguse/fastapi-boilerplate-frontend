@@ -40,7 +40,7 @@ export function OAuthCallback({ provider }: OAuthCallbackProps) {
         if (response.ok) {
           // Backend should handle token exchange and user creation/login
           // and redirect us or set cookies appropriately
-          
+
           // Check if we were redirected (indicating success)
           if (response.redirected) {
             window.location.href = response.url
@@ -53,7 +53,6 @@ export function OAuthCallback({ provider }: OAuthCallbackProps) {
         }
 
         throw new Error('OAuth callback failed')
-        
       } catch (_error) {
         // Redirect to login with error
         router.navigate({ to: '/sign-in' })
@@ -64,11 +63,11 @@ export function OAuthCallback({ provider }: OAuthCallbackProps) {
   }, [provider, router])
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="text-center">
-        <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
-        <h2 className="mt-4 text-lg font-semibold">Completing sign in...</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
+    <div className='flex min-h-screen items-center justify-center'>
+      <div className='text-center'>
+        <Loader2 className='text-primary mx-auto h-8 w-8 animate-spin' />
+        <h2 className='mt-4 text-lg font-semibold'>Completing sign in...</h2>
+        <p className='text-muted-foreground mt-2 text-sm'>
           Please wait while we complete your {provider} authentication
         </p>
       </div>

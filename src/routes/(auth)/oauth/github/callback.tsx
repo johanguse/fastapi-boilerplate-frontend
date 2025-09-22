@@ -2,5 +2,5 @@ import { createFileRoute } from '@tanstack/react-router'
 import { OAuthCallback } from '@/components/auth/oauth-callback'
 
 export const Route = createFileRoute('/(auth)/oauth/github/callback')({
-  component: () => <OAuthCallback provider="github" />,
+  component: () => <OAuthCallback provider='github' />,
 })

@@ -1,11 +1,11 @@
 import { create } from 'zustand'
-import { 
-  signIn, 
-  signUp, 
-  signOut, 
+import {
+  signIn,
+  signUp,
+  signOut,
   getSession,
-  type User, 
-  type Session 
+  type User,
+  type Session,
 } from '@/lib/auth'
 
 interface AuthState {
@@ -13,13 +13,13 @@ interface AuthState {
   session: Session | null
   isLoading: boolean
   isInitialized: boolean
-  
+
   // Actions
   setUser: (user: User | null) => void
   setSession: (session: Session | null) => void
   setLoading: (loading: boolean) => void
   setInitialized: (initialized: boolean) => void
-  
+
   // Auth methods
   login: (email: string, password: string) => Promise<void>
   register: (email: string, password: string, name: string) => Promise<void>
@@ -33,12 +33,12 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   session: null,
   isLoading: false,
   isInitialized: false,
-  
+
   setUser: (user) => set({ user }),
   setSession: (session) => set({ session, user: session?.user || null }),
   setLoading: (isLoading) => set({ isLoading }),
   setInitialized: (isInitialized) => set({ isInitialized }),
-  
+
   // Normalize various backend error shapes into a friendly message
   // Accepts objects like { status, code, message, detail }
   // detail may be a JSON-like string with single quotes; we'll parse leniently
@@ -57,16 +57,27 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
         return input
       }
 
-      const err = unwrap(raw) as { status?: number; code?: string; message?: string; detail?: unknown }
+      const err = unwrap(raw) as {
+        status?: number
+        code?: string
+        message?: string
+        detail?: unknown
+      }
       const baseCode = (err?.code || '').toLowerCase()
       const baseMsg = err?.message?.trim()
-      type DetailShape = { error?: string; message?: string } | string | undefined
+      type DetailShape =
+        | { error?: string; message?: string }
+        | string
+        | undefined
       let detail: DetailShape = err?.detail as DetailShape
-      
+
       // If detail is a string that looks like an object but uses single quotes, normalize and parse
       if (typeof detail === 'string') {
         const trimmed = detail.trim()
-        if ((trimmed.startsWith('{') && trimmed.endsWith('}')) || (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
+        if (
+          (trimmed.startsWith('{') && trimmed.endsWith('}')) ||
+          (trimmed.startsWith('[') && trimmed.endsWith(']'))
+        ) {
           try {
             const jsonish = trimmed.replace(/'([^']*)'/g, '"$1"')
             detail = JSON.parse(jsonish)
@@ -84,7 +95,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       const code = (detailCode || baseCode).toLowerCase()
       const msg = detailMsg || baseMsg
 
-      if (code.includes('invalid_credentials') || /invalid email or password/i.test(msg || '')) {
+      if (
+        code.includes('invalid_credentials') ||
+        /invalid email or password/i.test(msg || '')
+      ) {
         return 'Invalid email or password.'
       }
       if (code.includes('user_not_found')) {
@@ -93,7 +107,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       if (code.includes('email_not_verified')) {
         return 'Please verify your email to continue.'
       }
-      if (code.includes('rate_limit') || (err.status === 429)) {
+      if (code.includes('rate_limit') || err.status === 429) {
         return 'Too many attempts. Please wait a moment and try again.'
       }
       if (code.includes('conflict') || err.status === 409) {
@@ -114,70 +128,90 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
   login: async (email: string, password: string) => {
     set({ isLoading: true })
-    
+
     try {
       const result = await signIn.email({
         email,
         password,
       })
-      
+
       if (result.error) {
-        const friendly = (get() as unknown as { _resolveErrorMessage: (e: unknown) => string })._resolveErrorMessage(result.error)
+        const friendly = (
+          get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
+        )._resolveErrorMessage(result.error)
         throw new Error(friendly)
       } else if (result.data) {
         // If backend returns user, set it immediately to avoid relying on getSession
         const data = result.data as unknown
-        if (typeof data === 'object' && data !== null && 'user' in (data as Record<string, unknown>)) {
+        if (
+          typeof data === 'object' &&
+          data !== null &&
+          'user' in (data as Record<string, unknown>)
+        ) {
           const user = (data as { user: User }).user
           set({ user, session: null, isInitialized: true })
         } else {
           // Data without a user is considered an error for sign-in
-          const friendly = (get() as unknown as { _resolveErrorMessage: (e: unknown) => string })._resolveErrorMessage(data)
+          const friendly = (
+            get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
+          )._resolveErrorMessage(data)
           throw new Error(friendly)
         }
       }
     } catch (e: unknown) {
-      const friendly = (get() as unknown as { _resolveErrorMessage: (e: unknown) => string })._resolveErrorMessage(e)
+      const friendly = (
+        get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
+      )._resolveErrorMessage(e)
       throw new Error(friendly)
     } finally {
       set({ isLoading: false })
     }
   },
-  
+
   register: async (email: string, password: string, name: string) => {
     set({ isLoading: true })
-    
+
     try {
       const result = await signUp.email({
         email,
         password,
         name,
       })
-      
+
       if (result.error) {
-        const friendly = (get() as unknown as { _resolveErrorMessage: (e: unknown) => string })._resolveErrorMessage(result.error)
+        const friendly = (
+          get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
+        )._resolveErrorMessage(result.error)
         throw new Error(friendly)
       } else if (result.data) {
         const data = result.data as unknown
-        if (typeof data === 'object' && data !== null && 'user' in (data as Record<string, unknown>)) {
+        if (
+          typeof data === 'object' &&
+          data !== null &&
+          'user' in (data as Record<string, unknown>)
+        ) {
           const user = (data as { user: User }).user
           set({ user, session: null, isInitialized: true })
         } else {
-          const friendly = (get() as unknown as { _resolveErrorMessage: (e: unknown) => string })._resolveErrorMessage(data)
+          const friendly = (
+            get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
+          )._resolveErrorMessage(data)
           throw new Error(friendly)
         }
       }
     } catch (e: unknown) {
-      const friendly = (get() as unknown as { _resolveErrorMessage: (e: unknown) => string })._resolveErrorMessage(e)
+      const friendly = (
+        get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
+      )._resolveErrorMessage(e)
       throw new Error(friendly)
     } finally {
       set({ isLoading: false })
     }
   },
-  
+
   logout: async () => {
     set({ isLoading: true })
-    
+
     try {
       await signOut()
       set({ user: null, session: null, isInitialized: true })
@@ -190,18 +224,18 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       set({ isLoading: false })
     }
   },
-  
+
   checkSession: async () => {
     set({ isLoading: true })
-    
+
     try {
       const session = await getSession()
       if (session?.data) {
         const sessionData = session.data as Session
-        set({ 
-          user: sessionData.user, 
+        set({
+          user: sessionData.user,
           session: sessionData,
-          isInitialized: true 
+          isInitialized: true,
         })
       } else {
         set({ user: null, session: null, isInitialized: true })
@@ -219,13 +253,13 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       set({ isLoading: false, isInitialized: true })
     }
   },
-  
+
   reset: () => {
-    set({ 
-      user: null, 
-      session: null, 
+    set({
+      user: null,
+      session: null,
       isLoading: false,
-      isInitialized: false 
+      isInitialized: false,
     })
   },
 }))

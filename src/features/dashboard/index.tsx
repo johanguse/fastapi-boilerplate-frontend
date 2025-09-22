@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next'
 import { useLocation } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -10,13 +10,13 @@ import {
 } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ConfigDrawer } from '@/components/config-drawer'
+import { LanguageSwitcher } from '@/components/language-switcher'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { TopNav } from '@/components/layout/top-nav'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { LanguageSwitcher } from '@/components/language-switcher'
 import { Overview } from './components/overview'
 import { RecentSales } from './components/recent-sales'
 
@@ -50,7 +50,7 @@ export function Dashboard() {
       disabled: true,
     },
   ]
-  
+
   return (
     <>
       {/* ===== Top Heading ===== */}
@@ -68,7 +68,9 @@ export function Dashboard() {
       {/* ===== Main ===== */}
       <Main>
         <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>{t('dashboard.title')}</h1>
+          <h1 className='text-2xl font-bold tracking-tight'>
+            {t('dashboard.title')}
+          </h1>
           <div className='flex items-center space-x-2'>
             <Button>{t('dashboard.metrics.download')}</Button>
           </div>
@@ -148,7 +150,9 @@ export function Dashboard() {
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>{t('dashboard.metrics.sales')}</CardTitle>
+                  <CardTitle className='text-sm font-medium'>
+                    {t('dashboard.metrics.sales')}
+                  </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
                     viewBox='0 0 24 24'

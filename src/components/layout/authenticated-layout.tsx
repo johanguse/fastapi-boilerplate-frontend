@@ -1,7 +1,7 @@
 import { Outlet } from '@tanstack/react-router'
+import { useAuth } from '@/stores/auth-store'
 import { getCookie } from '@/lib/cookies'
 import { cn } from '@/lib/utils'
-import { useAuth } from '@/stores/auth-store'
 import { LayoutProvider } from '@/context/layout-provider'
 import { SearchProvider } from '@/context/search-provider'
 import {
@@ -28,7 +28,7 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
   const sidebarData = useSidebarData()
   // Initialize auth data loading
   useAuth()
-  
+
   return (
     <SearchProvider>
       <SidebarProvider defaultOpen={defaultOpen}>

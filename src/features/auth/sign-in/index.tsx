@@ -19,10 +19,10 @@ export function SignIn() {
     <AuthLayout>
       <Card className='gap-4'>
         <CardHeader>
-          <CardTitle className='text-lg tracking-tight'>{t('auth.loginTitle')}</CardTitle>
-          <CardDescription>
-            {t('auth.loginDescription')}
-          </CardDescription>
+          <CardTitle className='text-lg tracking-tight'>
+            {t('auth.loginTitle')}
+          </CardTitle>
+          <CardDescription>{t('auth.loginDescription')}</CardDescription>
         </CardHeader>
         <CardContent>
           <UserAuthForm redirectTo={redirect} />

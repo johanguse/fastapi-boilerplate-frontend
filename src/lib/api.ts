@@ -137,54 +137,74 @@ export const authApi = {
     const formData = new URLSearchParams()
     formData.append('username', data.email) // FastAPI Users uses 'username' field
     formData.append('password', data.password)
-    
-    const response: AxiosResponse<AuthResponse> = await apiClient.post('/auth/jwt/login', formData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-    
+
+    const response: AxiosResponse<AuthResponse> = await apiClient.post(
+      '/auth/jwt/login',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    )
+
     return response.data
   },
 
   // Better Auth compatible sign in
   async signIn(data: BetterAuthSignInRequest): Promise<BetterAuthResponse> {
-    const response: AxiosResponse<BetterAuthResponse> = await apiClient.post('/auth/sign-in/email', data)
+    const response: AxiosResponse<BetterAuthResponse> = await apiClient.post(
+      '/auth/sign-in/email',
+      data
+    )
     // Token is automatically set via HTTP-only cookie by the backend
     return response.data
   },
 
   // Better Auth compatible sign up
   async signUp(data: BetterAuthSignUpRequest): Promise<BetterAuthResponse> {
-    const response: AxiosResponse<BetterAuthResponse> = await apiClient.post('/auth/sign-up/email', data)
+    const response: AxiosResponse<BetterAuthResponse> = await apiClient.post(
+      '/auth/sign-up/email',
+      data
+    )
     // Token is automatically set via HTTP-only cookie by the backend
     return response.data
   },
 
   // Better Auth compatible sign out
   async signOut(): Promise<{ success: boolean }> {
-    const response: AxiosResponse<{ success: boolean }> = await apiClient.post('/auth/sign-out')
+    const response: AxiosResponse<{ success: boolean }> =
+      await apiClient.post('/auth/sign-out')
     // Cookies are cleared by the backend
     return response.data
   },
 
   // Get current session (Better Auth style)
-  async getSession(): Promise<{ user: BetterAuthUser; session: BetterAuthSession }> {
-    const response: AxiosResponse<{ user: BetterAuthUser; session: BetterAuthSession }> = await apiClient.get('/auth/session')
+  async getSession(): Promise<{
+    user: BetterAuthUser
+    session: BetterAuthSession
+  }> {
+    const response: AxiosResponse<{
+      user: BetterAuthUser
+      session: BetterAuthSession
+    }> = await apiClient.get('/auth/session')
     return response.data
   },
 
   // Legacy registration
   async register(data: RegisterRequest): Promise<User> {
-    const response: AxiosResponse<User> = await apiClient.post('/auth/register', {
-      email: data.email,
-      password: data.password,
-      name: data.name,
-      role: data.role || 'member',
-      is_active: true,
-      is_verified: false,
-    })
-    
+    const response: AxiosResponse<User> = await apiClient.post(
+      '/auth/register',
+      {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        role: data.role || 'member',
+        is_active: true,
+        is_verified: false,
+      }
+    )
+
     return response.data
   },
 
@@ -210,33 +230,55 @@ export const authApi = {
 // Better Auth organization API
 export const organizationApi = {
   async list(): Promise<Organization[]> {
-    const response: AxiosResponse<Organization[]> = await apiClient.get('/auth/organization')
+    const response: AxiosResponse<Organization[]> =
+      await apiClient.get('/auth/organization')
     return response.data
   },
 
   async get(id: string): Promise<Organization> {
-    const response: AxiosResponse<Organization> = await apiClient.get(`/auth/organization/${id}`)
+    const response: AxiosResponse<Organization> = await apiClient.get(
+      `/auth/organization/${id}`
+    )
     return response.data
   },
 
-  async create(data: { name: string; slug?: string; logo?: string }): Promise<Organization> {
-    const response: AxiosResponse<Organization> = await apiClient.post('/auth/organization', data)
+  async create(data: {
+    name: string
+    slug?: string
+    logo?: string
+  }): Promise<Organization> {
+    const response: AxiosResponse<Organization> = await apiClient.post(
+      '/auth/organization',
+      data
+    )
     return response.data
   },
 
-  async update(id: string, data: { name?: string; slug?: string; logo?: string }): Promise<Organization> {
-    const response: AxiosResponse<Organization> = await apiClient.put(`/auth/organization/${id}`, data)
+  async update(
+    id: string,
+    data: { name?: string; slug?: string; logo?: string }
+  ): Promise<Organization> {
+    const response: AxiosResponse<Organization> = await apiClient.put(
+      `/auth/organization/${id}`,
+      data
+    )
     return response.data
   },
 
   async delete(id: string): Promise<{ success: boolean; message: string }> {
-    const response: AxiosResponse<{ success: boolean; message: string }> = await apiClient.delete(`/auth/organization/${id}`)
+    const response: AxiosResponse<{ success: boolean; message: string }> =
+      await apiClient.delete(`/auth/organization/${id}`)
     return response.data
   },
 
-  async setActive(organizationId: string): Promise<{ success: boolean; activeOrganizationId: string }> {
-    const response: AxiosResponse<{ success: boolean; activeOrganizationId: string }> = await apiClient.post('/auth/organization/set-active', {
-      organizationId
+  async setActive(
+    organizationId: string
+  ): Promise<{ success: boolean; activeOrganizationId: string }> {
+    const response: AxiosResponse<{
+      success: boolean
+      activeOrganizationId: string
+    }> = await apiClient.post('/auth/organization/set-active', {
+      organizationId,
     })
     return response.data
   },
@@ -244,12 +286,15 @@ export const organizationApi = {
 
 export const teamsApi = {
   async getTeams(): Promise<Team[]> {
-    const response: AxiosResponse<{ items: Team[] }> = await apiClient.get('/teams')
+    const response: AxiosResponse<{ items: Team[] }> =
+      await apiClient.get('/teams')
     return response.data.items
   },
 
   async createTeam(name: string): Promise<Team> {
-    const response: AxiosResponse<Team> = await apiClient.post('/teams', { name })
+    const response: AxiosResponse<Team> = await apiClient.post('/teams', {
+      name,
+    })
     return response.data
   },
 
@@ -259,7 +304,10 @@ export const teamsApi = {
   },
 
   async updateTeam(id: number, data: Partial<Team>): Promise<Team> {
-    const response: AxiosResponse<Team> = await apiClient.put(`/teams/${id}`, data)
+    const response: AxiosResponse<Team> = await apiClient.put(
+      `/teams/${id}`,
+      data
+    )
     return response.data
   },
 
@@ -270,22 +318,35 @@ export const teamsApi = {
 
 export const projectsApi = {
   async getProjects(): Promise<Project[]> {
-    const response: AxiosResponse<{ items: Project[] }> = await apiClient.get('/projects')
+    const response: AxiosResponse<{ items: Project[] }> =
+      await apiClient.get('/projects')
     return response.data.items
   },
 
-  async createProject(data: { name: string; description?: string; team_id: number }): Promise<Project> {
-    const response: AxiosResponse<Project> = await apiClient.post('/projects', data)
+  async createProject(data: {
+    name: string
+    description?: string
+    team_id: number
+  }): Promise<Project> {
+    const response: AxiosResponse<Project> = await apiClient.post(
+      '/projects',
+      data
+    )
     return response.data
   },
 
   async getProject(id: number): Promise<Project> {
-    const response: AxiosResponse<Project> = await apiClient.get(`/projects/${id}`)
+    const response: AxiosResponse<Project> = await apiClient.get(
+      `/projects/${id}`
+    )
     return response.data
   },
 
   async updateProject(id: number, data: Partial<Project>): Promise<Project> {
-    const response: AxiosResponse<Project> = await apiClient.put(`/projects/${id}`, data)
+    const response: AxiosResponse<Project> = await apiClient.put(
+      `/projects/${id}`,
+      data
+    )
     return response.data
   },
 
