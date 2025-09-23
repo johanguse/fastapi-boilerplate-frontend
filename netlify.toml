@@ -1,5 +1,5 @@
 [build.environment]
-    SECRETS_SCAN_OMIT_KEYS = "VITE_GOOGLE_CLIENT_ID, VITE_API_URL"
+    SECRETS_SCAN_OMIT_KEYS = "VITE_GOOGLE_CLIENT_ID, VITE_API_URL, VITE_APP_URL"
     
 [[redirects]]
   from = "/*"
