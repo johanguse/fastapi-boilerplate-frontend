@@ -10,6 +10,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Include cookies in requests for authentication
 })
 
 // Request interceptor to add auth token
@@ -96,6 +97,9 @@ export interface Organization {
   logo?: string
   metadata?: Record<string, unknown>
   createdAt?: string
+  plan?: string // Organization plan (Free, Starter, Pro, etc.)
+  maxProjects?: number
+  activeProjects?: number
 }
 
 export interface User {
@@ -103,11 +107,86 @@ export interface User {
   email: string
   name: string
   role: string
+  status: string // 'active', 'invited', 'suspended'
   is_active: boolean
   is_verified: boolean
-  is_superuser: boolean
+  is_superuser?: boolean
   created_at: string
-  updated_at: string
+  updated_at?: string
+  avatar_url?: string
+}
+
+export interface PaginatedResponse<T> {
+  items: T[]
+  total: number
+  page: number
+  size: number
+}
+
+export interface AdminStats {
+  total_users: number
+  verified_users: number
+  active_users: number
+  admin_users: number
+  member_users: number
+}
+
+export interface AnalyticsOverview {
+  users: {
+    total: number
+    new_last_30_days: number
+    new_last_7_days: number
+  }
+  organizations: {
+    total: number
+  }
+  subscriptions: {
+    active: number
+  }
+  revenue: {
+    total: number
+    last_30_days: number
+    currency: string
+  }
+  activity: {
+    total_events: number
+  }
+}
+
+export interface ChartDataPoint {
+  date: string
+  count?: number
+  revenue?: number
+}
+
+export interface ActivityLog {
+  id: number
+  action: string
+  action_type: string
+  description: string
+  action_metadata?: Record<string, unknown>
+  ip_address?: string
+  user_agent?: string
+  created_at: string
+  user_id?: number
+  organization_id?: number
+  project_id?: number
+  user_name?: string
+  user_email?: string
+}
+
+export interface UserUpdateAdmin {
+  name?: string
+  role?: string
+  status?: string // 'active', 'invited', 'suspended'
+  is_active?: boolean
+  is_verified?: boolean
+}
+
+export interface UserInvite {
+  email: string
+  name: string
+  role?: string
 }
 
 export interface Team {
@@ -354,5 +433,87 @@ export const projectsApi = {
     await apiClient.delete(`/projects/${id}`)
   },
 }
+
+// Admin API (requires admin role)
+export const adminApi = {
+  async getAllUsers(params?: {
+    page?: number
+    size?: number
+    search?: string
+    role?: string
+  }): Promise<PaginatedResponse<User>> {
+    const response: AxiosResponse<PaginatedResponse<User>> =
+      await apiClient.get('/admin/users', { params })
+    return response.data
+  },
+
+  async getUserById(userId: number): Promise<User> {
+    const response: AxiosResponse<User> = await apiClient.get(
+      `/admin/users/${userId}`
+    )
+    return response.data
+  },
+
+  async updateUser(userId: number, data: UserUpdateAdmin): Promise<User> {
+    const response: AxiosResponse<User> = await apiClient.patch(
+      `/admin/users/${userId}`,
+      data
+    )
+    return response.data
+  },
+
+  async deleteUser(userId: number): Promise<{ success: boolean; message: string }> {
+    const response: AxiosResponse<{ success: boolean; message: string }> =
+      await apiClient.delete(`/admin/users/${userId}`)
+    return response.data
+  },
+
+  async inviteUser(data: UserInvite): Promise<User> {
+    const response: AxiosResponse<User> = await apiClient.post(
+      '/admin/users/invite',
+      data
+    )
+    return response.data
+  },
+
+  async getStats(): Promise<AdminStats> {
+    const response: AxiosResponse<AdminStats> =
+      await apiClient.get('/admin/stats')
+    return response.data
+  },
+
+  async getAnalyticsOverview(): Promise<AnalyticsOverview> {
+    const response: AxiosResponse<AnalyticsOverview> =
+      await apiClient.get('/admin/analytics/overview')
+    return response.data
+  },
+
+  async getUsersGrowth(days: number = 30): Promise<{ data: ChartDataPoint[] }> {
+    const response: AxiosResponse<{ data: ChartDataPoint[] }> =
+      await apiClient.get('/admin/analytics/users-growth', { params: { days } })
+    return response.data
+  },
+
+  async getRevenueChart(days: number = 30): Promise<{ data: ChartDataPoint[]; currency: string }> {
+    const response: AxiosResponse<{ data: ChartDataPoint[]; currency: string }> =
+      await apiClient.get('/admin/analytics/revenue-chart', { params: { days } })
+    return response.data
+  },
+
+  async getActivityLogs(params?: {
+    page?: number
+    size?: number
+    action_type?: string
+    user_id?: number
+    organization_id?: number
+  }): Promise<PaginatedResponse<ActivityLog>> {
+    const response: AxiosResponse<PaginatedResponse<ActivityLog>> =
+      await apiClient.get('/admin/activity-logs', { params })
+    return response.data
+  },
+}
+
+// Export apiClient as 'api' for convenience
+export const api = apiClient
 
 export default apiClient

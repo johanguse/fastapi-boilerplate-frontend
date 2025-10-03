@@ -86,7 +86,33 @@
     "signUpRegistrationFailed": "Registration failed. Please check your information.",
     "signUpCheckInformation": "Please check your information and try again",
     "signUpWelcome": "Welcome {name}! Please check your email to verify your account.",
-    "orContinueWithSignUp": "Or continue with"
+    "orContinueWithSignUp": "Or continue with",
+    "welcome": "Welcome back! You have successfully signed in.",
+    "socialLogin": {
+      "success": "Successfully signed in with {provider}"
+    }
+  },
+  "emailVerification": {
+    "notVerified": "Your email {email} is not verified.",
+    "emailSent": "Verification email sent",
+    "checkInbox": "Please check your inbox at {email}",
+    "resendFailed": "Failed to resend verification email",
+    "resend": "Resend Email",
+    "goToDashboard": "Go to Dashboard"
+  },
+  "invitations": {
+    "inviteSent": "Invitation sent",
+    "inviteSentDescription": "Invitation sent to {email}",
+    "inviteFailedGeneric": "Failed to send invitation",
+    "invitationCancelled": "Invitation cancelled",
+    "invitationCancelledDescription": "The invitation has been cancelled",
+    "cancelFailed": "Failed to cancel invitation",
+    "invitationAccepted": "Invitation accepted",
+    "redirecting": "Redirecting to your organization...",
+    "acceptFailed": "Failed to accept invitation",
+    "invitationDeclined": "Invitation declined",
+    "declinedDescription": "You have declined the invitation",
+    "declineFailed": "Failed to decline invitation"
   },
   "organizations": {
     "title": "Organizations",
@@ -115,7 +141,13 @@
     "noOrganizations": "No organizations yet",
     "noOrganizationsDescription": "Create your first organization to get started",
     "created": "Created {{date}}",
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "defaultOrganization": "Default Organization",
+    "switchSuccess": "Organization switched successfully",
+    "switchFailed": "Failed to switch organization",
+    "organizationCount_one": "{{count}} organization",
+    "organizationCount_other": "{{count}} organizations",
+    "noOrganizationsYet": "No organizations yet"
   },
   "common": {
     "loading": "Loading...",

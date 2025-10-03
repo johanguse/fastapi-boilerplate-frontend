@@ -86,10 +86,37 @@
     "signUpRegistrationFailed": "Falha no registro. Verifique suas informações.",
     "signUpCheckInformation": "Verifique suas informações e tente novamente",
     "signUpWelcome": "Bem-vindo {name}! Verifique seu e-mail para confirmar sua conta.",
-    "orContinueWithSignUp": "Ou continue com"
+    "orContinueWithSignUp": "Ou continue com",
+    "welcome": "Bem-vindo de volta! Você fez login com sucesso.",
+    "socialLogin": {
+      "success": "Login bem-sucedido com {provider}"
+    }
+  },
+  "emailVerification": {
+    "notVerified": "Seu e-mail {email} não está verificado.",
+    "emailSent": "E-mail de verificação enviado",
+    "checkInbox": "Por favor verifique sua caixa de entrada em {email}",
+    "resendFailed": "Falha ao reenviar e-mail de verificação",
+    "resend": "Reenviar E-mail",
+    "goToDashboard": "Ir para o Painel"
+  },
+  "invitations": {
+    "inviteSent": "Convite enviado",
+    "inviteSentDescription": "Convite enviado para {email}",
+    "inviteFailedGeneric": "Falha ao enviar convite",
+    "invitationCancelled": "Convite cancelado",
+    "invitationCancelledDescription": "O convite foi cancelado",
+    "cancelFailed": "Falha ao cancelar convite",
+    "invitationAccepted": "Convite aceito",
+    "redirecting": "Redirecionando para sua organização...",
+    "acceptFailed": "Falha ao aceitar convite",
+    "invitationDeclined": "Convite recusado",
+    "declinedDescription": "Você recusou o convite",
+    "declineFailed": "Falha ao recusar convite"
   },
   "organizations": {
     "title": "Organizações",
+    "subtitle": "Gerencie suas organizações e alterne entre elas",
     "createNew": "Criar Organização",
     "name": "Nome da Organização",
     "description": "Descrição",
@@ -107,7 +134,20 @@
     "updateSuccess": "Organização atualizada com sucesso",
     "nameRequired": "Nome da organização é obrigatório",
     "namePlaceholder": "Digite o nome da organização",
-    "descriptionPlaceholder": "Digite a descrição da organização (opcional)"
+    "descriptionPlaceholder": "Digite a descrição da organização (opcional)",
+    "deleteDialogTitle": "Excluir Organização",
+    "deleteDialogDescription": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita. Todos os dados associados a esta organização serão removidos permanentemente.",
+    "deleting": "Excluindo...",
+    "noOrganizations": "Ainda não há organizações",
+    "noOrganizationsDescription": "Crie sua primeira organização para começar",
+    "created": "Criado em {{date}}",
+    "openMenu": "Abrir menu",
+    "defaultOrganization": "Organização Padrão",
+    "switchSuccess": "Organização alterada com sucesso",
+    "switchFailed": "Falha ao alternar organização",
+    "organizationCount_one": "{{count}} organização",
+    "organizationCount_other": "{{count}} organizações",
+    "noOrganizationsYet": "Ainda não há organizações"
   },
   "common": {
     "loading": "Carregando...",

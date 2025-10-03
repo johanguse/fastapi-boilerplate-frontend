@@ -23,7 +23,9 @@
     "emailRequired": "Email is required",
     "emailInvalid": "Please enter a valid email address",
     "passwordRequired": "Password is required",
-    "passwordTooShort": "Password must be at least 8 characters",
+    "passwordTooShort": "Password must be at least {{count}} characters",
+    "nameTooShort": "Name must be at least {{count}} characters",
+    "passwordsDontMatch": "Passwords don't match",
     "invalidCredentials": "Invalid email or password",
     "email": "Email",
     "emailPlaceholder": "Enter your email",
@@ -43,6 +45,7 @@
     "alreadyHaveAccount": "Already have an account?",
     "dontHaveAccount": "Don't have an account?",
     "welcomeBack": "Welcome back",
+    "welcome": "Welcome!",
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
     "agreeToTerms": "I agree to the {terms} and {privacy}",
@@ -51,6 +54,7 @@
     "socialLogin": {
       "divider": "Or continue with",
       "continueWith": "Continue with {{provider}}",
+      "success": "Successfully logged in with {{provider}}",
       "disclaimer": "By continuing, you agree to our Terms of Service and Privacy Policy",
       "error": {
         "title": "Authentication Error",

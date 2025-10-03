@@ -86,10 +86,37 @@
     "signUpRegistrationFailed": "Registrierung fehlgeschlagen. Überprüfen Sie Ihre Informationen.",
     "signUpCheckInformation": "Überprüfen Sie Ihre Informationen und versuchen Sie es erneut",
     "signUpWelcome": "Willkommen {name}! Überprüfen Sie Ihre E-Mail, um Ihr Konto zu bestätigen.",
-    "orContinueWithSignUp": "Oder weiter mit"
+    "orContinueWithSignUp": "Oder weiter mit",
+    "welcome": "Willkommen zurück! Sie haben sich erfolgreich angemeldet.",
+    "socialLogin": {
+      "success": "Erfolgreich mit {provider} angemeldet"
+    }
+  },
+  "emailVerification": {
+    "notVerified": "Ihre E-Mail {email} ist nicht verifiziert.",
+    "emailSent": "Bestätigungs-E-Mail gesendet",
+    "checkInbox": "Bitte überprüfen Sie Ihren Posteingang unter {email}",
+    "resendFailed": "Fehler beim erneuten Senden der Bestätigungs-E-Mail",
+    "resend": "E-Mail erneut senden",
+    "goToDashboard": "Zum Dashboard gehen"
+  },
+  "invitations": {
+    "inviteSent": "Einladung gesendet",
+    "inviteSentDescription": "Einladung gesendet an {email}",
+    "inviteFailedGeneric": "Einladung konnte nicht gesendet werden",
+    "invitationCancelled": "Einladung abgebrochen",
+    "invitationCancelledDescription": "Die Einladung wurde abgebrochen",
+    "cancelFailed": "Einladung konnte nicht abgebrochen werden",
+    "invitationAccepted": "Einladung angenommen",
+    "redirecting": "Weiterleitung zu Ihrer Organisation...",
+    "acceptFailed": "Einladung konnte nicht angenommen werden",
+    "invitationDeclined": "Einladung abgelehnt",
+    "declinedDescription": "Sie haben die Einladung abgelehnt",
+    "declineFailed": "Einladung konnte nicht abgelehnt werden"
   },
   "organizations": {
     "title": "Organisationen",
+    "subtitle": "Verwalten Sie Ihre Organisationen und wechseln Sie zwischen ihnen",
     "createNew": "Organisation Erstellen",
     "name": "Organisationsname",
     "description": "Beschreibung",
@@ -107,7 +134,20 @@
     "updateSuccess": "Organisation erfolgreich aktualisiert",
     "nameRequired": "Organisationsname ist erforderlich",
     "namePlaceholder": "Organisationsname eingeben",
-    "descriptionPlaceholder": "Organisationsbeschreibung eingeben (optional)"
+    "descriptionPlaceholder": "Organisationsbeschreibung eingeben (optional)",
+    "deleteDialogTitle": "Organisation löschen",
+    "deleteDialogDescription": "Sind Sie sicher, dass Sie \"{{name}}\" löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden. Alle mit dieser Organisation verbundenen Daten werden dauerhaft entfernt.",
+    "deleting": "Wird gelöscht...",
+    "noOrganizations": "Noch keine Organisationen",
+    "noOrganizationsDescription": "Erstellen Sie Ihre erste Organisation, um loszulegen",
+    "created": "Erstellt am {{date}}",
+    "openMenu": "Menü öffnen",
+    "defaultOrganization": "Standard-Organisation",
+    "switchSuccess": "Organisation erfolgreich gewechselt",
+    "switchFailed": "Wechsel der Organisation fehlgeschlagen",
+    "organizationCount_one": "{{count}} Organisation",
+    "organizationCount_other": "{{count}} Organisationen",
+    "noOrganizationsYet": "Noch keine Organisationen"
   },
   "common": {
     "loading": "Laden...",

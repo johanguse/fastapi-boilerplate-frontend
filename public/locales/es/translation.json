@@ -86,7 +86,33 @@
     "signUpRegistrationFailed": "Error en el registro. Verifica tu información.",
     "signUpCheckInformation": "Verifica tu información e intenta nuevamente",
     "signUpWelcome": "¡Bienvenido {name}! Revisa tu email para verificar tu cuenta.",
-    "orContinueWithSignUp": "O continuar con"
+    "orContinueWithSignUp": "O continuar con",
+    "welcome": "¡Bienvenido de nuevo! Has iniciado sesión exitosamente.",
+    "socialLogin": {
+      "success": "Inicio de sesión exitoso con {provider}"
+    }
+  },
+  "emailVerification": {
+    "notVerified": "Tu email {email} no está verificado.",
+    "emailSent": "Email de verificación enviado",
+    "checkInbox": "Por favor revisa tu bandeja de entrada en {email}",
+    "resendFailed": "Error al reenviar el email de verificación",
+    "resend": "Reenviar Email",
+    "goToDashboard": "Ir al Panel"
+  },
+  "invitations": {
+    "inviteSent": "Invitación enviada",
+    "inviteSentDescription": "Invitación enviada a {email}",
+    "inviteFailedGeneric": "Error al enviar la invitación",
+    "invitationCancelled": "Invitación cancelada",
+    "invitationCancelledDescription": "La invitación ha sido cancelada",
+    "cancelFailed": "Error al cancelar la invitación",
+    "invitationAccepted": "Invitación aceptada",
+    "redirecting": "Redirigiendo a tu organización...",
+    "acceptFailed": "Error al aceptar la invitación",
+    "invitationDeclined": "Invitación rechazada",
+    "declinedDescription": "Has rechazado la invitación",
+    "declineFailed": "Error al rechazar la invitación"
   },
   "organizations": {
     "title": "Organizaciones",
@@ -115,7 +141,13 @@
     "noOrganizations": "Aún no hay organizaciones",
     "noOrganizationsDescription": "Crea tu primera organización para comenzar",
     "created": "Creado {{date}}",
-    "openMenu": "Abrir menú"
+    "openMenu": "Abrir menú",
+    "defaultOrganization": "Organización Predeterminada",
+    "switchSuccess": "Organización cambiada exitosamente",
+    "switchFailed": "Error al cambiar de organización",
+    "organizationCount_one": "{{count}} organización",
+    "organizationCount_other": "{{count}} organizaciones",
+    "noOrganizationsYet": "Aún no hay organizaciones"
   },
   "common": {
     "loading": "Cargando...",

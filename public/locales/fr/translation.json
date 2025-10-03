@@ -86,10 +86,37 @@
     "signUpRegistrationFailed": "Échec de l'inscription. Veuillez vérifier vos informations.",
     "signUpCheckInformation": "Veuillez vérifier vos informations et réessayer",
     "signUpWelcome": "Bienvenue {name} ! Veuillez vérifier votre email pour confirmer votre compte.",
-    "orContinueWithSignUp": "Ou continuer avec"
+    "orContinueWithSignUp": "Ou continuer avec",
+    "welcome": "Bienvenue ! Vous vous êtes connecté avec succès.",
+    "socialLogin": {
+      "success": "Connexion réussie avec {provider}"
+    }
+  },
+  "emailVerification": {
+    "notVerified": "Votre email {email} n'est pas vérifié.",
+    "emailSent": "Email de vérification envoyé",
+    "checkInbox": "Veuillez vérifier votre boîte de réception à {email}",
+    "resendFailed": "Échec de renvoi de l'email de vérification",
+    "resend": "Renvoyer l'Email",
+    "goToDashboard": "Aller au Tableau de Bord"
+  },
+  "invitations": {
+    "inviteSent": "Invitation envoyée",
+    "inviteSentDescription": "Invitation envoyée à {email}",
+    "inviteFailedGeneric": "Échec de l'envoi de l'invitation",
+    "invitationCancelled": "Invitation annulée",
+    "invitationCancelledDescription": "L'invitation a été annulée",
+    "cancelFailed": "Échec de l'annulation de l'invitation",
+    "invitationAccepted": "Invitation acceptée",
+    "redirecting": "Redirection vers votre organisation...",
+    "acceptFailed": "Échec de l'acceptation de l'invitation",
+    "invitationDeclined": "Invitation refusée",
+    "declinedDescription": "Vous avez refusé l'invitation",
+    "declineFailed": "Échec du refus de l'invitation"
   },
   "organizations": {
     "title": "Organisations",
+    "subtitle": "Gérez vos organisations et basculez entre elles",
     "createNew": "Créer une Organisation",
     "name": "Nom de l'Organisation",
     "description": "Description",
@@ -107,7 +134,20 @@
     "updateSuccess": "Organisation mise à jour avec succès",
     "nameRequired": "Le nom de l'organisation est requis",
     "namePlaceholder": "Entrez le nom de l'organisation",
-    "descriptionPlaceholder": "Entrez la description de l'organisation (optionnel)"
+    "descriptionPlaceholder": "Entrez la description de l'organisation (optionnel)",
+    "deleteDialogTitle": "Supprimer l'Organisation",
+    "deleteDialogDescription": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action est irréversible. Toutes les données associées à cette organisation seront définitivement supprimées.",
+    "deleting": "Suppression...",
+    "noOrganizations": "Pas encore d'organisations",
+    "noOrganizationsDescription": "Créez votre première organisation pour commencer",
+    "created": "Créé le {{date}}",
+    "openMenu": "Ouvrir le menu",
+    "defaultOrganization": "Organisation par Défaut",
+    "switchSuccess": "Organisation changée avec succès",
+    "switchFailed": "Échec du changement d'organisation",
+    "organizationCount_one": "{{count}} organisation",
+    "organizationCount_other": "{{count}} organisations",
+    "noOrganizationsYet": "Pas encore d'organisations"
   },
   "common": {
     "loading": "Chargement...",

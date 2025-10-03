@@ -1,4 +1,5 @@
 import { LanguageSwitcher } from '@/components/language-switcher'
+import { ThemeSwitch } from '@/components/theme-switch'
 
 type AuthLayoutProps = {
   readonly children: React.ReactNode
@@ -24,7 +25,8 @@ export function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
           <h1 className='text-xl font-medium'>Shadcn Admin</h1>
         </div>
         {children}
-        <div className='mt-6 flex justify-center'>
+        <div className='mt-6 flex items-center justify-center gap-2'>
+          <ThemeSwitch />
           <LanguageSwitcher />
         </div>
       </div>

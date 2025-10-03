@@ -23,7 +23,9 @@
     "emailRequired": "L'email est requis",
     "emailInvalid": "Veuillez entrer un email valide",
     "passwordRequired": "Le mot de passe est requis",
-    "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+    "passwordTooShort": "Le mot de passe doit contenir au moins {{count}} caractères",
+    "nameTooShort": "Le nom doit contenir au moins {{count}} caractères",
+    "passwordsDontMatch": "Les mots de passe ne correspondent pas",
     "invalidCredentials": "Email ou mot de passe invalide",
     "email": "Email",
     "emailPlaceholder": "Entrez votre email",
@@ -43,6 +45,7 @@
     "alreadyHaveAccount": "Vous avez déjà un compte ?",
     "dontHaveAccount": "Vous n'avez pas de compte ?",
     "welcomeBack": "Bon retour",
+    "welcome": "Bienvenue !",
     "terms": "Conditions d'utilisation",
     "privacy": "Politique de confidentialité",
     "agreeToTerms": "J'accepte les {terms} et la {privacy}",
@@ -51,6 +54,7 @@
     "socialLogin": {
       "divider": "Ou continuer avec",
       "continueWith": "Continuer avec {{provider}}",
+      "success": "Connexion réussie avec {{provider}}",
       "disclaimer": "En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité",
       "error": {
         "title": "Erreur d'authentification",
@@ -139,7 +143,8 @@
     "actions": "Actions",
     "noResults": "Aucun résultat trouvé",
     "tryAgain": "Réessayer",
-    "general": "Général"
+    "general": "Général",
+    "optional": "optionnel"
   },
   "dashboard": {
     "title": "Tableau de bord",
@@ -186,5 +191,152 @@
     "fr": "Français",
     "de": "Deutsch",
     "pt": "Português"
+  },
+  "invitations": {
+    "inviteMember": "Inviter un Membre",
+    "inviteMemberTo": "Inviter un membre à {{name}}",
+    "inviteDescription": "Envoyez une invitation pour rejoindre votre organisation par e-mail.",
+    "emailAddress": "Adresse E-mail",
+    "role": "Rôle",
+    "selectRole": "Sélectionnez un rôle",
+    "personalMessage": "Message Personnel",
+    "messagePlaceholder": "Bienvenue dans notre équipe ! Nous sommes impatients de travailler avec vous.",
+    "messageDescription": "Ajoutez un message personnel à l'e-mail d'invitation (facultatif).",
+    "roleDescription": "Choisissez le rôle pour le nouveau membre.",
+    "sendInvite": "Envoyer l'Invitation",
+    "inviteSent": "Invitation Envoyée",
+    "inviteSentDescription": "Une invitation a été envoyée à {{email}}",
+    "inviteFailedGeneric": "Échec de l'envoi de l'invitation. Veuillez réessayer.",
+    "noPendingInvitations": "Aucune Invitation en Attente",
+    "noPendingInvitationsDescription": "Invitez des membres de l'équipe à collaborer sur votre organisation.",
+    "email": "E-mail",
+    "invitedBy": "Invité Par",
+    "sentDate": "Date d'Envoi",
+    "expiresAt": "Expire",
+    "cancelInvitation": "Annuler l'Invitation",
+    "cancelInvitationTitle": "Annuler l'Invitation ?",
+    "cancelInvitationDescription": "Cela annulera définitivement l'invitation. Le destinataire ne pourra plus l'accepter.",
+    "invitationCancelled": "Invitation Annulée",
+    "invitationCancelledDescription": "L'invitation a été annulée avec succès.",
+    "cancelFailed": "Échec de l'annulation de l'invitation",
+    "teamInvitation": "Invitation d'Équipe",
+    "acceptInvitationDescription": "Vous avez été invité à rejoindre une organisation. Acceptez l'invitation pour commencer.",
+    "invitationDetails": "Détails de l'Invitation",
+    "youHaveBeenInvited": "Vous avez été invité à rejoindre cette organisation.",
+    "acceptInvitation": "Accepter l'Invitation",
+    "declineInvitation": "Refuser l'Invitation",
+    "invitationAccepted": "Invitation Acceptée",
+    "redirecting": "Redirection...",
+    "invitationDeclined": "Invitation Refusée",
+    "declinedDescription": "Vous avez refusé l'invitation.",
+    "acceptFailed": "Échec de l'acceptation de l'invitation",
+    "declineFailed": "Échec du refus de l'invitation",
+    "invalidToken": "Invitation Invalide",
+    "invalidTokenDescription": "Ce lien d'invitation est invalide ou a expiré.",
+    "acceptSuccessTitle": "Bienvenue !",
+    "acceptSuccessDescription": "Vous avez rejoint l'organisation avec succès.",
+    "acceptErrorTitle": "Quelque Chose s'est Mal Passé",
+    "acceptErrorDescription": "Nous n'avons pas pu traiter votre invitation. Elle a peut-être expiré ou déjà été utilisée."
+  },
+  "emailVerification": {
+    "notVerified": "Veuillez vérifier votre e-mail : {{email}}",
+    "resend": "Renvoyer l'E-mail",
+    "emailSent": "E-mail de Vérification Envoyé",
+    "checkInbox": "Veuillez vérifier votre boîte de réception à {{email}}",
+    "resendFailed": "Échec de l'envoi de l'e-mail de vérification",
+    "verifying": "Vérification de votre E-mail",
+    "verified": "E-mail Vérifié !",
+    "verificationFailed": "Échec de la Vérification",
+    "pleaseWait": "Veuillez patienter pendant que nous vérifions votre adresse e-mail...",
+    "successDescription": "Votre e-mail a été vérifié avec succès.",
+    "noToken": "Aucun jeton de vérification fourni",
+    "allSet": "Tout est Prêt !",
+    "redirectingToDashboard": "Redirection vers le tableau de bord...",
+    "goToDashboard": "Aller au Tableau de Bord"
+  },
+  "roles": {
+    "viewer": "Observateur",
+    "viewerDescription": "Peut voir le contenu mais ne peut pas faire de modifications",
+    "member": "Membre",
+    "memberDescription": "Peut créer et modifier du contenu",
+    "admin": "Administrateur",
+    "adminDescription": "Peut gérer les membres et les paramètres",
+    "owner": "Propriétaire",
+    "ownerDescription": "Accès complet à toutes les fonctionnalités"
+  },
+  "pricing": {
+    "title": "Choisissez votre Plan",
+    "subtitle": "Sélectionnez le plan parfait pour votre équipe",
+    "monthly": "Mensuel",
+    "yearly": "Annuel",
+    "save": "Économisez 17%",
+    "popular": "Plus Populaire",
+    "month": "mois",
+    "year": "année",
+    "subscribe": "Commencer",
+    "loading": "Traitement...",
+    "errors": {
+      "noOrganization": "Veuillez sélectionner une organisation d'abord",
+      "checkoutFailed": "Échec de la création de la session de paiement"
+    },
+    "features": {
+      "projects": "{{count}} projets",
+      "users": "{{count}} membres de l'équipe",
+      "storage": "{{size}}GB de stockage"
+    },
+    "faq": {
+      "title": "Questions Fréquentes",
+      "cancel": {
+        "question": "Puis-je annuler à tout moment ?",
+        "answer": "Oui ! Vous pouvez annuler votre abonnement à tout moment."
+      }
+    }
+  },
+  "billing": {
+    "title": "Facturation et Abonnement",
+    "subtitle": "Gérez votre abonnement et facturation",
+    "managePortal": "Gérer la Facturation",
+    "currentPlan": "Plan Actuel",
+    "month": "mois",
+    "nextBilling": "Prochaine date de facturation",
+    "cancelScheduled": "Votre abonnement sera annulé à la fin de la période de facturation.",
+    "upgradePlan": "Mettre à Niveau le Plan",
+    "cancelSubscription": "Annuler l'Abonnement",
+    "usage": "Utilisation",
+    "usageDescription": "Utilisation actuelle des ressources de votre plan",
+    "projects": "Projets",
+    "teamMembers": "Membres de l'Équipe",
+    "storage": "Stockage",
+    "history": "Historique de Facturation",
+    "historyDescription": "Voir et télécharger les factures précédentes",
+    "noHistory": "Aucun historique de facturation pour le moment",
+    "noOrganization": "Veuillez sélectionner une organisation d'abord",
+    "noSubscription": {
+      "title": "Aucun Abonnement Actif",
+      "description": "Vous n'avez pas encore d'abonnement actif.",
+      "viewPlans": "Voir les Plans de Prix"
+    },
+    "confirmCancel": "Êtes-vous sûr de vouloir annuler votre abonnement ? Il restera actif jusqu'à la fin de la période de facturation.",
+    "cancelSuccess": "Abonnement annulé. Il restera actif jusqu'à la fin de la période de facturation.",
+    "status": {
+      "active": "Actif",
+      "trialing": "Essai",
+      "past_due": "En Retard",
+      "canceled": "Annulé",
+      "incomplete": "Incomplet",
+      "paid": "Payé",
+      "failed": "Échoué"
+    },
+    "table": {
+      "date": "Date",
+      "description": "Description",
+      "amount": "Montant",
+      "status": "Statut",
+      "invoice": "Facture"
+    },
+    "errors": {
+      "portalFailed": "Erreur lors de l'ouverture du portail de facturation",
+      "cancelFailed": "Erreur lors de l'annulation de l'abonnement"
+    }
   }
 }

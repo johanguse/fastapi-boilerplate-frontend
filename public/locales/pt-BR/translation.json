@@ -23,7 +23,9 @@
     "emailRequired": "E-mail é obrigatório",
     "emailInvalid": "Por favor, digite um e-mail válido",
     "passwordRequired": "Senha é obrigatória",
-    "passwordTooShort": "A senha deve ter pelo menos 8 caracteres",
+    "passwordTooShort": "A senha deve ter pelo menos {{count}} caracteres",
+    "nameTooShort": "O nome deve ter pelo menos {{count}} caracteres",
+    "passwordsDontMatch": "As senhas não coincidem",
     "invalidCredentials": "E-mail ou senha inválidos",
     "email": "E-mail",
     "emailPlaceholder": "Digite seu e-mail",
@@ -43,14 +45,16 @@
     "alreadyHaveAccount": "Já tem uma conta?",
     "dontHaveAccount": "Não tem uma conta?",
     "welcomeBack": "Bem-vindo de volta",
+    "welcome": "Bem-vindo!",
     "terms": "Termos de Serviço",
     "privacy": "Política de Privacidade",
     "agreeToTerms": "Concordo com os {terms} e a {privacy}",
-        "orContinueWith": "Ou continue com",
+    "orContinueWith": "Ou continue com",
     "loginTitle": "Entrar",
     "socialLogin": {
       "divider": "Ou continue com",
       "continueWith": "Continuar com {{provider}}",
+      "success": "Login com {{provider}} realizado com sucesso",
       "disclaimer": "Ao continuar, você concorda com nossos Termos de Serviço e Política de Privacidade",
       "error": {
         "title": "Erro de Autenticação",
@@ -139,7 +143,8 @@
     "actions": "Ações",
     "noResults": "Nenhum resultado encontrado",
     "tryAgain": "Tentar novamente",
-    "general": "Geral"
+    "general": "Geral",
+    "optional": "opcional"
   },
   "dashboard": {
     "title": "Painel",
@@ -186,5 +191,152 @@
     "fr": "Français",
     "de": "Deutsch",
     "pt": "Português"
+  },
+  "invitations": {
+    "inviteMember": "Convidar Membro",
+    "inviteMemberTo": "Convidar membro para {{name}}",
+    "inviteDescription": "Envie um convite para participar da sua organização por e-mail.",
+    "emailAddress": "Endereço de E-mail",
+    "role": "Função",
+    "selectRole": "Selecione uma função",
+    "personalMessage": "Mensagem Pessoal",
+    "messagePlaceholder": "Bem-vindo à nossa equipe! Ansioso para trabalhar com você.",
+    "messageDescription": "Adicione uma mensagem pessoal ao e-mail de convite (opcional).",
+    "roleDescription": "Escolha a função para o novo membro.",
+    "sendInvite": "Enviar Convite",
+    "inviteSent": "Convite Enviado",
+    "inviteSentDescription": "Um convite foi enviado para {{email}}",
+    "inviteFailedGeneric": "Falha ao enviar convite. Tente novamente.",
+    "noPendingInvitations": "Sem Convites Pendentes",
+    "noPendingInvitationsDescription": "Convide membros da equipe para colaborar em sua organização.",
+    "email": "E-mail",
+    "invitedBy": "Convidado Por",
+    "sentDate": "Data de Envio",
+    "expiresAt": "Expira",
+    "cancelInvitation": "Cancelar Convite",
+    "cancelInvitationTitle": "Cancelar Convite?",
+    "cancelInvitationDescription": "Isso cancelará permanentemente o convite. O destinatário não poderá mais aceitá-lo.",
+    "invitationCancelled": "Convite Cancelado",
+    "invitationCancelledDescription": "O convite foi cancelado com sucesso.",
+    "cancelFailed": "Falha ao cancelar convite",
+    "teamInvitation": "Convite da Equipe",
+    "acceptInvitationDescription": "Você foi convidado para participar de uma organização. Aceite o convite para começar.",
+    "invitationDetails": "Detalhes do Convite",
+    "youHaveBeenInvited": "Você foi convidado para participar desta organização.",
+    "acceptInvitation": "Aceitar Convite",
+    "declineInvitation": "Recusar Convite",
+    "invitationAccepted": "Convite Aceito",
+    "redirecting": "Redirecionando...",
+    "invitationDeclined": "Convite Recusado",
+    "declinedDescription": "Você recusou o convite.",
+    "acceptFailed": "Falha ao aceitar convite",
+    "declineFailed": "Falha ao recusar convite",
+    "invalidToken": "Convite Inválido",
+    "invalidTokenDescription": "Este link de convite é inválido ou expirou.",
+    "acceptSuccessTitle": "Bem-vindo!",
+    "acceptSuccessDescription": "Você entrou com sucesso na organização.",
+    "acceptErrorTitle": "Algo Deu Errado",
+    "acceptErrorDescription": "Não foi possível processar seu convite. Pode ter expirado ou já sido usado."
+  },
+  "emailVerification": {
+    "notVerified": "Por favor, verifique seu e-mail: {{email}}",
+    "resend": "Reenviar E-mail",
+    "emailSent": "E-mail de Verificação Enviado",
+    "checkInbox": "Por favor, verifique sua caixa de entrada em {{email}}",
+    "resendFailed": "Falha ao enviar e-mail de verificação",
+    "verifying": "Verificando seu E-mail",
+    "verified": "E-mail Verificado!",
+    "verificationFailed": "Verificação Falhou",
+    "pleaseWait": "Por favor, aguarde enquanto verificamos seu endereço de e-mail...",
+    "successDescription": "Seu e-mail foi verificado com sucesso.",
+    "noToken": "Nenhum token de verificação fornecido",
+    "allSet": "Tudo Pronto!",
+    "redirectingToDashboard": "Redirecionando para o painel...",
+    "goToDashboard": "Ir para o Painel"
+  },
+  "roles": {
+    "viewer": "Visualizador",
+    "viewerDescription": "Pode visualizar conteúdo mas não fazer alterações",
+    "member": "Membro",
+    "memberDescription": "Pode criar e editar conteúdo",
+    "admin": "Administrador",
+    "adminDescription": "Pode gerenciar membros e configurações",
+    "owner": "Proprietário",
+    "ownerDescription": "Acesso completo a todos os recursos"
+  },
+  "pricing": {
+    "title": "Escolha seu Plano",
+    "subtitle": "Selecione o plano perfeito para sua equipe",
+    "monthly": "Mensal",
+    "yearly": "Anual",
+    "save": "Economize 17%",
+    "popular": "Mais Popular",
+    "month": "mês",
+    "year": "ano",
+    "subscribe": "Começar",
+    "loading": "Processando...",
+    "errors": {
+      "noOrganization": "Por favor selecione uma organização primeiro",
+      "checkoutFailed": "Falha ao criar sessão de checkout"
+    },
+    "features": {
+      "projects": "{{count}} projetos",
+      "users": "{{count}} membros da equipe",
+      "storage": "{{size}}GB de armazenamento"
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "cancel": {
+        "question": "Posso cancelar a qualquer momento?",
+        "answer": "Sim! Você pode cancelar sua assinatura a qualquer momento."
+      }
+    }
+  },
+  "billing": {
+    "title": "Faturamento e Assinatura",
+    "subtitle": "Gerencie sua assinatura e faturamento",
+    "managePortal": "Gerenciar Faturamento",
+    "currentPlan": "Plano Atual",
+    "month": "mês",
+    "nextBilling": "Próxima data de faturamento",
+    "cancelScheduled": "Sua assinatura será cancelada ao final do período de faturamento.",
+    "upgradePlan": "Atualizar Plano",
+    "cancelSubscription": "Cancelar Assinatura",
+    "usage": "Uso",
+    "usageDescription": "Uso atual dos recursos do seu plano",
+    "projects": "Projetos",
+    "teamMembers": "Membros da Equipe",
+    "storage": "Armazenamento",
+    "history": "Histórico de Faturamento",
+    "historyDescription": "Ver e baixar faturas anteriores",
+    "noHistory": "Ainda não há histórico de faturamento",
+    "noOrganization": "Por favor selecione uma organização primeiro",
+    "noSubscription": {
+      "title": "Sem Assinatura Ativa",
+      "description": "Você ainda não tem uma assinatura ativa.",
+      "viewPlans": "Ver Planos de Preços"
+    },
+    "confirmCancel": "Tem certeza de que deseja cancelar sua assinatura? Ela permanecerá ativa até o final do período de faturamento.",
+    "cancelSuccess": "Assinatura cancelada. Permanecerá ativa até o final do período de faturamento.",
+    "status": {
+      "active": "Ativo",
+      "trialing": "Teste",
+      "past_due": "Vencido",
+      "canceled": "Cancelado",
+      "incomplete": "Incompleto",
+      "paid": "Pago",
+      "failed": "Falhado"
+    },
+    "table": {
+      "date": "Data",
+      "description": "Descrição",
+      "amount": "Valor",
+      "status": "Status",
+      "invoice": "Fatura"
+    },
+    "errors": {
+      "portalFailed": "Erro ao abrir o portal de faturamento",
+      "cancelFailed": "Erro ao cancelar a assinatura"
+    }
   }
 }

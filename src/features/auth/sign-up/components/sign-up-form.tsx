@@ -6,7 +6,7 @@ import { Loader2, UserPlus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { useAuth } from '@/stores/auth-store'
-import { registerSchema, type RegisterFormData } from '@/lib/auth'
+import { getRegisterSchema, type RegisterFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -30,7 +30,7 @@ export function SignUpForm({
   const { register } = useAuth()
 
   const form = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(getRegisterSchema()),
     defaultValues: {
       name: '',
       email: '',

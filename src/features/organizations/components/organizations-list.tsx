@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   MoreHorizontal,
   Plus,
@@ -7,10 +6,12 @@ import {
   Settings,
   Trash2,
   Edit,
+  ArrowRightLeft,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
-import { organizationApi, type Organization } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
+import { useOrganizations } from '@/hooks/use-organizations'
+import { type Organization } from '@/lib/api'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,7 +26,6 @@ import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -41,37 +41,20 @@ import { EditOrganizationDialog } from './edit-organization-dialog'
 
 export function OrganizationsList() {
   const { t } = useTranslation()
+  const { isAdmin } = useAuth()
+  const {
+    organizations,
+    isLoading,
+    isDeleting,
+    setActiveOrganization,
+    deleteOrganization,
+  } = useOrganizations()
+  
   const [createDialogOpen, setCreateDialogOpen] = useState(false)
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [selectedOrganization, setSelectedOrganization] =
     useState<Organization | null>(null)
-
-  const queryClient = useQueryClient()
-
-  const { data: organizations = [], isLoading } = useQuery({
-    queryKey: ['organizations'],
-    queryFn: organizationApi.list,
-  })
-
-  const deleteMutation = useMutation({
-    mutationFn: organizationApi.delete,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['organizations'] })
-      toast.success('Organization deleted successfully')
-      setDeleteDialogOpen(false)
-      setSelectedOrganization(null)
-    },
-    onError: (error: unknown) => {
-      const axiosError = error as {
-        response?: { data?: { detail?: { message?: string } } }
-      }
-      const errorMessage =
-        axiosError.response?.data?.detail?.message ||
-        'Failed to delete organization'
-      toast.error(errorMessage)
-    },
-  })
 
   const handleEdit = (organization: Organization) => {
     setSelectedOrganization(organization)
@@ -83,9 +66,16 @@ export function OrganizationsList() {
     setDeleteDialogOpen(true)
   }
 
+  const handleSwitch = (organization: Organization) => {
+    // Use the centralized React Query hook method
+    setActiveOrganization(organization.id)
+  }
+
   const confirmDelete = () => {
     if (selectedOrganization) {
-      deleteMutation.mutate(selectedOrganization.id)
+      deleteOrganization(selectedOrganization.id)
+      setDeleteDialogOpen(false)
+      setSelectedOrganization(null)
     }
   }
 
@@ -148,33 +138,50 @@ export function OrganizationsList() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
-                  <DropdownMenuItem onClick={() => handleEdit(organization)}>
-                    <Edit className='mr-2 h-4 w-4' />
-                    Edit
+                  <DropdownMenuItem onClick={() => handleSwitch(organization)}>
+                    <ArrowRightLeft className='mr-2 h-4 w-4' />
+                    Switch
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className='mr-2 h-4 w-4' />
-                    Settings
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => handleDelete(organization)}
-                    className='text-destructive'
-                  >
-                    <Trash2 className='mr-2 h-4 w-4' />
-                    Delete
-                  </DropdownMenuItem>
+                  {isAdmin && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => handleEdit(organization)}>
+                        <Edit className='mr-2 h-4 w-4' />
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Settings className='mr-2 h-4 w-4' />
+                        Settings
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => handleDelete(organization)}
+                        className='text-destructive'
+                      >
+                        <Trash2 className='mr-2 h-4 w-4' />
+                        Delete
+                      </DropdownMenuItem>
+                    </>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             </CardHeader>
             <CardContent>
-              <CardDescription className='text-sm'>
+              <div className='space-y-2'>
                 {organization.slug && (
                   <span className='bg-muted rounded px-2 py-1 font-mono text-xs'>
                     {organization.slug}
                   </span>
                 )}
-              </CardDescription>
+                {organization.plan && (
+                  <div className='flex items-center gap-2'>
+                    <span className='text-muted-foreground text-xs'>Plan:</span>
+                    <span className='bg-primary/10 text-primary rounded px-2 py-0.5 text-xs font-medium'>
+                      {organization.plan}
+                    </span>
+                  </div>
+                )}
+              </div>
               {organization.createdAt && (
                 <p className='text-muted-foreground mt-2 text-xs'>
                   Created{' '}
@@ -233,9 +240,9 @@ export function OrganizationsList() {
             <AlertDialogAction
               onClick={confirmDelete}
               className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
-              disabled={deleteMutation.isPending}
+              disabled={isDeleting}
             >
-              {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
+              {isDeleting ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

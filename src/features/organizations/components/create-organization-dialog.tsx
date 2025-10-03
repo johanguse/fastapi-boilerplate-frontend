@@ -2,10 +2,7 @@ import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { toast } from 'sonner'
-import { organizationApi } from '@/lib/api'
-// import { useAuth } from '@/stores/auth-store' // TODO: Use when organization functionality is fully implemented
+import { useOrganizations } from '@/hooks/use-organizations'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -45,8 +42,7 @@ export function CreateOrganizationDialog({
   onOpenChange,
 }: Readonly<CreateOrganizationDialogProps>) {
   const [error, setError] = useState<string | null>(null)
-  const queryClient = useQueryClient()
-  // const { user } = useAuth() // TODO: Use when organization functionality is fully implemented
+  const { createOrganization, isCreating } = useOrganizations()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -56,21 +52,26 @@ export function CreateOrganizationDialog({
     },
   })
 
-  const createMutation = useMutation({
-    mutationFn: organizationApi.create,
-    onSuccess: (_newOrganization) => {
-      // Update organizations list
-      queryClient.invalidateQueries({ queryKey: ['organizations'] })
-
-      // TODO: Add organization to auth store when organization plugin is properly configured
-      // auth.addOrganization(newOrganization)
-
-      toast.success('Organization created successfully')
-      form.reset()
+  const onSubmit = async (data: FormData) => {
+    try {
       setError(null)
+
+      // Generate slug from name if not provided
+      const slug =
+        data.slug ||
+        data.name
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '')
+
+      await createOrganization({
+        name: data.name,
+        slug,
+      })
+
+      form.reset()
       onOpenChange(false)
-    },
-    onError: (error: unknown) => {
+    } catch (error: unknown) {
       const axiosError = error as {
         response?: { data?: { detail?: { message?: string } } }
       }
@@ -78,29 +79,11 @@ export function CreateOrganizationDialog({
         axiosError.response?.data?.detail?.message ||
         'Failed to create organization'
       setError(errorMessage)
-      toast.error(errorMessage)
-    },
-  })
-
-  const onSubmit = (data: FormData) => {
-    setError(null)
-
-    // Generate slug from name if not provided
-    const slug =
-      data.slug ||
-      data.name
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '')
-
-    createMutation.mutate({
-      name: data.name,
-      slug,
-    })
+    }
   }
 
   const handleOpenChange = (newOpen: boolean) => {
-    if (!newOpen && !createMutation.isPending) {
+    if (!newOpen && !isCreating) {
       form.reset()
       setError(null)
     }
@@ -137,14 +120,12 @@ export function CreateOrganizationDialog({
                       {...field}
                       onChange={(e) => {
                         field.onChange(e)
-                        // Auto-generate slug as user types
-                        if (!form.getValues('slug')) {
-                          const autoSlug = e.target.value
-                            .toLowerCase()
-                            .replace(/[^a-z0-9]+/g, '-')
-                            .replace(/(^-|-$)/g, '')
-                          form.setValue('slug', autoSlug)
-                        }
+                        // Auto-generate slug as user types (unless manually edited)
+                        const autoSlug = e.target.value
+                          .toLowerCase()
+                          .replace(/[^a-z0-9]+/g, '-')
+                          .replace(/(^-|-$)/g, '')
+                        form.setValue('slug', autoSlug, { shouldValidate: true })
                       }}
                     />
                   </FormControl>
@@ -176,14 +157,12 @@ export function CreateOrganizationDialog({
                 type='button'
                 variant='outline'
                 onClick={() => handleOpenChange(false)}
-                disabled={createMutation.isPending}
+                disabled={isCreating}
               >
                 Cancel
               </Button>
-              <Button type='submit' disabled={createMutation.isPending}>
-                {createMutation.isPending
-                  ? 'Creating...'
-                  : 'Create Organization'}
+              <Button type='submit' disabled={isCreating}>
+                {isCreating ? 'Creating...' : 'Create Organization'}
               </Button>
             </DialogFooter>
           </form>

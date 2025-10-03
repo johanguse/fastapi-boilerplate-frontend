@@ -1,17 +1,7 @@
 {
   "navigation": {
     "dashboard": "Tablero",
-    "orContinueWith": "O continúa con",
-    "loginTitle": "Iniciar Sesión",
-    "socialLogin": {
-      "divider": "O continúa con",
-      "continueWith": "Continuar con {{provider}}",
-      "disclaimer": "Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad",
-      "error": {
-        "title": "Error de Autenticación",
-        "description": "Error al autenticar con {{provider}}. Por favor, inténtalo de nuevo."
-      }
-    },  "organizations": "Organizaciones",
+    "organizations": "Organizaciones",
     "settings": "Configuración",
     "billing": "Facturación",
     "support": "Soporte",
@@ -33,7 +23,9 @@
     "emailRequired": "El email es obligatorio",
     "emailInvalid": "Por favor ingresa un email válido",
     "passwordRequired": "La contraseña es obligatoria",
-    "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+    "passwordTooShort": "La contraseña debe tener al menos {{count}} caracteres",
+    "nameTooShort": "El nombre debe tener al menos {{count}} caracteres",
+    "passwordsDontMatch": "Las contraseñas no coinciden",
     "invalidCredentials": "Email o contraseña inválidos",
     "email": "Email",
     "emailPlaceholder": "Ingresa tu email",
@@ -53,11 +45,22 @@
     "alreadyHaveAccount": "¿Ya tienes una cuenta?",
     "dontHaveAccount": "¿No tienes una cuenta?",
     "welcomeBack": "Bienvenido de vuelta",
+    "welcome": "¡Bienvenido!",
     "terms": "Términos de servicio",
     "privacy": "Política de privacidad",
     "agreeToTerms": "Acepto los {terms} y la {privacy}",
     "orContinueWith": "O continúa con",
     "loginTitle": "Iniciar sesión",
+    "socialLogin": {
+      "divider": "O continúa con",
+      "continueWith": "Continuar con {{provider}}",
+      "success": "Inicio de sesión exitoso con {{provider}}",
+      "disclaimer": "Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad",
+      "error": {
+        "title": "Error de Autenticación",
+        "description": "Error al autenticar con {{provider}}. Por favor, inténtalo de nuevo."
+      }
+    },
     "loginDescription": "Ingresa tu email y contraseña a continuación para iniciar sesión en tu cuenta",
     "signOutTitle": "Cerrar sesión",
     "signOutDescription": "¿Estás seguro de que quieres cerrar sesión? Necesitarás iniciar sesión nuevamente para acceder a tu cuenta.",
@@ -149,7 +152,8 @@
     "actions": "Acciones",
     "noResults": "No se encontraron resultados",
     "tryAgain": "Intentar de nuevo",
-    "general": "General"
+    "general": "General",
+    "optional": "opcional"
   },
   "dashboard": {
     "title": "Panel de Control",
@@ -196,5 +200,152 @@
     "fr": "Français",
     "de": "Deutsch",
     "pt": "Português"
+  },
+  "invitations": {
+    "inviteMember": "Invitar Miembro",
+    "inviteMemberTo": "Invitar miembro a {{name}}",
+    "inviteDescription": "Envía una invitación para unirse a tu organización por correo electrónico.",
+    "emailAddress": "Dirección de Email",
+    "role": "Rol",
+    "selectRole": "Selecciona un rol",
+    "personalMessage": "Mensaje Personal",
+    "messagePlaceholder": "¡Bienvenido a nuestro equipo! Esperamos trabajar contigo.",
+    "messageDescription": "Agrega un mensaje personal al correo de invitación (opcional).",
+    "roleDescription": "Elige el rol para el nuevo miembro.",
+    "sendInvite": "Enviar Invitación",
+    "inviteSent": "Invitación Enviada",
+    "inviteSentDescription": "Se ha enviado una invitación a {{email}}",
+    "inviteFailedGeneric": "No se pudo enviar la invitación. Inténtalo de nuevo.",
+    "noPendingInvitations": "Sin Invitaciones Pendientes",
+    "noPendingInvitationsDescription": "Invita a miembros del equipo para colaborar en tu organización.",
+    "email": "Email",
+    "invitedBy": "Invitado Por",
+    "sentDate": "Fecha de Envío",
+    "expiresAt": "Expira",
+    "cancelInvitation": "Cancelar Invitación",
+    "cancelInvitationTitle": "¿Cancelar Invitación?",
+    "cancelInvitationDescription": "Esto cancelará permanentemente la invitación. El destinatario ya no podrá aceptarla.",
+    "invitationCancelled": "Invitación Cancelada",
+    "invitationCancelledDescription": "La invitación ha sido cancelada exitosamente.",
+    "cancelFailed": "No se pudo cancelar la invitación",
+    "teamInvitation": "Invitación al Equipo",
+    "acceptInvitationDescription": "Has sido invitado a unirte a una organización. Acepta la invitación para comenzar.",
+    "invitationDetails": "Detalles de la Invitación",
+    "youHaveBeenInvited": "Has sido invitado a unirte a esta organización.",
+    "acceptInvitation": "Aceptar Invitación",
+    "declineInvitation": "Rechazar Invitación",
+    "invitationAccepted": "Invitación Aceptada",
+    "redirecting": "Redirigiendo...",
+    "invitationDeclined": "Invitación Rechazada",
+    "declinedDescription": "Has rechazado la invitación.",
+    "acceptFailed": "No se pudo aceptar la invitación",
+    "declineFailed": "No se pudo rechazar la invitación",
+    "invalidToken": "Invitación Inválida",
+    "invalidTokenDescription": "Este enlace de invitación es inválido o ha expirado.",
+    "acceptSuccessTitle": "¡Bienvenido a Bordo!",
+    "acceptSuccessDescription": "Te has unido exitosamente a la organización.",
+    "acceptErrorTitle": "Algo Salió Mal",
+    "acceptErrorDescription": "No pudimos procesar tu invitación. Puede haber expirado o ya haber sido usada."
+  },
+  "emailVerification": {
+    "notVerified": "Por favor verifica tu email: {{email}}",
+    "resend": "Reenviar Email",
+    "emailSent": "Email de Verificación Enviado",
+    "checkInbox": "Por favor revisa tu bandeja de entrada en {{email}}",
+    "resendFailed": "No se pudo enviar el email de verificación",
+    "verifying": "Verificando tu Email",
+    "verified": "¡Email Verificado!",
+    "verificationFailed": "Verificación Fallida",
+    "pleaseWait": "Por favor espera mientras verificamos tu dirección de email...",
+    "successDescription": "Tu email ha sido verificado exitosamente.",
+    "noToken": "No se proporcionó token de verificación",
+    "allSet": "¡Todo Listo!",
+    "redirectingToDashboard": "Redirigiendo al panel de control...",
+    "goToDashboard": "Ir al Panel"
+  },
+  "roles": {
+    "viewer": "Visor",
+    "viewerDescription": "Puede ver contenido pero no hacer cambios",
+    "member": "Miembro",
+    "memberDescription": "Puede crear y editar contenido",
+    "admin": "Administrador",
+    "adminDescription": "Puede gestionar miembros y configuraciones",
+    "owner": "Propietario",
+    "ownerDescription": "Acceso completo a todas las funciones"
+  },
+  "pricing": {
+    "title": "Elige tu Plan",
+    "subtitle": "Selecciona el plan perfecto para tu equipo",
+    "monthly": "Mensual",
+    "yearly": "Anual",
+    "save": "Ahorra 17%",
+    "popular": "Más Popular",
+    "month": "mes",
+    "year": "año",
+    "subscribe": "Comenzar",
+    "loading": "Procesando...",
+    "errors": {
+      "noOrganization": "Por favor selecciona una organización primero",
+      "checkoutFailed": "Error al crear la sesión de pago"
+    },
+    "features": {
+      "projects": "{{count}} proyectos",
+      "users": "{{count}} miembros del equipo",
+      "storage": "{{size}}GB de almacenamiento"
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "cancel": {
+        "question": "¿Puedo cancelar en cualquier momento?",
+        "answer": "¡Sí! Puedes cancelar tu suscripción en cualquier momento."
+      }
+    }
+  },
+  "billing": {
+    "title": "Facturación y Suscripción",
+    "subtitle": "Gestiona tu suscripción y facturación",
+    "managePortal": "Gestionar Facturación",
+    "currentPlan": "Plan Actual",
+    "month": "mes",
+    "nextBilling": "Próxima fecha de facturación",
+    "cancelScheduled": "Tu suscripción será cancelada al final del período de facturación.",
+    "upgradePlan": "Actualizar Plan",
+    "cancelSubscription": "Cancelar Suscripción",
+    "usage": "Uso",
+    "usageDescription": "Uso actual de los recursos de tu plan",
+    "projects": "Proyectos",
+    "teamMembers": "Miembros del Equipo",
+    "storage": "Almacenamiento",
+    "history": "Historial de Facturación",
+    "historyDescription": "Ver y descargar facturas anteriores",
+    "noHistory": "Aún no hay historial de facturación",
+    "noOrganization": "Por favor selecciona una organización primero",
+    "noSubscription": {
+      "title": "Sin Suscripción Activa",
+      "description": "Aún no tienes una suscripción activa.",
+      "viewPlans": "Ver Planes de Precios"
+    },
+    "confirmCancel": "¿Estás seguro de que quieres cancelar tu suscripción? Permanecerá activa hasta el final del período de facturación.",
+    "cancelSuccess": "Suscripción cancelada. Permanecerá activa hasta el final del período de facturación.",
+    "status": {
+      "active": "Activo",
+      "trialing": "Prueba",
+      "past_due": "Vencido",
+      "canceled": "Cancelado",
+      "incomplete": "Incompleto",
+      "paid": "Pagado",
+      "failed": "Fallido"
+    },
+    "table": {
+      "date": "Fecha",
+      "description": "Descripción",
+      "amount": "Monto",
+      "status": "Estado",
+      "invoice": "Factura"
+    },
+    "errors": {
+      "portalFailed": "Error al abrir el portal de facturación",
+      "cancelFailed": "Error al cancelar la suscripción"
+    }
   }
 }

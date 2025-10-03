@@ -20,16 +20,18 @@ import {
   MessagesSquare,
   ShieldCheck,
   Building2,
+  Shield,
+  Activity,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/stores/auth-store'
+import { useOrganizations } from '@/hooks/use-organizations'
 import { type SidebarData } from '../types'
 
 export function useSidebarData(): SidebarData {
   const { t } = useTranslation()
-  const { user } = useAuth()
-
-  // Note: Organizations will need to be implemented separately
+  const { user, isAdmin } = useAuth()
+  const { activeOrganization } = useOrganizations()
 
   return useMemo(
     (): SidebarData => ({
@@ -40,9 +42,9 @@ export function useSidebarData(): SidebarData {
       },
       teams: [
         {
-          name: t('organizations.title'), // TODO: Use actual organization name when implemented
+          name: activeOrganization?.name || t('organizations.title'),
           logo: Building2,
-          plan: 'Starter',
+          plan: activeOrganization?.plan || 'Free',
         },
       ],
       navGroups: [
@@ -185,8 +187,33 @@ export function useSidebarData(): SidebarData {
             },
           ],
         },
+        // Admin section - only show for admins
+        ...(isAdmin
+          ? [
+              {
+                title: 'Admin',
+                items: [
+                  {
+                    title: 'Reports & Analytics',
+                    url: '/admin/reports',
+                    icon: Shield,
+                  },
+                  {
+                    title: 'All Users',
+                    url: '/admin/users',
+                    icon: Users,
+                  },
+                  {
+                    title: 'Activity Logs',
+                    url: '/admin/activity-logs',
+                    icon: Activity,
+                  },
+                ],
+              },
+            ]
+          : []),
       ],
     }),
-    [t, user]
+    [t, user, isAdmin, activeOrganization]
   )
 }

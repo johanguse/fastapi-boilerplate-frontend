@@ -76,10 +76,10 @@ const providerIcons = {
 } as const
 
 const providerColors = {
-  google: 'hover:bg-blue-50 border-blue-200 text-blue-700',
-  github: 'hover:bg-gray-50 border-gray-200 text-gray-700',
-  microsoft: 'hover:bg-blue-50 border-blue-200 text-blue-700',
-  apple: 'hover:bg-gray-50 border-gray-900 text-gray-900',
+  google: 'hover:bg-blue-50 dark:hover:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400',
+  github: 'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
+  microsoft: 'hover:bg-blue-50 dark:hover:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400',
+  apple: 'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100',
 } as const
 
 const socialProviders = [

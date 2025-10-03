@@ -6,7 +6,7 @@ import { Loader2, LogIn } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { useAuth } from '@/stores/auth-store'
-import { loginSchema, type LoginFormData } from '@/lib/auth'
+import { getLoginSchema, type LoginFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -35,7 +35,7 @@ export function UserAuthForm({
   const { login } = useAuth()
 
   const form = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(getLoginSchema()),
     defaultValues: {
       email: '',
       password: '',
@@ -56,8 +56,8 @@ export function UserAuthForm({
     },
     onError: (error: unknown) => {
       // Handle error from Better Auth login
-      const errorMessage =
-        error instanceof Error ? error.message : t('auth.invalidCredentials')
+      // Always use translated message instead of backend English message
+      const errorMessage = t('auth.invalidCredentials')
 
       // Set inline error on form root
       form.setError('root', {
@@ -67,6 +67,12 @@ export function UserAuthForm({
 
       // Also show toast for better UX
       toast.error(errorMessage)
+
+      // Log the actual error for debugging
+      if (error instanceof Error) {
+        // eslint-disable-next-line no-console
+        console.error('Login error:', error.message)
+      }
     },
   })
 

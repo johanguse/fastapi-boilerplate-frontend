@@ -19,6 +19,8 @@ import {
   MessagesSquare,
   ShieldCheck,
   Building2,
+  CreditCard,
+  DollarSign,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
@@ -48,6 +50,11 @@ export const sidebarData: SidebarData = {
           title: 'Organizations',
           url: '/organizations',
           icon: Building2,
+        },
+        {
+          title: 'Pricing',
+          url: '/pricing',
+          icon: DollarSign,
         },
         {
           title: 'Tasks',
@@ -165,6 +172,11 @@ export const sidebarData: SidebarData = {
               title: 'Display',
               url: '/settings/display',
               icon: Monitor,
+            },
+            {
+              title: 'Billing',
+              url: '/settings/billing',
+              icon: CreditCard,
             },
           ],
         },
