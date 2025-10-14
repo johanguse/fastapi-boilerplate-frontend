@@ -48,27 +48,27 @@ export function SignIn2() {
         <div className='mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]'>
           <div className='flex flex-col space-y-2 text-start'>
             <h1 className='text-2xl font-semibold tracking-tight'>
-              {t('auth.loginTitle')}
+              {t('auth.loginTitle', 'Sign In')}
             </h1>
             <p className='text-muted-foreground text-sm'>
-              {t('auth.loginDescription')}
+              {t('auth.loginDescription', 'Sign in to your account')}
             </p>
           </div>
           <UserAuthForm />
           <p className='text-muted-foreground px-8 text-center text-sm'>
-            {t('auth.byClickingLogin')}{' '}
+            {t('auth.byClickingLogin', 'By clicking login, you agree to our')}{' '}
             <a
               href='/terms'
               className='hover:text-primary underline underline-offset-4'
             >
-              {t('auth.terms')}
+              {t('auth.terms', 'Terms of Service')}
             </a>{' '}
             and{' '}
             <a
               href='/privacy'
               className='hover:text-primary underline underline-offset-4'
             >
-              {t('auth.privacy')}
+              {t('auth.privacy', 'Privacy Policy')}
             </a>
             .
           </p>

@@ -462,7 +462,9 @@ export const adminApi = {
     return response.data
   },
 
-  async deleteUser(userId: number): Promise<{ success: boolean; message: string }> {
+  async deleteUser(
+    userId: number
+  ): Promise<{ success: boolean; message: string }> {
     const response: AxiosResponse<{ success: boolean; message: string }> =
       await apiClient.delete(`/admin/users/${userId}`)
     return response.data
@@ -483,8 +485,9 @@ export const adminApi = {
   },
 
   async getAnalyticsOverview(): Promise<AnalyticsOverview> {
-    const response: AxiosResponse<AnalyticsOverview> =
-      await apiClient.get('/admin/analytics/overview')
+    const response: AxiosResponse<AnalyticsOverview> = await apiClient.get(
+      '/admin/analytics/overview'
+    )
     return response.data
   },
 
@@ -494,9 +497,15 @@ export const adminApi = {
     return response.data
   },
 
-  async getRevenueChart(days: number = 30): Promise<{ data: ChartDataPoint[]; currency: string }> {
-    const response: AxiosResponse<{ data: ChartDataPoint[]; currency: string }> =
-      await apiClient.get('/admin/analytics/revenue-chart', { params: { days } })
+  async getRevenueChart(
+    days: number = 30
+  ): Promise<{ data: ChartDataPoint[]; currency: string }> {
+    const response: AxiosResponse<{
+      data: ChartDataPoint[]
+      currency: string
+    }> = await apiClient.get('/admin/analytics/revenue-chart', {
+      params: { days },
+    })
     return response.data
   },
 

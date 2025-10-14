@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { Mail, UserPlus } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
+import { api } from '@/lib/api'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -22,6 +25,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
@@ -29,11 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Button } from '@/components/ui/button'
-import { toast } from 'sonner'
-import { api } from '@/lib/api'
 
 const invitationSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -75,8 +75,10 @@ export function InviteMemberDialog({
         data
       )
 
-      toast.success(t('invitations.inviteSent'), {
-        description: t('invitations.inviteSentDescription', { email: data.email }),
+      toast.success(t('invitations.inviteSent', 'Invitation sent'), {
+        description:
+          t('invitations.inviteSentDescription', { email: data.email }) ||
+          `Invitation sent to ${data.email}`,
       })
 
       form.reset()
@@ -84,9 +86,10 @@ export function InviteMemberDialog({
       onSuccess?.()
     } catch (error: unknown) {
       const err = error as { response?: { data?: { detail?: string } } }
-      toast.error(t('common.error'), {
+      toast.error(t('common.error', 'An error occurred'), {
         description:
-          err.response?.data?.detail || t('invitations.inviteFailedGeneric'),
+          err.response?.data?.detail ||
+          t('invitations.inviteFailedGeneric', 'Failed to send invitation'),
       })
     }
   }
@@ -96,33 +99,41 @@ export function InviteMemberDialog({
       <DialogTrigger asChild>
         {trigger || (
           <Button>
-            <UserPlus className="mr-2 h-4 w-4" />
-            {t('invitations.inviteMember')}
+            <UserPlus className='mr-2 h-4 w-4' />
+            {t('invitations.inviteMember', 'Invite Member')}
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[525px]">
+      <DialogContent className='sm:max-w-[525px]'>
         <DialogHeader>
-          <DialogTitle>{t('invitations.inviteMemberTo', { name: organizationName })}</DialogTitle>
+          <DialogTitle>
+            {t('invitations.inviteMemberTo', { name: organizationName }) ||
+              `Invite member to ${organizationName}`}
+          </DialogTitle>
           <DialogDescription>
-            {t('invitations.inviteDescription')}
+            {t(
+              'invitations.inviteDescription',
+              'Invite a new member to your organization.'
+            )}
           </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
             <FormField
               control={form.control}
-              name="email"
+              name='email'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('invitations.emailAddress')}</FormLabel>
+                  <FormLabel>
+                    {t('invitations.emailAddress', 'Email Address')}
+                  </FormLabel>
                   <FormControl>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <div className='relative'>
+                      <Mail className='text-muted-foreground absolute top-3 left-3 h-4 w-4' />
                       <Input
-                        placeholder="colleague@example.com"
-                        className="pl-9"
+                        placeholder='colleague@example.com'
+                        className='pl-9'
                         {...field}
                       />
                     </div>
@@ -134,7 +145,7 @@ export function InviteMemberDialog({
 
             <FormField
               control={form.control}
-              name="role"
+              name='role'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t('invitations.role')}</FormLabel>
@@ -144,46 +155,74 @@ export function InviteMemberDialog({
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder={t('invitations.selectRole')} />
+                        <SelectValue
+                          placeholder={t(
+                            'invitations.selectRole',
+                            'Select a role'
+                          )}
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="viewer">
-                        <div className="flex flex-col">
-                          <span className="font-medium">{t('roles.viewer')}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {t('roles.viewerDescription')}
+                      <SelectItem value='viewer'>
+                        <div className='flex flex-col'>
+                          <span className='font-medium'>
+                            {t('roles.viewer', 'Viewer')}
+                          </span>
+                          <span className='text-muted-foreground text-xs'>
+                            {t(
+                              'roles.viewerDescription',
+                              'Can view organization data'
+                            )}
                           </span>
                         </div>
                       </SelectItem>
-                      <SelectItem value="member">
-                        <div className="flex flex-col">
-                          <span className="font-medium">{t('roles.member')}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {t('roles.memberDescription')}
+                      <SelectItem value='member'>
+                        <div className='flex flex-col'>
+                          <span className='font-medium'>
+                            {t('roles.member', 'Member')}
+                          </span>
+                          <span className='text-muted-foreground text-xs'>
+                            {t(
+                              'roles.memberDescription',
+                              'Can view and edit organization data'
+                            )}
                           </span>
                         </div>
                       </SelectItem>
-                      <SelectItem value="admin">
-                        <div className="flex flex-col">
-                          <span className="font-medium">{t('roles.admin')}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {t('roles.adminDescription')}
+                      <SelectItem value='admin'>
+                        <div className='flex flex-col'>
+                          <span className='font-medium'>
+                            {t('roles.admin', 'Admin')}
+                          </span>
+                          <span className='text-muted-foreground text-xs'>
+                            {t(
+                              'roles.adminDescription',
+                              'Can manage organization settings and members'
+                            )}
                           </span>
                         </div>
                       </SelectItem>
-                      <SelectItem value="owner">
-                        <div className="flex flex-col">
-                          <span className="font-medium">{t('roles.owner')}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {t('roles.ownerDescription')}
+                      <SelectItem value='owner'>
+                        <div className='flex flex-col'>
+                          <span className='font-medium'>
+                            {t('roles.owner', 'Owner')}
+                          </span>
+                          <span className='text-muted-foreground text-xs'>
+                            {t(
+                              'roles.ownerDescription',
+                              'Full access to organization'
+                            )}
                           </span>
                         </div>
                       </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormDescription>
-                    {t('invitations.roleDescription')}
+                    {t(
+                      'invitations.roleDescription',
+                      'Select the role for the new member.'
+                    )}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -192,20 +231,31 @@ export function InviteMemberDialog({
 
             <FormField
               control={form.control}
-              name="message"
+              name='message'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('invitations.personalMessage')} <span className="text-muted-foreground">({t('common.optional')})</span></FormLabel>
+                  <FormLabel>
+                    {t('invitations.personalMessage', 'Personal Message')}{' '}
+                    <span className='text-muted-foreground'>
+                      ({t('common.optional', 'optional')})
+                    </span>
+                  </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder={t('invitations.messagePlaceholder')}
-                      className="resize-none"
+                      placeholder={t(
+                        'invitations.messagePlaceholder',
+                        'Add a message (optional)'
+                      )}
+                      className='resize-none'
                       rows={3}
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    {t('invitations.messageDescription')}
+                    {t(
+                      'invitations.messageDescription',
+                      'This message will be included in the invitation email.'
+                    )}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -214,16 +264,16 @@ export function InviteMemberDialog({
 
             <DialogFooter>
               <Button
-                type="button"
-                variant="outline"
+                type='button'
+                variant='outline'
                 onClick={() => setOpen(false)}
               >
-                {t('common.cancel')}
+                {t('common.cancel', 'Cancel')}
               </Button>
-              <Button type="submit" disabled={form.formState.isSubmitting}>
+              <Button type='submit' disabled={form.formState.isSubmitting}>
                 {form.formState.isSubmitting
-                  ? t('common.loading')
-                  : t('invitations.sendInvite')}
+                  ? t('common.loading', 'Loading...')
+                  : t('invitations.sendInvite', 'Send Invite')}
               </Button>
             </DialogFooter>
           </form>
@@ -232,4 +282,3 @@ export function InviteMemberDialog({
     </Dialog>
   )
 }
-

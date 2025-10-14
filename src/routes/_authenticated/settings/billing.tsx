@@ -149,9 +149,12 @@ function BillingPage() {
         }
       )
       window.location.href = response.data.portal_url
-    } catch (error: any) {
+    } catch (error) {
+      const errorDetail = (
+        error as { response?: { data?: { detail?: string } } }
+      ).response?.data?.detail
       toast.error(
-        error.response?.data?.detail ||
+        errorDetail ||
           t('billing.errors.portalFailed', 'Failed to open billing portal')
       )
     }
@@ -179,9 +182,12 @@ function BillingPage() {
           'Subscription canceled. It will remain active until the end of the billing period.'
         )
       )
-    } catch (error: any) {
+    } catch (error) {
+      const errorDetail = (
+        error as { response?: { data?: { detail?: string } } }
+      ).response?.data?.detail
       toast.error(
-        error.response?.data?.detail ||
+        errorDetail ||
           t('billing.errors.cancelFailed', 'Failed to cancel subscription')
       )
     }

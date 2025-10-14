@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
-import { useTranslation } from 'react-i18next'
 import { CheckCircle2, XCircle, Loader2, Mail } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { api } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -11,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { api } from '@/lib/api'
 
 export const Route = createFileRoute('/(auth)/verify-email')({
   component: VerifyEmailPage,
@@ -20,8 +20,12 @@ export const Route = createFileRoute('/(auth)/verify-email')({
 function VerifyEmailPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { token } = useSearch({ from: '/(auth)/verify-email' }) as { token?: string }
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
+  const { token } = useSearch({ from: '/(auth)/verify-email' }) as {
+    token?: string
+  }
+  const [status, setStatus] = useState<'loading' | 'success' | 'error'>(
+    'loading'
+  )
   const [error, setError] = useState<string>('')
 
   useEffect(() => {
@@ -35,17 +39,17 @@ function VerifyEmailPage() {
       try {
         await api.post(`/api/v1/invitations/verify-email/${token}`)
         setStatus('success')
-        
         // Redirect to dashboard after 3 seconds
         setTimeout(() => {
           navigate({ to: '/' })
         }, 3000)
-      } catch (err: any) {
+      } catch (err) {
         setStatus('error')
-        setError(
-          err.response?.data?.detail ||
-            t('emailVerification.verificationFailed')
-        )
+        // If using axios, err is likely AxiosError; otherwise, check for response property
+        const errorDetail = (
+          err as { response?: { data?: { detail?: string } } }
+        ).response?.data?.detail
+        setError(errorDetail || t('emailVerification.verificationFailed'))
       }
     }
 
@@ -53,34 +57,34 @@ function VerifyEmailPage() {
   }, [token, navigate, t])
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
-      <Card className="w-full max-w-md">
+    <div className='bg-muted/40 flex min-h-screen items-center justify-center p-4'>
+      <Card className='w-full max-w-md'>
         <CardHeader>
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+          <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
             {status === 'loading' && (
-              <div className="bg-primary/10">
-                <Loader2 className="h-6 w-6 animate-spin text-primary" />
+              <div className='bg-primary/10'>
+                <Loader2 className='text-primary h-6 w-6 animate-spin' />
               </div>
             )}
             {status === 'success' && (
-              <div className="rounded-full bg-green-100 p-3">
-                <CheckCircle2 className="h-6 w-6 text-green-600" />
+              <div className='rounded-full bg-green-100 p-3'>
+                <CheckCircle2 className='h-6 w-6 text-green-600' />
               </div>
             )}
             {status === 'error' && (
-              <div className="rounded-full bg-destructive/10 p-3">
-                <XCircle className="h-6 w-6 text-destructive" />
+              <div className='bg-destructive/10 rounded-full p-3'>
+                <XCircle className='text-destructive h-6 w-6' />
               </div>
             )}
           </div>
 
-          <CardTitle className="text-center">
+          <CardTitle className='text-center'>
             {status === 'loading' && t('emailVerification.verifying')}
             {status === 'success' && t('emailVerification.verified')}
             {status === 'error' && t('emailVerification.verificationFailed')}
           </CardTitle>
 
-          <CardDescription className="text-center">
+          <CardDescription className='text-center'>
             {status === 'loading' && t('emailVerification.pleaseWait')}
             {status === 'success' && t('emailVerification.successDescription')}
             {status === 'error' && error}
@@ -89,13 +93,13 @@ function VerifyEmailPage() {
 
         {status === 'success' && (
           <CardContent>
-            <div className="flex items-start gap-3 rounded-lg border bg-muted/50 p-4">
-              <Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
-              <div className="flex-1">
-                <p className="text-sm font-medium">
+            <div className='bg-muted/50 flex items-start gap-3 rounded-lg border p-4'>
+              <Mail className='text-muted-foreground mt-0.5 h-5 w-5' />
+              <div className='flex-1'>
+                <p className='text-sm font-medium'>
                   {t('emailVerification.allSet')}
                 </p>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className='text-muted-foreground mt-1 text-sm'>
                   {t('emailVerification.redirectingToDashboard')}
                 </p>
               </div>
@@ -104,7 +108,7 @@ function VerifyEmailPage() {
         )}
 
         {status === 'success' && (
-          <CardFooter className="justify-center">
+          <CardFooter className='justify-center'>
             <Button onClick={() => navigate({ to: '/' })}>
               {t('emailVerification.goToDashboard')}
             </Button>
@@ -112,16 +116,13 @@ function VerifyEmailPage() {
         )}
 
         {status === 'error' && (
-          <CardFooter className="flex flex-col gap-2">
-            <Button
-              className="w-full"
-              onClick={() => navigate({ to: '/' })}
-            >
+          <CardFooter className='flex flex-col gap-2'>
+            <Button className='w-full' onClick={() => navigate({ to: '/' })}>
               {t('navigation.dashboard')}
             </Button>
             <Button
-              variant="outline"
-              className="w-full"
+              variant='outline'
+              className='w-full'
               onClick={() => window.location.reload()}
             >
               {t('common.tryAgain')}
@@ -132,4 +133,3 @@ function VerifyEmailPage() {
     </div>
   )
 }
-

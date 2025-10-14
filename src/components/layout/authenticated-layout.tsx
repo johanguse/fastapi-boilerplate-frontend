@@ -12,9 +12,9 @@ import {
   SidebarProvider,
   SidebarRail,
 } from '@/components/ui/sidebar'
+import { EmailVerificationBanner } from '@/components/email-verification-banner'
 import { AppSidebar } from '@/components/layout/app-sidebar'
 import { SkipToMain } from '@/components/skip-to-main'
-import { EmailVerificationBanner } from '@/components/email-verification-banner'
 import { useSidebarData } from './hooks/use-sidebar-data'
 import { NavGroup } from './nav-group'
 import { NavUser } from './nav-user'
@@ -65,7 +65,7 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
             )}
           >
             {user && !user.is_verified && (
-              <div className="px-4 pt-4">
+              <div className='px-4 pt-4'>
                 <EmailVerificationBanner email={user.email} />
               </div>
             )}

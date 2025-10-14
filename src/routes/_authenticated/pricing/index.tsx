@@ -1,8 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
+import { createFileRoute } from '@tanstack/react-router'
+import { Check, Loader2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { Check, Loader2 } from 'lucide-react'
+import { api } from '@/lib/api'
+import { useOrganizations } from '@/hooks/use-organizations'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -12,11 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
-import { api } from '@/lib/api'
-import { useOrganizations } from '@/hooks/use-organizations'
+import { Switch } from '@/components/ui/switch'
 
 export const Route = createFileRoute('/_authenticated/pricing/')({
   component: PricingPage,
@@ -124,11 +124,7 @@ function PricingPage() {
     const lang = i18n.language
     if (lang.startsWith('en-GB')) return 'GBP'
     if (lang.startsWith('pt')) return 'BRL'
-    if (
-      lang.startsWith('fr') ||
-      lang.startsWith('de') ||
-      lang.startsWith('es')
-    )
+    if (lang.startsWith('fr') || lang.startsWith('de') || lang.startsWith('es'))
       return 'EUR'
     return 'USD'
   }
@@ -177,10 +173,11 @@ function PricingPage() {
       if (response.data.checkout_url) {
         window.location.href = response.data.checkout_url
       }
-    } catch (error: any) {
-      toast.error(
-        error.response?.data?.detail || t('pricing.errors.checkoutFailed')
-      )
+    } catch (error) {
+      const errorDetail = (
+        error as { response?: { data?: { detail?: string } } }
+      ).response?.data?.detail
+      toast.error(errorDetail || t('pricing.errors.checkoutFailed'))
     } finally {
       setLoadingPlanId(null)
     }
@@ -194,7 +191,7 @@ function PricingPage() {
           <h1 className='mb-4 text-4xl font-bold'>
             {t('pricing.title', { defaultValue: 'Choose Your Plan' })}
           </h1>
-          <p className='mb-8 text-lg text-muted-foreground'>
+          <p className='text-muted-foreground mb-8 text-lg'>
             {t(
               'pricing.subtitle',
               'Select the perfect plan for your team. Upgrade or downgrade anytime.'
@@ -233,7 +230,7 @@ function PricingPage() {
               key={plan.id}
               className={
                 plan.is_popular
-                  ? 'relative border-primary shadow-lg'
+                  ? 'border-primary relative shadow-lg'
                   : 'relative'
               }
             >
@@ -253,7 +250,10 @@ function PricingPage() {
                     {formatPrice(plan)}
                   </span>
                   <span className='text-muted-foreground'>
-                    /{isYearly ? t('pricing.year', 'year') : t('pricing.month', 'month')}
+                    /
+                    {isYearly
+                      ? t('pricing.year', 'year')
+                      : t('pricing.month', 'month')}
                   </span>
                 </div>
               </CardHeader>
@@ -261,7 +261,7 @@ function PricingPage() {
               <CardContent>
                 <ul className='space-y-3'>
                   <li className='flex items-center gap-2'>
-                    <Check className='h-5 w-5 text-primary' />
+                    <Check className='text-primary h-5 w-5' />
                     <span>
                       {t('pricing.features.projects', {
                         count: plan.max_projects,
@@ -270,7 +270,7 @@ function PricingPage() {
                     </span>
                   </li>
                   <li className='flex items-center gap-2'>
-                    <Check className='h-5 w-5 text-primary' />
+                    <Check className='text-primary h-5 w-5' />
                     <span>
                       {t('pricing.features.users', {
                         count: plan.max_users,
@@ -279,7 +279,7 @@ function PricingPage() {
                     </span>
                   </li>
                   <li className='flex items-center gap-2'>
-                    <Check className='h-5 w-5 text-primary' />
+                    <Check className='text-primary h-5 w-5' />
                     <span>
                       {t('pricing.features.storage', {
                         size: plan.max_storage_gb,
@@ -289,7 +289,7 @@ function PricingPage() {
                   </li>
                   {plan.features.slice(3).map((feature, index) => (
                     <li key={index} className='flex items-center gap-2'>
-                      <Check className='h-5 w-5 text-primary' />
+                      <Check className='text-primary h-5 w-5' />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -358,7 +358,10 @@ function PricingPage() {
             <Card>
               <CardHeader>
                 <CardTitle>
-                  {t('pricing.faq.payment.question', 'What payment methods do you accept?')}
+                  {t(
+                    'pricing.faq.payment.question',
+                    'What payment methods do you accept?'
+                  )}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -381,7 +384,7 @@ function PricingPage() {
                 <p className='text-muted-foreground'>
                   {t(
                     'pricing.faq.refund.answer',
-                    'We offer a 30-day money-back guarantee. If you\'re not satisfied, contact us for a full refund.'
+                    "We offer a 30-day money-back guarantee. If you're not satisfied, contact us for a full refund."
                   )}
                 </p>
               </CardContent>

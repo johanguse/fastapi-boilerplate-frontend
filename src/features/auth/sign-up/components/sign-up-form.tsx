@@ -46,7 +46,11 @@ export function SignUpForm({
       // Clear any form errors on success
       form.clearErrors()
 
-      toast.success(t('auth.signUpWelcome', { name: form.getValues('name') }))
+      toast.success(
+        t('auth.signUpWelcome', 'Welcome, {name}!', {
+          name: form.getValues('name'),
+        })
+      )
       navigate({ to: '/sign-in' })
     },
     onError: (error: unknown) => {
@@ -70,7 +74,10 @@ export function SignUpForm({
         const errorData = detail || axiosError.response.data
 
         if (errorData?.error === 'USER_EXISTS') {
-          const errorMessage = t('auth.signUpEmailExists')
+          const errorMessage = t(
+            'auth.signUpEmailExists',
+            'This email is already registered'
+          )
           form.setError('root', {
             type: 'manual',
             message: errorMessage,
@@ -78,7 +85,11 @@ export function SignUpForm({
           toast.error(errorMessage)
         } else {
           const errorMessage =
-            errorData?.message || t('auth.signUpRegistrationFailed')
+            errorData?.message ||
+            t(
+              'auth.signUpRegistrationFailed',
+              'Registration failed. Please try again.'
+            )
           form.setError('root', {
             type: 'manual',
             message: errorMessage,
@@ -86,14 +97,20 @@ export function SignUpForm({
           toast.error(errorMessage)
         }
       } else if (axiosError.response?.status === 422) {
-        const errorMessage = t('auth.signUpCheckInformation')
+        const errorMessage = t(
+          'auth.signUpCheckInformation',
+          'Please check your information and try again.'
+        )
         form.setError('root', {
           type: 'manual',
           message: errorMessage,
         })
         toast.error(errorMessage)
       } else {
-        const errorMessage = t('auth.signUpRegistrationFailed')
+        const errorMessage = t(
+          'auth.signUpRegistrationFailed',
+          'Registration failed. Please try again.'
+        )
         form.setError('root', {
           type: 'manual',
           message: errorMessage,
@@ -131,10 +148,13 @@ export function SignUpForm({
           name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.signUpFullName')}</FormLabel>
+              <FormLabel>{t('auth.signUpFullName', 'Full Name')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t('auth.signUpFullNamePlaceholder')}
+                  placeholder={t(
+                    'auth.signUpFullNamePlaceholder',
+                    'Enter your full name'
+                  )}
                   {...field}
                 />
               </FormControl>
@@ -147,10 +167,13 @@ export function SignUpForm({
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.email')}</FormLabel>
+              <FormLabel>{t('auth.email', 'Email')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t('auth.signUpEmailPlaceholder')}
+                  placeholder={t(
+                    'auth.signUpEmailPlaceholder',
+                    'Enter your email address'
+                  )}
                   {...field}
                 />
               </FormControl>
@@ -163,10 +186,13 @@ export function SignUpForm({
           name='password'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.password')}</FormLabel>
+              <FormLabel>{t('auth.password', 'Password')}</FormLabel>
               <FormControl>
                 <PasswordInput
-                  placeholder={t('auth.signUpPasswordPlaceholder')}
+                  placeholder={t(
+                    'auth.signUpPasswordPlaceholder',
+                    'Create a password'
+                  )}
                   {...field}
                 />
               </FormControl>
@@ -179,10 +205,15 @@ export function SignUpForm({
           name='confirmPassword'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.confirmPassword')}</FormLabel>
+              <FormLabel>
+                {t('auth.confirmPassword', 'Confirm Password')}
+              </FormLabel>
               <FormControl>
                 <PasswordInput
-                  placeholder={t('auth.signUpConfirmPasswordPlaceholder')}
+                  placeholder={t(
+                    'auth.signUpConfirmPasswordPlaceholder',
+                    'Re-enter your password'
+                  )}
                   {...field}
                 />
               </FormControl>
@@ -196,7 +227,7 @@ export function SignUpForm({
           ) : (
             <UserPlus />
           )}
-          {t('auth.signUpCreateAccount')}
+          {t('auth.signUpCreateAccount', 'Create Account')}
         </Button>
 
         <SocialLogin className='mt-2' redirectTo='/dashboard' />

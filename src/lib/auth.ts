@@ -122,9 +122,7 @@ export const getLoginSchema = () =>
       .string()
       .min(1, i18n.t('auth.emailRequired'))
       .email(i18n.t('auth.emailInvalid')),
-    password: z
-      .string()
-      .min(6, i18n.t('auth.passwordTooShort', { count: 6 })),
+    password: z.string().min(6, i18n.t('auth.passwordTooShort', { count: 6 })),
   })
 
 export const getRegisterSchema = () =>

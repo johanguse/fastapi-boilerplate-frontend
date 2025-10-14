@@ -11,6 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 import { type NavigateFn, useTableUrlState } from '@/hooks/use-table-url-state'
 import {
@@ -41,6 +42,7 @@ type DataTableProps = {
 }
 
 export function UsersTable({ data, search, navigate }: DataTableProps) {
+  const { t } = useTranslation()
   // Local UI-only states
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -102,22 +104,22 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
     <div className='space-y-4 max-sm:has-[div[role="toolbar"]]:mb-16'>
       <DataTableToolbar
         table={table}
-        searchPlaceholder='Filter users...'
+        searchPlaceholder={t('users.filterUsers', 'Filter users...')}
         searchKey='username'
         filters={[
           {
             columnId: 'status',
-            title: 'Status',
+            title: t('users.status', 'Status'),
             options: [
-              { label: 'Active', value: 'active' },
-              { label: 'Inactive', value: 'inactive' },
-              { label: 'Invited', value: 'invited' },
-              { label: 'Suspended', value: 'suspended' },
+              { label: t('users.active', 'Active'), value: 'active' },
+              { label: t('users.inactive', 'Inactive'), value: 'inactive' },
+              { label: t('users.invited', 'Invited'), value: 'invited' },
+              { label: t('users.suspended', 'Suspended'), value: 'suspended' },
             ],
           },
           {
             columnId: 'role',
-            title: 'Role',
+            title: t('users.role', 'Role'),
             options: roles.map((role) => ({ ...role })),
           },
         ]}
@@ -179,7 +181,7 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
                   colSpan={columns.length}
                   className='h-24 text-center'
                 >
-                  No results.
+                  {t('users.noResults', 'No results.')}
                 </TableCell>
               </TableRow>
             )}

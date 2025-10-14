@@ -52,12 +52,15 @@ export function UserAuthForm({
       const targetPath = redirectTo || '/dashboard'
       navigate({ to: targetPath, replace: true })
 
-      toast.success(t('auth.welcome'))
+      toast.success(t('auth.welcome', 'Welcome!'))
     },
     onError: (error: unknown) => {
       // Handle error from Better Auth login
       // Always use translated message instead of backend English message
-      const errorMessage = t('auth.invalidCredentials')
+      const errorMessage = t(
+        'auth.invalidCredentials',
+        'Invalid email or password.'
+      )
 
       // Set inline error on form root
       form.setError('root', {
@@ -110,10 +113,13 @@ export function UserAuthForm({
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('auth.email')}</FormLabel>
+              <FormLabel>{t('auth.email', 'Email')}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t('auth.emailPlaceholder')}
+                  placeholder={t(
+                    'auth.emailPlaceholder',
+                    'Enter your email address'
+                  )}
                   {...field}
                   onChange={(e) => {
                     field.onChange(e)
@@ -130,10 +136,13 @@ export function UserAuthForm({
           name='password'
           render={({ field }) => (
             <FormItem className='relative'>
-              <FormLabel>{t('auth.password')}</FormLabel>
+              <FormLabel>{t('auth.password', 'Password')}</FormLabel>
               <FormControl>
                 <PasswordInput
-                  placeholder={t('auth.passwordPlaceholder')}
+                  placeholder={t(
+                    'auth.passwordPlaceholder',
+                    'Enter your password'
+                  )}
                   {...field}
                   onChange={(e) => {
                     field.onChange(e)
@@ -146,7 +155,7 @@ export function UserAuthForm({
                 to='/forgot-password'
                 className='text-muted-foreground absolute end-0 -top-0.5 text-sm font-medium hover:opacity-75'
               >
-                {t('auth.forgotPassword')}
+                {t('auth.forgotPassword', 'Forgot password?')}
               </Link>
             </FormItem>
           )}
@@ -157,7 +166,7 @@ export function UserAuthForm({
           ) : (
             <LogIn />
           )}
-          {t('auth.signIn')}
+          {t('auth.signIn', 'Sign In')}
         </Button>
 
         <SocialLogin className='mt-2' redirectTo={redirectTo || '/dashboard'} />

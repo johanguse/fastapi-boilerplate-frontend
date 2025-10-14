@@ -125,7 +125,9 @@ export function CreateOrganizationDialog({
                           .toLowerCase()
                           .replace(/[^a-z0-9]+/g, '-')
                           .replace(/(^-|-$)/g, '')
-                        form.setValue('slug', autoSlug, { shouldValidate: true })
+                        form.setValue('slug', autoSlug, {
+                          shouldValidate: true,
+                        })
                       }}
                     />
                   </FormControl>

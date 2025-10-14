@@ -267,8 +267,9 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 // Helper hook for getting auth state
 export const useAuth = () => {
   const store = useAuthStore()
-  const isAdmin = store.user?.role === 'admin' || store.user?.is_superuser === true
-  
+  const isAdmin =
+    store.user?.role === 'admin' || store.user?.is_superuser === true
+
   return {
     user: store.user,
     session: store.session,

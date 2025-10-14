@@ -128,12 +128,12 @@ export function useOrganizations() {
     mutationFn: organizationApi.delete,
     onSuccess: (_data, deletedId) => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
-      
+
       // If deleted org was active, clear active org
       if (activeOrganizationId === deletedId) {
         setActiveOrganizationId(null)
       }
-      
+
       toast.success('Organization deleted successfully')
     },
     onError: () => {
@@ -155,14 +155,14 @@ export function useOrganizations() {
     activeOrganizationId,
     isLoading,
     error,
-    
+
     // Actions
     setActiveOrganization,
     createOrganization: createMutation.mutate,
     updateOrganization: updateMutation.mutate,
     deleteOrganization: deleteMutation.mutate,
     resetActive,
-    
+
     // Mutation states
     isCreating: createMutation.isPending,
     isUpdating: updateMutation.isPending,

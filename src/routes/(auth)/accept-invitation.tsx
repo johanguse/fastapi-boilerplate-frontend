@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
-import { useTranslation } from 'react-i18next'
 import { useMutation } from '@tanstack/react-query'
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { CheckCircle2, XCircle, Loader2, Mail, Users } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
+import { api } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -12,8 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { api } from '@/lib/api'
-import { toast } from 'sonner'
 
 export const Route = createFileRoute('/(auth)/accept-invitation')({
   component: AcceptInvitationPage,
@@ -22,7 +22,9 @@ export const Route = createFileRoute('/(auth)/accept-invitation')({
 function AcceptInvitationPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { token } = useSearch({ from: '/(auth)/accept-invitation' }) as { token?: string }
+  const { token } = useSearch({ from: '/(auth)/accept-invitation' }) as {
+    token?: string
+  }
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const acceptMutation = useMutation({
@@ -50,8 +52,7 @@ function AcceptInvitationPage() {
       setStatus('error')
       toast.error(t('common.error'), {
         description:
-          err.response?.data?.detail ||
-          t('invitations.acceptFailed'),
+          err.response?.data?.detail || t('invitations.acceptFailed'),
       })
     },
   })
@@ -79,20 +80,20 @@ function AcceptInvitationPage() {
 
   if (!token) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
-        <Card className="w-full max-w-md">
+      <div className='bg-muted/40 flex min-h-screen items-center justify-center p-4'>
+        <Card className='w-full max-w-md'>
           <CardHeader>
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10">
-              <XCircle className="h-6 w-6 text-destructive" />
+            <div className='bg-destructive/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
+              <XCircle className='text-destructive h-6 w-6' />
             </div>
-            <CardTitle className="text-center">
+            <CardTitle className='text-center'>
               {t('invitations.invalidToken')}
             </CardTitle>
-            <CardDescription className="text-center">
+            <CardDescription className='text-center'>
               {t('invitations.invalidTokenDescription')}
             </CardDescription>
           </CardHeader>
-          <CardFooter className="justify-center">
+          <CardFooter className='justify-center'>
             <Button onClick={() => navigate({ to: '/' })}>
               {t('navigation.dashboard')}
             </Button>
@@ -103,26 +104,26 @@ function AcceptInvitationPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
-      <Card className="w-full max-w-md">
+    <div className='bg-muted/40 flex min-h-screen items-center justify-center p-4'>
+      <Card className='w-full max-w-md'>
         <CardHeader>
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+          <div className='bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
             {status === 'success' ? (
-              <CheckCircle2 className="h-6 w-6 text-green-600" />
+              <CheckCircle2 className='h-6 w-6 text-green-600' />
             ) : status === 'error' ? (
-              <XCircle className="h-6 w-6 text-destructive" />
+              <XCircle className='text-destructive h-6 w-6' />
             ) : (
-              <Users className="h-6 w-6 text-primary" />
+              <Users className='text-primary h-6 w-6' />
             )}
           </div>
-          <CardTitle className="text-center">
+          <CardTitle className='text-center'>
             {status === 'success'
               ? t('invitations.acceptSuccessTitle')
               : status === 'error'
                 ? t('invitations.acceptErrorTitle')
                 : t('invitations.teamInvitation')}
           </CardTitle>
-          <CardDescription className="text-center">
+          <CardDescription className='text-center'>
             {status === 'success'
               ? t('invitations.acceptSuccessDescription')
               : status === 'error'
@@ -134,29 +135,29 @@ function AcceptInvitationPage() {
         {status === 'idle' && (
           <>
             <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3 rounded-lg border p-4">
-                  <Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">
+              <div className='space-y-4'>
+                <div className='flex items-start gap-3 rounded-lg border p-4'>
+                  <Mail className='text-muted-foreground mt-0.5 h-5 w-5' />
+                  <div className='flex-1'>
+                    <p className='text-sm font-medium'>
                       {t('invitations.invitationDetails')}
                     </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
+                    <p className='text-muted-foreground mt-1 text-sm'>
                       {t('invitations.youHaveBeenInvited')}
                     </p>
                   </div>
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col gap-2">
+            <CardFooter className='flex flex-col gap-2'>
               <Button
-                className="w-full"
+                className='w-full'
                 onClick={() => acceptMutation.mutate()}
                 disabled={acceptMutation.isPending || declineMutation.isPending}
               >
                 {acceptMutation.isPending ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                     {t('common.loading')}
                   </>
                 ) : (
@@ -164,14 +165,14 @@ function AcceptInvitationPage() {
                 )}
               </Button>
               <Button
-                variant="outline"
-                className="w-full"
+                variant='outline'
+                className='w-full'
                 onClick={() => declineMutation.mutate()}
                 disabled={acceptMutation.isPending || declineMutation.isPending}
               >
                 {declineMutation.isPending ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                     {t('common.loading')}
                   </>
                 ) : (
@@ -183,16 +184,16 @@ function AcceptInvitationPage() {
         )}
 
         {status === 'success' && (
-          <CardFooter className="justify-center">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
+          <CardFooter className='justify-center'>
+            <div className='text-muted-foreground flex items-center gap-2 text-sm'>
+              <Loader2 className='h-4 w-4 animate-spin' />
               {t('invitations.redirecting')}
             </div>
           </CardFooter>
         )}
 
         {status === 'error' && (
-          <CardFooter className="justify-center">
+          <CardFooter className='justify-center'>
             <Button onClick={() => navigate({ to: '/' })}>
               {t('navigation.dashboard')}
             </Button>
@@ -202,4 +203,3 @@ function AcceptInvitationPage() {
     </div>
   )
 }
-

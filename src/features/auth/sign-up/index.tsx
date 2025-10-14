@@ -19,16 +19,19 @@ export function SignUp() {
       <Card className='gap-4'>
         <CardHeader>
           <CardTitle className='text-lg tracking-tight'>
-            {t('auth.signUpTitle')}
+            {t('auth.signUpTitle', 'Sign Up')}
           </CardTitle>
           <CardDescription>
-            {t('auth.signUpDescription')} <br />
-            {t('auth.signUpAlreadyHaveAccount')}{' '}
+            {t('auth.signUpDescription', 'Create your account below.')} <br />
+            {t(
+              'auth.signUpAlreadyHaveAccount',
+              'Already have an account?'
+            )}{' '}
             <Link
               to='/sign-in'
               className='hover:text-primary underline underline-offset-4'
             >
-              {t('auth.signIn')}
+              {t('auth.signIn', 'Sign In')}
             </Link>
           </CardDescription>
         </CardHeader>
@@ -37,19 +40,22 @@ export function SignUp() {
         </CardContent>
         <CardFooter>
           <p className='text-muted-foreground px-8 text-center text-sm'>
-            {t('auth.signUpByCreating')}{' '}
+            {t(
+              'auth.signUpByCreating',
+              'By creating an account, you agree to our'
+            )}{' '}
             <a
               href='/terms'
               className='hover:text-primary underline underline-offset-4'
             >
-              {t('auth.terms')}
+              {t('auth.terms', 'Terms of Service')}
             </a>{' '}
             and{' '}
             <a
               href='/privacy'
               className='hover:text-primary underline underline-offset-4'
             >
-              {t('auth.privacy')}
+              {t('auth.privacy', 'Privacy Policy')}
             </a>
             .
           </p>

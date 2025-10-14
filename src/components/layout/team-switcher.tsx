@@ -1,5 +1,5 @@
-import { ChevronsUpDown, Plus, Building2 } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
+import { ChevronsUpDown, Plus, Building2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useOrganizations } from '@/hooks/use-organizations'
 import {
