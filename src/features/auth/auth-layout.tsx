@@ -25,7 +25,7 @@ export function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
           <h1 className='text-xl font-medium'>Shadcn Admin</h1>
         </div>
         {children}
-        <div className='mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-2'>
+        <div className='mt-6 flex flex-col items-center justify-center gap-4'>
           <ThemeSwitch />
           <LanguageSwitcher />
         </div>

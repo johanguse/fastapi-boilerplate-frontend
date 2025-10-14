@@ -231,16 +231,25 @@ function AdminReportsPage() {
           {/* Charts Section */}
           <Tabs defaultValue='users' className='space-y-4'>
             <TabsList>
-              <TabsTrigger value='users'>User Growth</TabsTrigger>
-              <TabsTrigger value='revenue'>Revenue</TabsTrigger>
+              <TabsTrigger value='users'>
+                {t('admin.reports.userGrowth', 'User Growth')}
+              </TabsTrigger>
+              <TabsTrigger value='revenue'>
+                {t('admin.reports.revenue', 'Revenue')}
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value='users' className='space-y-4'>
               <Card>
                 <CardHeader>
-                  <CardTitle>User Growth (Last 30 Days)</CardTitle>
+                  <CardTitle>
+                    {t('admin.reports.userGrowthLast30', 'User Growth (Last 30 Days)')}
+                  </CardTitle>
                   <CardDescription>
-                    New user registrations over time
+                    {t(
+                      'admin.reports.newUserRegistrations',
+                      'New user registrations over time'
+                    )}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -257,7 +266,7 @@ function AdminReportsPage() {
                   ) : usersGrowth && usersGrowth.data.length > 0 ? (
                     <div className='space-y-2'>
                       <p className='text-muted-foreground text-sm'>
-                        Total new users:{' '}
+                        {t('admin.reports.totalNewUsers', 'Total new users:')}{' '}
                         {usersGrowth.data.reduce(
                           (acc, d) => acc + (d.count || 0),
                           0
@@ -283,7 +292,10 @@ function AdminReportsPage() {
                     </div>
                   ) : (
                     <div className='text-muted-foreground flex h-[300px] items-center justify-center'>
-                      No user growth data available yet
+                      {t(
+                        'admin.reports.noUserGrowthData',
+                        'No user growth data available yet'
+                      )}
                     </div>
                   )}
                 </CardContent>
@@ -293,8 +305,15 @@ function AdminReportsPage() {
             <TabsContent value='revenue' className='space-y-4'>
               <Card>
                 <CardHeader>
-                  <CardTitle>Revenue (Last 30 Days)</CardTitle>
-                  <CardDescription>Payment revenue over time</CardDescription>
+                  <CardTitle>
+                    {t('admin.reports.revenueLast30', 'Revenue (Last 30 Days)')}
+                  </CardTitle>
+                  <CardDescription>
+                    {t(
+                      'admin.reports.paymentRevenueOverTime',
+                      'Payment revenue over time'
+                    )}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {revenueLoading ? (
@@ -310,7 +329,7 @@ function AdminReportsPage() {
                   ) : revenueData && revenueData.data.length > 0 ? (
                     <div className='space-y-2'>
                       <p className='text-muted-foreground text-sm'>
-                        Total: $
+                        {t('admin.reports.total', 'Total:')} $
                         {revenueData.data.reduce(
                           (acc, d) => acc + (d.revenue || 0),
                           0
@@ -336,7 +355,10 @@ function AdminReportsPage() {
                     </div>
                   ) : (
                     <div className='text-muted-foreground flex h-[300px] items-center justify-center'>
-                      No revenue data available yet
+                      {t(
+                        'admin.reports.noRevenueData',
+                        'No revenue data available yet'
+                      )}
                     </div>
                   )}
                 </CardContent>
@@ -347,39 +369,56 @@ function AdminReportsPage() {
           {/* Additional Info */}
           <Card>
             <CardHeader>
-              <CardTitle>Data Sources</CardTitle>
+              <CardTitle>
+                {t('admin.reports.dataSources', 'Data Sources')}
+              </CardTitle>
               <CardDescription>
-                Information about the data displayed in these reports
+                {t(
+                  'admin.reports.dataSourcesDescription',
+                  'Information about the data displayed in these reports'
+                )}
               </CardDescription>
             </CardHeader>
             <CardContent className='space-y-2'>
               <div className='flex items-start gap-2'>
                 <Users className='text-muted-foreground mt-0.5 h-4 w-4' />
                 <div>
-                  <p className='text-sm font-medium'>User Data</p>
+                  <p className='text-sm font-medium'>
+                    {t('admin.reports.userData', 'User Data')}
+                  </p>
                   <p className='text-muted-foreground text-xs'>
-                    User registrations, verifications, and activity from the
-                    users table
+                    {t(
+                      'admin.reports.userDataDescription',
+                      'User registrations, verifications, and activity from the users table'
+                    )}
                   </p>
                 </div>
               </div>
               <div className='flex items-start gap-2'>
                 <DollarSign className='text-muted-foreground mt-0.5 h-4 w-4' />
                 <div>
-                  <p className='text-sm font-medium'>Revenue Data</p>
+                  <p className='text-sm font-medium'>
+                    {t('admin.reports.revenueData', 'Revenue Data')}
+                  </p>
                   <p className='text-muted-foreground text-xs'>
-                    Payment data from billing_history table (Stripe invoices are
-                    tracked in DB)
+                    {t(
+                      'admin.reports.revenueDataDescription',
+                      'Payment data from billing_history table (Stripe invoices are tracked in DB)'
+                    )}
                   </p>
                 </div>
               </div>
               <div className='flex items-start gap-2'>
                 <Activity className='text-muted-foreground mt-0.5 h-4 w-4' />
                 <div>
-                  <p className='text-sm font-medium'>Activity Logs</p>
+                  <p className='text-sm font-medium'>
+                    {t('admin.reports.activityLogs', 'Activity Logs')}
+                  </p>
                   <p className='text-muted-foreground text-xs'>
-                    System events and user actions are available in the
-                    dedicated Activity Logs page
+                    {t(
+                      'admin.reports.activityLogsDescription',
+                      'System events and user actions are available in the dedicated Activity Logs page'
+                    )}
                   </p>
                 </div>
               </div>

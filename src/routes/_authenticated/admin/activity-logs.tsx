@@ -149,10 +149,13 @@ function ActivityLogsPage() {
             <CardHeader>
               <CardTitle className='flex items-center gap-2'>
                 <Filter className='h-5 w-5' />
-                Filters
+                {t('admin.activityLogs.filters', 'Filters')}
               </CardTitle>
               <CardDescription>
-                Filter activity logs by type or user
+                {t(
+                  'admin.activityLogs.filtersDescription',
+                  'Filter activity logs by type or user'
+                )}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -163,16 +166,35 @@ function ActivityLogsPage() {
                     onValueChange={setActionType}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder='All Action Types' />
+                      <SelectValue
+                        placeholder={t(
+                          'admin.activityLogs.allActionTypes',
+                          'All Action Types'
+                        )}
+                      />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value='auth'>Authentication</SelectItem>
-                      <SelectItem value='user'>User</SelectItem>
-                      <SelectItem value='organization'>Organization</SelectItem>
-                      <SelectItem value='project'>Project</SelectItem>
-                      <SelectItem value='payment'>Payment</SelectItem>
-                      <SelectItem value='system'>System</SelectItem>
-                      <SelectItem value='security'>Security</SelectItem>
+                      <SelectItem value='auth'>
+                        {t('admin.activityLogs.authentication', 'Authentication')}
+                      </SelectItem>
+                      <SelectItem value='user'>
+                        {t('admin.activityLogs.user', 'User')}
+                      </SelectItem>
+                      <SelectItem value='organization'>
+                        {t('admin.activityLogs.organization', 'Organization')}
+                      </SelectItem>
+                      <SelectItem value='project'>
+                        {t('admin.activityLogs.project', 'Project')}
+                      </SelectItem>
+                      <SelectItem value='payment'>
+                        {t('admin.activityLogs.payment', 'Payment')}
+                      </SelectItem>
+                      <SelectItem value='system'>
+                        {t('admin.activityLogs.system', 'System')}
+                      </SelectItem>
+                      <SelectItem value='security'>
+                        {t('admin.activityLogs.security', 'Security')}
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -180,7 +202,10 @@ function ActivityLogsPage() {
                   <div className='relative'>
                     <User className='text-muted-foreground absolute top-3 left-3 h-4 w-4' />
                     <Input
-                      placeholder='Filter by User ID...'
+                      placeholder={t(
+                        'admin.activityLogs.filterByUserId',
+                        'Filter by User ID...'
+                      )}
                       value={searchUserId}
                       onChange={(e) => setSearchUserId(e.target.value)}
                       className='pl-9'
@@ -197,7 +222,7 @@ function ActivityLogsPage() {
                       setPage(1)
                     }}
                   >
-                    Clear Filters
+                    {t('admin.activityLogs.clearFilters', 'Clear Filters')}
                   </Button>
                 )}
               </div>
@@ -207,11 +232,23 @@ function ActivityLogsPage() {
           {/* Activity Logs Table */}
           <Card>
             <CardHeader>
-              <CardTitle>Activity History</CardTitle>
+              <CardTitle>
+                {t('admin.activityLogs.activityHistory', 'Activity History')}
+              </CardTitle>
               <CardDescription>
                 {logsData?.total
-                  ? `Showing ${logsData.items.length} of ${logsData.total} activities`
-                  : 'Loading activities...'}
+                  ? t(
+                      'admin.activityLogs.showingActivities',
+                      'Showing {{count}} of {{total}} activities',
+                      {
+                        count: logsData.items.length,
+                        total: logsData.total,
+                      }
+                    )
+                  : t(
+                      'admin.activityLogs.loadingActivities',
+                      'Loading activities...'
+                    )}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -231,11 +268,19 @@ function ActivityLogsPage() {
               ) : !logsData?.items?.length ? (
                 <div className='text-muted-foreground py-12 text-center'>
                   <Activity className='mx-auto mb-4 h-12 w-12 opacity-50' />
-                  <p className='text-lg font-medium'>No activity logs found</p>
+                  <p className='text-lg font-medium'>
+                    {t('admin.activityLogs.noActivityLogs', 'No activity logs found')}
+                  </p>
                   <p className='mt-1 text-sm'>
                     {actionType || searchUserId
-                      ? 'Try adjusting your filters'
-                      : 'Activities will appear here as users interact with the system'}
+                      ? t(
+                          'admin.activityLogs.tryAdjustingFilters',
+                          'Try adjusting your filters'
+                        )
+                      : t(
+                          'admin.activityLogs.activitiesWillAppear',
+                          'Activities will appear here as users interact with the system'
+                        )}
                   </p>
                 </div>
               ) : (
@@ -244,12 +289,24 @@ function ActivityLogsPage() {
                     <Table>
                       <TableHeader>
                         <TableRow>
-                          <TableHead>Type</TableHead>
-                          <TableHead>Action</TableHead>
-                          <TableHead>User</TableHead>
-                          <TableHead>Description</TableHead>
-                          <TableHead>Time</TableHead>
-                          <TableHead>IP Address</TableHead>
+                          <TableHead>
+                            {t('admin.activityLogs.type', 'Type')}
+                          </TableHead>
+                          <TableHead>
+                            {t('admin.activityLogs.action', 'Action')}
+                          </TableHead>
+                          <TableHead>
+                            {t('admin.activityLogs.user', 'User')}
+                          </TableHead>
+                          <TableHead>
+                            {t('admin.activityLogs.description', 'Description')}
+                          </TableHead>
+                          <TableHead>
+                            {t('admin.activityLogs.time', 'Time')}
+                          </TableHead>
+                          <TableHead>
+                            {t('admin.activityLogs.ipAddress', 'IP Address')}
+                          </TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -280,7 +337,7 @@ function ActivityLogsPage() {
                                 </div>
                               ) : (
                                 <span className='text-muted-foreground'>
-                                  System
+                                  {t('admin.activityLogs.systemUser', 'System')}
                                 </span>
                               )}
                             </TableCell>
@@ -293,7 +350,8 @@ function ActivityLogsPage() {
                               })}
                             </TableCell>
                             <TableCell className='text-muted-foreground font-mono text-sm'>
-                              {log.ip_address || 'N/A'}
+                              {log.ip_address ||
+                                t('admin.activityLogs.notAvailable', 'N/A')}
                             </TableCell>
                           </TableRow>
                         ))}
@@ -304,8 +362,15 @@ function ActivityLogsPage() {
                   {/* Pagination */}
                   <div className='mt-4 flex items-center justify-between'>
                     <p className='text-muted-foreground text-sm'>
-                      Page {page} of {totalPages} ({logsData.total} total
-                      activities)
+                      {t(
+                        'admin.activityLogs.pageOf',
+                        'Page {{page}} of {{total}} ({{count}} total activities)',
+                        {
+                          page,
+                          total: totalPages,
+                          count: logsData.total,
+                        }
+                      )}
                     </p>
                     <div className='flex gap-2'>
                       <Button
@@ -314,7 +379,7 @@ function ActivityLogsPage() {
                         onClick={() => setPage((p) => Math.max(1, p - 1))}
                         disabled={page === 1}
                       >
-                        Previous
+                        {t('admin.activityLogs.previous', 'Previous')}
                       </Button>
                       <Button
                         variant='outline'
@@ -324,7 +389,7 @@ function ActivityLogsPage() {
                         }
                         disabled={page === totalPages}
                       >
-                        Next
+                        {t('admin.activityLogs.next', 'Next')}
                       </Button>
                     </div>
                   </div>

@@ -1,6 +1,6 @@
-import { z } from 'zod'
 import { organizationClient } from 'better-auth/client/plugins'
 import { createAuthClient } from 'better-auth/react'
+import { z } from 'zod/v4'
 import i18n from '@/lib/i18n'
 
 // Better Auth client configuration with organization plugin
@@ -119,47 +119,49 @@ export interface Invitation {
 export const getLoginSchema = () =>
   z.object({
     email: z
+      .email(i18n.t('auth.emailInvalid', 'Invalid email address'))
+      .min(1, i18n.t('auth.emailRequired', 'Email is required')),
+    password: z
       .string()
-      .min(1, i18n.t('auth.emailRequired'))
-      .email(i18n.t('auth.emailInvalid')),
-    password: z.string().min(6, i18n.t('auth.passwordTooShort', { count: 6 })),
+      .min(
+        6,
+        i18n.t(
+          'auth.passwordTooShort',
+          'Password must be at least 6 characters',
+          { count: 6 }
+        )
+      ),
   })
 
 export const getRegisterSchema = () =>
   z
     .object({
       email: z
-        .string()
-        .min(1, i18n.t('auth.emailRequired'))
-        .email(i18n.t('auth.emailInvalid')),
+        .email(i18n.t('auth.emailInvalid', 'Invalid email address'))
+        .min(1, i18n.t('auth.emailRequired', 'Email is required')),
       password: z
         .string()
-        .min(6, i18n.t('auth.passwordTooShort', { count: 6 })),
-      name: z.string().min(2, i18n.t('auth.nameTooShort', { count: 2 })),
+        .min(
+          6,
+          i18n.t(
+            'auth.passwordTooShort',
+            'Password must be at least 6 characters',
+            { count: 6 }
+          )
+        ),
+      name: z.string().min(
+        2,
+        i18n.t('auth.nameTooShort', 'Name must be at least 2 characters', {
+          count: 2,
+        })
+      ),
       confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: i18n.t('auth.passwordsDontMatch'),
+      message: i18n.t('auth.passwordsDontMatch', "Passwords don't match"),
       path: ['confirmPassword'],
     })
 
-// Legacy static schemas (kept for backward compatibility)
-export const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-})
-
-export const registerSchema = z
-  .object({
-    email: z.string().email('Please enter a valid email address'),
-    password: z.string().min(6, 'Password must be at least 6 characters'),
-    name: z.string().min(2, 'Name must be at least 2 characters'),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  })
-
-export type LoginFormData = z.infer<typeof loginSchema>
-export type RegisterFormData = z.infer<typeof registerSchema>
+// Types for forms based on dynamic schemas
+export type LoginFormData = z.infer<ReturnType<typeof getLoginSchema>>
+export type RegisterFormData = z.infer<ReturnType<typeof getRegisterSchema>>

@@ -1,0 +1,5 @@
+[install]
+module = true
+
+[test]
+# Use Bun's test runner

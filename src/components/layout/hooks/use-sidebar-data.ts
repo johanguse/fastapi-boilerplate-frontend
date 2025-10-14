@@ -36,109 +36,109 @@ export function useSidebarData(): SidebarData {
   return useMemo(
     (): SidebarData => ({
       user: {
-        name: user?.name || t('common.loading'),
-        email: user?.email || t('common.loading'),
+        name: user?.name || t('common.loading', 'Loading...'),
+        email: user?.email || t('common.loading', 'Loading...'),
         avatar: '/avatars/shadcn.jpg',
       },
       teams: [
         {
-          name: activeOrganization?.name || t('organizations.title'),
+          name: activeOrganization?.name || t('organizations.title', 'Organizations'),
           logo: Building2,
           plan: activeOrganization?.plan || 'Free',
         },
       ],
       navGroups: [
         {
-          title: t('common.general'),
+          title: t('common.general', 'General'),
           items: [
             {
-              title: t('navigation.dashboard'),
+              title: t('navigation.dashboard', 'Dashboard'),
               url: '/',
               icon: LayoutDashboard,
             },
             {
-              title: t('navigation.organizations'),
+              title: t('navigation.organizations', 'Organizations'),
               url: '/organizations',
               icon: Building2,
             },
             {
-              title: t('navigation.tasks'),
+              title: t('navigation.tasks', 'Tasks'),
               url: '/tasks',
               icon: ListTodo,
             },
             {
-              title: t('navigation.apps'),
+              title: t('navigation.apps', 'Apps'),
               url: '/apps',
               icon: Package,
             },
             {
-              title: t('navigation.chats'),
+              title: t('navigation.chats', 'Chats'),
               url: '/chats',
               badge: '3',
               icon: MessagesSquare,
             },
             {
-              title: t('navigation.users'),
+              title: t('navigation.users', 'Users'),
               url: '/users',
               icon: Users,
             },
           ],
         },
         {
-          title: t('navigation.pages'),
+          title: t('navigation.pages', 'Pages'),
           items: [
             {
-              title: t('navigation.auth'),
+              title: t('navigation.auth', 'Authentication'),
               icon: ShieldCheck,
               items: [
                 {
-                  title: t('auth.signIn'),
+                  title: t('auth.signIn', 'Sign In'),
                   url: '/sign-in',
                 },
                 {
-                  title: t('auth.signIn') + ' (2 Col)',
+                  title: t('auth.signIn', 'Sign In') + ' (2 Col)',
                   url: '/sign-in-2',
                 },
                 {
-                  title: t('auth.signUp'),
+                  title: t('auth.signUp', 'Sign Up'),
                   url: '/sign-up',
                 },
                 {
-                  title: t('auth.forgotPassword'),
+                  title: t('auth.forgotPassword', 'Forgot Password'),
                   url: '/forgot-password',
                 },
                 {
-                  title: t('auth.otp'),
+                  title: t('auth.otp', 'OTP'),
                   url: '/otp',
                 },
               ],
             },
             {
-              title: t('navigation.errors'),
+              title: t('navigation.errors', 'Errors'),
               icon: Bug,
               items: [
                 {
-                  title: t('auth.unauthorized'),
+                  title: t('auth.unauthorized', 'Unauthorized'),
                   url: '/errors/unauthorized',
                   icon: Lock,
                 },
                 {
-                  title: t('auth.forbidden'),
+                  title: t('auth.forbidden', 'Forbidden'),
                   url: '/errors/forbidden',
                   icon: UserX,
                 },
                 {
-                  title: t('auth.notFound'),
+                  title: t('auth.notFound', 'Not Found'),
                   url: '/errors/not-found',
                   icon: FileX,
                 },
                 {
-                  title: t('auth.internalServerError'),
+                  title: t('auth.internalServerError', 'Internal Server Error'),
                   url: '/errors/internal-server-error',
                   icon: ServerOff,
                 },
                 {
-                  title: t('auth.maintenanceError'),
+                  title: t('auth.maintenanceError', 'Maintenance Error'),
                   url: '/errors/maintenance-error',
                   icon: Construction,
                 },
@@ -147,41 +147,41 @@ export function useSidebarData(): SidebarData {
           ],
         },
         {
-          title: t('navigation.other'),
+          title: t('navigation.other', 'Other'),
           items: [
             {
-              title: t('navigation.settings'),
+              title: t('navigation.settings', 'Settings'),
               icon: Settings,
               items: [
                 {
-                  title: t('settings.profile'),
+                  title: t('settings.profile', 'Profile'),
                   url: '/settings',
                   icon: UserCog,
                 },
                 {
-                  title: t('settings.account'),
+                  title: t('settings.account', 'Account'),
                   url: '/settings/account',
                   icon: Wrench,
                 },
                 {
-                  title: t('settings.appearance'),
+                  title: t('settings.appearance', 'Appearance'),
                   url: '/settings/appearance',
                   icon: Palette,
                 },
                 {
-                  title: t('settings.notifications'),
+                  title: t('settings.notifications', 'Notifications'),
                   url: '/settings/notifications',
                   icon: Bell,
                 },
                 {
-                  title: t('settings.display'),
+                  title: t('settings.display', 'Display'),
                   url: '/settings/display',
                   icon: Monitor,
                 },
               ],
             },
             {
-              title: t('navigation.helpCenter'),
+              title: t('navigation.helpCenter', 'Help Center'),
               url: '/help-center',
               icon: HelpCircle,
             },
@@ -191,20 +191,20 @@ export function useSidebarData(): SidebarData {
         ...(isAdmin
           ? [
               {
-                title: 'Admin',
+                title: t('admin.sideMenu.admin', 'Admin'),
                 items: [
                   {
-                    title: 'Reports & Analytics',
+                    title: t('admin.sideMenu.reports', 'Reports & Analytics'),
                     url: '/admin/reports',
                     icon: Shield,
                   },
                   {
-                    title: 'All Users',
+                    title: t('admin.sideMenu.users', 'All Users'),
                     url: '/admin/users',
                     icon: Users,
                   },
                   {
-                    title: 'Activity Logs',
+                    title: t('admin.sideMenu.activity', 'Activity Logs'),
                     url: '/admin/activity-logs',
                     icon: Activity,
                   },

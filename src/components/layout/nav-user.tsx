@@ -33,11 +33,15 @@ import {
 import { SignOutDialog } from '@/components/sign-out-dialog'
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹' },
+  { code: 'en-US', name: 'English (US)', flag: '🇺🇸' },
+  { code: 'en-GB', name: 'English (UK)', flag: '🇬🇧' },
+  { code: 'es-ES', name: 'Español (España)', flag: '🇪🇸' },
+  { code: 'es-MX', name: 'Español (México)', flag: '🇲🇽' },
+  { code: 'fr-FR', name: 'Français (France)', flag: '🇫🇷' },
+  { code: 'fr-CA', name: 'Français (Canada)', flag: '🇨🇦' },
+  { code: 'de-DE', name: 'Deutsch (Deutschland)', flag: '🇩🇪' },
+  { code: 'pt-BR', name: 'Português (Brasil)', flag: '🇧🇷' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' },
 ]
 
 export function NavUser() {
@@ -111,7 +115,7 @@ export function NavUser() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Sparkles />
-                  {t('navigation.upgradeToPro')}
+                  {t('navigation.upgradeToPro', 'Upgrade to Pro')}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
@@ -120,7 +124,7 @@ export function NavUser() {
                   <DropdownMenuSubTrigger>
                     <Languages />
                     <span>
-                      {currentLanguage.flag} {t('settings.language')}
+                      {currentLanguage.flag} {t('settings.language', 'Language')}
                     </span>
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
@@ -145,26 +149,26 @@ export function NavUser() {
                 <DropdownMenuItem asChild>
                   <Link to='/settings/account'>
                     <BadgeCheck />
-                    {t('navigation.account')}
+                    {t('navigation.account', 'Account')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to='/settings'>
                     <CreditCard />
-                    {t('navigation.billing')}
+                    {t('navigation.billing', 'Billing')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to='/settings/notifications'>
                     <Bell />
-                    {t('navigation.notifications')}
+                    {t('navigation.notifications', 'Notifications')}
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setOpen(true)}>
                 <LogOut />
-                {t('auth.signOutTitle')}
+                {t('auth.signOutTitle', 'Sign out')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
