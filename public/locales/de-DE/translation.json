@@ -128,6 +128,9 @@
     "deleting": "Wird gelöscht...",
     "noOrganizations": "Noch keine Organisationen",
     "noOrganizationsDescription": "Erstellen Sie Ihre erste Organisation, um zu beginnen",
+    "noOrganizationsYet": "Noch keine Organisationen",
+    "defaultOrganization": "Organisation Auswählen",
+    "organizationCount": "{{count}} Organisationen",
     "created": "Erstellt {{date}}",
     "openMenu": "Menü öffnen"
   },

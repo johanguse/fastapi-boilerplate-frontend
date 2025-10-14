@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
 import { type Table } from '@tanstack/react-table'
 import { X } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { useEffect, useRef, useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -10,6 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 
 type DataTableBulkActionsProps<TData> = {
   table: Table<TData>
@@ -139,16 +139,16 @@ export function DataTableBulkActions<TData>({
         tabIndex={-1}
         onKeyDown={handleKeyDown}
         className={cn(
-          'fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-xl',
+          '-translate-x-1/2 fixed bottom-6 left-1/2 z-50 rounded-xl',
           'transition-all delay-100 duration-300 ease-out hover:scale-105',
-          'focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:outline-none'
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50'
         )}
       >
         <div
           className={cn(
             'p-2 shadow-xl',
             'rounded-xl border',
-            'bg-background/95 supports-[backdrop-filter]:bg-background/60 backdrop-blur-lg',
+            'bg-background/95 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60',
             'flex items-center gap-x-2'
           )}
         >

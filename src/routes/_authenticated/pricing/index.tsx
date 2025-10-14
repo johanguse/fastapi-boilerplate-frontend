@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { Check, Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { api } from '@/lib/api'
-import { useOrganizations } from '@/hooks/use-organizations'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,6 +15,8 @@ import {
 } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
+import { useOrganizations } from '@/hooks/use-organizations'
+import { api } from '@/lib/api'
 
 export const Route = createFileRoute('/_authenticated/pricing/')({
   component: PricingPage,
@@ -188,10 +188,10 @@ function PricingPage() {
       <div className='mx-auto max-w-6xl'>
         {/* Header */}
         <div className='mb-12 text-center'>
-          <h1 className='mb-4 text-4xl font-bold'>
+          <h1 className='mb-4 font-bold text-4xl'>
             {t('pricing.title', { defaultValue: 'Choose Your Plan' })}
           </h1>
-          <p className='text-muted-foreground mb-8 text-lg'>
+          <p className='mb-8 text-lg text-muted-foreground'>
             {t(
               'pricing.subtitle',
               'Select the perfect plan for your team. Upgrade or downgrade anytime.'
@@ -230,12 +230,12 @@ function PricingPage() {
               key={plan.id}
               className={
                 plan.is_popular
-                  ? 'border-primary relative shadow-lg'
+                  ? 'relative border-primary shadow-lg'
                   : 'relative'
               }
             >
               {plan.is_popular && (
-                <div className='absolute -top-4 left-1/2 -translate-x-1/2'>
+                <div className='-top-4 -translate-x-1/2 absolute left-1/2'>
                   <Badge className='px-4 py-1'>
                     {t('pricing.popular', 'Most Popular')}
                   </Badge>
@@ -246,7 +246,7 @@ function PricingPage() {
                 <CardTitle className='text-2xl'>{plan.display_name}</CardTitle>
                 <CardDescription>{plan.description}</CardDescription>
                 <div className='mt-4'>
-                  <span className='text-4xl font-bold'>
+                  <span className='font-bold text-4xl'>
                     {formatPrice(plan)}
                   </span>
                   <span className='text-muted-foreground'>
@@ -261,7 +261,7 @@ function PricingPage() {
               <CardContent>
                 <ul className='space-y-3'>
                   <li className='flex items-center gap-2'>
-                    <Check className='text-primary h-5 w-5' />
+                    <Check className='h-5 w-5 text-primary' />
                     <span>
                       {t('pricing.features.projects', {
                         count: plan.max_projects,
@@ -270,7 +270,7 @@ function PricingPage() {
                     </span>
                   </li>
                   <li className='flex items-center gap-2'>
-                    <Check className='text-primary h-5 w-5' />
+                    <Check className='h-5 w-5 text-primary' />
                     <span>
                       {t('pricing.features.users', {
                         count: plan.max_users,
@@ -279,7 +279,7 @@ function PricingPage() {
                     </span>
                   </li>
                   <li className='flex items-center gap-2'>
-                    <Check className='text-primary h-5 w-5' />
+                    <Check className='h-5 w-5 text-primary' />
                     <span>
                       {t('pricing.features.storage', {
                         size: plan.max_storage_gb,
@@ -289,7 +289,7 @@ function PricingPage() {
                   </li>
                   {plan.features.slice(3).map((feature, index) => (
                     <li key={index} className='flex items-center gap-2'>
-                      <Check className='text-primary h-5 w-5' />
+                      <Check className='h-5 w-5 text-primary' />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -319,7 +319,7 @@ function PricingPage() {
 
         {/* FAQ Section */}
         <div className='mt-16'>
-          <h2 className='mb-8 text-center text-2xl font-bold'>
+          <h2 className='mb-8 text-center font-bold text-2xl'>
             {t('pricing.faq.title', 'Frequently Asked Questions')}
           </h2>
           <div className='grid gap-6 md:grid-cols-2'>

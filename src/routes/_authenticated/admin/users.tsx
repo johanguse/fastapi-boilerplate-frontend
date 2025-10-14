@@ -1,27 +1,26 @@
-import { useState } from 'react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import {
-  Users,
-  Shield,
-  Search,
   CheckCircle,
-  XCircle,
   Crown,
-  MoreHorizontal,
   Edit,
+  MoreHorizontal,
+  Search,
+  Shield,
   Trash2,
   UserPlus,
+  Users,
+  XCircle,
 } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { useAuth } from '@/stores/auth-store'
-import {
-  adminApi,
-  type User,
-  type UserUpdateAdmin,
-  type UserInvite,
-} from '@/lib/api'
+import { ConfigDrawer } from '@/components/config-drawer'
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search as SearchBar } from '@/components/search'
+import { ThemeSwitch } from '@/components/theme-switch'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -76,12 +75,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search as SearchBar } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
+import {
+  adminApi,
+  type User,
+  type UserInvite,
+  type UserUpdateAdmin,
+} from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
 
 export const Route = createFileRoute('/_authenticated/admin/users')({
   component: AdminUsersPage,
@@ -211,11 +211,11 @@ function AdminUsersPage() {
         <Main>
           <div className='flex h-full items-center justify-center'>
             <div className='text-center'>
-              <Shield className='text-muted-foreground mx-auto mb-4 h-12 w-12' />
-              <h1 className='text-2xl font-bold'>
+              <Shield className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
+              <h1 className='font-bold text-2xl'>
                 {t('admin.accessDeniedTitle', 'Access Denied')}
               </h1>
-              <p className='text-muted-foreground mt-2'>
+              <p className='mt-2 text-muted-foreground'>
                 {t(
                   'admin.accessDeniedDescription',
                   "You don't have permission to access this page."
@@ -245,11 +245,11 @@ function AdminUsersPage() {
         <div className='space-y-6'>
           <div className='flex items-center justify-between'>
             <div>
-              <h1 className='flex items-center gap-2 text-3xl font-bold'>
+              <h1 className='flex items-center gap-2 font-bold text-3xl'>
                 <Users className='h-8 w-8' />
                 {t('admin.users.title', 'User Management')}
               </h1>
-              <p className='text-muted-foreground mt-2'>
+              <p className='mt-2 text-muted-foreground'>
                 {t('admin.users.subtitle', 'Manage all users in your platform')}
               </p>
             </div>
@@ -261,15 +261,15 @@ function AdminUsersPage() {
           <div className='grid gap-4 md:grid-cols-3'>
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'>
+                <CardTitle className='font-medium text-sm'>
                   {t('admin.users.total', 'Total Users')}
                 </CardTitle>
-                <Users className='text-muted-foreground h-4 w-4' />
+                <Users className='h-4 w-4 text-muted-foreground' />
               </CardHeader>
               <CardContent>
                 {stats ? (
                   <>
-                    <div className='text-2xl font-bold'>
+                    <div className='font-bold text-2xl'>
                       {stats.total_users}
                     </div>
                     <p className='text-muted-foreground text-xs'>
@@ -286,7 +286,7 @@ function AdminUsersPage() {
             </Card>
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'>
+                <CardTitle className='font-medium text-sm'>
                   {t('admin.users.active', 'Active Users')}
                 </CardTitle>
                 <CheckCircle className='h-4 w-4 text-green-600' />
@@ -294,7 +294,7 @@ function AdminUsersPage() {
               <CardContent>
                 {stats ? (
                   <>
-                    <div className='text-2xl font-bold'>
+                    <div className='font-bold text-2xl'>
                       {stats.active_users}
                     </div>
                     <p className='text-muted-foreground text-xs'>
@@ -311,7 +311,7 @@ function AdminUsersPage() {
             </Card>
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'>
+                <CardTitle className='font-medium text-sm'>
                   {t('admin.users.verified', 'Verified Users')}
                 </CardTitle>
                 <Shield className='h-4 w-4 text-blue-600' />
@@ -319,7 +319,7 @@ function AdminUsersPage() {
               <CardContent>
                 {stats ? (
                   <>
-                    <div className='text-2xl font-bold'>
+                    <div className='font-bold text-2xl'>
                       {stats.verified_users}
                     </div>
                     <p className='text-muted-foreground text-xs'>
@@ -346,7 +346,7 @@ function AdminUsersPage() {
               </CardDescription>
               <div className='flex items-center gap-2 pt-4'>
                 <div className='relative flex-1'>
-                  <Search className='text-muted-foreground absolute top-2.5 left-2 h-4 w-4' />
+                  <Search className='absolute top-2.5 left-2 h-4 w-4 text-muted-foreground' />
                   <Input
                     placeholder={t(
                       'admin.users.searchPlaceholder',
@@ -420,7 +420,7 @@ function AdminUsersPage() {
                   </div>
                 </div>
               ) : !usersData?.items?.length ? (
-                <div className='text-muted-foreground py-8 text-center'>
+                <div className='py-8 text-center text-muted-foreground'>
                   <p>{t('admin.users.noUsersFound', 'No users found')}</p>
                   {usersData && (
                     <p className='mt-2 text-xs'>

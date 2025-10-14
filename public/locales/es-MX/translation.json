@@ -1,10 +1,10 @@
 {
   "navigation": {
-  "dashboard": "Tablero",
-  "organizations": "Organizaciones",
-  "pricing": "Precios",
-  "settings": "Configuración",
-  "billing": "Facturación",
+    "dashboard": "Tablero",
+    "organizations": "Organizaciones",
+    "pricing": "Precios",
+    "settings": "Configuración",
+    "billing": "Facturación",
     "support": "Soporte",
     "logout": "Cerrar sesión",
     "tasks": "Tareas",
@@ -128,6 +128,9 @@
     "deleting": "Eliminando...",
     "noOrganizations": "Aún no hay organizaciones",
     "noOrganizationsDescription": "Crea tu primera organización para comenzar",
+    "noOrganizationsYet": "Aún no hay organizaciones",
+    "defaultOrganization": "Seleccionar Organización",
+    "organizationCount": "{{count}} organizaciones",
     "created": "Creado {{date}}",
     "openMenu": "Abrir menú"
   },

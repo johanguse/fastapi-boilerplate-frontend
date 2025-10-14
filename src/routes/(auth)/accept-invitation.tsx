@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
-import { CheckCircle2, XCircle, Loader2, Mail, Users } from 'lucide-react'
+import { CheckCircle2, Loader2, Mail, Users, XCircle } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { api } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -14,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { api } from '@/lib/api'
 
 export const Route = createFileRoute('/(auth)/accept-invitation')({
   component: AcceptInvitationPage,
@@ -80,11 +80,11 @@ function AcceptInvitationPage() {
 
   if (!token) {
     return (
-      <div className='bg-muted/40 flex min-h-screen items-center justify-center p-4'>
+      <div className='flex min-h-screen items-center justify-center bg-muted/40 p-4'>
         <Card className='w-full max-w-md'>
           <CardHeader>
-            <div className='bg-destructive/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
-              <XCircle className='text-destructive h-6 w-6' />
+            <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10'>
+              <XCircle className='h-6 w-6 text-destructive' />
             </div>
             <CardTitle className='text-center'>
               {t('invitations.invalidToken')}
@@ -104,16 +104,16 @@ function AcceptInvitationPage() {
   }
 
   return (
-    <div className='bg-muted/40 flex min-h-screen items-center justify-center p-4'>
+    <div className='flex min-h-screen items-center justify-center bg-muted/40 p-4'>
       <Card className='w-full max-w-md'>
         <CardHeader>
-          <div className='bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
+          <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10'>
             {status === 'success' ? (
               <CheckCircle2 className='h-6 w-6 text-green-600' />
             ) : status === 'error' ? (
-              <XCircle className='text-destructive h-6 w-6' />
+              <XCircle className='h-6 w-6 text-destructive' />
             ) : (
-              <Users className='text-primary h-6 w-6' />
+              <Users className='h-6 w-6 text-primary' />
             )}
           </div>
           <CardTitle className='text-center'>
@@ -137,12 +137,12 @@ function AcceptInvitationPage() {
             <CardContent>
               <div className='space-y-4'>
                 <div className='flex items-start gap-3 rounded-lg border p-4'>
-                  <Mail className='text-muted-foreground mt-0.5 h-5 w-5' />
+                  <Mail className='mt-0.5 h-5 w-5 text-muted-foreground' />
                   <div className='flex-1'>
-                    <p className='text-sm font-medium'>
+                    <p className='font-medium text-sm'>
                       {t('invitations.invitationDetails')}
                     </p>
-                    <p className='text-muted-foreground mt-1 text-sm'>
+                    <p className='mt-1 text-muted-foreground text-sm'>
                       {t('invitations.youHaveBeenInvited')}
                     </p>
                   </div>
@@ -185,7 +185,7 @@ function AcceptInvitationPage() {
 
         {status === 'success' && (
           <CardFooter className='justify-center'>
-            <div className='text-muted-foreground flex items-center gap-2 text-sm'>
+            <div className='flex items-center gap-2 text-muted-foreground text-sm'>
               <Loader2 className='h-4 w-4 animate-spin' />
               {t('invitations.redirecting')}
             </div>

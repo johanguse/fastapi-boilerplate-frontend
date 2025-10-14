@@ -1,11 +1,9 @@
-import { useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { ROLES } from '@/config/roles'
 import { Mail, MoreHorizontal, Trash2 } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { api } from '@/lib/api'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,6 +30,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { ROLES } from '@/config/roles'
+import { api } from '@/lib/api'
 
 interface Invitation {
   id: number
@@ -122,8 +122,8 @@ export function PendingInvitations({
   if (!invitations || invitations.length === 0) {
     return (
       <div className='flex flex-col items-center justify-center rounded-lg border border-dashed py-12'>
-        <Mail className='text-muted-foreground mb-4 h-12 w-12' />
-        <h3 className='mb-2 text-lg font-semibold'>
+        <Mail className='mb-4 h-12 w-12 text-muted-foreground' />
+        <h3 className='mb-2 font-semibold text-lg'>
           {t('invitations.noPendingInvitations', 'No pending invitations')}
         </h3>
         <p className='text-muted-foreground text-sm'>
@@ -155,13 +155,14 @@ export function PendingInvitations({
               <TableRow key={invitation.id}>
                 <TableCell className='font-medium'>
                   <div className='flex items-center gap-2'>
-                    <Mail className='text-muted-foreground h-4 w-4' />
+                    <Mail className='h-4 w-4 text-muted-foreground' />
                     {invitation.email}
                   </div>
                 </TableCell>
                 <TableCell>
                   <Badge variant={getRoleBadgeVariant(invitation.role)}>
-                    {t(`roles.${invitation.role}`)}
+                    {/* biome-ignore lint/suspicious/noExplicitAny: Dynamic translation key requires any */}
+                    {t(`roles.${invitation.role}` as any)}
                   </Badge>
                 </TableCell>
                 <TableCell className='text-muted-foreground'>

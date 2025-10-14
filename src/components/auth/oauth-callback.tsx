@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
 import { useRouter } from '@tanstack/react-router'
 import { Loader2 } from 'lucide-react'
+import { useEffect } from 'react'
 
 interface OAuthCallbackProps {
   provider: string
@@ -65,9 +65,9 @@ export function OAuthCallback({ provider }: OAuthCallbackProps) {
   return (
     <div className='flex min-h-screen items-center justify-center'>
       <div className='text-center'>
-        <Loader2 className='text-primary mx-auto h-8 w-8 animate-spin' />
-        <h2 className='mt-4 text-lg font-semibold'>Completing sign in...</h2>
-        <p className='text-muted-foreground mt-2 text-sm'>
+        <Loader2 className='mx-auto h-8 w-8 animate-spin text-primary' />
+        <h2 className='mt-4 font-semibold text-lg'>Completing sign in...</h2>
+        <p className='mt-2 text-muted-foreground text-sm'>
           Please wait while we complete your {provider} authentication
         </p>
       </div>

@@ -15,11 +15,12 @@ This project serves as a complete frontend boilerplate for FastAPI applications,
 
 ### 🌍 Internationalization (i18n)
 
-- **5 Languages**: English, Spanish, French, German, and Portuguese
+- **9 Languages**: English (US, GB), Spanish (ES, MX), French (FR, CA), German, and Portuguese (BR, PT)
 - **File-based Translations**: Organized JSON translation files
 - **React i18next**: Powerful internationalization framework
 - **Language Switcher**: Easy language switching in authentication flows
-- **Complete Coverage**: All UI components and pages translated
+- **Complete Coverage**: All UI components and pages translated with fallback support
+- **Automated Testing**: Translation consistency tests ensure no missing keys
 
 ### 🎨 UI & Design
 
@@ -39,7 +40,9 @@ This project serves as a complete frontend boilerplate for FastAPI applications,
 ### 🛠 Developer Experience
 
 - **TypeScript**: Full type safety throughout the application
-- **Vite**: Fast build tool with HMR
+- **Bun**: Ultra-fast JavaScript runtime and package manager
+- **Vite**: Fast build tool with Hot Module Replacement (HMR)
+- **Biome**: Lightning-fast linter and formatter (10-100x faster than ESLint/Prettier)
 - **TanStack Router**: Type-safe routing with automatic code splitting
 - **React Query**: Data fetching and caching
 - **Zustand**: Lightweight state management
@@ -92,7 +95,7 @@ This project uses Shadcn UI components, with some customized for better RTL supp
 
 ### Prerequisites
 
-- Node.js 18+ and pnpm
+- Node.js 18+ and Bun (or pnpm/npm/yarn)
 - FastAPI backend running (for authentication)
 
 ### Installation
@@ -107,7 +110,7 @@ cd boilerplate/frontend
 1. Install dependencies
 
 ```bash
-pnpm install
+bun install
 ```
 
 1. Configure environment variables
@@ -126,7 +129,7 @@ VITE_APP_NAME="Your App Name"
 1. Start the development server
 
 ```bash
-pnpm run dev
+bun run dev
 ```
 
 The application will be available at `http://localhost:5173`
@@ -134,11 +137,48 @@ The application will be available at `http://localhost:5173`
 ### Build for Production
 
 ```bash
-pnpm run build
-pnpm run preview
+bun run build
+bun run preview
+```
+
+### Code Quality
+
+Run linting and formatting:
+
+```bash
+# Check code quality (linting + formatting)
+bun run check
+
+# Auto-fix issues
+bun run check:write
+
+# Format only
+bun run format
+
+# Lint only
+bun run lint
 ```
 
 ## 🔧 Configuration
+
+### Code Quality with Biome
+
+This project uses [Biome](https://biomejs.dev/) for blazing-fast linting and formatting:
+
+**Why Biome?**
+- ⚡ **10-100x faster** than ESLint + Prettier
+- 🔧 **Single tool** for linting AND formatting
+- 🎯 **Zero configuration** needed to get started
+- 📦 **Smaller footprint** - one dependency instead of dozens
+
+**Configuration**: See `biome.json` for the complete setup. The configuration:
+- Enforces consistent code style (single quotes, 2-space indentation, no semicolons)
+- Checks for common errors and code quality issues
+- Automatically organizes imports
+- Excludes generated files and UI library components
+- Uses `.gitignore` for consistent file exclusions
+
+**Editor Integration**: Install the [Biome VS Code extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) for real-time linting and format-on-save.
 
 ### Authentication Setup
 
@@ -173,13 +213,15 @@ Add new languages by:
 
 **Authentication:** [Better Auth](https://www.better-auth.com/) integration
 
-**Internationalization:** [React i18next](https://react.i18next.com/) with 5 languages
+**Internationalization:** [React i18next](https://react.i18next.com/) with 9 language locales
 
 **Styling:** [Tailwind CSS](https://tailwindcss.com/) with custom design system
 
-**Icons:** [Lucide Icons](https://lucide.dev/icons/) and [Tabler Icons](https://tabler.io/icons)
+**Icons:** [Lucide Icons](https://lucide.dev/icons/) and [Radix Icons](https://www.radix-ui.com/icons)
 
-**Linting:** [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/) with TypeScript rules
+**Code Quality:** [Biome](https://biomejs.dev/) - Fast linter & formatter (replaces ESLint + Prettier)
+
+**Package Manager:** [Bun](https://bun.sh/) - Fast JavaScript runtime and package manager
 
 ## 🔍 Key Features Explained
 
@@ -197,10 +239,13 @@ The application automatically restores user sessions on page reload through:
 Complete i18n implementation with:
 
 - **Translation Files**: JSON files in `public/locales/[lang]/translation.json`
-- **Namespace Organization**: Structured translations (auth, dashboard, common, etc.)
+- **9 Language Variants**: en-US, en-GB, es-ES, es-MX, fr-FR, fr-CA, de-DE, pt-BR, pt-PT
+- **Namespace Organization**: Structured translations (auth, dashboard, admin, common, etc.)
 - **Dynamic Loading**: Language files loaded on demand
-- **Fallback Support**: English as default fallback language
+- **Fallback Support**: English (en-US) as default fallback language
 - **Context Integration**: Available throughout the app via `useTranslation` hook
+- **Type Safety**: All translation keys have default text fallbacks
+- **Automated Testing**: Consistency tests ensure all locales have matching keys
 
 ### Authentication Flow
 
@@ -210,10 +255,45 @@ Complete i18n implementation with:
 4. Protected routes check authentication status
 5. Session automatically restored on app reload
 
+## 🛠 Available Scripts
+
+```bash
+# Development
+bun run dev              # Start development server with HMR
+
+# Building
+bun run build            # Type-check and build for production
+bun run preview          # Preview production build locally
+
+# Code Quality (powered by Biome)
+bun run check            # Check linting & formatting (recommended for CI/CD)
+bun run check:write      # Auto-fix linting & formatting issues (recommended for development)
+bun run lint             # Run linter only
+bun run lint:write       # Run linter with auto-fix
+bun run format           # Format all code files
+bun run format:check     # Check formatting without modifying files
+
+# Testing
+bun test                 # Run all tests (includes i18n consistency tests)
+
+# Utilities
+bun run generate-routes  # Generate TanStack Router route tree
+bun run knip             # Find unused dependencies and exports
+```
+
 ## 🤝 Contributing
 
 1. Fork the repository
-1. Create a feature branch (`git checkout -b feature/amazing-feature`)
-1. Commit your changes (`git commit -m 'Add amazing feature'`)
-1. Push to the branch (`git push origin feature/amazing-feature`)
-1. Open a Pull Request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run `bun run check:write` to ensure code quality
+5. Run `bun test` to verify all tests pass
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+**Code Quality Standards:**
+- All code must pass `bun run check` (Biome linting + formatting)
+- All translation keys must have default fallback text
+- New translations must be added to all 9 language files
+- Run `bun test` to ensure i18n consistency

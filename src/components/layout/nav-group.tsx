@@ -1,6 +1,6 @@
-import { type ReactNode } from 'react'
 import { Link, useLocation } from '@tanstack/react-router'
 import { ChevronRight } from 'lucide-react'
+import { type ReactNode } from 'react'
 import {
   Collapsible,
   CollapsibleContent,
@@ -28,9 +28,9 @@ import {
 } from '../ui/dropdown-menu'
 import {
   type NavCollapsible,
+  type NavGroup as NavGroupProps,
   type NavItem,
   type NavLink,
-  type NavGroup as NavGroupProps,
 } from './types'
 
 export function NavGroup({ title, items }: NavGroupProps) {

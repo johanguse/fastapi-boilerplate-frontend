@@ -1,17 +1,20 @@
-import { useState } from 'react'
 import {
+  ArrowRightLeft,
+  Building2,
+  Edit,
   MoreHorizontal,
   Plus,
-  Building2,
   Settings,
   Trash2,
-  Edit,
-  ArrowRightLeft,
 } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/stores/auth-store'
-import { type Organization } from '@/lib/api'
-import { useOrganizations } from '@/hooks/use-organizations'
+import { ConfigDrawer } from '@/components/config-drawer'
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
+import { ThemeSwitch } from '@/components/theme-switch'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,12 +34,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
+import { useOrganizations } from '@/hooks/use-organizations'
+import { type Organization } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
 import { CreateOrganizationDialog } from './create-organization-dialog'
 import { EditOrganizationDialog } from './edit-organization-dialog'
 
@@ -95,17 +95,17 @@ export function OrganizationsList() {
         <Main>
           <div className='space-y-4'>
             <div className='flex items-center justify-between'>
-              <h1 className='text-3xl font-bold'>{t('organizations.title')}</h1>
+              <h1 className='font-bold text-3xl'>{t('organizations.title')}</h1>
             </div>
             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
               {Array.from({ length: 6 }, (_, i) => (
                 <Card key={`skeleton-${i + 1}`} className='animate-pulse'>
                   <CardHeader>
-                    <div className='bg-muted h-4 w-3/4 rounded'></div>
-                    <div className='bg-muted h-3 w-1/2 rounded'></div>
+                    <div className='h-4 w-3/4 rounded bg-muted'></div>
+                    <div className='h-3 w-1/2 rounded bg-muted'></div>
                   </CardHeader>
                   <CardContent>
-                    <div className='bg-muted h-16 rounded'></div>
+                    <div className='h-16 rounded bg-muted'></div>
                   </CardContent>
                 </Card>
               ))}
@@ -131,7 +131,7 @@ export function OrganizationsList() {
         <div className='space-y-6'>
           <div className='flex items-center justify-between'>
             <div>
-              <h1 className='text-3xl font-bold'>Organizations</h1>
+              <h1 className='font-bold text-3xl'>Organizations</h1>
               <p className='text-muted-foreground'>
                 Manage your organizations and switch between them
               </p>
@@ -150,8 +150,8 @@ export function OrganizationsList() {
               >
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <div className='flex items-center space-x-2'>
-                    <Building2 className='text-muted-foreground h-5 w-5' />
-                    <CardTitle className='text-sm font-medium'>
+                    <Building2 className='h-5 w-5 text-muted-foreground' />
+                    <CardTitle className='font-medium text-sm'>
                       {organization.name}
                     </CardTitle>
                   </div>
@@ -198,7 +198,7 @@ export function OrganizationsList() {
                 <CardContent>
                   <div className='space-y-2'>
                     {organization.slug && (
-                      <span className='bg-muted rounded px-2 py-1 font-mono text-xs'>
+                      <span className='rounded bg-muted px-2 py-1 font-mono text-xs'>
                         {organization.slug}
                       </span>
                     )}
@@ -207,14 +207,14 @@ export function OrganizationsList() {
                         <span className='text-muted-foreground text-xs'>
                           Plan:
                         </span>
-                        <span className='bg-primary/10 text-primary rounded px-2 py-0.5 text-xs font-medium'>
+                        <span className='rounded bg-primary/10 px-2 py-0.5 font-medium text-primary text-xs'>
                           {organization.plan}
                         </span>
                       </div>
                     )}
                   </div>
                   {organization.createdAt && (
-                    <p className='text-muted-foreground mt-2 text-xs'>
+                    <p className='mt-2 text-muted-foreground text-xs'>
                       Created{' '}
                       {new Date(organization.createdAt).toLocaleDateString()}
                     </p>
@@ -226,11 +226,11 @@ export function OrganizationsList() {
             {organizations.length === 0 && (
               <Card className='col-span-full'>
                 <CardContent className='flex flex-col items-center justify-center py-12'>
-                  <Building2 className='text-muted-foreground mb-4 h-12 w-12' />
-                  <h3 className='mb-2 text-lg font-medium'>
+                  <Building2 className='mb-4 h-12 w-12 text-muted-foreground' />
+                  <h3 className='mb-2 font-medium text-lg'>
                     No organizations yet
                   </h3>
-                  <p className='text-muted-foreground mb-4 text-center'>
+                  <p className='mb-4 text-center text-muted-foreground'>
                     Create your first organization to get started
                   </p>
                   <Button onClick={() => setCreateDialogOpen(true)}>

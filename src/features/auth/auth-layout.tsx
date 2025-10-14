@@ -22,7 +22,7 @@ export function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
           >
             <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
           </svg>
-          <h1 className='text-xl font-medium'>Shadcn Admin</h1>
+          <h1 className='font-medium text-xl'>Shadcn Admin</h1>
         </div>
         {children}
         <div className='mt-6 flex flex-col items-center justify-center gap-4'>

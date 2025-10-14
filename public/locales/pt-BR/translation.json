@@ -1,10 +1,10 @@
 {
   "navigation": {
-  "dashboard": "Painel",
-  "organizations": "Organizações",
-  "pricing": "Preços",
-  "settings": "Configurações",
-  "billing": "Faturamento",
+    "dashboard": "Painel",
+    "organizations": "Organizações",
+    "pricing": "Preços",
+    "settings": "Configurações",
+    "billing": "Faturamento",
     "support": "Suporte",
     "logout": "Sair",
     "tasks": "Tarefas",
@@ -103,13 +103,13 @@
     "orContinueWithSignUp": "Ou continue com"
   },
   "organizations": {
-  "title": "Organizações",
-  "subtitle": "Gerencie suas organizações e alterne entre elas",
-  "deleteDialogTitle": "Excluir Organização",
-  "deleteDialogDescription": "Tem certeza de que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita. Todos os dados associados a esta organização serão excluídos permanentemente.",
-  "deleting": "Excluindo...",
-  "noOrganizations": "Ainda não há organizações",
-  "noOrganizationsDescription": "Crie sua primeira organização para começar",
+    "title": "Organizações",
+    "subtitle": "Gerencie suas organizações e alterne entre elas",
+    "deleteDialogTitle": "Excluir Organização",
+    "deleteDialogDescription": "Tem certeza de que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita. Todos os dados associados a esta organização serão excluídos permanentemente.",
+    "deleting": "Excluindo...",
+    "noOrganizations": "Ainda não há organizações",
+    "noOrganizationsDescription": "Crie sua primeira organização para começar",
     "createNew": "Criar Organização",
     "name": "Nome da Organização",
     "description": "Descrição",
@@ -128,8 +128,11 @@
     "nameRequired": "Nome da organização é obrigatório",
   "namePlaceholder": "Digite o nome da organização",
   "descriptionPlaceholder": "Digite a descrição da organização (opcional)",
-  "created": "Created {{date}}",
-  "openMenu": "Open menu"
+  "noOrganizationsYet": "Ainda não há organizações",
+  "defaultOrganization": "Selecionar Organização",
+  "organizationCount": "{{count}} organizações",
+  "created": "Criado {{date}}",
+  "openMenu": "Abrir menu"
   },
   "common": {
     "loading": "Carregando...",

@@ -2,7 +2,7 @@
  * Centralized React Query hook for organization management
  * This is the single source of truth for organizations data
  */
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { organizationApi } from '@/lib/api'
 import { getCookie, setCookie } from '@/lib/cookies'

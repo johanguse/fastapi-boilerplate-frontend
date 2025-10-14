@@ -1,6 +1,12 @@
-import { type ChangeEvent, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import { SlidersHorizontal, ArrowUpAZ, ArrowDownAZ } from 'lucide-react'
+import { ArrowDownAZ, ArrowUpAZ, SlidersHorizontal } from 'lucide-react'
+import { type ChangeEvent, useState } from 'react'
+import { ConfigDrawer } from '@/components/config-drawer'
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
+import { ThemeSwitch } from '@/components/theme-switch'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -11,12 +17,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import { apps } from './data/apps'
 
 const route = getRouteApi('/_authenticated/apps/')
@@ -96,7 +96,7 @@ export function Apps() {
       {/* ===== Content ===== */}
       <Main fixed>
         <div>
-          <h1 className='text-2xl font-bold tracking-tight'>
+          <h1 className='font-bold text-2xl tracking-tight'>
             App Integrations
           </h1>
           <p className='text-muted-foreground'>
@@ -154,7 +154,7 @@ export function Apps() {
             >
               <div className='mb-8 flex items-center justify-between'>
                 <div
-                  className={`bg-muted flex size-10 items-center justify-center rounded-lg p-2`}
+                  className={`flex size-10 items-center justify-center rounded-lg bg-muted p-2`}
                 >
                   {app.logo}
                 </div>

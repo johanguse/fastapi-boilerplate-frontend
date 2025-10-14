@@ -1,31 +1,31 @@
-import { useMemo } from 'react'
 import {
-  Construction,
-  LayoutDashboard,
-  Monitor,
+  Activity,
+  Bell,
   Bug,
-  ListTodo,
+  Building2,
+  Construction,
   FileX,
   HelpCircle,
+  LayoutDashboard,
+  ListTodo,
   Lock,
-  Bell,
+  MessagesSquare,
+  Monitor,
   Package,
   Palette,
   ServerOff,
   Settings,
-  Wrench,
-  UserCog,
-  UserX,
-  Users,
-  MessagesSquare,
-  ShieldCheck,
-  Building2,
   Shield,
-  Activity,
+  ShieldCheck,
+  UserCog,
+  Users,
+  UserX,
+  Wrench,
 } from 'lucide-react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/stores/auth-store'
 import { useOrganizations } from '@/hooks/use-organizations'
+import { useAuth } from '@/stores/auth-store'
 import { type SidebarData } from '../types'
 
 export function useSidebarData(): SidebarData {
@@ -42,7 +42,9 @@ export function useSidebarData(): SidebarData {
       },
       teams: [
         {
-          name: activeOrganization?.name || t('organizations.title', 'Organizations'),
+          name:
+            activeOrganization?.name ||
+            t('organizations.title', 'Organizations'),
           logo: Building2,
           plan: activeOrganization?.plan || 'Free',
         },

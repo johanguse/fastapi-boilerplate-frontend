@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useOrganizations } from '@/hooks/use-organizations'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -21,6 +20,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useOrganizations } from '@/hooks/use-organizations'
 
 const formSchema = z.object({
   name: z
@@ -103,7 +103,7 @@ export function CreateOrganizationDialog({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
             {error && (
-              <div className='border-destructive/20 bg-destructive/10 rounded-md border p-3'>
+              <div className='rounded-md border border-destructive/20 bg-destructive/10 p-3'>
                 <p className='text-destructive text-sm'>{error}</p>
               </div>
             )}

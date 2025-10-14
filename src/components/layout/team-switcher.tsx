@@ -1,7 +1,6 @@
 import { useNavigate } from '@tanstack/react-router'
-import { ChevronsUpDown, Plus, Building2 } from 'lucide-react'
+import { Building2, ChevronsUpDown, Plus } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useOrganizations } from '@/hooks/use-organizations'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,6 +15,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { useOrganizations } from '@/hooks/use-organizations'
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
@@ -48,7 +48,7 @@ export function TeamSwitcher() {
               size='lg'
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <div className='bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+              <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
                 <Building2 className='size-4' />
               </div>
               <div className='grid flex-1 text-left text-sm leading-tight'>
@@ -106,7 +106,7 @@ export function TeamSwitcher() {
               className='gap-2 p-2'
               onSelect={handleCreateOrganization}
             >
-              <div className='bg-background flex size-6 items-center justify-center rounded-md border'>
+              <div className='flex size-6 items-center justify-center rounded-md border bg-background'>
                 <Plus className='size-4' />
               </div>
               <div className='font-medium'>{t('organizations.createNew')}</div>

@@ -128,6 +128,9 @@
     "deleting": "Deleting...",
     "noOrganizations": "No organizations yet",
     "noOrganizationsDescription": "Create your first organization to get started",
+    "noOrganizationsYet": "No organizations yet",
+    "defaultOrganization": "Select Organization",
+    "organizationCount": "{{count}} organizations",
     "created": "Created {{date}}",
     "openMenu": "Open menu"
   },

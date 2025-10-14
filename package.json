@@ -5,13 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "build": "bun test && tsc -b && vite build",
+    "lint": "biome lint .",
+    "lint:write": "biome lint --write .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check": "biome check .",
+    "check:write": "biome check --write .",
     "preview": "vite preview",
-    "format:check": "prettier --check .",
-    "format": "prettier --write .",
     "generate-routes": "tsr generate",
-    "knip": "knip"
+    "knip": "knip",
+    "test": "bun test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -64,27 +68,18 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "@eslint/js": "^9.37.0",
+    "@biomejs/biome": "^2.2.6",
     "@faker-js/faker": "^9.9.0",
-    "@tanstack/eslint-plugin-query": "^5.91.0",
     "@tanstack/react-query-devtools": "^5.90.2",
     "@tanstack/react-router-devtools": "^1.133.1",
     "@tanstack/router-cli": "^1.132.51",
     "@tanstack/router-plugin": "^1.132.56",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^24.7.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react-swc": "^4.1.0",
-    "eslint": "^9.37.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.23",
-    "globals": "^16.4.0",
     "knip": "^5.65.0",
-    "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.14",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.46.1",
     "vite": "^7.1.10"
   }
 }

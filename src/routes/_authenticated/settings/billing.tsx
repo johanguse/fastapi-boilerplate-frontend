@@ -1,21 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import {
-  CreditCard,
+  AlertCircle,
   Calendar,
+  CreditCard,
   DollarSign,
   Download,
   ExternalLink,
-  TrendingUp,
-  Users,
   FolderKanban,
   HardDrive,
-  AlertCircle,
+  TrendingUp,
+  Users,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { api } from '@/lib/api'
-import { useOrganizations } from '@/hooks/use-organizations'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -36,6 +34,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useOrganizations } from '@/hooks/use-organizations'
+import { api } from '@/lib/api'
 
 export const Route = createFileRoute('/_authenticated/settings/billing')({
   component: BillingPage,
@@ -244,8 +244,8 @@ function BillingPage() {
     return (
       <div className='container mx-auto px-4 py-8'>
         <div className='animate-pulse space-y-4'>
-          <div className='bg-muted h-8 w-48 rounded' />
-          <div className='bg-muted h-64 rounded' />
+          <div className='h-8 w-48 rounded bg-muted' />
+          <div className='h-64 rounded bg-muted' />
         </div>
       </div>
     )
@@ -283,7 +283,7 @@ function BillingPage() {
       {/* Header */}
       <div className='flex items-center justify-between'>
         <div>
-          <h1 className='text-3xl font-bold'>
+          <h1 className='font-bold text-3xl'>
             {t('billing.title', 'Billing & Subscription')}
           </h1>
           <p className='text-muted-foreground'>
@@ -308,7 +308,7 @@ function BillingPage() {
           <CardContent className='space-y-4'>
             <div className='flex items-center justify-between'>
               <div>
-                <p className='text-2xl font-bold'>
+                <p className='font-bold text-2xl'>
                   {subscription.plan.display_name}
                 </p>
                 <p className='text-muted-foreground text-sm'>
@@ -355,7 +355,7 @@ function BillingPage() {
                 </Link>
                 <Button
                   variant='outline'
-                  className='text-destructive w-full'
+                  className='w-full text-destructive'
                   onClick={handleCancelSubscription}
                 >
                   {t('billing.cancelSubscription', 'Cancel Subscription')}
@@ -437,8 +437,8 @@ function BillingPage() {
         <CardContent>
           {loadingHistory ? (
             <div className='animate-pulse space-y-2'>
-              <div className='bg-muted h-10 rounded' />
-              <div className='bg-muted h-10 rounded' />
+              <div className='h-10 rounded bg-muted' />
+              <div className='h-10 rounded bg-muted' />
             </div>
           ) : billingHistory?.items?.length ? (
             <Table>
@@ -482,7 +482,7 @@ function BillingPage() {
               </TableBody>
             </Table>
           ) : (
-            <p className='text-muted-foreground text-center'>
+            <p className='text-center text-muted-foreground'>
               {t('billing.noHistory', 'No billing history yet')}
             </p>
           )}

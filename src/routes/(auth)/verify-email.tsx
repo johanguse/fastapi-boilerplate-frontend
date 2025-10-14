@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react'
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
-import { CheckCircle2, XCircle, Loader2, Mail } from 'lucide-react'
+import { CheckCircle2, Loader2, Mail, XCircle } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { api } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -12,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { api } from '@/lib/api'
 
 export const Route = createFileRoute('/(auth)/verify-email')({
   component: VerifyEmailPage,
@@ -57,13 +57,13 @@ function VerifyEmailPage() {
   }, [token, navigate, t])
 
   return (
-    <div className='bg-muted/40 flex min-h-screen items-center justify-center p-4'>
+    <div className='flex min-h-screen items-center justify-center bg-muted/40 p-4'>
       <Card className='w-full max-w-md'>
         <CardHeader>
           <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full'>
             {status === 'loading' && (
               <div className='bg-primary/10'>
-                <Loader2 className='text-primary h-6 w-6 animate-spin' />
+                <Loader2 className='h-6 w-6 animate-spin text-primary' />
               </div>
             )}
             {status === 'success' && (
@@ -72,8 +72,8 @@ function VerifyEmailPage() {
               </div>
             )}
             {status === 'error' && (
-              <div className='bg-destructive/10 rounded-full p-3'>
-                <XCircle className='text-destructive h-6 w-6' />
+              <div className='rounded-full bg-destructive/10 p-3'>
+                <XCircle className='h-6 w-6 text-destructive' />
               </div>
             )}
           </div>
@@ -93,13 +93,13 @@ function VerifyEmailPage() {
 
         {status === 'success' && (
           <CardContent>
-            <div className='bg-muted/50 flex items-start gap-3 rounded-lg border p-4'>
-              <Mail className='text-muted-foreground mt-0.5 h-5 w-5' />
+            <div className='flex items-start gap-3 rounded-lg border bg-muted/50 p-4'>
+              <Mail className='mt-0.5 h-5 w-5 text-muted-foreground' />
               <div className='flex-1'>
-                <p className='text-sm font-medium'>
+                <p className='font-medium text-sm'>
                   {t('emailVerification.allSet')}
                 </p>
-                <p className='text-muted-foreground mt-1 text-sm'>
+                <p className='mt-1 text-muted-foreground text-sm'>
                   {t('emailVerification.redirectingToDashboard')}
                 </p>
               </div>

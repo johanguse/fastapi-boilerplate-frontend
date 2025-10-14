@@ -1,6 +1,6 @@
 import axios, { type AxiosResponse } from 'axios'
-import { useAuthStore } from '@/stores/auth-store'
 import { deleteCookie as deleteCookieUtil } from '@/lib/utils'
+import { useAuthStore } from '@/stores/auth-store'
 
 const API_BASE_URL = 'http://localhost:8000/api/v1'
 

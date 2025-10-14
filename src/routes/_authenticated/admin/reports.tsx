@@ -1,16 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import {
+  Activity,
+  Building2,
+  DollarSign,
   Shield,
   TrendingUp,
   Users,
-  Building2,
-  DollarSign,
-  Activity,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/stores/auth-store'
-import { adminApi } from '@/lib/api'
+import { ConfigDrawer } from '@/components/config-drawer'
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
+import { ThemeSwitch } from '@/components/theme-switch'
 import {
   Card,
   CardContent,
@@ -20,12 +24,8 @@ import {
 } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
+import { adminApi } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
 
 export const Route = createFileRoute('/_authenticated/admin/reports')({
   component: AdminReportsPage,
@@ -69,11 +69,11 @@ function AdminReportsPage() {
         <Main>
           <div className='flex h-full items-center justify-center'>
             <div className='text-center'>
-              <Shield className='text-muted-foreground mx-auto mb-4 h-12 w-12' />
-              <h1 className='text-2xl font-bold'>
+              <Shield className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
+              <h1 className='font-bold text-2xl'>
                 {t('admin.accessDeniedTitle', 'Access Denied')}
               </h1>
-              <p className='text-muted-foreground mt-2'>
+              <p className='mt-2 text-muted-foreground'>
                 {t(
                   'admin.accessDeniedDescription',
                   "You don't have permission to access this page."
@@ -101,11 +101,11 @@ function AdminReportsPage() {
         <div className='space-y-6'>
           {/* Header */}
           <div>
-            <h1 className='flex items-center gap-2 text-3xl font-bold'>
+            <h1 className='flex items-center gap-2 font-bold text-3xl'>
               <TrendingUp className='h-8 w-8' />
               {t('admin.reports.title', 'Reports & Analytics')}
             </h1>
-            <p className='text-muted-foreground mt-2'>
+            <p className='mt-2 text-muted-foreground'>
               {t(
                 'admin.reports.subtitle',
                 'Platform insights and performance metrics'
@@ -117,15 +117,15 @@ function AdminReportsPage() {
           <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'>
+                <CardTitle className='font-medium text-sm'>
                   {t('admin.reports.totalUsers', 'Total Users')}
                 </CardTitle>
-                <Users className='text-muted-foreground h-4 w-4' />
+                <Users className='h-4 w-4 text-muted-foreground' />
               </CardHeader>
               <CardContent>
                 {overview ? (
                   <>
-                    <div className='text-2xl font-bold'>
+                    <div className='font-bold text-2xl'>
                       {overview.users.total}
                     </div>
                     <p className='text-muted-foreground text-xs'>
@@ -144,15 +144,15 @@ function AdminReportsPage() {
 
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'>
+                <CardTitle className='font-medium text-sm'>
                   {t('admin.reports.organizations', 'Organizations')}
                 </CardTitle>
-                <Building2 className='text-muted-foreground h-4 w-4' />
+                <Building2 className='h-4 w-4 text-muted-foreground' />
               </CardHeader>
               <CardContent>
                 {overview ? (
                   <>
-                    <div className='text-2xl font-bold'>
+                    <div className='font-bold text-2xl'>
                       {overview.organizations.total}
                     </div>
                     <p className='text-muted-foreground text-xs'>
@@ -173,7 +173,7 @@ function AdminReportsPage() {
 
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'>
+                <CardTitle className='font-medium text-sm'>
                   {t(
                     'admin.reports.activeSubscriptions',
                     'Active Subscriptions'
@@ -184,7 +184,7 @@ function AdminReportsPage() {
               <CardContent>
                 {overview ? (
                   <>
-                    <div className='text-2xl font-bold'>
+                    <div className='font-bold text-2xl'>
                       {overview.subscriptions.active}
                     </div>
                     <p className='text-muted-foreground text-xs'>
@@ -202,7 +202,7 @@ function AdminReportsPage() {
 
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'>
+                <CardTitle className='font-medium text-sm'>
                   {t('admin.reports.totalRevenue', 'Total Revenue')}
                 </CardTitle>
                 <DollarSign className='h-4 w-4 text-green-600' />
@@ -210,7 +210,7 @@ function AdminReportsPage() {
               <CardContent>
                 {overview ? (
                   <>
-                    <div className='text-2xl font-bold'>
+                    <div className='font-bold text-2xl'>
                       ${(overview.revenue.total / 100).toFixed(2)}
                     </div>
                     <p className='text-muted-foreground text-xs'>
@@ -243,7 +243,10 @@ function AdminReportsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>
-                    {t('admin.reports.userGrowthLast30', 'User Growth (Last 30 Days)')}
+                    {t(
+                      'admin.reports.userGrowthLast30',
+                      'User Growth (Last 30 Days)'
+                    )}
                   </CardTitle>
                   <CardDescription>
                     {t(
@@ -276,7 +279,7 @@ function AdminReportsPage() {
                         {usersGrowth.data.map((point, idx) => (
                           <div
                             key={idx}
-                            className='bg-primary flex-1 rounded-t transition-all hover:opacity-80'
+                            className='flex-1 rounded-t bg-primary transition-all hover:opacity-80'
                             style={{
                               height: `${(point.count || 0) * 20 + 20}px`,
                               minHeight: '20px',
@@ -285,13 +288,13 @@ function AdminReportsPage() {
                           />
                         ))}
                       </div>
-                      <div className='text-muted-foreground text-center text-xs'>
+                      <div className='text-center text-muted-foreground text-xs'>
                         {usersGrowth.data[0]?.date} -{' '}
                         {usersGrowth.data[usersGrowth.data.length - 1]?.date}
                       </div>
                     </div>
                   ) : (
-                    <div className='text-muted-foreground flex h-[300px] items-center justify-center'>
+                    <div className='flex h-[300px] items-center justify-center text-muted-foreground'>
                       {t(
                         'admin.reports.noUserGrowthData',
                         'No user growth data available yet'
@@ -348,13 +351,13 @@ function AdminReportsPage() {
                           />
                         ))}
                       </div>
-                      <div className='text-muted-foreground text-center text-xs'>
+                      <div className='text-center text-muted-foreground text-xs'>
                         {revenueData.data[0]?.date} -{' '}
                         {revenueData.data[revenueData.data.length - 1]?.date}
                       </div>
                     </div>
                   ) : (
-                    <div className='text-muted-foreground flex h-[300px] items-center justify-center'>
+                    <div className='flex h-[300px] items-center justify-center text-muted-foreground'>
                       {t(
                         'admin.reports.noRevenueData',
                         'No revenue data available yet'
@@ -381,9 +384,9 @@ function AdminReportsPage() {
             </CardHeader>
             <CardContent className='space-y-2'>
               <div className='flex items-start gap-2'>
-                <Users className='text-muted-foreground mt-0.5 h-4 w-4' />
+                <Users className='mt-0.5 h-4 w-4 text-muted-foreground' />
                 <div>
-                  <p className='text-sm font-medium'>
+                  <p className='font-medium text-sm'>
                     {t('admin.reports.userData', 'User Data')}
                   </p>
                   <p className='text-muted-foreground text-xs'>
@@ -395,9 +398,9 @@ function AdminReportsPage() {
                 </div>
               </div>
               <div className='flex items-start gap-2'>
-                <DollarSign className='text-muted-foreground mt-0.5 h-4 w-4' />
+                <DollarSign className='mt-0.5 h-4 w-4 text-muted-foreground' />
                 <div>
-                  <p className='text-sm font-medium'>
+                  <p className='font-medium text-sm'>
                     {t('admin.reports.revenueData', 'Revenue Data')}
                   </p>
                   <p className='text-muted-foreground text-xs'>
@@ -409,9 +412,9 @@ function AdminReportsPage() {
                 </div>
               </div>
               <div className='flex items-start gap-2'>
-                <Activity className='text-muted-foreground mt-0.5 h-4 w-4' />
+                <Activity className='mt-0.5 h-4 w-4 text-muted-foreground' />
                 <div>
-                  <p className='text-sm font-medium'>
+                  <p className='font-medium text-sm'>
                     {t('admin.reports.activityLogs', 'Activity Logs')}
                   </p>
                   <p className='text-muted-foreground text-xs'>

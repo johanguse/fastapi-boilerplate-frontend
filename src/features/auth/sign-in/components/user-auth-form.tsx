@@ -1,13 +1,12 @@
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { Loader2, LogIn } from 'lucide-react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { useAuth } from '@/stores/auth-store'
-import { getLoginSchema, type LoginFormData } from '@/lib/auth'
-import { cn } from '@/lib/utils'
+import { SocialLogin } from '@/components/auth/social-login'
+import { PasswordInput } from '@/components/password-input'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -18,8 +17,9 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { SocialLogin } from '@/components/auth/social-login'
-import { PasswordInput } from '@/components/password-input'
+import { getLoginSchema, type LoginFormData } from '@/lib/auth'
+import { cn } from '@/lib/utils'
+import { useAuth } from '@/stores/auth-store'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLFormElement> {
   readonly redirectTo?: string
@@ -73,7 +73,7 @@ export function UserAuthForm({
 
       // Log the actual error for debugging
       if (error instanceof Error) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: Intentional error logging
         console.error('Login error:', error.message)
       }
     },
@@ -102,8 +102,8 @@ export function UserAuthForm({
         {...props}
       >
         {form.formState.errors.root && (
-          <div className='border-destructive bg-destructive/10 mb-4 rounded-md border p-3'>
-            <p className='text-destructive text-sm font-medium'>
+          <div className='mb-4 rounded-md border border-destructive bg-destructive/10 p-3'>
+            <p className='font-medium text-destructive text-sm'>
               {form.formState.errors.root.message}
             </p>
           </div>
@@ -153,7 +153,7 @@ export function UserAuthForm({
               <FormMessage />
               <Link
                 to='/forgot-password'
-                className='text-muted-foreground absolute end-0 -top-0.5 text-sm font-medium hover:opacity-75'
+                className='-top-0.5 absolute end-0 font-medium text-muted-foreground text-sm hover:opacity-75'
               >
                 {t('auth.forgotPassword', 'Forgot password?')}
               </Link>

@@ -4,13 +4,12 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
+  Languages,
   LogOut,
   Sparkles,
-  Languages,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/stores/auth-store'
-import useDialogState from '@/hooks/use-dialog-state'
+import { SignOutDialog } from '@/components/sign-out-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -19,10 +18,10 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
   DropdownMenuSub,
-  DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
   SidebarMenu,
@@ -30,7 +29,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { SignOutDialog } from '@/components/sign-out-dialog'
+import useDialogState from '@/hooks/use-dialog-state'
+import { useAuth } from '@/stores/auth-store'
 
 const languages = [
   { code: 'en-US', name: 'English (US)', flag: '🇺🇸' },
@@ -124,7 +124,8 @@ export function NavUser() {
                   <DropdownMenuSubTrigger>
                     <Languages />
                     <span>
-                      {currentLanguage.flag} {t('settings.language', 'Language')}
+                      {currentLanguage.flag}{' '}
+                      {t('settings.language', 'Language')}
                     </span>
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>

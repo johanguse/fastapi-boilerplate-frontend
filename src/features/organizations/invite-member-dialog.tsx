@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Mail, UserPlus } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { api } from '@/lib/api'
+import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -34,6 +33,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { api } from '@/lib/api'
 
 const invitationSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -130,7 +130,7 @@ export function InviteMemberDialog({
                   </FormLabel>
                   <FormControl>
                     <div className='relative'>
-                      <Mail className='text-muted-foreground absolute top-3 left-3 h-4 w-4' />
+                      <Mail className='absolute top-3 left-3 h-4 w-4 text-muted-foreground' />
                       <Input
                         placeholder='colleague@example.com'
                         className='pl-9'

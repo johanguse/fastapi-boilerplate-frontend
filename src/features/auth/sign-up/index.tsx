@@ -23,13 +23,10 @@ export function SignUp() {
           </CardTitle>
           <CardDescription>
             {t('auth.signUpDescription', 'Create your account below.')} <br />
-            {t(
-              'auth.signUpAlreadyHaveAccount',
-              'Already have an account?'
-            )}{' '}
+            {t('auth.signUpAlreadyHaveAccount', 'Already have an account?')}{' '}
             <Link
               to='/sign-in'
-              className='hover:text-primary underline underline-offset-4'
+              className='underline underline-offset-4 hover:text-primary'
             >
               {t('auth.signIn', 'Sign In')}
             </Link>
@@ -39,21 +36,21 @@ export function SignUp() {
           <SignUpForm />
         </CardContent>
         <CardFooter>
-          <p className='text-muted-foreground px-8 text-center text-sm'>
+          <p className='px-8 text-center text-muted-foreground text-sm'>
             {t(
               'auth.signUpByCreating',
               'By creating an account, you agree to our'
             )}{' '}
             <a
               href='/terms'
-              className='hover:text-primary underline underline-offset-4'
+              className='underline underline-offset-4 hover:text-primary'
             >
               {t('auth.terms', 'Terms of Service')}
             </a>{' '}
             and{' '}
             <a
               href='/privacy'
-              className='hover:text-primary underline underline-offset-4'
+              className='underline underline-offset-4 hover:text-primary'
             >
               {t('auth.privacy', 'Privacy Policy')}
             </a>

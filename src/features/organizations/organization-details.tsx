@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
-import { Users, Settings, UserPlus } from 'lucide-react'
+import { Settings, UserPlus, Users } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { api } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -12,6 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { api } from '@/lib/api'
 import { InviteMemberDialog } from './invite-member-dialog'
 import { PendingInvitations } from './pending-invitations'
 
@@ -47,9 +47,9 @@ export function OrganizationDetails() {
     <div className='container mx-auto space-y-6 p-6'>
       <div className='flex items-center justify-between'>
         <div>
-          <h1 className='text-3xl font-bold'>{organization.name}</h1>
+          <h1 className='font-bold text-3xl'>{organization.name}</h1>
           {organization.description && (
-            <p className='text-muted-foreground mt-2'>
+            <p className='mt-2 text-muted-foreground'>
               {organization.description}
             </p>
           )}
@@ -99,7 +99,7 @@ export function OrganizationDetails() {
             <CardContent>
               <div className='space-y-4'>
                 {members.length === 0 ? (
-                  <div className='text-muted-foreground py-8 text-center'>
+                  <div className='py-8 text-center text-muted-foreground'>
                     {t('organizations.noMembers', 'No members yet')}
                   </div>
                 ) : (
@@ -122,7 +122,7 @@ export function OrganizationDetails() {
                               {member.user.email}
                             </p>
                           </div>
-                          <span className='bg-primary/10 rounded-full px-3 py-1 text-sm font-medium'>
+                          <span className='rounded-full bg-primary/10 px-3 py-1 font-medium text-sm'>
                             {member.role}
                           </span>
                         </div>

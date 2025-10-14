@@ -1,11 +1,15 @@
-import { useState } from 'react'
-import { formatDistanceToNow } from 'date-fns'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { Activity, Shield, Filter, User } from 'lucide-react'
+import { formatDistanceToNow } from 'date-fns'
+import { Activity, Filter, Shield, User } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/stores/auth-store'
-import { adminApi } from '@/lib/api'
+import { ConfigDrawer } from '@/components/config-drawer'
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
+import { ThemeSwitch } from '@/components/theme-switch'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -32,12 +36,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
+import { adminApi } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
 
 export const Route = createFileRoute('/_authenticated/admin/activity-logs')({
   component: ActivityLogsPage,
@@ -98,11 +98,11 @@ function ActivityLogsPage() {
         <Main>
           <div className='flex h-full items-center justify-center'>
             <div className='text-center'>
-              <Shield className='text-muted-foreground mx-auto mb-4 h-12 w-12' />
-              <h1 className='text-2xl font-bold'>
+              <Shield className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
+              <h1 className='font-bold text-2xl'>
                 {t('admin.accessDeniedTitle', 'Access Denied')}
               </h1>
-              <p className='text-muted-foreground mt-2'>
+              <p className='mt-2 text-muted-foreground'>
                 {t(
                   'admin.accessDeniedDescription',
                   "You don't have permission to access this page."
@@ -132,11 +132,11 @@ function ActivityLogsPage() {
         <div className='space-y-6'>
           {/* Header */}
           <div>
-            <h1 className='flex items-center gap-2 text-3xl font-bold'>
+            <h1 className='flex items-center gap-2 font-bold text-3xl'>
               <Activity className='h-8 w-8' />
               {t('admin.activityLogs.title', 'Activity Logs')}
             </h1>
-            <p className='text-muted-foreground mt-2'>
+            <p className='mt-2 text-muted-foreground'>
               {t(
                 'admin.activityLogs.subtitle',
                 'Monitor all system activities and user actions'
@@ -175,7 +175,10 @@ function ActivityLogsPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value='auth'>
-                        {t('admin.activityLogs.authentication', 'Authentication')}
+                        {t(
+                          'admin.activityLogs.authentication',
+                          'Authentication'
+                        )}
                       </SelectItem>
                       <SelectItem value='user'>
                         {t('admin.activityLogs.user', 'User')}
@@ -200,7 +203,7 @@ function ActivityLogsPage() {
                 </div>
                 <div className='flex-1'>
                   <div className='relative'>
-                    <User className='text-muted-foreground absolute top-3 left-3 h-4 w-4' />
+                    <User className='absolute top-3 left-3 h-4 w-4 text-muted-foreground' />
                     <Input
                       placeholder={t(
                         'admin.activityLogs.filterByUserId',
@@ -266,10 +269,13 @@ function ActivityLogsPage() {
                   ))}
                 </div>
               ) : !logsData?.items?.length ? (
-                <div className='text-muted-foreground py-12 text-center'>
+                <div className='py-12 text-center text-muted-foreground'>
                   <Activity className='mx-auto mb-4 h-12 w-12 opacity-50' />
-                  <p className='text-lg font-medium'>
-                    {t('admin.activityLogs.noActivityLogs', 'No activity logs found')}
+                  <p className='font-medium text-lg'>
+                    {t(
+                      'admin.activityLogs.noActivityLogs',
+                      'No activity logs found'
+                    )}
                   </p>
                   <p className='mt-1 text-sm'>
                     {actionType || searchUserId
@@ -349,7 +355,7 @@ function ActivityLogsPage() {
                                 addSuffix: true,
                               })}
                             </TableCell>
-                            <TableCell className='text-muted-foreground font-mono text-sm'>
+                            <TableCell className='font-mono text-muted-foreground text-sm'>
                               {log.ip_address ||
                                 t('admin.activityLogs.notAvailable', 'N/A')}
                             </TableCell>

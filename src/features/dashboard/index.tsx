@@ -1,5 +1,13 @@
 import { useLocation } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { ConfigDrawer } from '@/components/config-drawer'
+import { LanguageSwitcher } from '@/components/language-switcher'
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { TopNav } from '@/components/layout/top-nav'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
+import { ThemeSwitch } from '@/components/theme-switch'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,14 +17,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { LanguageSwitcher } from '@/components/language-switcher'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { TopNav } from '@/components/layout/top-nav'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import { Overview } from './components/overview'
 import { RecentSales } from './components/recent-sales'
 
@@ -68,7 +68,7 @@ export function Dashboard() {
       {/* ===== Main ===== */}
       <Main>
         <div className='mb-2 flex items-center justify-between space-y-2'>
-          <h1 className='text-2xl font-bold tracking-tight'>
+          <h1 className='font-bold text-2xl tracking-tight'>
             {t('dashboard.title')}
           </h1>
           <div className='flex items-center space-x-2'>
@@ -98,7 +98,7 @@ export function Dashboard() {
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
+                  <CardTitle className='font-medium text-sm'>
                     {t('dashboard.metrics.totalRevenue')}
                   </CardTitle>
                   <svg
@@ -109,13 +109,13 @@ export function Dashboard() {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     strokeWidth='2'
-                    className='text-muted-foreground h-4 w-4'
+                    className='h-4 w-4 text-muted-foreground'
                   >
                     <path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' />
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>$45,231.89</div>
+                  <div className='font-bold text-2xl'>$45,231.89</div>
                   <p className='text-muted-foreground text-xs'>
                     {t('dashboard.metrics.fromLastMonth')}
                   </p>
@@ -123,7 +123,7 @@ export function Dashboard() {
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
+                  <CardTitle className='font-medium text-sm'>
                     {t('dashboard.metrics.subscriptions')}
                   </CardTitle>
                   <svg
@@ -134,7 +134,7 @@ export function Dashboard() {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     strokeWidth='2'
-                    className='text-muted-foreground h-4 w-4'
+                    className='h-4 w-4 text-muted-foreground'
                   >
                     <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
                     <circle cx='9' cy='7' r='4' />
@@ -142,7 +142,7 @@ export function Dashboard() {
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+2350</div>
+                  <div className='font-bold text-2xl'>+2350</div>
                   <p className='text-muted-foreground text-xs'>
                     {t('dashboard.metrics.newToday')}
                   </p>
@@ -150,7 +150,7 @@ export function Dashboard() {
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
+                  <CardTitle className='font-medium text-sm'>
                     {t('dashboard.metrics.sales')}
                   </CardTitle>
                   <svg
@@ -161,14 +161,14 @@ export function Dashboard() {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     strokeWidth='2'
-                    className='text-muted-foreground h-4 w-4'
+                    className='h-4 w-4 text-muted-foreground'
                   >
                     <rect width='20' height='14' x='2' y='5' rx='2' />
                     <path d='M2 10h20' />
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+12,234</div>
+                  <div className='font-bold text-2xl'>+12,234</div>
                   <p className='text-muted-foreground text-xs'>
                     {t('dashboard.metrics.newThisHour')}
                   </p>
@@ -176,7 +176,7 @@ export function Dashboard() {
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
+                  <CardTitle className='font-medium text-sm'>
                     {t('dashboard.metrics.activeNow')}
                   </CardTitle>
                   <svg
@@ -187,13 +187,13 @@ export function Dashboard() {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     strokeWidth='2'
-                    className='text-muted-foreground h-4 w-4'
+                    className='h-4 w-4 text-muted-foreground'
                   >
                     <path d='M22 12h-4l-3 9L9 3l-3 9H2' />
                   </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+573</div>
+                  <div className='font-bold text-2xl'>+573</div>
                   <p className='text-muted-foreground text-xs'>
                     {t('dashboard.metrics.sinceLastHour')}
                   </p>

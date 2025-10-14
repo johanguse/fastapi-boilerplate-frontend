@@ -123,13 +123,16 @@
     "nameRequired": "Le nom de l'organisation est requis",
     "namePlaceholder": "Entrez le nom de l'organisation",
     "descriptionPlaceholder": "Entrez la description de l'organisation (optionnel)",
-    "deleteDialogTitle": "Delete Organization",
-    "deleteDialogDescription": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone. All data associated with this organization will be permanently removed.",
-    "deleting": "Deleting...",
-    "noOrganizations": "No organizations yet",
-    "noOrganizationsDescription": "Create your first organization to get started",
-    "created": "Created {{date}}",
-    "openMenu": "Open menu"
+    "deleteDialogTitle": "Supprimer l'Organisation",
+    "deleteDialogDescription": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action ne peut être annulée. Toutes les données associées à cette organisation seront supprimées définitivement.",
+    "deleting": "Suppression...",
+    "noOrganizations": "Aucune organisation pour le moment",
+    "noOrganizationsDescription": "Créez votre première organisation pour commencer",
+    "noOrganizationsYet": "Aucune organisation pour le moment",
+    "defaultOrganization": "Sélectionner une Organisation",
+    "organizationCount": "{{count}} organisations",
+    "created": "Créé {{date}}",
+    "openMenu": "Ouvrir le menu"
   },
   "common": {
     "loading": "Chargement...",
