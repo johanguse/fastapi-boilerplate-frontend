@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import { signIn } from '@/lib/auth'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 
 interface SocialLoginProps {
   className?: string
@@ -76,10 +76,14 @@ const providerIcons = {
 } as const
 
 const providerColors = {
-  google: 'hover:bg-blue-50 border-blue-200 text-blue-700',
-  github: 'hover:bg-gray-50 border-gray-200 text-gray-700',
-  microsoft: 'hover:bg-blue-50 border-blue-200 text-blue-700',
-  apple: 'hover:bg-gray-50 border-gray-900 text-gray-900',
+  google:
+    'hover:bg-blue-50 dark:hover:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400',
+  github:
+    'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
+  microsoft:
+    'hover:bg-blue-50 dark:hover:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400',
+  apple:
+    'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100',
 } as const
 
 const socialProviders = [
@@ -105,7 +109,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
 
       if (result.error) {
         // Handle error from Better Auth
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: Intentional error logging
         console.error('Social login error:', result.error)
         toast.error(
           t('auth.socialLogin.error.description', { provider: providerId })
@@ -115,7 +119,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
         toast.success(t('auth.socialLogin.success', { provider: providerId }))
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
+      // biome-ignore lint/suspicious/noConsole: Intentional error logging
       console.error('Social login failed:', error)
       toast.error(
         t('auth.socialLogin.error.description', { provider: providerId })
@@ -140,7 +144,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
           <span className='w-full border-t' />
         </div>
         <div className='relative flex justify-center text-xs uppercase'>
-          <span className='bg-background text-muted-foreground px-2'>
+          <span className='bg-background px-2 text-muted-foreground'>
             {t('auth.socialLogin.divider')}
           </span>
         </div>
@@ -175,7 +179,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
         })}
       </div>
 
-      <p className='text-muted-foreground text-center text-xs'>
+      <p className='text-center text-muted-foreground text-xs'>
         {t('auth.socialLogin.disclaimer')}
       </p>
     </div>

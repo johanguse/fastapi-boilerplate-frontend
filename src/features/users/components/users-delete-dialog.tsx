@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
 import { AlertTriangle } from 'lucide-react'
-import { showSubmittedData } from '@/lib/show-submitted-data'
+import { useState } from 'react'
+import { ConfirmDialog } from '@/components/confirm-dialog'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { ConfirmDialog } from '@/components/confirm-dialog'
+import { showSubmittedData } from '@/lib/show-submitted-data'
 import { type User } from '../data/schema'
 
 type UserDeleteDialogProps = {
@@ -38,7 +38,7 @@ export function UsersDeleteDialog({
       title={
         <span className='text-destructive'>
           <AlertTriangle
-            className='stroke-destructive me-1 inline-block'
+            className='me-1 inline-block stroke-destructive'
             size={18}
           />{' '}
           Delete User
@@ -51,9 +51,7 @@ export function UsersDeleteDialog({
             <span className='font-bold'>{currentRow.username}</span>?
             <br />
             This action will permanently remove the user with the role of{' '}
-            <span className='font-bold'>
-              {currentRow.role.toUpperCase()}
-            </span>{' '}
+            <span className='font-bold'>{currentRow.role.toUpperCase()}</span>{' '}
             from the system. This cannot be undone.
           </p>
 

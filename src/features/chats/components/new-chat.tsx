@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
 import { Check, X } from 'lucide-react'
-import { showSubmittedData } from '@/lib/show-submitted-data'
+import { useEffect, useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,6 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { showSubmittedData } from '@/lib/show-submitted-data'
 import { type ChatUser } from '../data/chat-types'
 
 type User = Omit<ChatUser, 'messages'>
@@ -54,13 +54,13 @@ export function NewChat({ users, onOpenChange, open }: NewChatProps) {
           <DialogTitle>New message</DialogTitle>
         </DialogHeader>
         <div className='flex flex-col gap-4'>
-          <div className='flex flex-wrap items-baseline-last gap-2'>
-            <span className='text-muted-foreground min-h-6 text-sm'>To:</span>
+          <div className='items-baseline-last flex flex-wrap gap-2'>
+            <span className='min-h-6 text-muted-foreground text-sm'>To:</span>
             {selectedUsers.map((user) => (
               <Badge key={user.id} variant='default'>
                 {user.fullName}
                 <button
-                  className='ring-offset-background focus:ring-ring ms-1 rounded-full outline-hidden focus:ring-2 focus:ring-offset-2'
+                  className='ms-1 rounded-full outline-hidden ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2'
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       handleRemoveUser(user.id)
@@ -68,7 +68,7 @@ export function NewChat({ users, onOpenChange, open }: NewChatProps) {
                   }}
                   onClick={() => handleRemoveUser(user.id)}
                 >
-                  <X className='text-muted-foreground hover:text-foreground h-3 w-3' />
+                  <X className='h-3 w-3 text-muted-foreground hover:text-foreground' />
                 </button>
               </Badge>
             ))}
@@ -85,7 +85,7 @@ export function NewChat({ users, onOpenChange, open }: NewChatProps) {
                   <CommandItem
                     key={user.id}
                     onSelect={() => handleSelectUser(user)}
-                    className='hover:bg-accent hover:text-accent-foreground flex items-center justify-between gap-2'
+                    className='flex items-center justify-between gap-2 hover:bg-accent hover:text-accent-foreground'
                   >
                     <div className='flex items-center gap-2'>
                       <img
@@ -94,7 +94,7 @@ export function NewChat({ users, onOpenChange, open }: NewChatProps) {
                         className='h-8 w-8 rounded-full'
                       />
                       <div className='flex flex-col'>
-                        <span className='text-sm font-medium'>
+                        <span className='font-medium text-sm'>
                           {user.fullName}
                         </span>
                         <span className='text-accent-foreground/70 text-xs'>

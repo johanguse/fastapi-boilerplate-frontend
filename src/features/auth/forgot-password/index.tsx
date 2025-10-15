@@ -19,23 +19,26 @@ export function ForgotPassword() {
       <Card className='gap-4'>
         <CardHeader>
           <CardTitle className='text-lg tracking-tight'>
-            {t('auth.forgotPasswordTitle')}
+            {t('auth.forgotPasswordTitle', 'Forgot Password')}
           </CardTitle>
           <CardDescription>
-            {t('auth.forgotPasswordDescription')}
+            {t(
+              'auth.forgotPasswordDescription',
+              'Enter your email to reset your password.'
+            )}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <ForgotPasswordForm />
         </CardContent>
         <CardFooter>
-          <p className='text-muted-foreground mx-auto px-8 text-center text-sm text-balance'>
-            {t('auth.dontHaveAccount')}{' '}
+          <p className='mx-auto text-balance px-8 text-center text-muted-foreground text-sm'>
+            {t('auth.dontHaveAccount', "Don't have an account?")}{' '}
             <Link
               to='/sign-up'
-              className='hover:text-primary underline underline-offset-4'
+              className='underline underline-offset-4 hover:text-primary'
             >
-              {t('auth.signUp')}
+              {t('auth.signUp', 'Sign Up')}
             </Link>
             .
           </p>

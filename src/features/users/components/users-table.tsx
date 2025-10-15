@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react'
 import {
-  type SortingState,
-  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -9,10 +6,13 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  type SortingState,
   useReactTable,
+  type VisibilityState,
 } from '@tanstack/react-table'
-import { cn } from '@/lib/utils'
-import { type NavigateFn, useTableUrlState } from '@/hooks/use-table-url-state'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
 import {
   Table,
   TableBody,
@@ -21,14 +21,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
+import { type NavigateFn, useTableUrlState } from '@/hooks/use-table-url-state'
+import { cn } from '@/lib/utils'
 import { roles } from '../data/data'
 import { type User } from '../data/schema'
 import { DataTableBulkActions } from './data-table-bulk-actions'
 import { usersColumns as columns } from './users-columns'
 
 declare module '@tanstack/react-table' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // biome-ignore lint/correctness/noUnusedVariables: Type parameters required by TanStack Table
   interface ColumnMeta<TData, TValue> {
     className: string
   }
@@ -41,6 +42,7 @@ type DataTableProps = {
 }
 
 export function UsersTable({ data, search, navigate }: DataTableProps) {
+  const { t } = useTranslation()
   // Local UI-only states
   const [rowSelection, setRowSelection] = useState({})
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -102,22 +104,22 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
     <div className='space-y-4 max-sm:has-[div[role="toolbar"]]:mb-16'>
       <DataTableToolbar
         table={table}
-        searchPlaceholder='Filter users...'
+        searchPlaceholder={t('users.filterUsers', 'Filter users...')}
         searchKey='username'
         filters={[
           {
             columnId: 'status',
-            title: 'Status',
+            title: t('users.status', 'Status'),
             options: [
-              { label: 'Active', value: 'active' },
-              { label: 'Inactive', value: 'inactive' },
-              { label: 'Invited', value: 'invited' },
-              { label: 'Suspended', value: 'suspended' },
+              { label: t('users.active', 'Active'), value: 'active' },
+              { label: t('users.inactive', 'Inactive'), value: 'inactive' },
+              { label: t('users.invited', 'Invited'), value: 'invited' },
+              { label: t('users.suspended', 'Suspended'), value: 'suspended' },
             ],
           },
           {
             columnId: 'role',
-            title: 'Role',
+            title: t('users.role', 'Role'),
             options: roles.map((role) => ({ ...role })),
           },
         ]}
@@ -179,7 +181,7 @@ export function UsersTable({ data, search, navigate }: DataTableProps) {
                   colSpan={columns.length}
                   className='h-24 text-center'
                 >
-                  No results.
+                  {t('users.noResults', 'No results.')}
                 </TableCell>
               </TableRow>
             )}

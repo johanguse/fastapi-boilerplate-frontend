@@ -6,10 +6,10 @@ export function SignIn2() {
   const { t } = useTranslation()
 
   return (
-    <div className='relative container grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
-      <div className='bg-muted relative hidden h-full flex-col p-10 text-white lg:flex dark:border-e'>
+    <div className='container relative grid h-svh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
+      <div className='relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-e'>
         <div className='absolute inset-0 bg-zinc-900' />
-        <div className='relative z-20 flex items-center text-lg font-medium'>
+        <div className='relative z-20 flex items-center font-medium text-lg'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 24 24'
@@ -47,28 +47,28 @@ export function SignIn2() {
       <div className='lg:p-8'>
         <div className='mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]'>
           <div className='flex flex-col space-y-2 text-start'>
-            <h1 className='text-2xl font-semibold tracking-tight'>
-              {t('auth.loginTitle')}
+            <h1 className='font-semibold text-2xl tracking-tight'>
+              {t('auth.loginTitle', 'Sign In')}
             </h1>
             <p className='text-muted-foreground text-sm'>
-              {t('auth.loginDescription')}
+              {t('auth.loginDescription', 'Sign in to your account')}
             </p>
           </div>
           <UserAuthForm />
-          <p className='text-muted-foreground px-8 text-center text-sm'>
-            {t('auth.byClickingLogin')}{' '}
+          <p className='px-8 text-center text-muted-foreground text-sm'>
+            {t('auth.byClickingLogin', 'By clicking login, you agree to our')}{' '}
             <a
               href='/terms'
-              className='hover:text-primary underline underline-offset-4'
+              className='underline underline-offset-4 hover:text-primary'
             >
-              {t('auth.terms')}
+              {t('auth.terms', 'Terms of Service')}
             </a>{' '}
             and{' '}
             <a
               href='/privacy'
-              className='hover:text-primary underline underline-offset-4'
+              className='underline underline-offset-4 hover:text-primary'
             >
-              {t('auth.privacy')}
+              {t('auth.privacy', 'Privacy Policy')}
             </a>
             .
           </p>

@@ -1,4 +1,6 @@
-import { ChevronsUpDown, Plus, Building2 } from 'lucide-react'
+import { useNavigate } from '@tanstack/react-router'
+import { Building2, ChevronsUpDown, Plus } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,12 +15,29 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { useOrganizations } from '@/hooks/use-organizations'
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
+  const navigate = useNavigate()
+  const { t } = useTranslation()
+  const { organizations, activeOrganization, setActiveOrganization } =
+    useOrganizations()
 
-  // Organization functionality temporarily disabled during auth migration
-  // TODO: Re-implement organization support with Better Auth
+  // Use active organization from React Query, or show placeholder
+  const displayOrganization = activeOrganization || {
+    id: 'default',
+    name: t('organizations.defaultOrganization'),
+    slug: 'default',
+  }
+
+  const handleCreateOrganization = () => {
+    navigate({ to: '/organizations' })
+  }
+
+  const handleSelectOrganization = (orgId: string) => {
+    setActiveOrganization(orgId)
+  }
 
   return (
     <SidebarMenu>
@@ -29,14 +48,20 @@ export function TeamSwitcher() {
               size='lg'
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <div className='bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+              <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
                 <Building2 className='size-4' />
               </div>
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-semibold'>
-                  Default Organization
+                  {displayOrganization.name}
                 </span>
-                <span className='truncate text-xs'>Starter Plan</span>
+                <span className='truncate text-xs'>
+                  {organizations.length > 0
+                    ? t('organizations.organizationCount', {
+                        count: organizations.length,
+                      })
+                    : t('organizations.noOrganizations')}
+                </span>
               </div>
               <ChevronsUpDown className='ml-auto' />
             </SidebarMenuButton>
@@ -48,22 +73,43 @@ export function TeamSwitcher() {
             sideOffset={4}
           >
             <DropdownMenuLabel className='text-muted-foreground text-xs'>
-              Organizations
+              {t('organizations.title')}
             </DropdownMenuLabel>
-            <DropdownMenuItem className='gap-2 p-2'>
-              <div className='flex size-6 items-center justify-center rounded-sm border'>
-                <Building2 className='size-4 shrink-0' />
-              </div>
-              Default Organization
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className='gap-2 p-2' disabled>
-              <div className='bg-background flex size-6 items-center justify-center rounded-md border'>
+            {organizations.length > 0 ? (
+              <>
+                {organizations.map((org) => (
+                  <DropdownMenuItem
+                    key={org.id}
+                    className='gap-2 p-2'
+                    onSelect={() => handleSelectOrganization(org.id)}
+                  >
+                    <div className='flex size-6 items-center justify-center rounded-sm border'>
+                      <Building2 className='size-4 shrink-0' />
+                    </div>
+                    {org.name}
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+              </>
+            ) : (
+              <>
+                <DropdownMenuItem className='gap-2 p-2' disabled>
+                  <div className='flex size-6 items-center justify-center rounded-sm border'>
+                    <Building2 className='size-4 shrink-0' />
+                  </div>
+                  {t('organizations.noOrganizationsYet')}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+              </>
+            )}
+            <DropdownMenuItem
+              className='gap-2 p-2'
+              onSelect={handleCreateOrganization}
+            >
+              <div className='flex size-6 items-center justify-center rounded-md border bg-background'>
                 <Plus className='size-4' />
               </div>
-              <div className='text-muted-foreground font-medium'>
-                Add organization (coming soon)
-              </div>
+              <div className='font-medium'>{t('organizations.createNew')}</div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

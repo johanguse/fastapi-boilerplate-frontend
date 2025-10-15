@@ -20,28 +20,30 @@ export function SignIn() {
       <Card className='gap-4'>
         <CardHeader>
           <CardTitle className='text-lg tracking-tight'>
-            {t('auth.loginTitle')}
+            {t('auth.loginTitle', 'Sign In')}
           </CardTitle>
-          <CardDescription>{t('auth.loginDescription')}</CardDescription>
+          <CardDescription>
+            {t('auth.loginDescription', 'Sign in to your account')}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <UserAuthForm redirectTo={redirect} />
         </CardContent>
         <CardFooter>
-          <p className='text-muted-foreground px-8 text-center text-sm'>
-            {t('auth.byClickingLogin')}{' '}
+          <p className='px-8 text-center text-muted-foreground text-sm'>
+            {t('auth.byClickingLogin', 'By clicking login, you agree to our')}{' '}
             <a
               href='/terms'
-              className='hover:text-primary underline underline-offset-4'
+              className='underline underline-offset-4 hover:text-primary'
             >
-              {t('auth.terms')}
+              {t('auth.terms', 'Terms of Service')}
             </a>{' '}
             and{' '}
             <a
               href='/privacy'
-              className='hover:text-primary underline underline-offset-4'
+              className='underline underline-offset-4 hover:text-primary'
             >
-              {t('auth.privacy')}
+              {t('auth.privacy', 'Privacy Policy')}
             </a>
             .
           </p>

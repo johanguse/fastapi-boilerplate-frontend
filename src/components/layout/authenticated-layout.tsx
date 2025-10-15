@@ -1,9 +1,7 @@
 import { Outlet } from '@tanstack/react-router'
-import { useAuth } from '@/stores/auth-store'
-import { getCookie } from '@/lib/cookies'
-import { cn } from '@/lib/utils'
-import { LayoutProvider } from '@/context/layout-provider'
-import { SearchProvider } from '@/context/search-provider'
+import { EmailVerificationBanner } from '@/components/email-verification-banner'
+import { AppSidebar } from '@/components/layout/app-sidebar'
+import { SkipToMain } from '@/components/skip-to-main'
 import {
   SidebarContent,
   SidebarFooter,
@@ -12,8 +10,11 @@ import {
   SidebarProvider,
   SidebarRail,
 } from '@/components/ui/sidebar'
-import { AppSidebar } from '@/components/layout/app-sidebar'
-import { SkipToMain } from '@/components/skip-to-main'
+import { LayoutProvider } from '@/context/layout-provider'
+import { SearchProvider } from '@/context/search-provider'
+import { getCookie } from '@/lib/cookies'
+import { cn } from '@/lib/utils'
+import { useAuth } from '@/stores/auth-store'
 import { useSidebarData } from './hooks/use-sidebar-data'
 import { NavGroup } from './nav-group'
 import { NavUser } from './nav-user'
@@ -27,7 +28,7 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
   const defaultOpen = getCookie('sidebar_state') !== 'false'
   const sidebarData = useSidebarData()
   // Initialize auth data loading
-  useAuth()
+  const { user } = useAuth()
 
   return (
     <SearchProvider>
@@ -63,6 +64,11 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
               '@container/content'
             )}
           >
+            {user && !user.is_verified && (
+              <div className='px-4 pt-4'>
+                <EmailVerificationBanner email={user.email} />
+              </div>
+            )}
             {children ?? <Outlet />}
           </SidebarInset>
         </LayoutProvider>

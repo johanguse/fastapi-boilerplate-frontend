@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 import {
-  signIn,
-  signUp,
-  signOut,
   getSession,
-  type User,
   type Session,
+  signIn,
+  signOut,
+  signUp,
+  type User,
 } from '@/lib/auth'
 
 interface AuthState {
@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     // Internal helper, not exported on the store type
     try {
       // Unwrap AxiosError-like shapes or nested { error: {...} }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: Dynamic error unwrapping requires any
       const unwrap = (input: any) => {
         // AxiosError with response.data
         if (input && input.isAxiosError && input.response) {
@@ -218,7 +218,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     } catch (e: unknown) {
       // Even if logout fails on server, clear local state
       set({ user: null, session: null, isInitialized: true })
-      // eslint-disable-next-line no-console
+      // biome-ignore lint/suspicious/noConsole: Intentional warning for logout failures
       console.warn('Logout warning (cleared local state anyway):', e)
     } finally {
       set({ isLoading: false })
@@ -267,12 +267,16 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 // Helper hook for getting auth state
 export const useAuth = () => {
   const store = useAuthStore()
+  const isAdmin =
+    store.user?.role === 'admin' || store.user?.is_superuser === true
+
   return {
     user: store.user,
     session: store.session,
     isLoading: store.isLoading,
     isInitialized: store.isInitialized,
     isAuthenticated: !!store.user,
+    isAdmin,
     login: store.login,
     register: store.register,
     logout: store.logout,

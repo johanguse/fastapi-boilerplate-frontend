@@ -1,19 +1,17 @@
-import { z } from 'zod'
 import { organizationClient } from 'better-auth/client/plugins'
 import { createAuthClient } from 'better-auth/react'
+import { z } from 'zod/v4'
+import i18n from '@/lib/i18n'
 
 // Better Auth client configuration with organization plugin
 export const authClient = createAuthClient({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000', // Your FastAPI backend
-  basePath: '/auth', // Match the FastAPI backend auth routes
+  basePath: '/api/v1/auth', // Match the FastAPI backend auth routes with API prefix
   fetchOptions: {
     // Send cookies for session persistence across refreshes
     credentials: 'include',
-    onError(e) {
-      if (e.error.status === 401) {
-        window.location.href = '/auth/sign-in'
-      }
-    },
+    // Don't redirect on 401 - let the auth store handle it gracefully
+    // A 401 on getSession is expected when not logged in
   },
   plugins: [
     organizationClient({
@@ -49,6 +47,9 @@ export interface User {
   image?: string | null
   createdAt: Date
   updatedAt: Date
+  role?: string // User role (admin, user, etc.)
+  is_verified?: boolean // Backend uses snake_case
+  is_superuser?: boolean // Backend admin flag
 }
 
 export interface Session {
@@ -114,23 +115,53 @@ export interface Invitation {
   inviterName?: string
 }
 
-// Validation schemas
-export const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-})
-
-export const registerSchema = z
-  .object({
-    email: z.string().email('Please enter a valid email address'),
-    password: z.string().min(6, 'Password must be at least 6 characters'),
-    name: z.string().min(2, 'Name must be at least 2 characters'),
-    confirmPassword: z.string(),
+// Validation schemas with i18n support
+export const getLoginSchema = () =>
+  z.object({
+    email: z
+      .email(i18n.t('auth.emailInvalid', 'Invalid email address'))
+      .min(1, i18n.t('auth.emailRequired', 'Email is required')),
+    password: z
+      .string()
+      .min(
+        6,
+        i18n.t(
+          'auth.passwordTooShort',
+          'Password must be at least 6 characters',
+          { count: 6 }
+        )
+      ),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  })
 
-export type LoginFormData = z.infer<typeof loginSchema>
-export type RegisterFormData = z.infer<typeof registerSchema>
+export const getRegisterSchema = () =>
+  z
+    .object({
+      email: z
+        .email(i18n.t('auth.emailInvalid', 'Invalid email address'))
+        .min(1, i18n.t('auth.emailRequired', 'Email is required')),
+      password: z
+        .string()
+        .min(
+          6,
+          i18n.t(
+            'auth.passwordTooShort',
+            'Password must be at least 6 characters',
+            { count: 6 }
+          )
+        ),
+      name: z.string().min(
+        2,
+        i18n.t('auth.nameTooShort', 'Name must be at least 2 characters', {
+          count: 2,
+        })
+      ),
+      confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: i18n.t('auth.passwordsDontMatch', "Passwords don't match"),
+      path: ['confirmPassword'],
+    })
+
+// Types for forms based on dynamic schemas
+export type LoginFormData = z.infer<ReturnType<typeof getLoginSchema>>
+export type RegisterFormData = z.infer<ReturnType<typeof getRegisterSchema>>

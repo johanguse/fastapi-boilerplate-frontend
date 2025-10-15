@@ -4,13 +4,12 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
+  Languages,
   LogOut,
   Sparkles,
-  Languages,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from '@/stores/auth-store'
-import useDialogState from '@/hooks/use-dialog-state'
+import { SignOutDialog } from '@/components/sign-out-dialog'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -19,10 +18,10 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
   DropdownMenuSub,
-  DropdownMenuSubTrigger,
   DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
   SidebarMenu,
@@ -30,14 +29,19 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { SignOutDialog } from '@/components/sign-out-dialog'
+import useDialogState from '@/hooks/use-dialog-state'
+import { useAuth } from '@/stores/auth-store'
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹' },
+  { code: 'en-US', name: 'English (US)', flag: '🇺🇸' },
+  { code: 'en-GB', name: 'English (UK)', flag: '🇬🇧' },
+  { code: 'es-ES', name: 'Español (España)', flag: '🇪🇸' },
+  { code: 'es-MX', name: 'Español (México)', flag: '🇲🇽' },
+  { code: 'fr-FR', name: 'Français (France)', flag: '🇫🇷' },
+  { code: 'fr-CA', name: 'Français (Canada)', flag: '🇨🇦' },
+  { code: 'de-DE', name: 'Deutsch (Deutschland)', flag: '🇩🇪' },
+  { code: 'pt-BR', name: 'Português (Brasil)', flag: '🇧🇷' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' },
 ]
 
 export function NavUser() {
@@ -111,7 +115,7 @@ export function NavUser() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Sparkles />
-                  {t('navigation.upgradeToPro')}
+                  {t('navigation.upgradeToPro', 'Upgrade to Pro')}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
@@ -120,7 +124,8 @@ export function NavUser() {
                   <DropdownMenuSubTrigger>
                     <Languages />
                     <span>
-                      {currentLanguage.flag} {t('settings.language')}
+                      {currentLanguage.flag}{' '}
+                      {t('settings.language', 'Language')}
                     </span>
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
@@ -145,26 +150,26 @@ export function NavUser() {
                 <DropdownMenuItem asChild>
                   <Link to='/settings/account'>
                     <BadgeCheck />
-                    {t('navigation.account')}
+                    {t('navigation.account', 'Account')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to='/settings'>
                     <CreditCard />
-                    {t('navigation.billing')}
+                    {t('navigation.billing', 'Billing')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to='/settings/notifications'>
                     <Bell />
-                    {t('navigation.notifications')}
+                    {t('navigation.notifications', 'Notifications')}
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setOpen(true)}>
                 <LogOut />
-                {t('auth.signOutTitle')}
+                {t('auth.signOutTitle', 'Sign out')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

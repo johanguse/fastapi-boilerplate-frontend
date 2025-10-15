@@ -1,8 +1,6 @@
-import React from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { ArrowRight, ChevronRight, Laptop, Moon, Sun } from 'lucide-react'
-import { useSearch } from '@/context/search-provider'
-import { useTheme } from '@/context/theme-provider'
+import React from 'react'
 import {
   CommandDialog,
   CommandEmpty,
@@ -12,6 +10,8 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command'
+import { useSearch } from '@/context/search-provider'
+import { useTheme } from '@/context/theme-provider'
 import { sidebarData } from './layout/data/sidebar-data'
 import { ScrollArea } from './ui/scroll-area'
 
@@ -47,7 +47,7 @@ export function CommandMenu() {
                       }}
                     >
                       <div className='flex size-4 items-center justify-center'>
-                        <ArrowRight className='text-muted-foreground/80 size-2' />
+                        <ArrowRight className='size-2 text-muted-foreground/80' />
                       </div>
                       {navItem.title}
                     </CommandItem>
@@ -62,7 +62,7 @@ export function CommandMenu() {
                     }}
                   >
                     <div className='flex size-4 items-center justify-center'>
-                      <ArrowRight className='text-muted-foreground/80 size-2' />
+                      <ArrowRight className='size-2 text-muted-foreground/80' />
                     </div>
                     {navItem.title} <ChevronRight /> {subItem.title}
                   </CommandItem>

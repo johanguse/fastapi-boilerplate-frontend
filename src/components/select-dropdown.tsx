@@ -1,5 +1,4 @@
 import { Loader } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { FormControl } from '@/components/ui/form'
 import {
   Select,
@@ -8,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { cn } from '@/lib/utils'
 
 type SelectDropdownProps = {
   onValueChange?: (value: string) => void

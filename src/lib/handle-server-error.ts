@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 import { toast } from 'sonner'
 
 export function handleServerError(error: unknown) {
-  // eslint-disable-next-line no-console
+  // biome-ignore lint/suspicious/noConsole: Intentional error logging
   console.log(error)
 
   let errMsg = 'Something went wrong!'

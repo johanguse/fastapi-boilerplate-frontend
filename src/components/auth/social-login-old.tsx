@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 interface SocialProvider {
   id: string
@@ -174,7 +174,7 @@ export function SocialLogin({ className, redirectUrl }: SocialLoginProps) {
           <span className='w-full border-t' />
         </div>
         <div className='relative flex justify-center text-xs uppercase'>
-          <span className='bg-background text-muted-foreground px-2'>
+          <span className='bg-background px-2 text-muted-foreground'>
             {t('auth.socialLogin.divider')}
           </span>
         </div>
@@ -215,7 +215,7 @@ export function SocialLogin({ className, redirectUrl }: SocialLoginProps) {
         })}
       </div>
 
-      <p className='text-muted-foreground text-center text-xs'>
+      <p className='text-center text-muted-foreground text-xs'>
         {t('auth.socialLogin.disclaimer')}
       </p>
     </div>

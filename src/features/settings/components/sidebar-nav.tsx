@@ -1,6 +1,5 @@
-import { useState, type JSX } from 'react'
-import { useLocation, useNavigate, Link } from '@tanstack/react-router'
-import { cn } from '@/lib/utils'
+import { Link, useLocation, useNavigate } from '@tanstack/react-router'
+import { type JSX, useState } from 'react'
 import { buttonVariants } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
@@ -10,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { cn } from '@/lib/utils'
 
 type SidebarNavProps = React.HTMLAttributes<HTMLElement> & {
   items: {
@@ -52,11 +52,11 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       <ScrollArea
         orientation='horizontal'
         type='always'
-        className='bg-background hidden w-full min-w-40 px-1 py-2 md:block'
+        className='hidden w-full min-w-40 bg-background px-1 py-2 md:block'
       >
         <nav
           className={cn(
-            'flex space-x-2 py-1 lg:flex-col lg:space-y-1 lg:space-x-0',
+            'flex space-x-2 py-1 lg:flex-col lg:space-x-0 lg:space-y-1',
             className
           )}
           {...props}
