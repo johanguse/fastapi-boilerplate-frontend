@@ -126,13 +126,13 @@
     "createSuccess": "Organização criada com sucesso",
     "updateSuccess": "Organização atualizada com sucesso",
     "nameRequired": "Nome da organização é obrigatório",
-  "namePlaceholder": "Digite o nome da organização",
-  "descriptionPlaceholder": "Digite a descrição da organização (opcional)",
-  "noOrganizationsYet": "Ainda não existem organizações",
-  "defaultOrganization": "Selecionar Organização",
-  "organizationCount": "{{count}} organizações",
-  "created": "Criado {{date}}",
-  "openMenu": "Abrir menu"
+    "namePlaceholder": "Digite o nome da organização",
+    "descriptionPlaceholder": "Digite a descrição da organização (opcional)",
+    "noOrganizationsYet": "Ainda não existem organizações",
+    "defaultOrganization": "Selecionar Organização",
+    "organizationCount": "{{count}} organizações",
+    "created": "Criado {{date}}",
+    "openMenu": "Abrir menu"
   },
   "common": {
     "loading": "Carregando...",
