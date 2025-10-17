@@ -1,10 +1,19 @@
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import Backend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
+// Import all translation files
+import enUS from '../i18n/locales/en-US/translation.json'
+import enGB from '../i18n/locales/en-GB/translation.json'
+import esES from '../i18n/locales/es-ES/translation.json'
+import esMX from '../i18n/locales/es-MX/translation.json'
+import frFR from '../i18n/locales/fr-FR/translation.json'
+import frCA from '../i18n/locales/fr-CA/translation.json'
+import deDE from '../i18n/locales/de-DE/translation.json'
+import ptBR from '../i18n/locales/pt-BR/translation.json'
+import ptPT from '../i18n/locales/pt-PT/translation.json'
+
 i18n
-  .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
@@ -31,10 +40,34 @@ i18n
       caches: ['localStorage'],
     },
 
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
-      // Add cache busting to force reload of translation files
-      queryStringParams: { v: Date.now() },
+    resources: {
+      'en-US': {
+        translation: enUS,
+      },
+      'en-GB': {
+        translation: enGB,
+      },
+      'es-ES': {
+        translation: esES,
+      },
+      'es-MX': {
+        translation: esMX,
+      },
+      'fr-FR': {
+        translation: frFR,
+      },
+      'fr-CA': {
+        translation: frCA,
+      },
+      'de-DE': {
+        translation: deDE,
+      },
+      'pt-BR': {
+        translation: ptBR,
+      },
+      'pt-PT': {
+        translation: ptPT,
+      },
     },
   })
 

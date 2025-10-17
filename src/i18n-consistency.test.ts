@@ -1,14 +1,14 @@
 // @ts-expect-error: Bun provides 'bun:test' at runtime
 import { expect, test } from 'bun:test'
-import deDE from '../public/locales/de-DE/translation.json'
-import enGB from '../public/locales/en-GB/translation.json'
-import enUS from '../public/locales/en-US/translation.json'
-import esES from '../public/locales/es-ES/translation.json'
-import esMX from '../public/locales/es-MX/translation.json'
-import frCA from '../public/locales/fr-CA/translation.json'
-import frFR from '../public/locales/fr-FR/translation.json'
-import ptBR from '../public/locales/pt-BR/translation.json'
-import ptPT from '../public/locales/pt-PT/translation.json'
+import deDE from './i18n/locales/de-DE/translation.json'
+import enGB from './i18n/locales/en-GB/translation.json'
+import enUS from './i18n/locales/en-US/translation.json'
+import esES from './i18n/locales/es-ES/translation.json'
+import esMX from './i18n/locales/es-MX/translation.json'
+import frCA from './i18n/locales/fr-CA/translation.json'
+import frFR from './i18n/locales/fr-FR/translation.json'
+import ptBR from './i18n/locales/pt-BR/translation.json'
+import ptPT from './i18n/locales/pt-PT/translation.json'
 
 function getKeys(obj: Record<string, unknown>, prefix = ''): string[] {
   return Object.entries(obj).flatMap(([k, v]) =>

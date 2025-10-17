@@ -15,7 +15,14 @@
     "preview": "vite preview",
     "generate-routes": "tsr generate",
     "knip": "knip",
-    "test": "bun test"
+    "test": "bun test",
+    "i18n:lint": "i18next-cli lint",
+    "i18n:extract": "i18next-cli extract",
+    "i18n:extract:watch": "i18next-cli extract --watch",
+    "i18n:sync": "i18next-cli sync",
+    "i18n:watch": "i18next-cli watch",
+    "i18n:types": "i18next-cli types",
+    "i18n:status": "i18next-cli status"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -50,7 +57,6 @@
     "date-fns": "^4.1.0",
     "i18next": "^25.6.0",
     "i18next-browser-languagedetector": "^8.2.0",
-    "i18next-http-backend": "^3.0.2",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.542.0",
     "react": "^19.2.0",
@@ -78,6 +84,7 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react-swc": "^4.1.0",
+    "i18next-cli": "^1.11.5",
     "knip": "^5.65.0",
     "typescript": "~5.9.3",
     "vite": "^7.1.10"
