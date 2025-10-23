@@ -22,12 +22,19 @@ import {
 import { showSubmittedData } from '@/lib/show-submitted-data'
 import { cn } from '@/lib/utils'
 
-const createFormSchema = (t: (key: string, defaultValue: string) => string) => z.object({
-  otp: z
-    .string()
-    .min(6, t('auth.otp.validation.required', 'Please enter the 6-digit code.'))
-    .max(6, t('auth.otp.validation.required', 'Please enter the 6-digit code.')),
-})
+const createFormSchema = (t: (key: string, defaultValue: string) => string) =>
+  z.object({
+    otp: z
+      .string()
+      .min(
+        6,
+        t('auth.otp.validation.required', 'Please enter the 6-digit code.')
+      )
+      .max(
+        6,
+        t('auth.otp.validation.required', 'Please enter the 6-digit code.')
+      ),
+  })
 
 type OtpFormProps = React.HTMLAttributes<HTMLFormElement>
 
@@ -35,7 +42,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const formSchema = createFormSchema(t)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,7 +73,9 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
           name='otp'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='sr-only'>{t('auth.otp.label', 'One-Time Password')}</FormLabel>
+              <FormLabel className='sr-only'>
+                {t('auth.otp.label', 'One-Time Password')}
+              </FormLabel>
               <FormControl>
                 <InputOTP
                   maxLength={6}

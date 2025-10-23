@@ -8,7 +8,10 @@ export function SettingsNotifications() {
   return (
     <ContentSection
       title={t('settings.notifications.title', 'Notifications')}
-      desc={t('settings.notifications.description', 'Configure how you receive notifications.')}
+      desc={t(
+        'settings.notifications.description',
+        'Configure how you receive notifications.'
+      )}
     >
       <NotificationsForm />
     </ContentSection>

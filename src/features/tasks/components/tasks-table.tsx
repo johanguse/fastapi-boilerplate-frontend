@@ -36,7 +36,7 @@ type DataTableProps = {
 
 export function TasksTable({ data }: DataTableProps) {
   const { t } = useTranslation()
-  
+
   // Local UI-only states
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])
@@ -109,7 +109,10 @@ export function TasksTable({ data }: DataTableProps) {
     <div className='space-y-4 max-sm:has-[div[role="toolbar"]]:mb-16'>
       <DataTableToolbar
         table={table}
-        searchPlaceholder={t('tasks.table.searchPlaceholder', 'Filter by title or ID...')}
+        searchPlaceholder={t(
+          'tasks.table.searchPlaceholder',
+          'Filter by title or ID...'
+        )}
         filters={[
           {
             columnId: 'status',

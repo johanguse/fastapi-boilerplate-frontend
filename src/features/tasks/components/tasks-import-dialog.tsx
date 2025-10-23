@@ -23,17 +23,21 @@ import {
 import { Input } from '@/components/ui/input'
 import { showSubmittedData } from '@/lib/show-submitted-data'
 
-const createFormSchema = (t: (key: string, defaultValue: string) => string) => z.object({
-  file: z
-    .instanceof(FileList)
-    .refine((files) => files.length > 0, {
-      message: t('tasks.import.validation.fileRequired', 'Please upload a file'),
-    })
-    .refine(
-      (files) => ['text/csv'].includes(files?.[0]?.type),
-      t('tasks.import.validation.csvFormat', 'Please upload csv format.')
-    ),
-})
+const createFormSchema = (t: (key: string, defaultValue: string) => string) =>
+  z.object({
+    file: z
+      .instanceof(FileList)
+      .refine((files) => files.length > 0, {
+        message: t(
+          'tasks.import.validation.fileRequired',
+          'Please upload a file'
+        ),
+      })
+      .refine(
+        (files) => ['text/csv'].includes(files?.[0]?.type),
+        t('tasks.import.validation.csvFormat', 'Please upload csv format.')
+      ),
+  })
 
 type TaskImportDialogProps = {
   open: boolean
@@ -46,7 +50,7 @@ export function TasksImportDialog({
 }: TaskImportDialogProps) {
   const { t } = useTranslation()
   const formSchema = createFormSchema(t)
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { file: undefined },
@@ -63,7 +67,13 @@ export function TasksImportDialog({
         size: file[0].size,
         type: file[0].type,
       }
-      showSubmittedData(fileDetails, t('tasks.import.successMessage', 'You have imported the following file:'))
+      showSubmittedData(
+        fileDetails,
+        t(
+          'tasks.import.successMessage',
+          'You have imported the following file:'
+        )
+      )
     }
     onOpenChange(false)
   }
@@ -80,7 +90,10 @@ export function TasksImportDialog({
         <DialogHeader className='text-start'>
           <DialogTitle>{t('tasks.import.title', 'Import Tasks')}</DialogTitle>
           <DialogDescription>
-            {t('tasks.import.description', 'Import tasks quickly from a CSV file.')}
+            {t(
+              'tasks.import.description',
+              'Import tasks quickly from a CSV file.'
+            )}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

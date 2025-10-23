@@ -68,9 +68,15 @@ export function OAuthCallback({ provider }: OAuthCallbackProps) {
     <div className='flex min-h-screen items-center justify-center'>
       <div className='text-center'>
         <Loader2 className='mx-auto h-8 w-8 animate-spin text-primary' />
-        <h2 className='mt-4 font-semibold text-lg'>{t('auth.oauth.completingSignIn', 'Completing sign in...')}</h2>
+        <h2 className='mt-4 font-semibold text-lg'>
+          {t('auth.oauth.completingSignIn', 'Completing sign in...')}
+        </h2>
         <p className='mt-2 text-muted-foreground text-sm'>
-          {t('auth.oauth.pleaseWait', 'Please wait while we complete your {{provider}} authentication', { provider })}
+          {t(
+            'auth.oauth.pleaseWait',
+            'Please wait while we complete your {{provider}} authentication',
+            { provider }
+          )}
         </p>
       </div>
     </div>

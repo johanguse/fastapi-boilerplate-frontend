@@ -61,7 +61,11 @@ export function DataTableFacetedFilter<TData, TValue>({
                     variant='secondary'
                     className='rounded-sm px-1 font-normal'
                   >
-                    {t('dataTable.facetedFilter.selectedCount', '{{count}} selected', { count: selectedValues.size })}
+                    {t(
+                      'dataTable.facetedFilter.selectedCount',
+                      '{{count}} selected',
+                      { count: selectedValues.size }
+                    )}
                   </Badge>
                 ) : (
                   options
@@ -85,7 +89,9 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
-            <CommandEmpty>{t('dataTable.facetedFilter.noResults', 'No results found.')}</CommandEmpty>
+            <CommandEmpty>
+              {t('dataTable.facetedFilter.noResults', 'No results found.')}
+            </CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
                 const isSelected = selectedValues.has(option.value)

@@ -8,7 +8,7 @@ type AuthLayoutProps = {
 
 export function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
   const { t } = useTranslation()
-  
+
   return (
     <div className='container grid h-svh max-w-none items-center justify-center'>
       <div className='mx-auto flex w-full flex-col justify-center space-y-2 py-8 sm:w-[480px] sm:p-8'>
@@ -25,7 +25,9 @@ export function AuthLayout({ children }: Readonly<AuthLayoutProps>) {
           >
             <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
           </svg>
-          <h1 className='font-medium text-xl'>{t('common.appName', 'Shadcn Admin')}</h1>
+          <h1 className='font-medium text-xl'>
+            {t('common.appName', 'Shadcn Admin')}
+          </h1>
         </div>
         {children}
         <div className='mt-6 flex flex-col items-center justify-center gap-4'>

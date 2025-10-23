@@ -57,7 +57,9 @@ export function NewChat({ users, onOpenChange, open }: NewChatProps) {
         </DialogHeader>
         <div className='flex flex-col gap-4'>
           <div className='items-baseline-last flex flex-wrap gap-2'>
-            <span className='min-h-6 text-muted-foreground text-sm'>{t('chats.to', 'To')}:</span>
+            <span className='min-h-6 text-muted-foreground text-sm'>
+              {t('chats.to', 'To')}:
+            </span>
             {selectedUsers.map((user) => (
               <Badge key={user.id} variant='default'>
                 {user.fullName}
@@ -81,7 +83,9 @@ export function NewChat({ users, onOpenChange, open }: NewChatProps) {
               className='text-foreground'
             />
             <CommandList>
-              <CommandEmpty>{t('chats.noPeopleFound', 'No people found')}</CommandEmpty>
+              <CommandEmpty>
+                {t('chats.noPeopleFound', 'No people found')}
+              </CommandEmpty>
               <CommandGroup>
                 {users.map((user) => (
                   <CommandItem

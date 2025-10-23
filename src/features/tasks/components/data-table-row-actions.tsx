@@ -52,11 +52,17 @@ export function DataTableRowActions<TData>({
         >
           {t('common.edit', 'Edit')}
         </DropdownMenuItem>
-        <DropdownMenuItem disabled>{t('tasks.makeCopy', 'Make a copy')}</DropdownMenuItem>
-        <DropdownMenuItem disabled>{t('tasks.favorite', 'Favorite')}</DropdownMenuItem>
+        <DropdownMenuItem disabled>
+          {t('tasks.makeCopy', 'Make a copy')}
+        </DropdownMenuItem>
+        <DropdownMenuItem disabled>
+          {t('tasks.favorite', 'Favorite')}
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>{t('tasks.labels', 'Labels')}</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger>
+            {t('tasks.labels', 'Labels')}
+          </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             <DropdownMenuRadioGroup value={task.label}>
               {labels.map((label) => (

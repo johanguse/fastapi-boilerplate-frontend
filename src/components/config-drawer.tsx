@@ -57,9 +57,14 @@ export function ConfigDrawer() {
       </SheetTrigger>
       <SheetContent className='flex flex-col'>
         <SheetHeader className='pb-0 text-start'>
-          <SheetTitle>{t('settings.themeSettings', 'Theme Settings')}</SheetTitle>
+          <SheetTitle>
+            {t('settings.themeSettings', 'Theme Settings')}
+          </SheetTitle>
           <SheetDescription id='config-drawer-description'>
-            {t('settings.themeSettingsDescription', 'Adjust the appearance and layout to suit your preferences.')}
+            {t(
+              'settings.themeSettingsDescription',
+              'Adjust the appearance and layout to suit your preferences.'
+            )}
           </SheetDescription>
         </SheetHeader>
         <div className='space-y-6 overflow-y-auto px-4'>
@@ -72,7 +77,10 @@ export function ConfigDrawer() {
           <Button
             variant='destructive'
             onClick={handleReset}
-            aria-label={t('settings.resetAllSettings', 'Reset all settings to default values')}
+            aria-label={t(
+              'settings.resetAllSettings',
+              'Reset all settings to default values'
+            )}
           >
             {t('settings.reset', 'Reset')}
           </Button>
@@ -184,7 +192,10 @@ function ThemeConfig() {
         value={theme}
         onValueChange={setTheme}
         className='grid w-full max-w-md grid-cols-3 gap-4'
-        aria-label={t('settings.selectThemePreference', 'Select theme preference')}
+        aria-label={t(
+          'settings.selectThemePreference',
+          'Select theme preference'
+        )}
         aria-describedby='theme-description'
       >
         {[
@@ -208,7 +219,10 @@ function ThemeConfig() {
         ))}
       </Radio>
       <div id='theme-description' className='sr-only'>
-        {t('settings.themeDescription', 'Choose between system preference, light mode, or dark mode')}
+        {t(
+          'settings.themeDescription',
+          'Choose between system preference, light mode, or dark mode'
+        )}
       </div>
     </div>
   )
@@ -252,7 +266,10 @@ function SidebarConfig() {
         ))}
       </Radio>
       <div id='sidebar-description' className='sr-only'>
-        {t('settings.sidebarDescription', 'Choose between inset, floating, or standard sidebar layout')}
+        {t(
+          'settings.sidebarDescription',
+          'Choose between inset, floating, or standard sidebar layout'
+        )}
       </div>
     </div>
   )
@@ -310,7 +327,10 @@ function LayoutConfig() {
         ))}
       </Radio>
       <div id='layout-description' className='sr-only'>
-        {t('settings.layoutDescription', 'Choose between default expanded, compact icon-only, or full layout mode')}
+        {t(
+          'settings.layoutDescription',
+          'Choose between default expanded, compact icon-only, or full layout mode'
+        )}
       </div>
     </div>
   )
@@ -353,7 +373,10 @@ function DirConfig() {
         ))}
       </Radio>
       <div id='direction-description' className='sr-only'>
-        {t('settings.directionDescription', 'Choose between left-to-right or right-to-left site direction')}
+        {t(
+          'settings.directionDescription',
+          'Choose between left-to-right or right-to-left site direction'
+        )}
       </div>
     </div>
   )

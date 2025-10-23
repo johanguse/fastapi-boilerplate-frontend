@@ -58,7 +58,9 @@ export function AppearanceForm() {
           name='font'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('settings.appearance.fontLabel', 'Font')}</FormLabel>
+              <FormLabel>
+                {t('settings.appearance.fontLabel', 'Font')}
+              </FormLabel>
               <div className='relative w-max'>
                 <FormControl>
                   <select
@@ -79,7 +81,10 @@ export function AppearanceForm() {
                 <ChevronDownIcon className='absolute end-3 top-2.5 h-4 w-4 opacity-50' />
               </div>
               <FormDescription className='font-manrope'>
-                {t('settings.appearance.fontDescription', 'Set the font you want to use in the dashboard.')}
+                {t(
+                  'settings.appearance.fontDescription',
+                  'Set the font you want to use in the dashboard.'
+                )}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -90,9 +95,14 @@ export function AppearanceForm() {
           name='theme'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('settings.appearance.themeLabel', 'Theme')}</FormLabel>
+              <FormLabel>
+                {t('settings.appearance.themeLabel', 'Theme')}
+              </FormLabel>
               <FormDescription>
-                {t('settings.appearance.themeDescription', 'Select the theme for the dashboard.')}
+                {t(
+                  'settings.appearance.themeDescription',
+                  'Select the theme for the dashboard.'
+                )}
               </FormDescription>
               <FormMessage />
               <RadioGroup
@@ -157,7 +167,9 @@ export function AppearanceForm() {
           )}
         />
 
-        <Button type='submit'>{t('settings.appearance.updateButton', 'Update preferences')}</Button>
+        <Button type='submit'>
+          {t('settings.appearance.updateButton', 'Update preferences')}
+        </Button>
       </form>
     </Form>
   )

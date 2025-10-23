@@ -21,7 +21,7 @@ export function LearnMore({
   ...props
 }: LearnMoreProps) {
   const { t } = useTranslation()
-  
+
   return (
     <Popover {...props}>
       <PopoverTrigger

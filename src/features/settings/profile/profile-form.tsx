@@ -25,26 +25,48 @@ import { Textarea } from '@/components/ui/textarea'
 import { showSubmittedData } from '@/lib/show-submitted-data'
 import { cn } from '@/lib/utils'
 
-const createProfileFormSchema = (t: (key: string, defaultValue: string) => string) => z.object({
-  username: z
-    .string(t('profile.validation.usernameRequired', 'Please enter your username.'))
-    .min(2, t('profile.validation.usernameMinLength', 'Username must be at least 2 characters.'))
-    .max(30, t('profile.validation.usernameMaxLength', 'Username must not be longer than 30 characters.')),
-  email: z.email({
-    error: (iss) =>
-      iss.input === undefined
-        ? t('profile.validation.emailRequired', 'Please select an email to display.')
-        : undefined,
-  }),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.url(t('profile.validation.urlRequired', 'Please enter a valid URL.')),
-      })
-    )
-    .optional(),
-})
+const createProfileFormSchema = (
+  t: (key: string, defaultValue: string) => string
+) =>
+  z.object({
+    username: z
+      .string(
+        t('profile.validation.usernameRequired', 'Please enter your username.')
+      )
+      .min(
+        2,
+        t(
+          'profile.validation.usernameMinLength',
+          'Username must be at least 2 characters.'
+        )
+      )
+      .max(
+        30,
+        t(
+          'profile.validation.usernameMaxLength',
+          'Username must not be longer than 30 characters.'
+        )
+      ),
+    email: z.email({
+      error: (iss) =>
+        iss.input === undefined
+          ? t(
+              'profile.validation.emailRequired',
+              'Please select an email to display.'
+            )
+          : undefined,
+    }),
+    bio: z.string().max(160).min(4),
+    urls: z
+      .array(
+        z.object({
+          value: z.url(
+            t('profile.validation.urlRequired', 'Please enter a valid URL.')
+          ),
+        })
+      )
+      .optional(),
+  })
 
 type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>
 
@@ -84,10 +106,16 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>{t('profile.username', 'Username')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('profile.usernamePlaceholder', 'shadcn')} {...field} />
+                <Input
+                  placeholder={t('profile.usernamePlaceholder', 'shadcn')}
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
-                {t('profile.usernameDescription', 'This is your public display name. It can be your real name or a pseudonym. You can only change this once every 30 days.')}
+                {t(
+                  'profile.usernameDescription',
+                  'This is your public display name. It can be your real name or a pseudonym. You can only change this once every 30 days.'
+                )}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -102,7 +130,12 @@ export function ProfileForm() {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder={t('profile.emailPlaceholder', 'Select a verified email to display')} />
+                    <SelectValue
+                      placeholder={t(
+                        'profile.emailPlaceholder',
+                        'Select a verified email to display'
+                      )}
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -112,7 +145,10 @@ export function ProfileForm() {
                 </SelectContent>
               </Select>
               <FormDescription>
-                {t('profile.emailDescription', 'You can manage verified email addresses in your')}{' '}
+                {t(
+                  'profile.emailDescription',
+                  'You can manage verified email addresses in your'
+                )}{' '}
                 <Link to='/'>email settings</Link>.
               </FormDescription>
               <FormMessage />
@@ -127,13 +163,19 @@ export function ProfileForm() {
               <FormLabel>{t('profile.bio', 'Bio')}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder={t('profile.bioPlaceholder', 'Tell us a little bit about yourself')}
+                  placeholder={t(
+                    'profile.bioPlaceholder',
+                    'Tell us a little bit about yourself'
+                  )}
                   className='resize-none'
                   {...field}
                 />
               </FormControl>
               <FormDescription>
-                {t('profile.bioDescription', 'You can @mention other users and organizations to link to them.')}
+                {t(
+                  'profile.bioDescription',
+                  'You can @mention other users and organizations to link to them.'
+                )}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -151,7 +193,10 @@ export function ProfileForm() {
                     {t('profile.urls', 'URLs')}
                   </FormLabel>
                   <FormDescription className={cn(index !== 0 && 'sr-only')}>
-                    {t('profile.urlsDescription', 'Add links to your website, blog, or social media profiles.')}
+                    {t(
+                      'profile.urlsDescription',
+                      'Add links to your website, blog, or social media profiles.'
+                    )}
                   </FormDescription>
                   <FormControl>
                     <Input {...field} />
@@ -171,7 +216,9 @@ export function ProfileForm() {
             {t('profile.addUrl', 'Add URL')}
           </Button>
         </div>
-        <Button type='submit'>{t('profile.updateProfile', 'Update profile')}</Button>
+        <Button type='submit'>
+          {t('profile.updateProfile', 'Update profile')}
+        </Button>
       </form>
     </Form>
   )

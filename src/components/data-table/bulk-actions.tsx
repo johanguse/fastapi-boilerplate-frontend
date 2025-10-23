@@ -42,10 +42,14 @@ export function DataTableBulkActions<TData>({
   // Announce selection changes to screen readers
   useEffect(() => {
     if (selectedCount > 0) {
-      const message = t('dataTable.bulkActions.announcement', '{{count}} {{entityName}}{{count, plural, one {} other {s}} selected. Bulk actions toolbar is available.', { 
-        count: selectedCount, 
-        entityName 
-      })
+      const message = t(
+        'dataTable.bulkActions.announcement',
+        '{{count}} {{entityName}}{{count, plural, one {} other {s}} selected. Bulk actions toolbar is available.',
+        {
+          count: selectedCount,
+          entityName,
+        }
+      )
       setAnnouncement(message)
 
       // Clear announcement after a delay
@@ -139,10 +143,14 @@ export function DataTableBulkActions<TData>({
       <div
         ref={toolbarRef}
         role='toolbar'
-        aria-label={t('dataTable.bulkActions.ariaLabel', 'Bulk actions for {{count}} selected {{entityName}}{{count, plural, one {} other {s}}}', { 
-          count: selectedCount, 
-          entityName 
-        })}
+        aria-label={t(
+          'dataTable.bulkActions.ariaLabel',
+          'Bulk actions for {{count}} selected {{entityName}}{{count, plural, one {} other {s}}}',
+          {
+            count: selectedCount,
+            entityName,
+          }
+        )}
         aria-describedby='bulk-actions-description'
         tabIndex={-1}
         onKeyDown={handleKeyDown}
@@ -167,15 +175,28 @@ export function DataTableBulkActions<TData>({
                 size='icon'
                 onClick={handleClearSelection}
                 className='size-6 rounded-full'
-                aria-label={t('dataTable.bulkActions.clearSelection', 'Clear selection')}
-                title={t('dataTable.bulkActions.clearSelectionTitle', 'Clear selection (Escape)')}
+                aria-label={t(
+                  'dataTable.bulkActions.clearSelection',
+                  'Clear selection'
+                )}
+                title={t(
+                  'dataTable.bulkActions.clearSelectionTitle',
+                  'Clear selection (Escape)'
+                )}
               >
                 <X />
-                <span className='sr-only'>{t('dataTable.bulkActions.clearSelection', 'Clear selection')}</span>
+                <span className='sr-only'>
+                  {t('dataTable.bulkActions.clearSelection', 'Clear selection')}
+                </span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{t('dataTable.bulkActions.clearSelectionTitle', 'Clear selection (Escape)')}</p>
+              <p>
+                {t(
+                  'dataTable.bulkActions.clearSelectionTitle',
+                  'Clear selection (Escape)'
+                )}
+              </p>
             </TooltipContent>
           </Tooltip>
 
@@ -192,7 +213,11 @@ export function DataTableBulkActions<TData>({
             <Badge
               variant='default'
               className='min-w-8 rounded-lg'
-              aria-label={t('dataTable.bulkActions.selectedCount', '{{count}} selected', { count: selectedCount })}
+              aria-label={t(
+                'dataTable.bulkActions.selectedCount',
+                '{{count}} selected',
+                { count: selectedCount }
+              )}
             >
               {selectedCount}
             </Badge>{' '}

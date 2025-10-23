@@ -24,11 +24,12 @@ const route = getRouteApi('/_authenticated/apps/')
 
 type AppType = 'all' | 'connected' | 'notConnected'
 
-const getAppText = (t: (key: string, defaultValue: string) => string) => new Map<AppType, string>([
-  ['all', t('apps.filter.all', 'All Apps')],
-  ['connected', t('apps.filter.connected', 'Connected')],
-  ['notConnected', t('apps.filter.notConnected', 'Not Connected')],
-])
+const getAppText = (t: (key: string, defaultValue: string) => string) =>
+  new Map<AppType, string>([
+    ['all', t('apps.filter.all', 'All Apps')],
+    ['connected', t('apps.filter.connected', 'Connected')],
+    ['notConnected', t('apps.filter.notConnected', 'Not Connected')],
+  ])
 
 export function Apps() {
   const { t } = useTranslation()
@@ -103,7 +104,10 @@ export function Apps() {
             {t('apps.title', 'App Integrations')}
           </h1>
           <p className='text-muted-foreground'>
-            {t('apps.description', 'Here\'s a list of your apps for the integration!')}
+            {t(
+              'apps.description',
+              "Here's a list of your apps for the integration!"
+            )}
           </p>
         </div>
         <div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
@@ -119,9 +123,15 @@ export function Apps() {
                 <SelectValue>{appText.get(appType)}</SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='all'>{t('apps.filter.all', 'All Apps')}</SelectItem>
-                <SelectItem value='connected'>{t('apps.filter.connected', 'Connected')}</SelectItem>
-                <SelectItem value='notConnected'>{t('apps.filter.notConnected', 'Not Connected')}</SelectItem>
+                <SelectItem value='all'>
+                  {t('apps.filter.all', 'All Apps')}
+                </SelectItem>
+                <SelectItem value='connected'>
+                  {t('apps.filter.connected', 'Connected')}
+                </SelectItem>
+                <SelectItem value='notConnected'>
+                  {t('apps.filter.notConnected', 'Not Connected')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -166,7 +176,9 @@ export function Apps() {
                   size='sm'
                   className={`${app.connected ? 'border border-blue-300 bg-blue-50 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950 dark:hover:bg-blue-900' : ''}`}
                 >
-                  {app.connected ? t('apps.connected', 'Connected') : t('apps.connect', 'Connect')}
+                  {app.connected
+                    ? t('apps.connected', 'Connected')
+                    : t('apps.connect', 'Connect')}
                 </Button>
               </div>
               <div>

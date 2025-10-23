@@ -25,13 +25,14 @@ import {
 import { Input } from '@/components/ui/input'
 import { type Organization, organizationApi } from '@/lib/api'
 
-const getFormSchema = (t: (key: string, defaultValue: string) => string) => z.object({
-  name: z
-    .string()
-    .min(1, t('organizations.nameRequired', 'Name is required'))
-    .max(100, t('organizations.nameTooLong', 'Name is too long')),
-  slug: z.string().optional(),
-})
+const getFormSchema = (t: (key: string, defaultValue: string) => string) =>
+  z.object({
+    name: z
+      .string()
+      .min(1, t('organizations.nameRequired', 'Name is required'))
+      .max(100, t('organizations.nameTooLong', 'Name is too long')),
+    slug: z.string().optional(),
+  })
 
 type FormData = z.infer<ReturnType<typeof getFormSchema>>
 
@@ -73,7 +74,9 @@ export function EditOrganizationDialog({
       organizationApi.update(organization.id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
-      toast.success(t('organizations.updateSuccess', 'Organization updated successfully'))
+      toast.success(
+        t('organizations.updateSuccess', 'Organization updated successfully')
+      )
       setError(null)
       onOpenChange(false)
     },
@@ -121,9 +124,14 @@ export function EditOrganizationDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogTitle>{t('organizations.editOrganization', 'Edit Organization')}</DialogTitle>
+          <DialogTitle>
+            {t('organizations.editOrganization', 'Edit Organization')}
+          </DialogTitle>
           <DialogDescription>
-            {t('organizations.editDescription', 'Update your organization details')}
+            {t(
+              'organizations.editDescription',
+              'Update your organization details'
+            )}
           </DialogDescription>
         </DialogHeader>
 
@@ -142,7 +150,13 @@ export function EditOrganizationDialog({
                 <FormItem>
                   <FormLabel>{t('organizations.name', 'Name')}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('organizations.namePlaceholder', 'Enter organization name')} {...field} />
+                    <Input
+                      placeholder={t(
+                        'organizations.namePlaceholder',
+                        'Enter organization name'
+                      )}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -156,11 +170,20 @@ export function EditOrganizationDialog({
                 <FormItem>
                   <FormLabel>{t('organizations.slug', 'Slug')}</FormLabel>
                   <FormControl>
-                    <Input placeholder={t('organizations.slugPlaceholder', 'Enter organization slug')} {...field} />
+                    <Input
+                      placeholder={t(
+                        'organizations.slugPlaceholder',
+                        'Enter organization slug'
+                      )}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                   <p className='text-muted-foreground text-xs'>
-                    {t('organizations.slugDescription', 'A URL-friendly version of the name')}
+                    {t(
+                      'organizations.slugDescription',
+                      'A URL-friendly version of the name'
+                    )}
                   </p>
                 </FormItem>
               )}
@@ -178,7 +201,10 @@ export function EditOrganizationDialog({
               <Button type='submit' disabled={updateMutation.isPending}>
                 {updateMutation.isPending
                   ? t('organizations.updating', 'Updating...')
-                  : t('organizations.updateOrganization', 'Update Organization')}
+                  : t(
+                      'organizations.updateOrganization',
+                      'Update Organization'
+                    )}
               </Button>
             </DialogFooter>
           </form>

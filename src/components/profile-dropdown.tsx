@@ -72,7 +72,9 @@ export function ProfileDropdown() {
                 <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>{t('profile.newTeam', 'New Team')}</DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('profile.newTeam', 'New Team')}
+            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setOpen(true)}>

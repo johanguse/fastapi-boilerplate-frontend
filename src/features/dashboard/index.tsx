@@ -211,7 +211,9 @@ export function Dashboard() {
               </Card>
               <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
-                  <CardTitle>{t('dashboard.metrics.recentSales', 'Recent Sales')}</CardTitle>
+                  <CardTitle>
+                    {t('dashboard.metrics.recentSales', 'Recent Sales')}
+                  </CardTitle>
                   <CardDescription>
                     You made 265 sales this month.
                   </CardDescription>

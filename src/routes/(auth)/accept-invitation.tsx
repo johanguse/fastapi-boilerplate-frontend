@@ -36,9 +36,12 @@ function AcceptInvitationPage() {
     },
     onSuccess: (data) => {
       setStatus('success')
-      toast.success(t('invitations.invitationAccepted', 'Invitation accepted'), {
-        description: t('invitations.redirecting', 'Redirecting...'),
-      })
+      toast.success(
+        t('invitations.invitationAccepted', 'Invitation accepted'),
+        {
+          description: t('invitations.redirecting', 'Redirecting...'),
+        }
+      )
       // Redirect to organization after 2 seconds
       setTimeout(() => {
         navigate({
@@ -52,7 +55,8 @@ function AcceptInvitationPage() {
       setStatus('error')
       toast.error(t('common.error'), {
         description:
-          err.response?.data?.detail || t('invitations.acceptFailed', 'Failed to accept invitation'),
+          err.response?.data?.detail ||
+          t('invitations.acceptFailed', 'Failed to accept invitation'),
       })
     },
   })
@@ -62,9 +66,15 @@ function AcceptInvitationPage() {
       await api.post(`/api/v1/invitations/invitations/${token}/decline`)
     },
     onSuccess: () => {
-      toast.success(t('invitations.invitationDeclined', 'Invitation declined'), {
-        description: t('invitations.declinedDescription', 'You have declined the invitation'),
-      })
+      toast.success(
+        t('invitations.invitationDeclined', 'Invitation declined'),
+        {
+          description: t(
+            'invitations.declinedDescription',
+            'You have declined the invitation'
+          ),
+        }
+      )
       setTimeout(() => {
         navigate({ to: '/' })
       }, 1500)
@@ -73,7 +83,8 @@ function AcceptInvitationPage() {
       const err = error as { response?: { data?: { detail?: string } } }
       toast.error(t('common.error'), {
         description:
-          err.response?.data?.detail || t('invitations.declineFailed', 'Failed to decline invitation'),
+          err.response?.data?.detail ||
+          t('invitations.declineFailed', 'Failed to decline invitation'),
       })
     },
   })
@@ -90,7 +101,10 @@ function AcceptInvitationPage() {
               {t('invitations.invalidToken', 'Invalid Token')}
             </CardTitle>
             <CardDescription className='text-center'>
-              {t('invitations.invalidTokenDescription', 'The invitation token is invalid or has expired')}
+              {t(
+                'invitations.invalidTokenDescription',
+                'The invitation token is invalid or has expired'
+              )}
             </CardDescription>
           </CardHeader>
           <CardFooter className='justify-center'>
@@ -125,10 +139,19 @@ function AcceptInvitationPage() {
           </CardTitle>
           <CardDescription className='text-center'>
             {status === 'success'
-              ? t('invitations.acceptSuccessDescription', 'You have successfully joined the team')
+              ? t(
+                  'invitations.acceptSuccessDescription',
+                  'You have successfully joined the team'
+                )
               : status === 'error'
-                ? t('invitations.acceptErrorDescription', 'There was an error accepting the invitation')
-                : t('invitations.acceptInvitationDescription', 'You have been invited to join a team')}
+                ? t(
+                    'invitations.acceptErrorDescription',
+                    'There was an error accepting the invitation'
+                  )
+                : t(
+                    'invitations.acceptInvitationDescription',
+                    'You have been invited to join a team'
+                  )}
           </CardDescription>
         </CardHeader>
 
@@ -143,7 +166,10 @@ function AcceptInvitationPage() {
                       {t('invitations.invitationDetails', 'Invitation Details')}
                     </p>
                     <p className='mt-1 text-muted-foreground text-sm'>
-                      {t('invitations.youHaveBeenInvited', 'You have been invited to join this team')}
+                      {t(
+                        'invitations.youHaveBeenInvited',
+                        'You have been invited to join this team'
+                      )}
                     </p>
                   </div>
                 </div>

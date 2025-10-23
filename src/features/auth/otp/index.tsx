@@ -13,7 +13,7 @@ import { OtpForm } from './components/otp-form'
 
 export function Otp() {
   const { t } = useTranslation()
-  
+
   return (
     <AuthLayout>
       <Card className='gap-4'>
@@ -22,7 +22,10 @@ export function Otp() {
             {t('auth.otp.title', 'Two-factor Authentication')}
           </CardTitle>
           <CardDescription>
-            {t('auth.otp.description', 'Please enter the authentication code. We have sent the authentication code to your email.')}
+            {t(
+              'auth.otp.description',
+              'Please enter the authentication code. We have sent the authentication code to your email.'
+            )}
           </CardDescription>
         </CardHeader>
         <CardContent>

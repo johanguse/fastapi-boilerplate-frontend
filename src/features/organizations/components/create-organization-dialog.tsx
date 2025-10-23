@@ -23,15 +23,15 @@ import {
 import { Input } from '@/components/ui/input'
 import { useOrganizations } from '@/hooks/use-organizations'
 
-const getFormSchema = (t: any) => z.object({
+const formSchema = z.object({
   name: z
     .string()
-    .min(1, t('organizations.nameRequired', 'Name is required'))
-    .max(100, t('organizations.nameTooLong', 'Name is too long')),
+    .min(1, 'Name is required')
+    .max(100, 'Name is too long'),
   slug: z.string().optional(),
 })
 
-type FormData = z.infer<ReturnType<typeof getFormSchema>>
+type FormData = z.infer<typeof formSchema>
 
 interface CreateOrganizationDialogProps {
   open: boolean
@@ -47,7 +47,7 @@ export function CreateOrganizationDialog({
   const { createOrganization, isCreating } = useOrganizations()
 
   const form = useForm<FormData>({
-    resolver: zodResolver(getFormSchema(t)),
+    resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
       slug: '',
@@ -78,8 +78,7 @@ export function CreateOrganizationDialog({
         response?: { data?: { detail?: { message?: string } } }
       }
       const errorMessage =
-        axiosError.response?.data?.detail?.message ||
-        t('common.error', 'Error')
+        axiosError.response?.data?.detail?.message || t('common.error', 'Error')
       setError(errorMessage)
     }
   }
@@ -96,9 +95,14 @@ export function CreateOrganizationDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogTitle>{t('organizations.createOrganization', 'Create Organization')}</DialogTitle>
+          <DialogTitle>
+            {t('organizations.createOrganization', 'Create Organization')}
+          </DialogTitle>
           <DialogDescription>
-            {t('organizations.createNewDescription', 'Create a new organization to collaborate with your team.')}
+            {t(
+              'organizations.createNewDescription',
+              'Create a new organization to collaborate with your team.'
+            )}
           </DialogDescription>
         </DialogHeader>
 
@@ -115,10 +119,15 @@ export function CreateOrganizationDialog({
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('organizations.name', 'Organization Name')}</FormLabel>
+                  <FormLabel>
+                    {t('organizations.name', 'Organization Name')}
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={t('organizations.namePlaceholder', 'My Organization')}
+                      placeholder={t(
+                        'organizations.namePlaceholder',
+                        'My Organization'
+                      )}
                       {...field}
                       onChange={(e) => {
                         field.onChange(e)
@@ -143,13 +152,24 @@ export function CreateOrganizationDialog({
               name='slug'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('organizations.slug', 'Slug (URL identifier)')}</FormLabel>
+                  <FormLabel>
+                    {t('organizations.slug', 'Slug (URL identifier)')}
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder={t('organizations.slugPlaceholder', 'my-organization')} {...field} />
+                    <Input
+                      placeholder={t(
+                        'organizations.slugPlaceholder',
+                        'my-organization'
+                      )}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                   <p className='text-muted-foreground text-xs'>
-                    {t('organizations.slugDescription', 'Used in URLs. Only lowercase letters, numbers, and hyphens allowed.')}
+                    {t(
+                      'organizations.slugDescription',
+                      'Used in URLs. Only lowercase letters, numbers, and hyphens allowed.'
+                    )}
                   </p>
                 </FormItem>
               )}
@@ -165,7 +185,12 @@ export function CreateOrganizationDialog({
                 {t('common.cancel', 'Cancel')}
               </Button>
               <Button type='submit' disabled={isCreating}>
-                {isCreating ? t('organizations.creating', 'Creating...') : t('organizations.createOrganization', 'Create Organization')}
+                {isCreating
+                  ? t('organizations.creating', 'Creating...')
+                  : t(
+                      'organizations.createOrganization',
+                      'Create Organization'
+                    )}
               </Button>
             </DialogFooter>
           </form>

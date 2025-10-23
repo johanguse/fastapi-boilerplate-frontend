@@ -33,9 +33,14 @@ export function Users() {
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
           <div>
-            <h2 className='font-bold text-2xl tracking-tight'>{t('users.title', 'User List')}</h2>
+            <h2 className='font-bold text-2xl tracking-tight'>
+              {t('users.title', 'User List')}
+            </h2>
             <p className='text-muted-foreground'>
-              {t('users.description', 'Manage your users and their roles here.')}
+              {t(
+                'users.description',
+                'Manage your users and their roles here.'
+              )}
             </p>
           </div>
           <UsersPrimaryButtons />

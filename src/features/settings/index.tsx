@@ -12,7 +12,7 @@ import { SidebarNav } from './components/sidebar-nav'
 
 export function Settings() {
   const { t } = useTranslation()
-  
+
   const sidebarNavItems = [
     {
       title: t('settings.nav.profile', 'Profile'),
@@ -59,7 +59,10 @@ export function Settings() {
             {t('settings.title', 'Settings')}
           </h1>
           <p className='text-muted-foreground'>
-            {t('settings.description', 'Manage your account settings and set e-mail preferences.')}
+            {t(
+              'settings.description',
+              'Manage your account settings and set e-mail preferences.'
+            )}
           </p>
         </div>
         <Separator className='my-4 lg:my-6' />

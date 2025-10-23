@@ -51,7 +51,11 @@ export function ForgotPasswordForm({
         setIsLoading(false)
         form.reset()
         navigate({ to: '/otp' })
-        return t('auth.forgotPasswordEmailSent', 'Reset email sent to {{email}}', { email: data.email })
+        return t(
+          'auth.forgotPasswordEmailSent',
+          'Reset email sent to {{email}}',
+          { email: data.email }
+        )
       },
       error: t('common.error', 'An error occurred'),
     })

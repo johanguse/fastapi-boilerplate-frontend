@@ -36,7 +36,10 @@ export function SignIn2() {
         <div className='relative z-20 mt-auto'>
           <blockquote className='space-y-2'>
             <p className='text-lg'>
-              {t('auth.testimonial', '"This template has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before."')}
+              {t(
+                'auth.testimonial',
+                '"This template has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before."'
+              )}
             </p>
             <footer className='text-sm'>John Doe</footer>
           </blockquote>

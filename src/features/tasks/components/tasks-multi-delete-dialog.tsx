@@ -24,14 +24,20 @@ export function TasksMultiDeleteDialog<TData>({
 }: TaskMultiDeleteDialogProps<TData>) {
   const { t } = useTranslation()
   const [value, setValue] = useState('')
-  
+
   const CONFIRM_WORD = t('tasks.delete.confirmWord', 'DELETE')
 
   const selectedRows = table.getFilteredSelectedRowModel().rows
 
   const handleDelete = () => {
     if (value.trim() !== CONFIRM_WORD) {
-      toast.error(t('tasks.delete.confirmPrompt', 'Please type "{{confirmWord}}" to confirm.', { confirmWord: CONFIRM_WORD }))
+      toast.error(
+        t(
+          'tasks.delete.confirmPrompt',
+          'Please type "{{confirmWord}}" to confirm.',
+          { confirmWord: CONFIRM_WORD }
+        )
+      )
       return
     }
 
@@ -41,7 +47,11 @@ export function TasksMultiDeleteDialog<TData>({
       loading: t('tasks.delete.deleting', 'Deleting tasks...'),
       success: () => {
         table.resetRowSelection()
-        return t('tasks.delete.success', 'Deleted {{count}} {{count, plural, one {task} other {tasks}}}', { count: selectedRows.length })
+        return t(
+          'tasks.delete.success',
+          'Deleted {{count}} {{count, plural, one {task} other {tasks}}}',
+          { count: selectedRows.length }
+        )
       },
       error: t('common.error', 'Error'),
     })
@@ -59,28 +69,50 @@ export function TasksMultiDeleteDialog<TData>({
             className='me-1 inline-block stroke-destructive'
             size={18}
           />{' '}
-          {t('tasks.delete.title', 'Delete {{count}} {{count, plural, one {task} other {tasks}}}', { count: selectedRows.length })}
+          {t(
+            'tasks.delete.title',
+            'Delete {{count}} {{count, plural, one {task} other {tasks}}}',
+            { count: selectedRows.length }
+          )}
         </span>
       }
       desc={
         <div className='space-y-4'>
           <p className='mb-2'>
-            {t('tasks.delete.description', 'Are you sure you want to delete the selected tasks?\nThis action cannot be undone.')}
+            {t(
+              'tasks.delete.description',
+              'Are you sure you want to delete the selected tasks?\nThis action cannot be undone.'
+            )}
           </p>
 
           <Label className='my-4 flex flex-col items-start gap-1.5'>
-            <span className=''>{t('tasks.delete.confirmLabel', 'Confirm by typing "{{confirmWord}}":', { confirmWord: CONFIRM_WORD })}</span>
+            <span className=''>
+              {t(
+                'tasks.delete.confirmLabel',
+                'Confirm by typing "{{confirmWord}}":',
+                { confirmWord: CONFIRM_WORD }
+              )}
+            </span>
             <Input
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              placeholder={t('tasks.delete.confirmPlaceholder', 'Type "{{confirmWord}}" to confirm.', { confirmWord: CONFIRM_WORD })}
+              placeholder={t(
+                'tasks.delete.confirmPlaceholder',
+                'Type "{{confirmWord}}" to confirm.',
+                { confirmWord: CONFIRM_WORD }
+              )}
             />
           </Label>
 
           <Alert variant='destructive'>
-            <AlertTitle>{t('tasks.delete.warningTitle', 'Warning!')}</AlertTitle>
+            <AlertTitle>
+              {t('tasks.delete.warningTitle', 'Warning!')}
+            </AlertTitle>
             <AlertDescription>
-              {t('tasks.delete.warningDescription', 'Please be careful, this operation can not be rolled back.')}
+              {t(
+                'tasks.delete.warningDescription',
+                'Please be careful, this operation can not be rolled back.'
+              )}
             </AlertDescription>
           </Alert>
         </div>

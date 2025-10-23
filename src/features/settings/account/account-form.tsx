@@ -43,17 +43,17 @@ const languages = [
   { label: 'Chinese', value: 'zh' },
 ] as const
 
-const getAccountFormSchema = (t: any) => z.object({
+const accountFormSchema = z.object({
   name: z
     .string()
-    .min(1, t('account.nameRequired', 'Name is required'))
-    .min(2, t('account.nameMinLength', 'Name must be at least 2 characters'))
-    .max(30, t('account.nameMaxLength', 'Name must be at most 30 characters')),
-  dob: z.date(t('account.dobRequired', 'Date of birth is required')),
-  language: z.string(t('account.languageRequired', 'Language is required')),
+    .min(1, 'Name is required')
+    .min(2, 'Name must be at least 2 characters')
+    .max(30, 'Name must be at most 30 characters'),
+  dob: z.date('Date of birth is required'),
+  language: z.string('Language is required'),
 })
 
-type AccountFormValues = z.infer<ReturnType<typeof getAccountFormSchema>>
+type AccountFormValues = z.infer<typeof accountFormSchema>
 
 // This can come from your database or API.
 const defaultValues: Partial<AccountFormValues> = {
@@ -63,7 +63,7 @@ const defaultValues: Partial<AccountFormValues> = {
 export function AccountForm() {
   const { t } = useTranslation()
   const form = useForm<AccountFormValues>({
-    resolver: zodResolver(getAccountFormSchema(t)),
+    resolver: zodResolver(accountFormSchema),
     defaultValues,
   })
 
@@ -81,7 +81,10 @@ export function AccountForm() {
             <FormItem>
               <FormLabel>{t('account.name', 'Name')}</FormLabel>
               <FormControl>
-                <Input placeholder={t('account.namePlaceholder', 'Enter your name')} {...field} />
+                <Input
+                  placeholder={t('account.namePlaceholder', 'Enter your name')}
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
                 {t('account.nameDescription', 'Your display name')}
@@ -132,8 +135,15 @@ export function AccountForm() {
                 </PopoverTrigger>
                 <PopoverContent className='w-[200px] p-0'>
                   <Command>
-                    <CommandInput placeholder={t('account.searchLanguage', 'Search language')} />
-                    <CommandEmpty>{t('account.noLanguageFound', 'No language found')}</CommandEmpty>
+                    <CommandInput
+                      placeholder={t(
+                        'account.searchLanguage',
+                        'Search language'
+                      )}
+                    />
+                    <CommandEmpty>
+                      {t('account.noLanguageFound', 'No language found')}
+                    </CommandEmpty>
                     <CommandGroup>
                       <CommandList>
                         {languages.map((language) => (
@@ -161,13 +171,18 @@ export function AccountForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription>
-                {t('account.languageDescription', 'Choose your preferred language')}
+                {t(
+                  'account.languageDescription',
+                  'Choose your preferred language'
+                )}
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit'>{t('account.updateAccount', 'Update Account')}</Button>
+        <Button type='submit'>
+          {t('account.updateAccount', 'Update Account')}
+        </Button>
       </form>
     </Form>
   )

@@ -38,7 +38,10 @@ export function DataTablePagination<TData>({
     >
       <div className='flex w-full items-center justify-between'>
         <div className='flex @2xl/main:hidden w-[100px] items-center justify-center font-medium text-sm'>
-          {t('dataTable.pagination.pageOf', 'Page {{current}} of {{total}}', { current: currentPage, total: totalPages })}
+          {t('dataTable.pagination.pageOf', 'Page {{current}} of {{total}}', {
+            current: currentPage,
+            total: totalPages,
+          })}
         </div>
         <div className='flex @max-2xl/main:flex-row-reverse items-center gap-2'>
           <Select
@@ -58,13 +61,18 @@ export function DataTablePagination<TData>({
               ))}
             </SelectContent>
           </Select>
-          <p className='hidden font-medium text-sm sm:block'>{t('dataTable.pagination.rowsPerPage', 'Rows per page')}</p>
+          <p className='hidden font-medium text-sm sm:block'>
+            {t('dataTable.pagination.rowsPerPage', 'Rows per page')}
+          </p>
         </div>
       </div>
 
       <div className='flex items-center sm:space-x-6 lg:space-x-8'>
         <div className='flex @max-3xl/main:hidden w-[100px] items-center justify-center font-medium text-sm'>
-          {t('dataTable.pagination.pageOf', 'Page {{current}} of {{total}}', { current: currentPage, total: totalPages })}
+          {t('dataTable.pagination.pageOf', 'Page {{current}} of {{total}}', {
+            current: currentPage,
+            total: totalPages,
+          })}
         </div>
         <div className='flex items-center space-x-2'>
           <Button
@@ -73,7 +81,9 @@ export function DataTablePagination<TData>({
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className='sr-only'>{t('dataTable.pagination.goToFirstPage', 'Go to first page')}</span>
+            <span className='sr-only'>
+              {t('dataTable.pagination.goToFirstPage', 'Go to first page')}
+            </span>
             <DoubleArrowLeftIcon className='h-4 w-4' />
           </Button>
           <Button
@@ -82,7 +92,12 @@ export function DataTablePagination<TData>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className='sr-only'>{t('dataTable.pagination.goToPreviousPage', 'Go to previous page')}</span>
+            <span className='sr-only'>
+              {t(
+                'dataTable.pagination.goToPreviousPage',
+                'Go to previous page'
+              )}
+            </span>
             <ChevronLeftIcon className='h-4 w-4' />
           </Button>
 
@@ -97,7 +112,11 @@ export function DataTablePagination<TData>({
                   className='size-8 p-0'
                   onClick={() => table.setPageIndex((pageNumber as number) - 1)}
                 >
-                  <span className='sr-only'>{t('dataTable.pagination.goToPage', 'Go to page {{page}}', { page: pageNumber })}</span>
+                  <span className='sr-only'>
+                    {t('dataTable.pagination.goToPage', 'Go to page {{page}}', {
+                      page: pageNumber,
+                    })}
+                  </span>
                   {pageNumber}
                 </Button>
               )}
@@ -110,7 +129,9 @@ export function DataTablePagination<TData>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            <span className='sr-only'>{t('dataTable.pagination.goToNextPage', 'Go to next page')}</span>
+            <span className='sr-only'>
+              {t('dataTable.pagination.goToNextPage', 'Go to next page')}
+            </span>
             <ChevronRightIcon className='h-4 w-4' />
           </Button>
           <Button
@@ -119,7 +140,9 @@ export function DataTablePagination<TData>({
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
-            <span className='sr-only'>{t('dataTable.pagination.goToLastPage', 'Go to last page')}</span>
+            <span className='sr-only'>
+              {t('dataTable.pagination.goToLastPage', 'Go to last page')}
+            </span>
             <DoubleArrowRightIcon className='h-4 w-4' />
           </Button>
         </div>

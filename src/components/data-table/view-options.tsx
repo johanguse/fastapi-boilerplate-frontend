@@ -19,7 +19,7 @@ export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
   const { t } = useTranslation()
-  
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -33,7 +33,9 @@ export function DataTableViewOptions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[150px]'>
-        <DropdownMenuLabel>{t('dataTable.viewOptions.toggleColumns', 'Toggle columns')}</DropdownMenuLabel>
+        <DropdownMenuLabel>
+          {t('dataTable.viewOptions.toggleColumns', 'Toggle columns')}
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()

@@ -8,7 +8,10 @@ export function SettingsAccount() {
   return (
     <ContentSection
       title={t('settings.account.title', 'Account')}
-      desc={t('settings.account.description', 'Update your account settings. Set your preferred language and timezone.')}
+      desc={t(
+        'settings.account.description',
+        'Update your account settings. Set your preferred language and timezone.'
+      )}
     >
       <AccountForm />
     </ContentSection>

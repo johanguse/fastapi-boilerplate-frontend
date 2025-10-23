@@ -49,7 +49,13 @@ function VerifyEmailPage() {
         const errorDetail = (
           err as { response?: { data?: { detail?: string } } }
         ).response?.data?.detail
-        setError(errorDetail || t('emailVerification.verificationFailed', 'Email verification failed'))
+        setError(
+          errorDetail ||
+            t(
+              'emailVerification.verificationFailed',
+              'Email verification failed'
+            )
+        )
       }
     }
 
@@ -79,14 +85,22 @@ function VerifyEmailPage() {
           </div>
 
           <CardTitle className='text-center'>
-            {status === 'loading' && t('emailVerification.verifying', 'Verifying')}
-            {status === 'success' && t('emailVerification.verified', 'Verified')}
-            {status === 'error' && t('emailVerification.verificationFailed', 'Verification Failed')}
+            {status === 'loading' &&
+              t('emailVerification.verifying', 'Verifying')}
+            {status === 'success' &&
+              t('emailVerification.verified', 'Verified')}
+            {status === 'error' &&
+              t('emailVerification.verificationFailed', 'Verification Failed')}
           </CardTitle>
 
           <CardDescription className='text-center'>
-            {status === 'loading' && t('emailVerification.pleaseWait', 'Please wait')}
-            {status === 'success' && t('emailVerification.successDescription', 'Your email has been verified successfully')}
+            {status === 'loading' &&
+              t('emailVerification.pleaseWait', 'Please wait')}
+            {status === 'success' &&
+              t(
+                'emailVerification.successDescription',
+                'Your email has been verified successfully'
+              )}
             {status === 'error' && error}
           </CardDescription>
         </CardHeader>
@@ -100,7 +114,10 @@ function VerifyEmailPage() {
                   {t('emailVerification.allSet', 'All set!')}
                 </p>
                 <p className='mt-1 text-muted-foreground text-sm'>
-                  {t('emailVerification.redirectingToDashboard', 'Redirecting to dashboard')}
+                  {t(
+                    'emailVerification.redirectingToDashboard',
+                    'Redirecting to dashboard'
+                  )}
                 </p>
               </div>
             </div>

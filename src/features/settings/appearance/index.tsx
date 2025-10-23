@@ -8,7 +8,10 @@ export function SettingsAppearance() {
   return (
     <ContentSection
       title={t('settings.appearance.title', 'Appearance')}
-      desc={t('settings.appearance.description', 'Customize the appearance of the app. Automatically switch between day and night themes.')}
+      desc={t(
+        'settings.appearance.description',
+        'Customize the appearance of the app. Automatically switch between day and night themes.'
+      )}
     >
       <AppearanceForm />
     </ContentSection>

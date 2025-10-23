@@ -53,16 +53,28 @@ export function TasksDialogs() {
               }, 500)
               showSubmittedData(
                 currentRow,
-                t('tasks.deleteSuccessMessage', 'The following task has been deleted:')
+                t(
+                  'tasks.deleteSuccessMessage',
+                  'The following task has been deleted:'
+                )
               )
             }}
             className='max-w-md'
-            title={t('tasks.deleteConfirmTitle', `Delete this task: ${currentRow.id} ?`)}
+            title={t(
+              'tasks.deleteConfirmTitle',
+              `Delete this task: ${currentRow.id} ?`
+            )}
             desc={
               <>
-                {t('tasks.deleteConfirmDescription', 'You are about to delete a task with the ID')}{' '}
+                {t(
+                  'tasks.deleteConfirmDescription',
+                  'You are about to delete a task with the ID'
+                )}{' '}
                 <strong>{currentRow.id}</strong>. <br />
-                {t('tasks.deleteConfirmWarning', 'This action cannot be undone.')}
+                {t(
+                  'tasks.deleteConfirmWarning',
+                  'This action cannot be undone.'
+                )}
               </>
             }
             confirmText={t('tasks.deleteButton', 'Delete')}

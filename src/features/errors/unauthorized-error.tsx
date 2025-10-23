@@ -10,15 +10,24 @@ export function UnauthorisedError() {
     <div className='h-svh'>
       <div className='m-auto flex h-full w-full flex-col items-center justify-center gap-2'>
         <h1 className='font-bold text-[7rem] leading-tight'>401</h1>
-        <span className='font-medium'>{t('errors.unauthorized.title', 'Unauthorized Access')}</span>
+        <span className='font-medium'>
+          {t('errors.unauthorized.title', 'Unauthorized Access')}
+        </span>
         <p className='text-center text-muted-foreground'>
-          {t('errors.unauthorized.description', 'Please log in with the appropriate credentials')} <br /> {t('errors.unauthorized.subDescription', 'to access this resource.')}
+          {t(
+            'errors.unauthorized.description',
+            'Please log in with the appropriate credentials'
+          )}{' '}
+          <br />{' '}
+          {t('errors.unauthorized.subDescription', 'to access this resource.')}
         </p>
         <div className='mt-6 flex gap-4'>
           <Button variant='outline' onClick={() => history.go(-1)}>
             {t('errors.goBack', 'Go Back')}
           </Button>
-          <Button onClick={() => navigate({ to: '/' })}>{t('errors.backToHome', 'Back to Home')}</Button>
+          <Button onClick={() => navigate({ to: '/' })}>
+            {t('errors.backToHome', 'Back to Home')}
+          </Button>
         </div>
       </div>
     </div>

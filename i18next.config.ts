@@ -1,8 +1,18 @@
 import { defineConfig } from 'i18next-cli'
 
 export default defineConfig({
-  locales: ['en-US', 'en-GB', 'es-ES', 'es-MX', 'fr-FR', 'fr-CA', 'de-DE', 'pt-BR', 'pt-PT'],
-  
+  locales: [
+    'en-US',
+    'en-GB',
+    'es-ES',
+    'es-MX',
+    'fr-FR',
+    'fr-CA',
+    'de-DE',
+    'pt-BR',
+    'pt-PT',
+  ],
+
   // Key extraction settings
   extract: {
     input: [
@@ -15,7 +25,7 @@ export default defineConfig({
       '!src/styles/**/*', // Exclude CSS/styling files
     ],
     output: 'src/i18n/locales/{{language}}/{{namespace}}.json',
-    
+
     /** Glob pattern(s) for files to ignore during extraction */
     ignore: [
       'node_modules/**',
@@ -28,19 +38,15 @@ export default defineConfig({
 
     // Translation functions to detect
     functions: ['t', '*.t', 'i18next.t'],
-    
+
     // React components to analyze
     transComponents: ['Trans', 'Translation'],
-    
+
     // HTML tags to preserve in Trans component default values
     transKeepBasicHtmlNodesFor: ['br', 'strong', 'i', 'p'],
-    
+
     // Hook-like functions that return a t function
-    useTranslationNames: [
-      'useTranslation',
-      'getT',
-      'useT',
-    ],
+    useTranslationNames: ['useTranslation', 'getT', 'useT'],
 
     // Add custom JSX attributes to ignore during linting
     ignoredAttributes: [
@@ -48,7 +54,7 @@ export default defineConfig({
       'htmlFor',
       'name',
       'data-slot',
-      'data-testid', 
+      'data-testid',
       'buttonPosition',
       'position',
       'aria-live',
@@ -109,27 +115,33 @@ export default defineConfig({
 
     // JSX tag names whose content should be ignored when linting
     ignoredTags: ['pre', 'code', 'script', 'style'],
-    
+
     // Namespace and key configuration
     defaultNS: 'translation',
     nsSeparator: ':',
     keySeparator: '.',
     contextSeparator: '_',
     pluralSeparator: '_',
-    
+
     // Preserve dynamic keys matching patterns
-    preservePatterns: [
-      'dynamic.feature.*',
-      'generated.*.key'
-    ],
-    
+    preservePatterns: ['dynamic.feature.*', 'generated.*.key'],
+
     // Output formatting
     sort: true,
     indentation: 2,
-    
+
     // Primary language settings
     primaryLanguage: 'en-US',
-    secondaryLanguages: ['en-GB', 'es-ES', 'es-MX', 'fr-FR', 'fr-CA', 'de-DE', 'pt-BR', 'pt-PT'],
+    secondaryLanguages: [
+      'en-GB',
+      'es-ES',
+      'es-MX',
+      'fr-FR',
+      'fr-CA',
+      'de-DE',
+      'pt-BR',
+      'pt-PT',
+    ],
 
     // Default value for missing keys in secondary languages
     defaultValue: (key, namespace, language) => {
@@ -148,7 +160,7 @@ export default defineConfig({
     // Completely disable plural generation
     disablePlurals: false,
   },
-  
+
   // TypeScript type generation
   types: {
     input: ['src/i18n/locales/**/*.json'],
