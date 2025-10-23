@@ -28,7 +28,7 @@ export function Search({ className = '', placeholder }: SearchProps) {
         size={16}
       />
       <span className='ms-4'>
-        {placeholder || t('common.searchPlaceholder')}
+        {placeholder || t('common.searchPlaceholder', 'Search...')}
       </span>
       <kbd className='pointer-events-none absolute end-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] opacity-100 group-hover:bg-accent sm:flex'>
         <span className='text-xs'>⌘</span>K

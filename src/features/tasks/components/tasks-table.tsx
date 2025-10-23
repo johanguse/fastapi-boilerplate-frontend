@@ -12,6 +12,7 @@ import {
   type VisibilityState,
 } from '@tanstack/react-table'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
 import {
   Table,
@@ -34,6 +35,8 @@ type DataTableProps = {
 }
 
 export function TasksTable({ data }: DataTableProps) {
+  const { t } = useTranslation()
+  
   // Local UI-only states
   const [rowSelection, setRowSelection] = useState({})
   const [sorting, setSorting] = useState<SortingState>([])
@@ -106,16 +109,16 @@ export function TasksTable({ data }: DataTableProps) {
     <div className='space-y-4 max-sm:has-[div[role="toolbar"]]:mb-16'>
       <DataTableToolbar
         table={table}
-        searchPlaceholder='Filter by title or ID...'
+        searchPlaceholder={t('tasks.table.searchPlaceholder', 'Filter by title or ID...')}
         filters={[
           {
             columnId: 'status',
-            title: 'Status',
+            title: t('tasks.table.status', 'Status'),
             options: statuses,
           },
           {
             columnId: 'priority',
-            title: 'Priority',
+            title: t('tasks.table.priority', 'Priority'),
             options: priorities,
           },
         ]}
@@ -163,7 +166,7 @@ export function TasksTable({ data }: DataTableProps) {
                   colSpan={columns.length}
                   className='h-24 text-center'
                 >
-                  No results.
+                  {t('tasks.table.noResults', 'No results.')}
                 </TableCell>
               </TableRow>
             )}

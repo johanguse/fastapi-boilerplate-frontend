@@ -31,7 +31,7 @@ function VerifyEmailPage() {
   useEffect(() => {
     if (!token) {
       setStatus('error')
-      setError(t('emailVerification.noToken'))
+      setError(t('emailVerification.noToken', 'No token provided'))
       return
     }
 
@@ -49,7 +49,7 @@ function VerifyEmailPage() {
         const errorDetail = (
           err as { response?: { data?: { detail?: string } } }
         ).response?.data?.detail
-        setError(errorDetail || t('emailVerification.verificationFailed'))
+        setError(errorDetail || t('emailVerification.verificationFailed', 'Email verification failed'))
       }
     }
 
@@ -79,14 +79,14 @@ function VerifyEmailPage() {
           </div>
 
           <CardTitle className='text-center'>
-            {status === 'loading' && t('emailVerification.verifying')}
-            {status === 'success' && t('emailVerification.verified')}
-            {status === 'error' && t('emailVerification.verificationFailed')}
+            {status === 'loading' && t('emailVerification.verifying', 'Verifying')}
+            {status === 'success' && t('emailVerification.verified', 'Verified')}
+            {status === 'error' && t('emailVerification.verificationFailed', 'Verification Failed')}
           </CardTitle>
 
           <CardDescription className='text-center'>
-            {status === 'loading' && t('emailVerification.pleaseWait')}
-            {status === 'success' && t('emailVerification.successDescription')}
+            {status === 'loading' && t('emailVerification.pleaseWait', 'Please wait')}
+            {status === 'success' && t('emailVerification.successDescription', 'Your email has been verified successfully')}
             {status === 'error' && error}
           </CardDescription>
         </CardHeader>
@@ -97,10 +97,10 @@ function VerifyEmailPage() {
               <Mail className='mt-0.5 h-5 w-5 text-muted-foreground' />
               <div className='flex-1'>
                 <p className='font-medium text-sm'>
-                  {t('emailVerification.allSet')}
+                  {t('emailVerification.allSet', 'All set!')}
                 </p>
                 <p className='mt-1 text-muted-foreground text-sm'>
-                  {t('emailVerification.redirectingToDashboard')}
+                  {t('emailVerification.redirectingToDashboard', 'Redirecting to dashboard')}
                 </p>
               </div>
             </div>
@@ -110,7 +110,7 @@ function VerifyEmailPage() {
         {status === 'success' && (
           <CardFooter className='justify-center'>
             <Button onClick={() => navigate({ to: '/' })}>
-              {t('emailVerification.goToDashboard')}
+              {t('emailVerification.goToDashboard', 'Go to Dashboard')}
             </Button>
           </CardFooter>
         )}
@@ -118,14 +118,14 @@ function VerifyEmailPage() {
         {status === 'error' && (
           <CardFooter className='flex flex-col gap-2'>
             <Button className='w-full' onClick={() => navigate({ to: '/' })}>
-              {t('navigation.dashboard')}
+              {t('navigation.dashboard', 'Dashboard')}
             </Button>
             <Button
               variant='outline'
               className='w-full'
               onClick={() => window.location.reload()}
             >
-              {t('common.tryAgain')}
+              {t('common.tryAgain', 'Try Again')}
             </Button>
           </CardFooter>
         )}

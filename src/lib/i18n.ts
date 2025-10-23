@@ -30,6 +30,7 @@ i18n
       default: ['en-US'],
     },
     debug: import.meta.env.DEV,
+    returnEmptyString: false,
 
     interpolation: {
       escapeValue: false, // React already escapes values

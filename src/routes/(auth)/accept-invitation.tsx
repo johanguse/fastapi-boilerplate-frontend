@@ -36,8 +36,8 @@ function AcceptInvitationPage() {
     },
     onSuccess: (data) => {
       setStatus('success')
-      toast.success(t('invitations.invitationAccepted'), {
-        description: t('invitations.redirecting'),
+      toast.success(t('invitations.invitationAccepted', 'Invitation accepted'), {
+        description: t('invitations.redirecting', 'Redirecting...'),
       })
       // Redirect to organization after 2 seconds
       setTimeout(() => {
@@ -52,7 +52,7 @@ function AcceptInvitationPage() {
       setStatus('error')
       toast.error(t('common.error'), {
         description:
-          err.response?.data?.detail || t('invitations.acceptFailed'),
+          err.response?.data?.detail || t('invitations.acceptFailed', 'Failed to accept invitation'),
       })
     },
   })
@@ -62,8 +62,8 @@ function AcceptInvitationPage() {
       await api.post(`/api/v1/invitations/invitations/${token}/decline`)
     },
     onSuccess: () => {
-      toast.success(t('invitations.invitationDeclined'), {
-        description: t('invitations.declinedDescription'),
+      toast.success(t('invitations.invitationDeclined', 'Invitation declined'), {
+        description: t('invitations.declinedDescription', 'You have declined the invitation'),
       })
       setTimeout(() => {
         navigate({ to: '/' })
@@ -73,7 +73,7 @@ function AcceptInvitationPage() {
       const err = error as { response?: { data?: { detail?: string } } }
       toast.error(t('common.error'), {
         description:
-          err.response?.data?.detail || t('invitations.declineFailed'),
+          err.response?.data?.detail || t('invitations.declineFailed', 'Failed to decline invitation'),
       })
     },
   })
@@ -87,15 +87,15 @@ function AcceptInvitationPage() {
               <XCircle className='h-6 w-6 text-destructive' />
             </div>
             <CardTitle className='text-center'>
-              {t('invitations.invalidToken')}
+              {t('invitations.invalidToken', 'Invalid Token')}
             </CardTitle>
             <CardDescription className='text-center'>
-              {t('invitations.invalidTokenDescription')}
+              {t('invitations.invalidTokenDescription', 'The invitation token is invalid or has expired')}
             </CardDescription>
           </CardHeader>
           <CardFooter className='justify-center'>
             <Button onClick={() => navigate({ to: '/' })}>
-              {t('navigation.dashboard')}
+              {t('navigation.dashboard', 'Dashboard')}
             </Button>
           </CardFooter>
         </Card>
@@ -118,17 +118,17 @@ function AcceptInvitationPage() {
           </div>
           <CardTitle className='text-center'>
             {status === 'success'
-              ? t('invitations.acceptSuccessTitle')
+              ? t('invitations.acceptSuccessTitle', 'Invitation Accepted')
               : status === 'error'
-                ? t('invitations.acceptErrorTitle')
-                : t('invitations.teamInvitation')}
+                ? t('invitations.acceptErrorTitle', 'Acceptance Failed')
+                : t('invitations.teamInvitation', 'Team Invitation')}
           </CardTitle>
           <CardDescription className='text-center'>
             {status === 'success'
-              ? t('invitations.acceptSuccessDescription')
+              ? t('invitations.acceptSuccessDescription', 'You have successfully joined the team')
               : status === 'error'
-                ? t('invitations.acceptErrorDescription')
-                : t('invitations.acceptInvitationDescription')}
+                ? t('invitations.acceptErrorDescription', 'There was an error accepting the invitation')
+                : t('invitations.acceptInvitationDescription', 'You have been invited to join a team')}
           </CardDescription>
         </CardHeader>
 
@@ -140,10 +140,10 @@ function AcceptInvitationPage() {
                   <Mail className='mt-0.5 h-5 w-5 text-muted-foreground' />
                   <div className='flex-1'>
                     <p className='font-medium text-sm'>
-                      {t('invitations.invitationDetails')}
+                      {t('invitations.invitationDetails', 'Invitation Details')}
                     </p>
                     <p className='mt-1 text-muted-foreground text-sm'>
-                      {t('invitations.youHaveBeenInvited')}
+                      {t('invitations.youHaveBeenInvited', 'You have been invited to join this team')}
                     </p>
                   </div>
                 </div>
@@ -158,10 +158,10 @@ function AcceptInvitationPage() {
                 {acceptMutation.isPending ? (
                   <>
                     <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                    {t('common.loading')}
+                    {t('common.loading', 'Loading')}
                   </>
                 ) : (
-                  t('invitations.acceptInvitation')
+                  t('invitations.acceptInvitation', 'Accept Invitation')
                 )}
               </Button>
               <Button
@@ -173,10 +173,10 @@ function AcceptInvitationPage() {
                 {declineMutation.isPending ? (
                   <>
                     <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                    {t('common.loading')}
+                    {t('common.loading', 'Loading')}
                   </>
                 ) : (
-                  t('invitations.declineInvitation')
+                  t('invitations.declineInvitation', 'Decline Invitation')
                 )}
               </Button>
             </CardFooter>
@@ -187,7 +187,7 @@ function AcceptInvitationPage() {
           <CardFooter className='justify-center'>
             <div className='flex items-center gap-2 text-muted-foreground text-sm'>
               <Loader2 className='h-4 w-4 animate-spin' />
-              {t('invitations.redirecting')}
+              {t('invitations.redirecting', 'Redirecting...')}
             </div>
           </CardFooter>
         )}
@@ -195,7 +195,7 @@ function AcceptInvitationPage() {
         {status === 'error' && (
           <CardFooter className='justify-center'>
             <Button onClick={() => navigate({ to: '/' })}>
-              {t('navigation.dashboard')}
+              {t('navigation.dashboard', 'Dashboard')}
             </Button>
           </CardFooter>
         )}

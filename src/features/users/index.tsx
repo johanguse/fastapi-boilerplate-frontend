@@ -5,6 +5,7 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
+import { useTranslation } from 'react-i18next'
 import { UsersDialogs } from './components/users-dialogs'
 import { UsersPrimaryButtons } from './components/users-primary-buttons'
 import { UsersProvider } from './components/users-provider'
@@ -14,6 +15,7 @@ import { users } from './data/users'
 const route = getRouteApi('/_authenticated/users/')
 
 export function Users() {
+  const { t } = useTranslation()
   const search = route.useSearch()
   const navigate = route.useNavigate()
 
@@ -31,9 +33,9 @@ export function Users() {
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
           <div>
-            <h2 className='font-bold text-2xl tracking-tight'>User List</h2>
+            <h2 className='font-bold text-2xl tracking-tight'>{t('users.title', 'User List')}</h2>
             <p className='text-muted-foreground'>
-              Manage your users and their roles here.
+              {t('users.description', 'Manage your users and their roles here.')}
             </p>
           </div>
           <UsersPrimaryButtons />

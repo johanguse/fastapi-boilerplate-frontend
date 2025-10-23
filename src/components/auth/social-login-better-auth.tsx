@@ -108,17 +108,17 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
         // biome-ignore lint/suspicious/noConsole: Intentional error logging
         console.error('Social login error:', result.error)
         toast.error(
-          t('auth.socialLogin.error.description', { provider: providerId })
+          t('auth.socialLogin.error.description', 'Login failed with {{provider}}', { provider: providerId })
         )
       } else {
         // Better Auth handles the redirect automatically
-        toast.success(t('auth.socialLogin.success', { provider: providerId }))
+        toast.success(t('auth.socialLogin.success', 'Successfully logged in with {{provider}}', { provider: providerId }))
       }
     } catch (error) {
       // biome-ignore lint/suspicious/noConsole: Intentional error logging
       console.error('Social login failed:', error)
       toast.error(
-        t('auth.socialLogin.error.description', { provider: providerId })
+        t('auth.socialLogin.error.description', 'Login failed with {{provider}}', { provider: providerId })
       )
     } finally {
       setLoading((prev) => ({ ...prev, [providerId]: false }))
@@ -141,7 +141,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
         </div>
         <div className='relative flex justify-center text-xs uppercase'>
           <span className='bg-background px-2 text-muted-foreground'>
-            {t('auth.socialLogin.divider')}
+            {t('auth.socialLogin.divider', 'or continue with')}
           </span>
         </div>
       </div>
@@ -166,7 +166,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
             >
               {loading[provider.id] ? <SpinnerIcon /> : <IconComponent />}
               <span className='ml-2'>
-                {t('auth.socialLogin.continueWith', {
+                {t('auth.socialLogin.continueWith', 'Continue with {{provider}}', {
                   provider: provider.name,
                 })}
               </span>
@@ -176,7 +176,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
       </div>
 
       <p className='text-center text-muted-foreground text-xs'>
-        {t('auth.socialLogin.disclaimer')}
+        {t('auth.socialLogin.disclaimer', 'By continuing, you agree to our Terms of Service and Privacy Policy')}
       </p>
     </div>
   )

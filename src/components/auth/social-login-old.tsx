@@ -154,7 +154,7 @@ export function SocialLogin({ className, redirectUrl }: SocialLoginProps) {
       }
     } catch (_error) {
       // Show error to user - could add toast notification here in the future
-      alert(t('auth.socialLogin.error.description', { provider: providerId }))
+      alert(t('auth.socialLogin.error.description', 'Login failed with {{provider}}', { provider: providerId }))
     } finally {
       setLoading((prev) => ({ ...prev, [providerId]: false }))
       setIsLoading(false)
@@ -175,7 +175,7 @@ export function SocialLogin({ className, redirectUrl }: SocialLoginProps) {
         </div>
         <div className='relative flex justify-center text-xs uppercase'>
           <span className='bg-background px-2 text-muted-foreground'>
-            {t('auth.socialLogin.divider')}
+            {t('auth.socialLogin.divider', 'or continue with')}
           </span>
         </div>
       </div>
@@ -206,7 +206,7 @@ export function SocialLogin({ className, redirectUrl }: SocialLoginProps) {
                 <GlobeIcon />
               )}
               <span className='ml-2'>
-                {t('auth.socialLogin.continueWith', {
+                {t('auth.socialLogin.continueWith', 'Continue with {{provider}}', {
                   provider: provider.name,
                 })}
               </span>
@@ -216,7 +216,7 @@ export function SocialLogin({ className, redirectUrl }: SocialLoginProps) {
       </div>
 
       <p className='text-center text-muted-foreground text-xs'>
-        {t('auth.socialLogin.disclaimer')}
+        {t('auth.socialLogin.disclaimer', 'By continuing, you agree to our Terms of Service and Privacy Policy')}
       </p>
     </div>
   )

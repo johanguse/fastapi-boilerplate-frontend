@@ -70,7 +70,7 @@
     },
     "sideMenu": {
       "activity": "Registros de Actividad",
-      "admin": "",
+      "admin": "Administrador",
       "reports": "Reportes y Analítica",
       "users": "Todos los Usuarios"
     },
@@ -130,6 +130,7 @@
     }
   },
   "auth": {
+    "and": "y",
     "byClickingLogin": "Al hacer clic en iniciar sesión, aceptas nuestros",
     "confirmPassword": "Confirmar contraseña",
     "dontHaveAccount": "¿No tienes una cuenta?",
@@ -143,7 +144,7 @@
     "forgotPasswordDescription": "Ingresa tu email registrado y te enviaremos un enlace para restablecer tu contraseña.",
     "forgotPasswordEmailPlaceholder": "nombre@ejemplo.com",
     "forgotPasswordEmailRequired": "Por favor ingresa tu email",
-    "forgotPasswordEmailSent": "Email enviado a {email}",
+    "forgotPasswordEmailSent": "Reset email sent to {{email}}",
     "forgotPasswordSendingEmail": "Enviando email...",
     "forgotPasswordTitle": "Contraseña olvidada",
     "internalServerError": "Error interno del servidor",
@@ -155,7 +156,17 @@
     "nameTooShort_many": "",
     "nameTooShort_other": "",
     "notFound": "No encontrado",
-    "otp": "OTP",
+    "otp": {
+      "title": "Autenticación de dos factores",
+      "description": "Por favor ingresa el código de autenticación. Hemos enviado el código de autenticación a tu email.",
+      "label": "Contraseña de un solo uso",
+      "verifyButton": "Verificar",
+      "haventReceived": "¿No lo has recibido?",
+      "resendCode": "Reenviar un nuevo código.",
+      "validation": {
+        "required": "Por favor ingresa el código de 6 dígitos."
+      }
+    },
     "password": "Contraseña",
     "passwordPlaceholder": "Ingresa tu contraseña",
     "passwordsDontMatch": "Las contraseñas no coinciden",
@@ -182,6 +193,7 @@
     "signUpRegistrationFailed": "Error en el registro. Verifica tu información.",
     "signUpTitle": "Crear una cuenta",
     "signUpWelcome": "¡Bienvenido {name}! Revisa tu email para verificar tu cuenta.",
+    "testimonial": "\"Esta plantilla me ha ahorrado incontables horas de trabajo y me ha ayudado a entregar diseños impresionantes a mis clientes más rápido que nunca.\"",
     "socialLogin": {
       "continueWith": "Continuar con {{provider}}",
       "disclaimer": "Al continuar, aceptas nuestros Términos de Servicio y Política de Privacidad",
@@ -190,6 +202,10 @@
         "description": "Error al autenticar con {{provider}}. Por favor, inténtalo de nuevo."
       },
       "success": "Inicio de sesión exitoso con {{provider}}"
+    },
+    "oauth": {
+      "completingSignIn": "Completando inicio de sesión...",
+      "pleaseWait": "Por favor espera mientras completamos tu autenticación de {{provider}}"
     },
     "terms": "Términos de servicio",
     "unauthorized": "No autorizado",
@@ -233,14 +249,146 @@
     "usage": "Uso",
     "usageDescription": "Uso actual de los recursos de tu plan"
   },
+  "dataTable": {
+    "pagination": {
+      "pageOf": "Página {{current}} de {{total}}",
+      "rowsPerPage": "Filas por página",
+      "goToFirstPage": "Ir a la primera página",
+      "goToPreviousPage": "Ir a la página anterior",
+      "goToPage": "Ir a la página {{page}}",
+      "goToNextPage": "Ir a la página siguiente",
+      "goToLastPage": "Ir a la última página"
+    },
+    "facetedFilter": {
+      "selectedCount": "{{count}} seleccionados",
+      "noResults": "No se encontraron resultados.",
+      "clearFilters": "Limpiar filtros"
+    },
+    "columnHeader": {
+      "ascending": "Asc",
+      "descending": "Desc",
+      "hide": "Ocultar"
+    },
+    "bulkActions": {
+      "announcement": "{{count}} {{entityName}}{{count, plural, one {} other {s}}} seleccionados. La barra de herramientas de acciones masivas está disponible.",
+      "ariaLabel": "Acciones masivas para {{count}} {{entityName}}{{count, plural, one {} other {s}}} seleccionados",
+      "clearSelection": "Limpiar selección",
+      "clearSelectionTitle": "Limpiar selección (Escape)",
+      "selectedCount": "{{count}} seleccionados",
+      "selected": "seleccionados"
+    },
+    "viewOptions": {
+      "view": "Ver",
+      "toggleColumns": "Alternar columnas"
+    }
+  },
   "common": {
+    "appName": "Shadcn Admin",
     "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
     "error": "Error",
     "general": "General",
+    "learnMore": "Saber más",
     "loading": "Cargando...",
+    "openMenu": "Abrir menú",
     "optional": "opcional",
+    "reset": "Restablecer",
     "searchPlaceholder": "Buscar...",
-    "tryAgain": "Intentar de nuevo"
+    "tryAgain": "Intentar de nuevo",
+    "close": "Cerrar"
+  },
+  "theme": {
+    "title": "Tema",
+    "toggleTheme": "Cambiar tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  },
+  "commandMenu": {
+    "placeholder": "Escribe un comando o busca...",
+    "noResults": "No se encontraron resultados."
+  },
+  "profile": {
+    "profile": "Perfil",
+    "billing": "Facturación",
+    "settings": "Configuración",
+    "newTeam": "Nuevo Equipo",
+    "signOut": "Cerrar sesión"
+  },
+  "comingSoon": {
+    "title": "¡Próximamente!",
+    "description": "Esta página aún no ha sido creada.",
+    "stayTuned": "¡Mantente atento!"
+  },
+  "errors": {
+    "goBack": "Volver",
+    "backToHome": "Volver al Inicio",
+    "learnMore": "Saber más",
+    "notFound": {
+      "title": "¡Ups! Página No Encontrada",
+      "description": "Parece que la página que buscas",
+      "subDescription": "no existe o podría haber sido eliminada."
+    },
+    "unauthorized": {
+      "title": "Acceso No Autorizado",
+      "description": "Por favor, inicia sesión con las credenciales apropiadas",
+      "subDescription": "para acceder a este recurso."
+    },
+    "forbidden": {
+      "title": "Acceso Prohibido",
+      "description": "No tienes el permiso necesario",
+      "subDescription": "para ver este recurso."
+    },
+    "general": {
+      "title": "¡Ups! Algo salió mal",
+      "description": "Nos disculpamos por las molestias.",
+      "subDescription": "Por favor, inténtalo de nuevo más tarde."
+    },
+    "maintenance": {
+      "title": "¡El sitio web está en mantenimiento!",
+      "description": "El sitio no está disponible en este momento.",
+      "subDescription": "Volveremos en línea pronto."
+    }
+  },
+  "accessibility": {
+    "skipToMain": "Saltar al contenido principal"
+  },
+  "account": {
+    "name": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "nameDescription": "Este es el nombre que se mostrará en tu perfil y en los correos electrónicos.",
+    "nameRequired": "Por favor ingresa tu nombre.",
+    "nameMinLength": "El nombre debe tener al menos 2 caracteres.",
+    "nameMaxLength": "El nombre no debe tener más de 30 caracteres.",
+    "dateOfBirth": "Fecha de nacimiento",
+    "dobDescription": "Tu fecha de nacimiento se usa para calcular tu edad.",
+    "dobRequired": "Por favor selecciona tu fecha de nacimiento.",
+    "language": "Idioma",
+    "languageDescription": "Este es el idioma que se usará en el panel de control.",
+    "languageRequired": "Por favor selecciona un idioma.",
+    "selectLanguage": "Seleccionar idioma",
+    "searchLanguage": "Buscar idioma...",
+    "noLanguageFound": "No se encontró idioma.",
+    "updateAccount": "Actualizar cuenta"
+  },
+  "chats": {
+    "title": "Bandeja de Entrada",
+    "searchLabel": "Buscar",
+    "searchPlaceholder": "Buscar chat...",
+    "messageInputLabel": "Caja de Texto del Chat",
+    "messageInputPlaceholder": "Escribe tus mensajes...",
+    "sendButton": "Enviar",
+    "emptyState": {
+      "title": "Tus mensajes",
+      "description": "Envía un mensaje para iniciar un chat.",
+      "sendMessageButton": "Enviar mensaje"
+    },
+    "newMessage": "Nuevo mensaje",
+    "to": "Para",
+    "searchPeople": "Buscar personas...",
+    "noPeopleFound": "No se encontraron personas.",
+    "chat": "Chat"
   },
   "dashboard": {
     "metrics": {
@@ -326,6 +474,7 @@
     "youHaveBeenInvited": "Has sido invitado a unirte a esta organización."
   },
   "navigation": {
+    "staticPages": "Páginas Estáticas & Ejemplos",
     "account": "Cuenta",
     "apps": "Aplicaciones",
     "auth": "Autenticación",
@@ -345,21 +494,45 @@
   },
   "organizations": {
     "createNew": "Crear Organización",
+    "createNewDescription": "Crear una nueva organización para colaborar con tu equipo.",
+    "createOrganization": "Crear Organización",
+    "creating": "Creando...",
     "defaultOrganization": "Seleccionar Organización",
-    "manageMembers": "",
-    "manageSettings": "",
+    "manageMembers": "Gestiona los miembros de tu organización y sus roles",
+    "manageSettings": "Gestionar configuración de la organización",
     "members": "Miembros",
-    "noMembers": "",
+    "name": "Nombre de la Organización",
+    "namePlaceholder": "Mi Organización",
+    "nameRequired": "El nombre de la organización es obligatorio",
+    "nameTooLong": "El nombre debe tener menos de 100 caracteres",
+    "noMembers": "Aún no hay miembros",
     "noOrganizations": "Aún no hay organizaciones",
     "noOrganizationsYet": "Aún no hay organizaciones",
-    "organizationCount_one": "",
-    "organizationCount_many": "",
-    "organizationCount_other": "",
-    "pendingInvitations": "",
-    "pendingInvitationsDesc": "",
+    "organizationCount_one": "organizations.organizationCount",
+    "organizationCount_many": "organizations.organizationCount",
+    "organizationCount_other": "organizations.organizationCount",
+    "pendingInvitations": "Invitaciones Pendientes",
+    "pendingInvitationsDesc": "Ver y gestionar invitaciones de equipo pendientes",
     "settings": "Configuración",
-    "settingsComingSoon": "",
-    "title": "Organizaciones"
+    "settingsComingSoon": "Configuración de organización próximamente...",
+    "slug": "Slug (identificador URL)",
+    "slugDescription": "Se usa en URLs. Solo se permiten letras minúsculas, números y guiones.",
+    "slugPlaceholder": "mi-organizacion",
+    "title": "Organizaciones",
+    "manageDescription": "Gestiona tus organizaciones y cambia entre ellas",
+    "switch": "Cambiar",
+    "plan": "Plan",
+    "created": "Creado",
+    "createFirstDescription": "Crea tu primera organización para comenzar",
+    "deleteOrganization": "Eliminar Organización",
+    "deleteConfirmation": "¿Estás seguro de que quieres eliminar \"{{name}}\"? Esta acción no se puede deshacer. Todos los datos asociados con esta organización serán eliminados permanentemente.",
+    "deleting": "Eliminando...",
+    "editOrganization": "Editar Organización",
+    "editDescription": "Actualiza la información de tu organización.",
+    "updateSuccess": "Organización actualizada exitosamente",
+    "updateError": "Error al actualizar la organización",
+    "updating": "Actualizando...",
+    "updateOrganization": "Actualizar Organización"
   },
   "pricing": {
     "errors": {
@@ -416,21 +589,300 @@
     "viewerDescription": "Puede ver contenido pero no hacer cambios"
   },
   "settings": {
+    "title": "Configuración",
+    "description": "Gestiona la configuración de tu cuenta y establece las preferencias de correo electrónico.",
+    "nav": {
+      "profile": "Perfil",
+      "account": "Cuenta",
+      "appearance": "Apariencia",
+      "notifications": "Notificaciones",
+      "display": "Pantalla"
+    },
+    "account": {
+      "title": "Cuenta",
+      "description": "Actualiza la configuración de tu cuenta. Establece tu idioma y zona horaria preferidos."
+    },
+    "appearance": {
+      "title": "Apariencia",
+      "description": "Personaliza la apariencia de la aplicación. Cambia automáticamente entre temas diurnos y nocturnos.",
+      "fontLabel": "Fuente",
+      "fontDescription": "Establece la fuente que quieres usar en el panel de control.",
+      "themeLabel": "Tema",
+      "themeDescription": "Selecciona el tema para el panel de control.",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "updateButton": "Actualizar preferencias"
+    },
+    "display": {
+      "sidebarLabel": "Barra lateral",
+      "sidebarDescription": "Selecciona los elementos que quieres mostrar en la barra lateral.",
+      "updateButton": "Actualizar pantalla",
+      "items": {
+        "recents": "Recientes",
+        "home": "Inicio",
+        "applications": "Aplicaciones",
+        "desktop": "Escritorio",
+        "downloads": "Descargas",
+        "documents": "Documentos"
+      },
+      "validation": {
+        "atLeastOne": "Tienes que seleccionar al menos un elemento."
+      }
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "description": "Configura cómo recibes las notificaciones."
+    },
     "account": "Cuenta",
     "appearance": "Apariencia",
     "display": "Pantalla",
     "language": "Idioma",
     "notifications": "Notificaciones",
-    "profile": "Perfil"
+    "openThemeSettings": "Abrir configuración de tema",
+    "themeSettings": "Configuración de Tema",
+    "themeSettingsDescription": "Ajusta la apariencia y el diseño según tus preferencias.",
+    "resetAllSettings": "Restablecer todas las configuraciones a valores predeterminados",
+    "reset": "Restablecer",
+    "theme": "Tema",
+    "selectThemePreference": "Seleccionar preferencia de tema",
+    "system": "Sistema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "themeDescription": "Elige entre la preferencia del sistema, modo claro o modo oscuro",
+    "sidebar": "Barra lateral",
+    "selectSidebarStyle": "Seleccionar estilo de barra lateral",
+    "inset": "Insertado",
+    "profile": {
+      "title": "Perfil",
+      "description": "Así es como otros te verán en el sitio.",
+      "username": "Nombre de usuario",
+      "usernamePlaceholder": "shadcn",
+      "usernameDescription": "Este es tu nombre público. Puede ser tu nombre real o un pseudónimo. Solo puedes cambiarlo una vez cada 30 días.",
+      "email": "Email",
+      "emailPlaceholder": "Selecciona un email verificado para mostrar",
+      "emailDescription": "Puedes gestionar las direcciones de email verificadas en tu",
+      "bio": "Biografía",
+      "bioPlaceholder": "Cuéntanos un poco sobre ti",
+      "bioDescription": "Puedes @mencionar otros usuarios y organizaciones para vincularlos.",
+      "urls": "URLs",
+      "urlsDescription": "Añade enlaces a tu sitio web, blog o perfiles de redes sociales.",
+      "addUrl": "Añadir URL",
+      "updateProfile": "Actualizar perfil",
+      "validation": {
+        "usernameRequired": "Por favor ingresa tu nombre de usuario.",
+        "usernameMinLength": "El nombre de usuario debe tener al menos 2 caracteres.",
+        "usernameMaxLength": "El nombre de usuario no debe tener más de 30 caracteres.",
+        "emailRequired": "Por favor selecciona un email para mostrar.",
+        "urlRequired": "Por favor ingresa una URL válida."
+      }
+    },
+    "notifications": {
+      "notifyMeAbout": "Notificarme sobre...",
+      "allNewMessages": "Todos los mensajes nuevos",
+      "directMessagesAndMentions": "Mensajes directos y menciones",
+      "nothing": "Nada",
+      "emailNotifications": "Notificaciones por Email",
+      "communicationEmails": "Emails de comunicación",
+      "communicationEmailsDescription": "Recibe emails sobre la actividad de tu cuenta.",
+      "marketingEmails": "Emails de marketing",
+      "marketingEmailsDescription": "Recibe emails sobre nuevos productos, características y más.",
+      "socialEmails": "Emails sociales",
+      "socialEmailsDescription": "Recibe emails sobre solicitudes de amistad, seguidores y más.",
+      "securityEmails": "Emails de seguridad",
+      "securityEmailsDescription": "Recibe emails sobre la actividad y seguridad de tu cuenta.",
+      "useDifferentSettingsForMobile": "Usar configuraciones diferentes para mis dispositivos móviles",
+      "mobileSettingsDescription": "Puedes gestionar tus notificaciones móviles en la",
+      "mobileSettings": "configuración móvil",
+      "page": "página",
+      "updateNotifications": "Actualizar notificaciones",
+      "validation": {
+        "typeRequired": "Por favor selecciona un tipo de notificación."
+      }
+    },
+    "floating": "Flotante",
+    "sidebarDescription": "Elige entre diseño de barra lateral insertado, flotante o estándar",
+    "layout": "Diseño",
+    "selectLayoutStyle": "Seleccionar estilo de diseño",
+    "default": "Predeterminado",
+    "compact": "Compacto",
+    "fullLayout": "Diseño completo",
+    "layoutDescription": "Elige entre expandido predeterminado, solo iconos compactos o modo de diseño completo",
+    "direction": "Dirección",
+    "selectSiteDirection": "Seleccionar dirección del sitio",
+    "leftToRight": "Izquierda a Derecha",
+    "rightToLeft": "Derecha a Izquierda",
+    "directionDescription": "Elige entre dirección del sitio de izquierda a derecha o de derecha a izquierda"
+  },
+  "tasks": {
+    "title": "Tareas",
+    "description": "¡Aquí tienes una lista de tus tareas para este mes!",
+    "delete": {
+      "confirmWord": "ELIMINAR",
+      "confirmPrompt": "Por favor escriba \"{{confirmWord}}\" para confirmar.",
+      "deleting": "Eliminando tareas...",
+      "success": "{{count, plural, one {Tarea eliminada} other {# tareas eliminadas}}}",
+      "title": "{{count, plural, one {Eliminar tarea} other {Eliminar # tareas}}}",
+      "description": "¿Está seguro de que desea eliminar las tareas seleccionadas?\nEsta acción no se puede deshacer.",
+      "confirmLabel": "Confirme escribiendo \"{{confirmWord}}\":",
+      "confirmPlaceholder": "Escriba \"{{confirmWord}}\" para confirmar.",
+      "warningTitle": "¡Advertencia!",
+      "warningDescription": "Por favor tenga cuidado, esta operación no se puede revertir.",
+      "confirmButton": "Eliminar"
+    },
+    "import": {
+      "title": "Importar Tareas",
+      "description": "Importe tareas rápidamente desde un archivo CSV.",
+      "fileLabel": "Archivo",
+      "button": "Importar",
+      "successMessage": "Ha importado el siguiente archivo:",
+      "validation": {
+        "fileRequired": "Por favor suba un archivo",
+        "csvFormat": "Por favor suba formato CSV."
+      }
+    },
+    "bulkActions": {
+      "updatingStatus": "Actualizando estado...",
+      "statusUpdated": "Estado actualizado a \"{{status}}\" para {{count}} {{count, plural, one {tarea} other {tareas}}}.",
+      "updatingPriority": "Actualizando prioridad...",
+      "priorityUpdated": "Prioridad actualizada a \"{{priority}}\" para {{count}} {{count, plural, one {tarea} other {tareas}}}.",
+      "exportingTasks": "Exportando tareas...",
+      "exportedTasks": "{{count}} {{count, plural, one {tarea exportada} other {tareas exportadas}}} a CSV.",
+      "updateStatus": "Actualizar estado",
+      "updatePriority": "Actualizar prioridad",
+      "exportTasks": "Exportar tareas",
+      "deleteSelectedTasks": "Eliminar tareas seleccionadas"
+    },
+    "deleteConfirmTitle": "¿Eliminar esta tarea: {{id}} ?",
+    "deleteConfirmDescription": "Estás a punto de eliminar una tarea con el ID",
+    "deleteConfirmWarning": "Esta acción no se puede deshacer.",
+    "deleteButton": "Eliminar",
+    "deleteSuccessMessage": "La siguiente tarea ha sido eliminada:",
+    "makeCopy": "Hacer una copia",
+    "favorite": "Favorito",
+    "labels": "Etiquetas",
+    "table": {
+      "searchPlaceholder": "Filtrar por título o ID...",
+      "status": "Estado",
+      "priority": "Prioridad",
+      "noResults": "Sin resultados."
+    },
+    "form": {
+      "createTitle": "Crear Tarea",
+      "updateTitle": "Actualizar Tarea",
+      "createDescription": "Añade una nueva tarea proporcionando la información necesaria. Haz clic en guardar cuando termines.",
+      "updateDescription": "Actualiza la tarea proporcionando la información necesaria. Haz clic en guardar cuando termines.",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Introduce un título",
+      "statusLabel": "Estado",
+      "statusPlaceholder": "Seleccionar estado",
+      "labelLabel": "Etiqueta",
+      "priorityLabel": "Prioridad",
+      "saveButton": "Guardar cambios",
+      "status": {
+        "inProgress": "En Progreso",
+        "backlog": "Pendiente",
+        "todo": "Por Hacer",
+        "canceled": "Cancelado",
+        "done": "Hecho"
+      },
+      "label": {
+        "documentation": "Documentación",
+        "feature": "Característica",
+        "bug": "Error"
+      },
+      "priority": {
+        "high": "Alta",
+        "medium": "Media",
+        "low": "Baja"
+      },
+      "validation": {
+        "titleRequired": "El título es obligatorio.",
+        "statusRequired": "Por favor selecciona un estado.",
+        "labelRequired": "Por favor selecciona una etiqueta.",
+        "priorityRequired": "Por favor elige una prioridad."
+      }
+    }
+  },
+  "apps": {
+    "title": "Integraciones de Aplicaciones",
+    "description": "¡Aquí tienes una lista de tus aplicaciones para la integración!",
+    "filterPlaceholder": "Filtrar aplicaciones...",
+    "filter": {
+      "all": "Todas las Aplicaciones",
+      "connected": "Conectadas",
+      "notConnected": "No Conectadas"
+    },
+    "sort": {
+      "ascending": "Ascendente",
+      "descending": "Descendente"
+    },
+    "connected": "Conectada",
+    "connect": "Conectar"
   },
   "users": {
-    "active": "",
-    "filterUsers": "",
-    "inactive": "",
+    "title": "Lista de Usuarios",
+    "description": "Gestiona tus usuarios y sus roles aquí.",
+    "active": "Activo",
+    "addUser": "Añadir Usuario",
+    "filterUsers": "Filtrar usuarios...",
+    "inactive": "Inactivo",
+    "inviteUser": "Invitar Usuario",
     "invited": "",
     "noResults": "",
     "role": "",
     "status": "",
-    "suspended": ""
+    "suspended": "",
+    "bulkActions": {
+      "activatingUsers": "Activando usuarios...",
+      "activatedUsers": "{{count}} {{count, plural, one {usuario activado} other {usuarios activados}}}",
+      "deactivatingUsers": "Desactivando usuarios...",
+      "deactivatedUsers": "{{count}} {{count, plural, one {usuario desactivado} other {usuarios desactivados}}}",
+      "invitingUsers": "Invitar usuarios...",
+      "invitedUsers": "{{count}} {{count, plural, one {usuario invitado} other {usuarios invitados}}}",
+      "errorActivatingUsers": "Error activando usuarios",
+      "errorDeactivatingUsers": "Error desactivando usuarios",
+      "errorInvitingUsers": "Error invitando usuarios",
+      "inviteSelectedUsers": "Invitar usuarios seleccionados",
+      "activateSelectedUsers": "Activar usuarios seleccionados",
+      "deactivateSelectedUsers": "Desactivar usuarios seleccionados",
+      "deleteSelectedUsers": "Eliminar usuarios seleccionados"
+    },
+    "deleteUser": "Eliminar Usuario",
+    "deleteConfirmQuestion": "¿Estás seguro de que quieres eliminar",
+    "deleteConfirmDescription": "Esta acción eliminará permanentemente al usuario con el rol de",
+    "deleteConfirmWarning": "del sistema. Esto no se puede deshacer.",
+    "usernameLabel": "Nombre de usuario:",
+    "usernamePlaceholder": "Ingresa el nombre de usuario para confirmar la eliminación.",
+    "warningTitle": "¡Advertencia!",
+    "warningDescription": "Por favor ten cuidado, esta operación no se puede revertir.",
+    "deleteSuccessMessage": "El siguiente usuario ha sido eliminado:",
+    "delete": {
+      "confirmWord": "ELIMINAR",
+      "confirmPrompt": "Por favor escribe \"{{confirmWord}}\" para confirmar.",
+      "deleting": "Eliminando usuarios...",
+      "success": "{{count}} {{count, plural, one {usuario eliminado} other {usuarios eliminados}}}",
+      "title": "Eliminar {{count}} {{count, plural, one {usuario} other {usuarios}}}",
+      "description": "¿Estás seguro de que quieres eliminar los usuarios seleccionados?",
+      "warningDescription": "Esta acción no se puede deshacer.",
+      "confirmLabel": "Confirma escribiendo \"{{confirmWord}}\":",
+      "confirmPlaceholder": "Escribe \"{{confirmWord}}\" para confirmar.",
+      "warningTitle": "¡Advertencia!",
+      "confirmButton": "Eliminar"
+    },
+    "invite": {
+      "title": "Invitar Usuario",
+      "description": "Invita a un nuevo usuario a unirse a tu equipo enviándole una invitación por correo electrónico. Asigna un rol para definir su nivel de acceso.",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "ej: juan.perez@gmail.com",
+      "roleLabel": "Rol",
+      "rolePlaceholder": "Selecciona un rol",
+      "descriptionLabel": "Descripción (opcional)",
+      "descriptionPlaceholder": "Añade una nota personal a tu invitación (opcional)",
+      "button": "Invitar",
+      "validation": {
+        "emailRequired": "Por favor ingresa un correo electrónico para invitar.",
+        "roleRequired": "El rol es requerido."
+      }
+    }
   }
 }

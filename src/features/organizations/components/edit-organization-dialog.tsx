@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
@@ -24,15 +25,15 @@ import {
 import { Input } from '@/components/ui/input'
 import { type Organization, organizationApi } from '@/lib/api'
 
-const formSchema = z.object({
+const getFormSchema = (t: (key: string, defaultValue: string) => string) => z.object({
   name: z
     .string()
-    .min(1, 'Organization name is required')
-    .max(100, 'Name must be less than 100 characters'),
+    .min(1, t('organizations.nameRequired', 'Name is required'))
+    .max(100, t('organizations.nameTooLong', 'Name is too long')),
   slug: z.string().optional(),
 })
 
-type FormData = z.infer<typeof formSchema>
+type FormData = z.infer<ReturnType<typeof getFormSchema>>
 
 interface EditOrganizationDialogProps {
   organization: Organization
@@ -46,10 +47,11 @@ export function EditOrganizationDialog({
   onOpenChange,
 }: Readonly<EditOrganizationDialogProps>) {
   const [error, setError] = useState<string | null>(null)
+  const { t } = useTranslation()
   const queryClient = useQueryClient()
 
   const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(getFormSchema(t)),
     defaultValues: {
       name: organization.name,
       slug: organization.slug,
@@ -71,7 +73,7 @@ export function EditOrganizationDialog({
       organizationApi.update(organization.id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
-      toast.success('Organization updated successfully')
+      toast.success(t('organizations.updateSuccess', 'Organization updated successfully'))
       setError(null)
       onOpenChange(false)
     },
@@ -81,7 +83,7 @@ export function EditOrganizationDialog({
       }
       const errorMessage =
         axiosError.response?.data?.detail?.message ||
-        'Failed to update organization'
+        t('organizations.updateError', 'Failed to update organization')
       setError(errorMessage)
       toast.error(errorMessage)
     },
@@ -119,9 +121,9 @@ export function EditOrganizationDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogTitle>Edit Organization</DialogTitle>
+          <DialogTitle>{t('organizations.editOrganization', 'Edit Organization')}</DialogTitle>
           <DialogDescription>
-            Update your organization information.
+            {t('organizations.editDescription', 'Update your organization details')}
           </DialogDescription>
         </DialogHeader>
 
@@ -138,9 +140,9 @@ export function EditOrganizationDialog({
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Organization Name</FormLabel>
+                  <FormLabel>{t('organizations.name', 'Name')}</FormLabel>
                   <FormControl>
-                    <Input placeholder='My Organization' {...field} />
+                    <Input placeholder={t('organizations.namePlaceholder', 'Enter organization name')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -152,14 +154,13 @@ export function EditOrganizationDialog({
               name='slug'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Slug (URL identifier)</FormLabel>
+                  <FormLabel>{t('organizations.slug', 'Slug')}</FormLabel>
                   <FormControl>
-                    <Input placeholder='my-organization' {...field} />
+                    <Input placeholder={t('organizations.slugPlaceholder', 'Enter organization slug')} {...field} />
                   </FormControl>
                   <FormMessage />
                   <p className='text-muted-foreground text-xs'>
-                    Used in URLs. Only lowercase letters, numbers, and hyphens
-                    allowed.
+                    {t('organizations.slugDescription', 'A URL-friendly version of the name')}
                   </p>
                 </FormItem>
               )}
@@ -172,12 +173,12 @@ export function EditOrganizationDialog({
                 onClick={() => handleOpenChange(false)}
                 disabled={updateMutation.isPending}
               >
-                Cancel
+                {t('common.cancel', 'Cancel')}
               </Button>
               <Button type='submit' disabled={updateMutation.isPending}>
                 {updateMutation.isPending
-                  ? 'Updating...'
-                  : 'Update Organization'}
+                  ? t('organizations.updating', 'Updating...')
+                  : t('organizations.updateOrganization', 'Update Organization')}
               </Button>
             </DialogFooter>
           </form>
