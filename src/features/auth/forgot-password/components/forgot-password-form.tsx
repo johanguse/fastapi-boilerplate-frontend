@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -51,7 +51,11 @@ export function ForgotPasswordForm({
         setIsLoading(false)
         form.reset()
         navigate({ to: '/otp' })
-        return t('auth.forgotPasswordEmailSent', { email: data.email })
+        return t(
+          'auth.forgotPasswordEmailSent',
+          'Reset email sent to {{email}}',
+          { email: data.email }
+        )
       },
       error: t('common.error', 'An error occurred'),
     })

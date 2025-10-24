@@ -63,6 +63,11 @@ export function useSidebarData(): SidebarData {
               url: '/organizations',
               icon: Building2,
             },
+          ],
+        },
+        {
+          title: t('navigation.staticPages', 'Static Pages & Examples'),
+          items: [
             {
               title: t('navigation.tasks', 'Tasks'),
               url: '/tasks',
@@ -84,11 +89,42 @@ export function useSidebarData(): SidebarData {
               url: '/users',
               icon: Users,
             },
-          ],
-        },
-        {
-          title: t('navigation.pages', 'Pages'),
-          items: [
+            {
+              title: t('navigation.settings', 'Settings'),
+              icon: Settings,
+              items: [
+                {
+                  title: t('settings.profile', 'Profile'),
+                  url: '/settings',
+                  icon: UserCog,
+                },
+                {
+                  title: t('settings.account', 'Account'),
+                  url: '/settings/account',
+                  icon: Wrench,
+                },
+                {
+                  title: t('settings.appearance', 'Appearance'),
+                  url: '/settings/appearance',
+                  icon: Palette,
+                },
+                {
+                  title: t('settings.notifications', 'Notifications'),
+                  url: '/settings/notifications',
+                  icon: Bell,
+                },
+                {
+                  title: t('settings.display', 'Display'),
+                  url: '/settings/display',
+                  icon: Monitor,
+                },
+              ],
+            },
+            {
+              title: t('navigation.helpCenter', 'Help Center'),
+              url: '/help-center',
+              icon: HelpCircle,
+            },
             {
               title: t('navigation.auth', 'Authentication'),
               icon: ShieldCheck,
@@ -145,47 +181,6 @@ export function useSidebarData(): SidebarData {
                   icon: Construction,
                 },
               ],
-            },
-          ],
-        },
-        {
-          title: t('navigation.other', 'Other'),
-          items: [
-            {
-              title: t('navigation.settings', 'Settings'),
-              icon: Settings,
-              items: [
-                {
-                  title: t('settings.profile', 'Profile'),
-                  url: '/settings',
-                  icon: UserCog,
-                },
-                {
-                  title: t('settings.account', 'Account'),
-                  url: '/settings/account',
-                  icon: Wrench,
-                },
-                {
-                  title: t('settings.appearance', 'Appearance'),
-                  url: '/settings/appearance',
-                  icon: Palette,
-                },
-                {
-                  title: t('settings.notifications', 'Notifications'),
-                  url: '/settings/notifications',
-                  icon: Bell,
-                },
-                {
-                  title: t('settings.display', 'Display'),
-                  url: '/settings/display',
-                  icon: Monitor,
-                },
-              ],
-            },
-            {
-              title: t('navigation.helpCenter', 'Help Center'),
-              url: '/help-center',
-              icon: HelpCircle,
             },
           ],
         },

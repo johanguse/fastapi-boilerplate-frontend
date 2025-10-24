@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod/v4'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -14,47 +15,58 @@ import {
 } from '@/components/ui/form'
 import { showSubmittedData } from '@/lib/show-submitted-data'
 
-const items = [
-  {
-    id: 'recents',
-    label: 'Recents',
-  },
-  {
-    id: 'home',
-    label: 'Home',
-  },
-  {
-    id: 'applications',
-    label: 'Applications',
-  },
-  {
-    id: 'desktop',
-    label: 'Desktop',
-  },
-  {
-    id: 'downloads',
-    label: 'Downloads',
-  },
-  {
-    id: 'documents',
-    label: 'Documents',
-  },
-] as const
+const getItems = (t: (key: string, defaultValue: string) => string) =>
+  [
+    {
+      id: 'recents',
+      label: t('settings.display.items.recents', 'Recents'),
+    },
+    {
+      id: 'home',
+      label: t('settings.display.items.home', 'Home'),
+    },
+    {
+      id: 'applications',
+      label: t('settings.display.items.applications', 'Applications'),
+    },
+    {
+      id: 'desktop',
+      label: t('settings.display.items.desktop', 'Desktop'),
+    },
+    {
+      id: 'downloads',
+      label: t('settings.display.items.downloads', 'Downloads'),
+    },
+    {
+      id: 'documents',
+      label: t('settings.display.items.documents', 'Documents'),
+    },
+  ] as const
 
-const displayFormSchema = z.object({
-  items: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: 'You have to select at least one item.',
-  }),
-})
-
-type DisplayFormValues = z.infer<typeof displayFormSchema>
+const createDisplayFormSchema = (
+  t: (key: string, defaultValue: string) => string
+) =>
+  z.object({
+    items: z.array(z.string()).refine((value) => value.some((item) => item), {
+      message: t(
+        'settings.display.validation.atLeastOne',
+        'You have to select at least one item.'
+      ),
+    }),
+  })
 
 // This can come from your database or API.
-const defaultValues: Partial<DisplayFormValues> = {
+const defaultValues: Partial<{ items: string[] }> = {
   items: ['recents', 'home'],
 }
 
 export function DisplayForm() {
+  const { t } = useTranslation()
+  const displayFormSchema = createDisplayFormSchema(t)
+  const items = getItems(t)
+
+  type DisplayFormValues = z.infer<typeof displayFormSchema>
+
   const form = useForm<DisplayFormValues>({
     resolver: zodResolver(displayFormSchema),
     defaultValues,
@@ -72,9 +84,14 @@ export function DisplayForm() {
           render={() => (
             <FormItem>
               <div className='mb-4'>
-                <FormLabel className='text-base'>Sidebar</FormLabel>
+                <FormLabel className='text-base'>
+                  {t('settings.display.sidebarLabel', 'Sidebar')}
+                </FormLabel>
                 <FormDescription>
-                  Select the items you want to display in the sidebar.
+                  {t(
+                    'settings.display.sidebarDescription',
+                    'Select the items you want to display in the sidebar.'
+                  )}
                 </FormDescription>
               </div>
               {items.map((item) => (
@@ -114,7 +131,9 @@ export function DisplayForm() {
             </FormItem>
           )}
         />
-        <Button type='submit'>Update display</Button>
+        <Button type='submit'>
+          {t('settings.display.updateButton', 'Update display')}
+        </Button>
       </form>
     </Form>
   )

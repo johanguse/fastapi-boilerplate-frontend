@@ -27,24 +27,24 @@ export function Dashboard() {
 
   const topNav = [
     {
-      title: t('dashboard.tabs.overview'),
+      title: t('dashboard.tabs.overview', 'Overview'),
       href: '/',
       isActive: pathname === '/',
     },
     {
-      title: t('dashboard.tabs.analytics'),
+      title: t('dashboard.tabs.analytics', 'Analytics'),
       href: '/analytics',
       isActive: pathname === '/analytics',
       disabled: true,
     },
     {
-      title: t('dashboard.tabs.reports'),
+      title: t('dashboard.tabs.reports', 'Reports'),
       href: '/reports',
       isActive: pathname === '/reports',
       disabled: true,
     },
     {
-      title: t('dashboard.tabs.notifications'),
+      title: t('dashboard.tabs.notifications', 'Notifications'),
       href: '/notifications',
       isActive: pathname === '/notifications',
       disabled: true,
@@ -69,10 +69,10 @@ export function Dashboard() {
       <Main>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <h1 className='font-bold text-2xl tracking-tight'>
-            {t('dashboard.title')}
+            {t('dashboard.title', 'Dashboard')}
           </h1>
           <div className='flex items-center space-x-2'>
-            <Button>{t('dashboard.metrics.download')}</Button>
+            <Button>{t('dashboard.metrics.download', 'Download')}</Button>
           </div>
         </div>
         <Tabs
@@ -99,7 +99,7 @@ export function Dashboard() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='font-medium text-sm'>
-                    {t('dashboard.metrics.totalRevenue')}
+                    {t('dashboard.metrics.totalRevenue', 'Total Revenue')}
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -117,14 +117,14 @@ export function Dashboard() {
                 <CardContent>
                   <div className='font-bold text-2xl'>$45,231.89</div>
                   <p className='text-muted-foreground text-xs'>
-                    {t('dashboard.metrics.fromLastMonth')}
+                    {t('dashboard.metrics.fromLastMonth', 'from last month')}
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='font-medium text-sm'>
-                    {t('dashboard.metrics.subscriptions')}
+                    {t('dashboard.metrics.subscriptions', 'Subscriptions')}
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -144,14 +144,14 @@ export function Dashboard() {
                 <CardContent>
                   <div className='font-bold text-2xl'>+2350</div>
                   <p className='text-muted-foreground text-xs'>
-                    {t('dashboard.metrics.newToday')}
+                    {t('dashboard.metrics.newToday', 'new today')}
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='font-medium text-sm'>
-                    {t('dashboard.metrics.sales')}
+                    {t('dashboard.metrics.sales', 'Sales')}
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -170,14 +170,14 @@ export function Dashboard() {
                 <CardContent>
                   <div className='font-bold text-2xl'>+12,234</div>
                   <p className='text-muted-foreground text-xs'>
-                    {t('dashboard.metrics.newThisHour')}
+                    {t('dashboard.metrics.newThisHour', 'new this hour')}
                   </p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='font-medium text-sm'>
-                    {t('dashboard.metrics.activeNow')}
+                    {t('dashboard.metrics.activeNow', 'active now')}
                   </CardTitle>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -195,7 +195,7 @@ export function Dashboard() {
                 <CardContent>
                   <div className='font-bold text-2xl'>+573</div>
                   <p className='text-muted-foreground text-xs'>
-                    {t('dashboard.metrics.sinceLastHour')}
+                    {t('dashboard.metrics.sinceLastHour', 'since last hour')}
                   </p>
                 </CardContent>
               </Card>
@@ -211,7 +211,9 @@ export function Dashboard() {
               </Card>
               <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
-                  <CardTitle>{t('dashboard.metrics.recentSales')}</CardTitle>
+                  <CardTitle>
+                    {t('dashboard.metrics.recentSales', 'Recent Sales')}
+                  </CardTitle>
                   <CardDescription>
                     You made 265 sales this month.
                   </CardDescription>

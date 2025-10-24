@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -11,6 +12,8 @@ import { TasksTable } from './components/tasks-table'
 import { tasks } from './data/tasks'
 
 export function Tasks() {
+  const { t } = useTranslation()
+
   return (
     <TasksProvider>
       <Header fixed>
@@ -25,9 +28,14 @@ export function Tasks() {
       <Main>
         <div className='mb-2 flex flex-wrap items-center justify-between gap-x-4 space-y-2'>
           <div>
-            <h2 className='font-bold text-2xl tracking-tight'>Tasks</h2>
+            <h2 className='font-bold text-2xl tracking-tight'>
+              {t('tasks.title', 'Tasks')}
+            </h2>
             <p className='text-muted-foreground'>
-              Here&apos;s a list of your tasks for this month!
+              {t(
+                'tasks.description',
+                "Here's a list of your tasks for this month!"
+              )}
             </p>
           </div>
           <TasksPrimaryButtons />

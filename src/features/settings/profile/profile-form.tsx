@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link } from '@tanstack/react-router'
 import { useFieldArray, useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod/v4'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -24,28 +25,50 @@ import { Textarea } from '@/components/ui/textarea'
 import { showSubmittedData } from '@/lib/show-submitted-data'
 import { cn } from '@/lib/utils'
 
-const profileFormSchema = z.object({
-  username: z
-    .string('Please enter your username.')
-    .min(2, 'Username must be at least 2 characters.')
-    .max(30, 'Username must not be longer than 30 characters.'),
-  email: z.email({
-    error: (iss) =>
-      iss.input === undefined
-        ? 'Please select an email to display.'
-        : undefined,
-  }),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.url('Please enter a valid URL.'),
-      })
-    )
-    .optional(),
-})
+const createProfileFormSchema = (
+  t: (key: string, defaultValue: string) => string
+) =>
+  z.object({
+    username: z
+      .string(
+        t('profile.validation.usernameRequired', 'Please enter your username.')
+      )
+      .min(
+        2,
+        t(
+          'profile.validation.usernameMinLength',
+          'Username must be at least 2 characters.'
+        )
+      )
+      .max(
+        30,
+        t(
+          'profile.validation.usernameMaxLength',
+          'Username must not be longer than 30 characters.'
+        )
+      ),
+    email: z.email({
+      error: (iss) =>
+        iss.input === undefined
+          ? t(
+              'profile.validation.emailRequired',
+              'Please select an email to display.'
+            )
+          : undefined,
+    }),
+    bio: z.string().max(160).min(4),
+    urls: z
+      .array(
+        z.object({
+          value: z.url(
+            t('profile.validation.urlRequired', 'Please enter a valid URL.')
+          ),
+        })
+      )
+      .optional(),
+  })
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
@@ -57,6 +80,8 @@ const defaultValues: Partial<ProfileFormValues> = {
 }
 
 export function ProfileForm() {
+  const { t } = useTranslation()
+  const profileFormSchema = createProfileFormSchema(t)
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
@@ -79,13 +104,18 @@ export function ProfileForm() {
           name='username'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>{t('profile.username', 'Username')}</FormLabel>
               <FormControl>
-                <Input placeholder='shadcn' {...field} />
+                <Input
+                  placeholder={t('profile.usernamePlaceholder', 'shadcn')}
+                  {...field}
+                />
               </FormControl>
               <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
+                {t(
+                  'profile.usernameDescription',
+                  'This is your public display name. It can be your real name or a pseudonym. You can only change this once every 30 days.'
+                )}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -96,11 +126,16 @@ export function ProfileForm() {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('profile.email', 'Email')}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Select a verified email to display' />
+                    <SelectValue
+                      placeholder={t(
+                        'profile.emailPlaceholder',
+                        'Select a verified email to display'
+                      )}
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -110,7 +145,10 @@ export function ProfileForm() {
                 </SelectContent>
               </Select>
               <FormDescription>
-                You can manage verified email addresses in your{' '}
+                {t(
+                  'profile.emailDescription',
+                  'You can manage verified email addresses in your'
+                )}{' '}
                 <Link to='/'>email settings</Link>.
               </FormDescription>
               <FormMessage />
@@ -122,17 +160,22 @@ export function ProfileForm() {
           name='bio'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <FormLabel>{t('profile.bio', 'Bio')}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder='Tell us a little bit about yourself'
+                  placeholder={t(
+                    'profile.bioPlaceholder',
+                    'Tell us a little bit about yourself'
+                  )}
                   className='resize-none'
                   {...field}
                 />
               </FormControl>
               <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
+                {t(
+                  'profile.bioDescription',
+                  'You can @mention other users and organizations to link to them.'
+                )}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -147,10 +190,13 @@ export function ProfileForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className={cn(index !== 0 && 'sr-only')}>
-                    URLs
+                    {t('profile.urls', 'URLs')}
                   </FormLabel>
                   <FormDescription className={cn(index !== 0 && 'sr-only')}>
-                    Add links to your website, blog, or social media profiles.
+                    {t(
+                      'profile.urlsDescription',
+                      'Add links to your website, blog, or social media profiles.'
+                    )}
                   </FormDescription>
                   <FormControl>
                     <Input {...field} />
@@ -167,10 +213,12 @@ export function ProfileForm() {
             className='mt-2'
             onClick={() => append({ value: '' })}
           >
-            Add URL
+            {t('profile.addUrl', 'Add URL')}
           </Button>
         </div>
-        <Button type='submit'>Update profile</Button>
+        <Button type='submit'>
+          {t('profile.updateProfile', 'Update profile')}
+        </Button>
       </form>
     </Form>
   )

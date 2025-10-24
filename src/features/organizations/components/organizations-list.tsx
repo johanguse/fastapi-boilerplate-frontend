@@ -95,7 +95,9 @@ export function OrganizationsList() {
         <Main>
           <div className='space-y-4'>
             <div className='flex items-center justify-between'>
-              <h1 className='font-bold text-3xl'>{t('organizations.title')}</h1>
+              <h1 className='font-bold text-3xl'>
+                {t('organizations.title', 'Organizations')}
+              </h1>
             </div>
             <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
               {Array.from({ length: 6 }, (_, i) => (
@@ -131,14 +133,17 @@ export function OrganizationsList() {
         <div className='space-y-6'>
           <div className='flex items-center justify-between'>
             <div>
-              <h1 className='font-bold text-3xl'>Organizations</h1>
+              <h1 className='font-bold text-3xl'>{t('organizations.title')}</h1>
               <p className='text-muted-foreground'>
-                Manage your organizations and switch between them
+                {t(
+                  'organizations.manageDescription',
+                  'Manage your organizations and settings'
+                )}
               </p>
             </div>
             <Button onClick={() => setCreateDialogOpen(true)}>
               <Plus className='mr-2 h-4 w-4' />
-              Create Organization
+              {t('organizations.createOrganization', 'Create Organization')}
             </Button>
           </div>
 
@@ -159,7 +164,9 @@ export function OrganizationsList() {
                     <DropdownMenuTrigger asChild>
                       <Button variant='ghost' size='sm'>
                         <MoreHorizontal className='h-4 w-4' />
-                        <span className='sr-only'>Open menu</span>
+                        <span className='sr-only'>
+                          {t('common.openMenu', 'Open menu')}
+                        </span>
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align='end'>
@@ -167,7 +174,7 @@ export function OrganizationsList() {
                         onClick={() => handleSwitch(organization)}
                       >
                         <ArrowRightLeft className='mr-2 h-4 w-4' />
-                        Switch
+                        {t('organizations.switch', 'Switch')}
                       </DropdownMenuItem>
                       {isAdmin && (
                         <>
@@ -176,11 +183,11 @@ export function OrganizationsList() {
                             onClick={() => handleEdit(organization)}
                           >
                             <Edit className='mr-2 h-4 w-4' />
-                            Edit
+                            {t('common.edit', 'Edit')}
                           </DropdownMenuItem>
                           <DropdownMenuItem>
                             <Settings className='mr-2 h-4 w-4' />
-                            Settings
+                            {t('organizations.settings', 'Settings')}
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
@@ -188,7 +195,7 @@ export function OrganizationsList() {
                             className='text-destructive'
                           >
                             <Trash2 className='mr-2 h-4 w-4' />
-                            Delete
+                            {t('common.delete', 'Delete')}
                           </DropdownMenuItem>
                         </>
                       )}
@@ -205,7 +212,7 @@ export function OrganizationsList() {
                     {organization.plan && (
                       <div className='flex items-center gap-2'>
                         <span className='text-muted-foreground text-xs'>
-                          Plan:
+                          {t('organizations.plan', 'Plan')}:
                         </span>
                         <span className='rounded bg-primary/10 px-2 py-0.5 font-medium text-primary text-xs'>
                           {organization.plan}
@@ -215,7 +222,7 @@ export function OrganizationsList() {
                   </div>
                   {organization.createdAt && (
                     <p className='mt-2 text-muted-foreground text-xs'>
-                      Created{' '}
+                      {t('organizations.created', 'Created')}{' '}
                       {new Date(organization.createdAt).toLocaleDateString()}
                     </p>
                   )}
@@ -228,14 +235,23 @@ export function OrganizationsList() {
                 <CardContent className='flex flex-col items-center justify-center py-12'>
                   <Building2 className='mb-4 h-12 w-12 text-muted-foreground' />
                   <h3 className='mb-2 font-medium text-lg'>
-                    No organizations yet
+                    {t(
+                      'organizations.noOrganizationsYet',
+                      'No organizations yet'
+                    )}
                   </h3>
                   <p className='mb-4 text-center text-muted-foreground'>
-                    Create your first organization to get started
+                    {t(
+                      'organizations.createFirstDescription',
+                      'Get started by creating your first organization'
+                    )}
                   </p>
                   <Button onClick={() => setCreateDialogOpen(true)}>
                     <Plus className='mr-2 h-4 w-4' />
-                    Create Organization
+                    {t(
+                      'organizations.createOrganization',
+                      'Create Organization'
+                    )}
                   </Button>
                 </CardContent>
               </Card>
@@ -264,21 +280,27 @@ export function OrganizationsList() {
           >
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Delete Organization</AlertDialogTitle>
+                <AlertDialogTitle>
+                  {t('organizations.deleteOrganization', 'Delete Organization')}
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  Are you sure you want to delete "{selectedOrganization?.name}
-                  "? This action cannot be undone. All data associated with this
-                  organization will be permanently removed.
+                  {t('organizations.deleteConfirmation', {
+                    name: selectedOrganization?.name,
+                  })}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>
+                  {t('common.cancel', 'Cancel')}
+                </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={confirmDelete}
                   className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
                   disabled={isDeleting}
                 >
-                  {isDeleting ? 'Deleting...' : 'Delete'}
+                  {isDeleting
+                    ? t('organizations.deleting', 'Deleting...')
+                    : t('common.delete', 'Delete')}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

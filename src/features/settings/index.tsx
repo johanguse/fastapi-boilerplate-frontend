@@ -1,5 +1,6 @@
 import { Outlet } from '@tanstack/react-router'
 import { Bell, Monitor, Palette, UserCog, Wrench } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -9,35 +10,37 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import { Separator } from '@/components/ui/separator'
 import { SidebarNav } from './components/sidebar-nav'
 
-const sidebarNavItems = [
-  {
-    title: 'Profile',
-    href: '/settings',
-    icon: <UserCog size={18} />,
-  },
-  {
-    title: 'Account',
-    href: '/settings/account',
-    icon: <Wrench size={18} />,
-  },
-  {
-    title: 'Appearance',
-    href: '/settings/appearance',
-    icon: <Palette size={18} />,
-  },
-  {
-    title: 'Notifications',
-    href: '/settings/notifications',
-    icon: <Bell size={18} />,
-  },
-  {
-    title: 'Display',
-    href: '/settings/display',
-    icon: <Monitor size={18} />,
-  },
-]
-
 export function Settings() {
+  const { t } = useTranslation()
+
+  const sidebarNavItems = [
+    {
+      title: t('settings.nav.profile', 'Profile'),
+      href: '/settings',
+      icon: <UserCog size={18} />,
+    },
+    {
+      title: t('settings.nav.account', 'Account'),
+      href: '/settings/account',
+      icon: <Wrench size={18} />,
+    },
+    {
+      title: t('settings.nav.appearance', 'Appearance'),
+      href: '/settings/appearance',
+      icon: <Palette size={18} />,
+    },
+    {
+      title: t('settings.nav.notifications', 'Notifications'),
+      href: '/settings/notifications',
+      icon: <Bell size={18} />,
+    },
+    {
+      title: t('settings.nav.display', 'Display'),
+      href: '/settings/display',
+      icon: <Monitor size={18} />,
+    },
+  ]
+
   return (
     <>
       {/* ===== Top Heading ===== */}
@@ -53,10 +56,13 @@ export function Settings() {
       <Main fixed>
         <div className='space-y-0.5'>
           <h1 className='font-bold text-2xl tracking-tight md:text-3xl'>
-            Settings
+            {t('settings.title', 'Settings')}
           </h1>
           <p className='text-muted-foreground'>
-            Manage your account settings and set e-mail preferences.
+            {t(
+              'settings.description',
+              'Manage your account settings and set e-mail preferences.'
+            )}
           </p>
         </div>
         <Separator className='my-4 lg:my-6' />

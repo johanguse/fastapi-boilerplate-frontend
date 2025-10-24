@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import { Fragment } from 'react/jsx-runtime'
+import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -31,6 +32,7 @@ import { type ChatUser, type Convo } from './data/chat-types'
 import { conversations } from './data/convo.json'
 
 export function Chats() {
+  const { t } = useTranslation()
   const [search, setSearch] = useState('')
   const [selectedUser, setSelectedUser] = useState<ChatUser | null>(null)
   const [mobileSelectedUser, setMobileSelectedUser] = useState<ChatUser | null>(
@@ -82,7 +84,9 @@ export function Chats() {
             <div className='-mx-4 sticky top-0 z-10 bg-background px-4 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none'>
               <div className='flex items-center justify-between py-2'>
                 <div className='flex gap-2'>
-                  <h1 className='font-bold text-2xl'>Inbox</h1>
+                  <h1 className='font-bold text-2xl'>
+                    {t('chats.title', 'Inbox')}
+                  </h1>
                   <MessagesSquare size={20} />
                 </div>
 
@@ -103,11 +107,13 @@ export function Chats() {
                 )}
               >
                 <SearchIcon size={15} className='me-2 stroke-slate-500' />
-                <span className='sr-only'>Search</span>
+                <span className='sr-only'>
+                  {t('chats.searchLabel', 'Search')}
+                </span>
                 <input
                   type='text'
                   className='w-full flex-1 bg-inherit text-sm focus-visible:outline-hidden'
-                  placeholder='Search chat...'
+                  placeholder={t('chats.searchPlaceholder', 'Search chat...')}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -294,10 +300,15 @@ export function Chats() {
                       </Button>
                     </div>
                     <label className='flex-1'>
-                      <span className='sr-only'>Chat Text Box</span>
+                      <span className='sr-only'>
+                        {t('chats.messageInputLabel', 'Chat Text Box')}
+                      </span>
                       <input
                         type='text'
-                        placeholder='Type your messages...'
+                        placeholder={t(
+                          'chats.messageInputPlaceholder',
+                          'Type your messages...'
+                        )}
                         className='h-8 w-full bg-inherit focus-visible:outline-hidden'
                       />
                     </label>
@@ -310,7 +321,7 @@ export function Chats() {
                     </Button>
                   </div>
                   <Button className='h-full sm:hidden'>
-                    <Send size={18} /> Send
+                    <Send size={18} /> {t('chats.sendButton', 'Send')}
                   </Button>
                 </form>
               </div>
@@ -326,13 +337,18 @@ export function Chats() {
                   <MessagesSquare className='size-8' />
                 </div>
                 <div className='space-y-2 text-center'>
-                  <h1 className='font-semibold text-xl'>Your messages</h1>
+                  <h1 className='font-semibold text-xl'>
+                    {t('chats.emptyState.title', 'Your messages')}
+                  </h1>
                   <p className='text-muted-foreground text-sm'>
-                    Send a message to start a chat.
+                    {t(
+                      'chats.emptyState.description',
+                      'Send a message to start a chat.'
+                    )}
                   </p>
                 </div>
                 <Button onClick={() => setCreateConversationDialog(true)}>
-                  Send message
+                  {t('chats.emptyState.sendMessageButton', 'Send message')}
                 </Button>
               </div>
             </div>

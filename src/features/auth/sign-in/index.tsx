@@ -38,7 +38,7 @@ export function SignIn() {
             >
               {t('auth.terms', 'Terms of Service')}
             </a>{' '}
-            and{' '}
+            {t('auth.and', 'and')}{' '}
             <a
               href='/privacy'
               className='underline underline-offset-4 hover:text-primary'

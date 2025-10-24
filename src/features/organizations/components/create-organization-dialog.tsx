@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod/v4'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -23,10 +24,7 @@ import { Input } from '@/components/ui/input'
 import { useOrganizations } from '@/hooks/use-organizations'
 
 const formSchema = z.object({
-  name: z
-    .string()
-    .min(1, 'Organization name is required')
-    .max(100, 'Name must be less than 100 characters'),
+  name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
   slug: z.string().optional(),
 })
 
@@ -42,6 +40,7 @@ export function CreateOrganizationDialog({
   onOpenChange,
 }: Readonly<CreateOrganizationDialogProps>) {
   const [error, setError] = useState<string | null>(null)
+  const { t } = useTranslation()
   const { createOrganization, isCreating } = useOrganizations()
 
   const form = useForm<FormData>({
@@ -76,8 +75,7 @@ export function CreateOrganizationDialog({
         response?: { data?: { detail?: { message?: string } } }
       }
       const errorMessage =
-        axiosError.response?.data?.detail?.message ||
-        'Failed to create organization'
+        axiosError.response?.data?.detail?.message || t('common.error', 'Error')
       setError(errorMessage)
     }
   }
@@ -94,9 +92,14 @@ export function CreateOrganizationDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogTitle>Create Organization</DialogTitle>
+          <DialogTitle>
+            {t('organizations.createOrganization', 'Create Organization')}
+          </DialogTitle>
           <DialogDescription>
-            Create a new organization to collaborate with your team.
+            {t(
+              'organizations.createNewDescription',
+              'Create a new organization to collaborate with your team.'
+            )}
           </DialogDescription>
         </DialogHeader>
 
@@ -113,10 +116,15 @@ export function CreateOrganizationDialog({
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Organization Name</FormLabel>
+                  <FormLabel>
+                    {t('organizations.name', 'Organization Name')}
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder='My Organization'
+                      placeholder={t(
+                        'organizations.namePlaceholder',
+                        'My Organization'
+                      )}
                       {...field}
                       onChange={(e) => {
                         field.onChange(e)
@@ -141,14 +149,24 @@ export function CreateOrganizationDialog({
               name='slug'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Slug (URL identifier)</FormLabel>
+                  <FormLabel>
+                    {t('organizations.slug', 'Slug (URL identifier)')}
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder='my-organization' {...field} />
+                    <Input
+                      placeholder={t(
+                        'organizations.slugPlaceholder',
+                        'my-organization'
+                      )}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                   <p className='text-muted-foreground text-xs'>
-                    Used in URLs. Only lowercase letters, numbers, and hyphens
-                    allowed.
+                    {t(
+                      'organizations.slugDescription',
+                      'Used in URLs. Only lowercase letters, numbers, and hyphens allowed.'
+                    )}
                   </p>
                 </FormItem>
               )}
@@ -161,10 +179,15 @@ export function CreateOrganizationDialog({
                 onClick={() => handleOpenChange(false)}
                 disabled={isCreating}
               >
-                Cancel
+                {t('common.cancel', 'Cancel')}
               </Button>
               <Button type='submit' disabled={isCreating}>
-                {isCreating ? 'Creating...' : 'Create Organization'}
+                {isCreating
+                  ? t('organizations.creating', 'Creating...')
+                  : t(
+                      'organizations.createOrganization',
+                      'Create Organization'
+                    )}
               </Button>
             </DialogFooter>
           </form>

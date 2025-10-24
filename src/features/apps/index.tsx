@@ -1,6 +1,7 @@
 import { getRouteApi } from '@tanstack/react-router'
 import { ArrowDownAZ, ArrowUpAZ, SlidersHorizontal } from 'lucide-react'
 import { type ChangeEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
@@ -23,19 +24,22 @@ const route = getRouteApi('/_authenticated/apps/')
 
 type AppType = 'all' | 'connected' | 'notConnected'
 
-const appText = new Map<AppType, string>([
-  ['all', 'All Apps'],
-  ['connected', 'Connected'],
-  ['notConnected', 'Not Connected'],
-])
+const getAppText = (t: (key: string, defaultValue: string) => string) =>
+  new Map<AppType, string>([
+    ['all', t('apps.filter.all', 'All Apps')],
+    ['connected', t('apps.filter.connected', 'Connected')],
+    ['notConnected', t('apps.filter.notConnected', 'Not Connected')],
+  ])
 
 export function Apps() {
+  const { t } = useTranslation()
   const {
     filter = '',
     type = 'all',
     sort: initSort = 'asc',
   } = route.useSearch()
   const navigate = route.useNavigate()
+  const appText = getAppText(t)
 
   const [sort, setSort] = useState(initSort)
   const [appType, setAppType] = useState(type)
@@ -97,16 +101,19 @@ export function Apps() {
       <Main fixed>
         <div>
           <h1 className='font-bold text-2xl tracking-tight'>
-            App Integrations
+            {t('apps.title', 'App Integrations')}
           </h1>
           <p className='text-muted-foreground'>
-            Here&apos;s a list of your apps for the integration!
+            {t(
+              'apps.description',
+              "Here's a list of your apps for the integration!"
+            )}
           </p>
         </div>
         <div className='my-4 flex items-end justify-between sm:my-0 sm:items-center'>
           <div className='flex flex-col gap-4 sm:my-4 sm:flex-row'>
             <Input
-              placeholder='Filter apps...'
+              placeholder={t('apps.filterPlaceholder', 'Filter apps...')}
               className='h-9 w-40 lg:w-[250px]'
               value={searchTerm}
               onChange={handleSearch}
@@ -116,9 +123,15 @@ export function Apps() {
                 <SelectValue>{appText.get(appType)}</SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value='all'>All Apps</SelectItem>
-                <SelectItem value='connected'>Connected</SelectItem>
-                <SelectItem value='notConnected'>Not Connected</SelectItem>
+                <SelectItem value='all'>
+                  {t('apps.filter.all', 'All Apps')}
+                </SelectItem>
+                <SelectItem value='connected'>
+                  {t('apps.filter.connected', 'Connected')}
+                </SelectItem>
+                <SelectItem value='notConnected'>
+                  {t('apps.filter.notConnected', 'Not Connected')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -133,13 +146,13 @@ export function Apps() {
               <SelectItem value='asc'>
                 <div className='flex items-center gap-4'>
                   <ArrowUpAZ size={16} />
-                  <span>Ascending</span>
+                  <span>{t('apps.sort.ascending', 'Ascending')}</span>
                 </div>
               </SelectItem>
               <SelectItem value='desc'>
                 <div className='flex items-center gap-4'>
                   <ArrowDownAZ size={16} />
-                  <span>Descending</span>
+                  <span>{t('apps.sort.descending', 'Descending')}</span>
                 </div>
               </SelectItem>
             </SelectContent>
@@ -163,7 +176,9 @@ export function Apps() {
                   size='sm'
                   className={`${app.connected ? 'border border-blue-300 bg-blue-50 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950 dark:hover:bg-blue-900' : ''}`}
                 >
-                  {app.connected ? 'Connected' : 'Connect'}
+                  {app.connected
+                    ? t('apps.connected', 'Connected')
+                    : t('apps.connect', 'Connect')}
                 </Button>
               </div>
               <div>

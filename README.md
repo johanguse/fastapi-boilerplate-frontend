@@ -16,11 +16,13 @@ This project serves as a complete frontend boilerplate for FastAPI applications,
 ### 🌍 Internationalization (i18n)
 
 - **9 Languages**: English (US, GB), Spanish (ES, MX), French (FR, CA), German, and Portuguese (BR, PT)
-- **File-based Translations**: Organized JSON translation files
-- **React i18next**: Powerful internationalization framework
+- **Import-based Loading**: Translation files bundled with the application for better performance
+- **TypeScript Integration**: Full type safety and autocomplete for translation keys
+- **CLI Automation**: [i18next-cli](https://github.com/i18next/i18next-cli) for automatic key extraction and validation
 - **Language Switcher**: Easy language switching in authentication flows
-- **Complete Coverage**: All UI components and pages translated with fallback support
+- **Robust Fallback**: Default text for all translation keys prevents missing UI text
 - **Automated Testing**: Translation consistency tests ensure no missing keys
+- **Developer Experience**: Watch mode for automatic key extraction during development
 
 ### 🎨 UI & Design
 
@@ -59,14 +61,47 @@ src/
 │   ├── auth/          # Authentication components
 │   ├── dashboard/     # Dashboard pages
 │   └── organizations/ # Organization management
+├── i18n/              # Internationalization
+│   ├── locales/       # Translation files (9 languages)
+│   └── types.ts       # TypeScript definitions
 ├── hooks/             # Custom React hooks
 │   ├── use-auth.ts    # Authentication hook
 │   └── use-auth-init.ts # Session initialization
 ├── stores/            # Zustand state stores
 ├── lib/               # Utilities and configurations
+│   └── i18n.ts        # i18n configuration
 ├── routes/            # TanStack Router route definitions
 └── styles/            # Global styles and themes
 ```
+
+## 🌍 Internationalization Status
+
+### Current Implementation
+- ✅ **Migration Complete**: Successfully migrated from HTTP backend to import-based loading
+- ✅ **CLI Integration**: i18next-cli configured for automated key extraction and validation
+- ✅ **TypeScript Support**: Full type safety and autocomplete for translation keys
+- ✅ **Testing**: Automated consistency tests ensure all languages have matching keys
+- ✅ **Documentation**: Comprehensive i18n documentation in `docs/i18n.md`
+
+### Available Scripts
+```bash
+# Extract translation keys from your code
+bun run i18n:extract
+
+# Watch mode - automatically extract keys as you code
+bun run i18n:extract:watch
+
+# Sync translation files between languages
+bun run i18n:sync
+
+# Test translation consistency
+bun test
+```
+
+### Next Steps
+- Gradually internationalize existing hardcoded strings
+- Re-enable linting when more strings are properly internationalized
+- Consider integration with translation management services
 
 ## 📄 License
 
@@ -189,13 +224,29 @@ The frontend is configured to work with Better Auth backend. Ensure your FastAPI
 - `GET /api/v1/auth/session` - Get current session
 - `POST /api/v1/auth/sign-out` - Logout
 
-### Language Configuration
+### Internationalization (i18n) Configuration
 
-Add new languages by:
+The project uses [i18next-cli](https://github.com/i18next/i18next-cli) for automated translation management:
 
-1. Creating translation files in `public/locales/[lang]/translation.json`
-2. Adding the language to `src/lib/i18n.ts`
-3. Updating the language switcher component
+**Available Commands:**
+```bash
+bun run i18n:extract        # Extract translation keys from code
+bun run i18n:extract:watch  # Watch mode - auto-extract as you code
+bun run i18n:lint          # Validate translation files
+bun run i18n:sync          # Sync translations between languages
+```
+
+**Adding New Languages:**
+1. Add language code to `i18next.config.ts`
+2. Run `bun run i18n:extract` to create translation files
+3. Translate the generated keys in `src/i18n/locales/[lang]/translation.json`
+4. Update the language switcher component
+
+**Translation Structure:**
+- All translations are in `src/i18n/locales/`
+- Import-based loading for better TypeScript integration
+- Automatic key extraction from your codebase
+- Type safety and autocomplete for translation keys
 
 ## 📦 Tech Stack
 
@@ -213,7 +264,7 @@ Add new languages by:
 
 **Authentication:** [Better Auth](https://www.better-auth.com/) integration
 
-**Internationalization:** [React i18next](https://react.i18next.com/) with 9 language locales
+**Internationalization:** [React i18next](https://react.i18next.com/) with [i18next-cli](https://github.com/i18next/i18next-cli) automation and 9 language locales
 
 **Styling:** [Tailwind CSS](https://tailwindcss.com/) with custom design system
 
@@ -238,10 +289,12 @@ The application automatically restores user sessions on page reload through:
 
 Complete i18n implementation with:
 
-- **Translation Files**: JSON files in `public/locales/[lang]/translation.json`
+- **Translation Files**: JSON files in `src/i18n/locales/[lang]/translation.json`
 - **9 Language Variants**: en-US, en-GB, es-ES, es-MX, fr-FR, fr-CA, de-DE, pt-BR, pt-PT
+- **Import-based Loading**: Translation files bundled with the application for better performance
+- **CLI Automation**: Automatic key extraction and validation with i18next-cli
+- **TypeScript Integration**: Full type safety and autocomplete for translation keys
 - **Namespace Organization**: Structured translations (auth, dashboard, admin, common, etc.)
-- **Dynamic Loading**: Language files loaded on demand
 - **Fallback Support**: English (en-US) as default fallback language
 - **Context Integration**: Available throughout the app via `useTranslation` hook
 - **Type Safety**: All translation keys have default text fallbacks
@@ -275,6 +328,12 @@ bun run format:check     # Check formatting without modifying files
 
 # Testing
 bun test                 # Run all tests (includes i18n consistency tests)
+
+# Internationalization
+bun run i18n:extract     # Extract translation keys from code
+bun run i18n:extract:watch # Watch mode - auto-extract as you code
+bun run i18n:lint       # Validate translation files
+bun run i18n:sync       # Sync translations between languages
 
 # Utilities
 bun run generate-routes  # Generate TanStack Router route tree

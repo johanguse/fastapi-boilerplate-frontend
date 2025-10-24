@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { SignIn } from '@/features/auth/sign-in'
 
 const searchSchema = z.object({

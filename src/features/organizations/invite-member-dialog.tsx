@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
