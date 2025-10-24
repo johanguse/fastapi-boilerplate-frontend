@@ -23,15 +23,15 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.bun
-            node_modules
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+      # - name: Cache dependencies
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       ~/.bun
+      #       node_modules
+      #     key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}-v2
+      #     restore-keys: |
+      #       ${{ runner.os }}-bun-
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -62,15 +62,15 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.bun
-            node_modules
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+      # - name: Cache dependencies
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       ~/.bun
+      #       node_modules
+      #     key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}-v2
+      #     restore-keys: |
+      #       ${{ runner.os }}-bun-
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
