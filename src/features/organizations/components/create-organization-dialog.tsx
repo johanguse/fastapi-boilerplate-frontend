@@ -24,10 +24,7 @@ import { Input } from '@/components/ui/input'
 import { useOrganizations } from '@/hooks/use-organizations'
 
 const formSchema = z.object({
-  name: z
-    .string()
-    .min(1, 'Name is required')
-    .max(100, 'Name is too long'),
+  name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
   slug: z.string().optional(),
 })
 

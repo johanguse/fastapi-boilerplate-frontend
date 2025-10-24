@@ -1,7 +1,7 @@
 import { Download, Plus } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { useTasks } from './tasks-provider'
-import { useTranslation } from 'react-i18next'
 
 export function TasksPrimaryButtons() {
   const { setOpen } = useTasks()

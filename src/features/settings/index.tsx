@@ -1,12 +1,12 @@
 import { Outlet } from '@tanstack/react-router'
 import { Bell, Monitor, Palette, UserCog, Wrench } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { useTranslation } from 'react-i18next'
 import { Separator } from '@/components/ui/separator'
 import { SidebarNav } from './components/sidebar-nav'
 

@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import { type JSX, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { buttonVariants } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
@@ -10,7 +11,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
-import { useTranslation } from 'react-i18next'
 
 type SidebarNavProps = React.HTMLAttributes<HTMLElement> & {
   items: {
