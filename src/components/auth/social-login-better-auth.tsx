@@ -100,7 +100,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
       // Use Better Auth social sign in
       const result = await signIn.social({
         provider: providerId as 'google' | 'github' | 'microsoft' | 'apple',
-        callbackURL: redirectTo || window.location.origin + '/dashboard',
+        callbackURL: redirectTo || window.location.origin + '/',
       })
 
       if (result.error) {

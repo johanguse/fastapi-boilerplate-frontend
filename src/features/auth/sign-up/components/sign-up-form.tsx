@@ -23,8 +23,9 @@ import { useAuth } from '@/stores/auth-store'
 
 export function SignUpForm({
   className,
+  defaultEmail,
   ...props
-}: Readonly<React.HTMLAttributes<HTMLFormElement>>) {
+}: Readonly<React.HTMLAttributes<HTMLFormElement> & { defaultEmail?: string }>) {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { register } = useAuth()
@@ -33,7 +34,7 @@ export function SignUpForm({
     resolver: zodResolver(getRegisterSchema()),
     defaultValues: {
       name: '',
-      email: '',
+      email: defaultEmail || '',
       password: '',
       confirmPassword: '',
     },
@@ -42,16 +43,16 @@ export function SignUpForm({
   const registerMutation = useMutation({
     mutationFn: ({ name, email, password }: RegisterFormData) =>
       register(email, password, name),
-    onSuccess: () => {
+    onSuccess: (user) => {
       // Clear any form errors on success
       form.clearErrors()
 
       toast.success(
-        t('auth.signUpWelcome', 'Welcome, {name}!', {
-          name: form.getValues('name'),
+        t('auth.signUpWelcome', 'Welcome, {name}! Please check your email to verify your account.', {
+          name: form.getValues('name') || 'User',
         })
       )
-      navigate({ to: '/sign-in' })
+      navigate({ to: '/onboarding' })
     },
     onError: (error: unknown) => {
       // biome-ignore lint/suspicious/noConsole: Intentional error logging
@@ -230,7 +231,7 @@ export function SignUpForm({
           {t('auth.signUpCreateAccount', 'Create Account')}
         </Button>
 
-        <SocialLogin className='mt-2' redirectTo='/dashboard' />
+        <SocialLogin className='mt-2' redirectTo='/' />
       </form>
     </Form>
   )

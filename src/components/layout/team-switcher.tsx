@@ -15,13 +15,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useOrganizations } from '@/hooks/use-organizations'
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { organizations, activeOrganization, setActiveOrganization } =
+  const { organizations, activeOrganization, setActiveOrganization, isLoading } =
     useOrganizations()
 
   // Use active organization from React Query, or show placeholder
@@ -52,16 +53,25 @@ export function TeamSwitcher() {
                 <Building2 className='size-4' />
               </div>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-semibold'>
-                  {displayOrganization.name}
-                </span>
-                <span className='truncate text-xs'>
-                  {organizations.length > 0
-                    ? t('organizations.organizationCount', {
-                        count: organizations.length,
-                      })
-                    : t('organizations.noOrganizations')}
-                </span>
+                {isLoading ? (
+                  <>
+                    <Skeleton className='h-4 w-32' />
+                    <Skeleton className='h-3 w-20 mt-1' />
+                  </>
+                ) : (
+                  <>
+                    <span className='truncate font-semibold'>
+                      {displayOrganization.name}
+                    </span>
+                    <span className='truncate text-xs'>
+                      {organizations.length > 0
+                        ? t('organizations.organizationCount', {
+                            count: organizations.length,
+                          })
+                        : t('organizations.noOrganizations')}
+                    </span>
+                  </>
+                )}
               </div>
               <ChevronsUpDown className='ml-auto' />
             </SidebarMenuButton>
@@ -75,7 +85,23 @@ export function TeamSwitcher() {
             <DropdownMenuLabel className='text-muted-foreground text-xs'>
               {t('organizations.title')}
             </DropdownMenuLabel>
-            {organizations.length > 0 ? (
+            {isLoading ? (
+              <>
+                <div className='gap-2 p-2 flex items-center'>
+                  <div className='flex size-6 items-center justify-center rounded-sm border'>
+                    <Building2 className='size-4 shrink-0' />
+                  </div>
+                  <Skeleton className='h-4 w-24' />
+                </div>
+                <div className='gap-2 p-2 flex items-center'>
+                  <div className='flex size-6 items-center justify-center rounded-sm border'>
+                    <Building2 className='size-4 shrink-0' />
+                  </div>
+                  <Skeleton className='h-4 w-20' />
+                </div>
+                <DropdownMenuSeparator />
+              </>
+            ) : organizations.length > 0 ? (
               <>
                 {organizations.map((org) => (
                   <DropdownMenuItem

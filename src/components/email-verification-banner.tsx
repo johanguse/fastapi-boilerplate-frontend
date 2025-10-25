@@ -1,80 +1,87 @@
-import { AlertCircle, Mail, X } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { AlertTriangle, Mail, X } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
-import { api } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
 
 interface EmailVerificationBannerProps {
-  email: string
-  onDismiss?: () => void
+  className?: string
 }
 
-export function EmailVerificationBanner({
-  email,
-  onDismiss,
-}: EmailVerificationBannerProps) {
+export function EmailVerificationBanner({ className }: EmailVerificationBannerProps) {
   const { t } = useTranslation()
-  const [isLoading, setIsLoading] = useState(false)
+  const { user } = useAuth()
+  const [isResending, setIsResending] = useState(false)
   const [isDismissed, setIsDismissed] = useState(false)
 
-  const handleResendEmail = async () => {
-    setIsLoading(true)
-    try {
-      await api.post('/api/v1/invitations/verify-email/resend')
-      toast.success(t('emailVerification.emailSent'), {
-        description: t('emailVerification.checkInbox', { email }),
-      })
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : (error as { response?: { data?: { detail?: string } } })?.response
-              ?.data?.detail || t('emailVerification.resendFailed')
+  // Don't show banner if user is verified or dismissed
+  if (!user || user.is_verified || isDismissed) {
+    return null
+  }
 
-      toast.error(t('common.error'), {
-        description: errorMessage,
+  const handleResendVerification = async () => {
+    if (!user?.email) return
+
+    setIsResending(true)
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/resend-verification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email: user.email }),
       })
+
+      if (response.ok) {
+        toast.success(t('auth.emailVerification.resent', 'Verification email sent! Please check your inbox.'))
+      } else {
+        const error = await response.json()
+        toast.error(error.message || t('auth.emailVerification.resendFailed', 'Failed to resend verification email'))
+      }
+    } catch (error) {
+      toast.error(t('auth.emailVerification.resendFailed', 'Failed to resend verification email'))
     } finally {
-      setIsLoading(false)
+      setIsResending(false)
     }
   }
 
   const handleDismiss = () => {
     setIsDismissed(true)
-    onDismiss?.()
   }
 
-  if (isDismissed) return null
-
   return (
-    <Alert className='relative border-yellow-500 bg-yellow-50 dark:bg-yellow-950'>
-      <AlertCircle className='h-4 w-4 text-yellow-600 dark:text-yellow-500' />
-      <AlertDescription className='ml-2 flex items-center justify-between gap-4'>
-        <div className='flex items-center gap-2'>
-          <Mail className='h-4 w-4' />
-          <span className='text-sm'>
-            {t('emailVerification.notVerified', { email })}
+    <Alert className={`border-orange-200 bg-orange-50 ${className}`}>
+      <AlertTriangle className="h-4 w-4 text-orange-600" />
+      <AlertDescription className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Mail className="h-4 w-4 text-orange-600" />
+          <span className="text-orange-800">
+            {t('auth.emailVerification.message', 'Please verify your email address to access all features.')}
           </span>
         </div>
-        <div className='flex items-center gap-2'>
+        <div className="flex items-center gap-2">
           <Button
-            size='sm'
-            variant='outline'
-            onClick={handleResendEmail}
-            disabled={isLoading}
-            className='border-yellow-600 text-yellow-600 hover:bg-yellow-100 dark:border-yellow-500 dark:text-yellow-500'
+            variant="outline"
+            size="sm"
+            onClick={handleResendVerification}
+            disabled={isResending}
+            className="border-orange-300 text-orange-700 hover:bg-orange-100"
           >
-            {isLoading ? t('common.loading') : t('emailVerification.resend')}
+            {isResending 
+              ? t('auth.emailVerification.sending', 'Sending...') 
+              : t('auth.emailVerification.resend', 'Resend')
+            }
           </Button>
           <Button
-            size='sm'
-            variant='ghost'
+            variant="ghost"
+            size="sm"
             onClick={handleDismiss}
-            className='h-6 w-6 p-0'
+            className="text-orange-600 hover:bg-orange-100 p-1 h-8 w-8"
           >
-            <X className='h-4 w-4' />
+            <X className="h-4 w-4" />
           </Button>
         </div>
       </AlertDescription>

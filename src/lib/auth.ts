@@ -50,6 +50,8 @@ export interface User {
   role?: string // User role (admin, user, etc.)
   is_verified?: boolean // Backend uses snake_case
   is_superuser?: boolean // Backend admin flag
+  onboarding_completed?: boolean // Onboarding completion status
+  onboarding_step?: number // Current onboarding step
 }
 
 export interface Session {

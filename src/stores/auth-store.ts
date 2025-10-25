@@ -130,33 +130,35 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      const result = await signIn.email({
-        email,
-        password,
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-in/email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
       })
 
-      if (result.error) {
+      if (!response.ok) {
+        const error = await response.json()
         const friendly = (
           get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
-        )._resolveErrorMessage(result.error)
+        )._resolveErrorMessage(error)
         throw new Error(friendly)
-      } else if (result.data) {
-        // If backend returns user, set it immediately to avoid relying on getSession
-        const data = result.data as unknown
-        if (
-          typeof data === 'object' &&
-          data !== null &&
-          'user' in (data as Record<string, unknown>)
-        ) {
-          const user = (data as { user: User }).user
-          set({ user, session: null, isInitialized: true })
-        } else {
-          // Data without a user is considered an error for sign-in
-          const friendly = (
-            get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
-          )._resolveErrorMessage(data)
-          throw new Error(friendly)
-        }
+      }
+
+      const data = await response.json()
+      
+      // Set user and session from our custom AuthResponse format
+      if (data.user && data.session) {
+        set({ 
+          user: data.user, 
+          session: data.session, 
+          isInitialized: true 
+        })
+        return data.user // Return user data for onSuccess callback
+      } else {
+        throw new Error('Invalid response format')
       }
     } catch (e: unknown) {
       const friendly = (
@@ -172,32 +174,35 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      const result = await signUp.email({
-        email,
-        password,
-        name,
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-up/email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email, password, name }),
       })
 
-      if (result.error) {
+      if (!response.ok) {
+        const error = await response.json()
         const friendly = (
           get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
-        )._resolveErrorMessage(result.error)
+        )._resolveErrorMessage(error)
         throw new Error(friendly)
-      } else if (result.data) {
-        const data = result.data as unknown
-        if (
-          typeof data === 'object' &&
-          data !== null &&
-          'user' in (data as Record<string, unknown>)
-        ) {
-          const user = (data as { user: User }).user
-          set({ user, session: null, isInitialized: true })
-        } else {
-          const friendly = (
-            get() as unknown as { _resolveErrorMessage: (e: unknown) => string }
-          )._resolveErrorMessage(data)
-          throw new Error(friendly)
-        }
+      }
+
+      const data = await response.json()
+      
+      // Set user and session from our custom AuthResponse format
+      if (data.user && data.session) {
+        set({ 
+          user: data.user, 
+          session: data.session, 
+          isInitialized: true 
+        })
+        return data.user // Return user data for onSuccess callback
+      } else {
+        throw new Error('Invalid response format')
       }
     } catch (e: unknown) {
       const friendly = (
@@ -213,7 +218,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      await signOut()
+      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-out`, {
+        method: 'POST',
+        credentials: 'include',
+      })
       set({ user: null, session: null, isInitialized: true })
     } catch (e: unknown) {
       // Even if logout fails on server, clear local state
@@ -229,26 +237,28 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      const session = await getSession()
-      if (session?.data) {
-        const sessionData = session.data as Session
-        set({
-          user: sessionData.user,
-          session: sessionData,
-          isInitialized: true,
-        })
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/session`, {
+        method: 'GET',
+        credentials: 'include',
+      })
+
+      if (response.ok) {
+        const sessionData = await response.json()
+        if (sessionData.user && sessionData.session) {
+          set({
+            user: sessionData.user,
+            session: sessionData.session,
+            isInitialized: true,
+          })
+        } else {
+          set({ user: null, session: null, isInitialized: true })
+        }
       } else {
         set({ user: null, session: null, isInitialized: true })
       }
     } catch (error: unknown) {
-      // Gracefully handle 404 from backend that may not implement get-session
-      type BetterAuthError = { error?: { status?: number } }
-      const status = (error as BetterAuthError)?.error?.status
-      if (status === 404) {
-        set({ session: null, user: null })
-      } else {
-        set({ session: null, user: null })
-      }
+      // Gracefully handle errors
+      set({ user: null, session: null, isInitialized: true })
     } finally {
       set({ isLoading: false, isInitialized: true })
     }

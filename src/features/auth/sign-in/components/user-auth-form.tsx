@@ -19,7 +19,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { getLoginSchema, type LoginFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
-import { useAuth } from '@/stores/auth-store'
+import { useAuth, useAuthStore } from '@/stores/auth-store'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLFormElement> {
   readonly redirectTo?: string
@@ -44,13 +44,18 @@ export function UserAuthForm({
 
   const loginMutation = useMutation({
     mutationFn: ({ email, password }: LoginFormData) => login(email, password),
-    onSuccess: () => {
+    onSuccess: (user) => {
       // Clear any form errors on success
       form.clearErrors()
 
-      // Redirect to the stored location or default to dashboard
-      const targetPath = redirectTo || '/dashboard'
-      navigate({ to: targetPath, replace: true })
+      // Redirect based on onboarding completion
+      if (user && !user.onboarding_completed) {
+        navigate({ to: '/onboarding', replace: true })
+      } else {
+        // Redirect to the stored location or default to root page
+        const targetPath = redirectTo || '/'
+        navigate({ to: targetPath, replace: true })
+      }
 
       toast.success(t('auth.welcome', 'Welcome!'))
     },

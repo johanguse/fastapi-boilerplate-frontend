@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedDashboardDemoRouteImport } from './routes/_authenticated/dashboard-demo'
+import { Route as AuthenticatedAiDocumentsRouteImport } from './routes/_authenticated/ai-documents'
+import { Route as AuthenticatedAiContentRouteImport } from './routes/_authenticated/ai-content'
+import { Route as AuthenticatedAiAnalyticsRouteImport } from './routes/_authenticated/ai-analytics'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
@@ -21,6 +25,7 @@ import { Route as authSignUpRouteImport } from './routes/(auth)/sign-up'
 import { Route as authSignIn2RouteImport } from './routes/(auth)/sign-in-2'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
+import { Route as authOnboardingRouteImport } from './routes/(auth)/onboarding'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
 import { Route as authAcceptInvitationRouteImport } from './routes/(auth)/accept-invitation'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
@@ -56,6 +61,29 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDashboardDemoRoute =
+  AuthenticatedDashboardDemoRouteImport.update({
+    id: '/dashboard-demo',
+    path: '/dashboard-demo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAiDocumentsRoute =
+  AuthenticatedAiDocumentsRouteImport.update({
+    id: '/ai-documents',
+    path: '/ai-documents',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAiContentRoute = AuthenticatedAiContentRouteImport.update({
+  id: '/ai-content',
+  path: '/ai-content',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAiAnalyticsRoute =
+  AuthenticatedAiAnalyticsRouteImport.update({
+    id: '/ai-analytics',
+    path: '/ai-analytics',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const errors503Route = errors503RouteImport.update({
   id: '/(errors)/503',
   path: '/503',
@@ -104,6 +132,11 @@ const authSignInRoute = authSignInRouteImport.update({
 const authOtpRoute = authOtpRouteImport.update({
   id: '/(auth)/otp',
   path: '/otp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authOnboardingRoute = authOnboardingRouteImport.update({
+  id: '/(auth)/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
@@ -251,6 +284,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/accept-invitation': typeof authAcceptInvitationRoute
   '/forgot-password': typeof authForgotPasswordRoute
+  '/onboarding': typeof authOnboardingRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
   '/sign-in-2': typeof authSignIn2Route
@@ -261,6 +295,10 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/ai-analytics': typeof AuthenticatedAiAnalyticsRoute
+  '/ai-content': typeof AuthenticatedAiContentRoute
+  '/ai-documents': typeof AuthenticatedAiDocumentsRoute
+  '/dashboard-demo': typeof AuthenticatedDashboardDemoRoute
   '/': typeof AuthenticatedIndexRoute
   '/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
@@ -288,6 +326,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/accept-invitation': typeof authAcceptInvitationRoute
   '/forgot-password': typeof authForgotPasswordRoute
+  '/onboarding': typeof authOnboardingRoute
   '/otp': typeof authOtpRoute
   '/sign-in': typeof authSignInRoute
   '/sign-in-2': typeof authSignIn2Route
@@ -298,6 +337,10 @@ export interface FileRoutesByTo {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/ai-analytics': typeof AuthenticatedAiAnalyticsRoute
+  '/ai-content': typeof AuthenticatedAiContentRoute
+  '/ai-documents': typeof AuthenticatedAiDocumentsRoute
+  '/dashboard-demo': typeof AuthenticatedDashboardDemoRoute
   '/': typeof AuthenticatedIndexRoute
   '/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
@@ -328,6 +371,7 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/(auth)/accept-invitation': typeof authAcceptInvitationRoute
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
+  '/(auth)/onboarding': typeof authOnboardingRoute
   '/(auth)/otp': typeof authOtpRoute
   '/(auth)/sign-in': typeof authSignInRoute
   '/(auth)/sign-in-2': typeof authSignIn2Route
@@ -338,6 +382,10 @@ export interface FileRoutesById {
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
+  '/_authenticated/ai-analytics': typeof AuthenticatedAiAnalyticsRoute
+  '/_authenticated/ai-content': typeof AuthenticatedAiContentRoute
+  '/_authenticated/ai-documents': typeof AuthenticatedAiDocumentsRoute
+  '/_authenticated/dashboard-demo': typeof AuthenticatedDashboardDemoRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
@@ -368,6 +416,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/accept-invitation'
     | '/forgot-password'
+    | '/onboarding'
     | '/otp'
     | '/sign-in'
     | '/sign-in-2'
@@ -378,6 +427,10 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/ai-analytics'
+    | '/ai-content'
+    | '/ai-documents'
+    | '/dashboard-demo'
     | '/'
     | '/admin/activity-logs'
     | '/admin/reports'
@@ -405,6 +458,7 @@ export interface FileRouteTypes {
   to:
     | '/accept-invitation'
     | '/forgot-password'
+    | '/onboarding'
     | '/otp'
     | '/sign-in'
     | '/sign-in-2'
@@ -415,6 +469,10 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/ai-analytics'
+    | '/ai-content'
+    | '/ai-documents'
+    | '/dashboard-demo'
     | '/'
     | '/admin/activity-logs'
     | '/admin/reports'
@@ -444,6 +502,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/(auth)/accept-invitation'
     | '/(auth)/forgot-password'
+    | '/(auth)/onboarding'
     | '/(auth)/otp'
     | '/(auth)/sign-in'
     | '/(auth)/sign-in-2'
@@ -454,6 +513,10 @@ export interface FileRouteTypes {
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
+    | '/_authenticated/ai-analytics'
+    | '/_authenticated/ai-content'
+    | '/_authenticated/ai-documents'
+    | '/_authenticated/dashboard-demo'
     | '/_authenticated/'
     | '/_authenticated/admin/activity-logs'
     | '/_authenticated/admin/reports'
@@ -483,6 +546,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   authAcceptInvitationRoute: typeof authAcceptInvitationRoute
   authForgotPasswordRoute: typeof authForgotPasswordRoute
+  authOnboardingRoute: typeof authOnboardingRoute
   authOtpRoute: typeof authOtpRoute
   authSignInRoute: typeof authSignInRoute
   authSignIn2Route: typeof authSignIn2Route
@@ -513,6 +577,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard-demo': {
+      id: '/_authenticated/dashboard-demo'
+      path: '/dashboard-demo'
+      fullPath: '/dashboard-demo'
+      preLoaderRoute: typeof AuthenticatedDashboardDemoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ai-documents': {
+      id: '/_authenticated/ai-documents'
+      path: '/ai-documents'
+      fullPath: '/ai-documents'
+      preLoaderRoute: typeof AuthenticatedAiDocumentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ai-content': {
+      id: '/_authenticated/ai-content'
+      path: '/ai-content'
+      fullPath: '/ai-content'
+      preLoaderRoute: typeof AuthenticatedAiContentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ai-analytics': {
+      id: '/_authenticated/ai-analytics'
+      path: '/ai-analytics'
+      fullPath: '/ai-analytics'
+      preLoaderRoute: typeof AuthenticatedAiAnalyticsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(errors)/503': {
@@ -583,6 +675,13 @@ declare module '@tanstack/react-router' {
       path: '/otp'
       fullPath: '/otp'
       preLoaderRoute: typeof authOtpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/onboarding': {
+      id: '/(auth)/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof authOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/forgot-password': {
@@ -790,6 +889,10 @@ const AuthenticatedSettingsRouteRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
+  AuthenticatedAiAnalyticsRoute: typeof AuthenticatedAiAnalyticsRoute
+  AuthenticatedAiContentRoute: typeof AuthenticatedAiContentRoute
+  AuthenticatedAiDocumentsRoute: typeof AuthenticatedAiDocumentsRoute
+  AuthenticatedDashboardDemoRoute: typeof AuthenticatedDashboardDemoRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedAdminActivityLogsRoute: typeof AuthenticatedAdminActivityLogsRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
@@ -807,6 +910,10 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
+  AuthenticatedAiAnalyticsRoute: AuthenticatedAiAnalyticsRoute,
+  AuthenticatedAiContentRoute: AuthenticatedAiContentRoute,
+  AuthenticatedAiDocumentsRoute: AuthenticatedAiDocumentsRoute,
+  AuthenticatedDashboardDemoRoute: AuthenticatedDashboardDemoRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedAdminActivityLogsRoute: AuthenticatedAdminActivityLogsRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
@@ -830,6 +937,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   authAcceptInvitationRoute: authAcceptInvitationRoute,
   authForgotPasswordRoute: authForgotPasswordRoute,
+  authOnboardingRoute: authOnboardingRoute,
   authOtpRoute: authOtpRoute,
   authSignInRoute: authSignInRoute,
   authSignIn2Route: authSignIn2Route,

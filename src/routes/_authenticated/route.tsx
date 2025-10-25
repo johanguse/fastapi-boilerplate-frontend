@@ -15,6 +15,11 @@ export const Route = createFileRoute('/_authenticated')({
         },
       })
     }
+
+    // If not completed onboarding, redirect to onboarding
+    if (authState.user && !authState.user.onboarding_completed) {
+      throw redirect({ to: '/onboarding' })
+    }
   },
   component: AuthenticatedLayout,
 })

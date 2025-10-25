@@ -66,7 +66,7 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
           >
             {user && !user.is_verified && (
               <div className='px-4 pt-4'>
-                <EmailVerificationBanner email={user.email} />
+                <EmailVerificationBanner />
               </div>
             )}
             {children ?? <Outlet />}

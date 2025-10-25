@@ -127,6 +127,111 @@
       "verified": "Verifiziert"
     }
   },
+  "onboarding": {
+    "title": "Willkommen in Ihrem Arbeitsbereich",
+    "subtitle": "Lassen Sie uns alles in wenigen Schritten einrichten",
+    "progress": "Fortschritt",
+    "loading": "Onboarding wird geladen...",
+    "error": {
+      "title": "Fehler",
+      "description": "Fehler beim Laden des Onboarding-Status. Bitte versuchen Sie es erneut.",
+      "fetchStatus": "Fehler beim Laden des Onboarding-Status",
+      "complete": "Fehler beim Abschließen des Onboardings"
+    },
+    "success": {
+      "completed": "Willkommen! Ihr Konto ist vollständig eingerichtet."
+    },
+    "steps": {
+      "profile": {
+        "title": "Vervollständigen Sie Ihr Profil",
+        "description": "Erzählen Sie uns etwas über sich"
+      },
+      "organization": {
+        "title": "Erstellen Sie Ihre Organisation",
+        "description": "Richten Sie Ihren Arbeitsbereich ein"
+      },
+      "complete": {
+        "title": "Alles Bereit!",
+        "description": "Willkommen in Ihrem neuen Arbeitsbereich"
+      }
+    },
+    "profile": {
+      "title": "Vervollständigen Sie Ihr Profil",
+      "description": "Erzählen Sie uns etwas über sich, um Ihre Erfahrung zu personalisieren",
+      "name": "Vollständiger Name",
+      "namePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+      "company": "Unternehmen",
+      "companyPlaceholder": "Geben Sie den Namen Ihres Unternehmens ein",
+      "jobTitle": "Berufsbezeichnung",
+      "jobTitlePlaceholder": "z.B., Softwareentwickler",
+      "country": "Land",
+      "countryPlaceholder": "Wählen Sie Ihr Land",
+      "phone": "Telefonnummer",
+      "phonePlaceholder": "+49 30 12345678",
+      "website": "Website",
+      "websitePlaceholder": "https://ihrewebsite.com",
+      "bio": "Biografie",
+      "bioPlaceholder": "Erzählen Sie uns etwas über sich...",
+      "saving": "Speichern...",
+      "continue": "Weiter",
+      "success": "Profil erfolgreich aktualisiert!",
+      "error": "Fehler beim Aktualisieren des Profils. Bitte versuchen Sie es erneut."
+    },
+    "organization": {
+      "title": "Erstellen Sie Ihre Organisation",
+      "description": "Richten Sie Ihren Arbeitsbereich ein, um mit Ihrem Team zusammenzuarbeiten",
+      "name": "Organisationsname",
+      "namePlaceholder": "Geben Sie den Namen Ihrer Organisation ein",
+      "slug": "URL Slug",
+      "slugPlaceholder": "meine-organisation",
+      "slugHelp": "Optional: Ein eindeutiger Bezeichner für die URL Ihrer Organisation",
+      "description": "Beschreibung",
+      "descriptionPlaceholder": "Erzählen Sie uns von Ihrer Organisation...",
+      "creating": "Erstellen...",
+      "continue": "Organisation Erstellen",
+      "success": "Organisation erfolgreich erstellt!",
+      "error": "Fehler beim Erstellen der Organisation. Bitte versuchen Sie es erneut.",
+      "benefits": {
+        "title": "Was Sie erhalten:",
+        "team": "Team-Kollaborationstools",
+        "projects": "Projektmanagement",
+        "analytics": "Analysen und Einblicke",
+        "support": "Prioritäts-Support"
+      }
+    },
+    "complete": {
+      "title": "Alles Bereit!",
+      "description": "Willkommen in Ihrem neuen Arbeitsbereich. Lassen Sie uns erkunden, was Sie tun können!",
+      "welcome": {
+        "title": "Willkommen, {name}!",
+        "description": "Ihr Arbeitsbereich ist bereit. Sie können jetzt mit der Zusammenarbeit mit Ihrem Team beginnen und alle Funktionen erkunden, die wir zu bieten haben."
+      },
+      "features": {
+        "title": "Was Sie jetzt tun können:",
+        "team": {
+          "title": "Team-Kollaboration",
+          "description": "Laden Sie Teammitglieder ein und arbeiten Sie nahtlos zusammen"
+        },
+        "analytics": {
+          "title": "Analytics-Dashboard",
+          "description": "Verfolgen Sie Ihren Fortschritt mit detaillierten Einblicken"
+        },
+        "automation": {
+          "title": "KI-gestützte Tools",
+          "description": "Nutzen Sie KI, um Ihre Produktivität zu steigern"
+        }
+      },
+      "nextSteps": {
+        "title": "Nächste Schritte:",
+        "profile": "Vervollständigen Sie Ihr Profil",
+        "organization": "Erstellen Sie Ihre Organisation",
+        "explore": "Erkunden Sie Ihr Dashboard",
+        "invite": "Laden Sie Teammitglieder ein"
+      },
+      "finishing": "Einrichtung wird abgeschlossen...",
+      "getStarted": "Loslegen"
+    }
+  },
   "auth": {
     "and": "und",
     "byClickingLogin": "Durch Klicken auf Anmelden stimmen Sie unseren",
@@ -143,11 +248,15 @@
     "forgotPasswordEmailPlaceholder": "name@beispiel.com",
     "forgotPasswordEmailRequired": "Bitte geben Sie Ihre E-Mail ein",
     "forgotPasswordEmailSent": "Reset email sent to {{email}}",
+    "forgotPasswordRateLimited": "Bitte warten Sie {{time}} bevor Sie eine weitere Passwort-Zurücksetzung anfordern",
+    "forgotPasswordNextRequest": "Nächste Anfrage verfügbar in",
+    "userNotFound": "Kein Konto mit dieser E-Mail-Adresse gefunden. Möchten Sie ein Konto erstellen?",
     "forgotPasswordSendingEmail": "E-Mail wird gesendet...",
     "forgotPasswordTitle": "Passwort vergessen",
     "internalServerError": "Interner Serverfehler",
     "invalidCredentials": "Ungültige E-Mail oder Passwort",
     "loginDescription": "Geben Sie unten Ihre E-Mail und Ihr Passwort ein, um sich in Ihr Konto einzuloggen",
+    "loginDontHaveAccount": "Haben Sie kein Konto?",
     "loginTitle": "Anmelden",
     "maintenanceError": "Wartungsfehler",
     "nameTooShort_one": "",
@@ -160,6 +269,9 @@
       "verifyButton": "Verifizieren",
       "haventReceived": "Nicht erhalten?",
       "resendCode": "Neuen Code senden.",
+      "resendIn": "Erneut senden verfügbar in",
+      "resendSuccess": "Bestätigungs-E-Mail erfolgreich gesendet",
+      "backToSignIn": "Zurück zur Anmeldung",
       "validation": {
         "required": "Bitte geben Sie den 6-stelligen Code ein."
       }
@@ -188,7 +300,7 @@
     "signUpPasswordPlaceholder": "********",
     "signUpRegistrationFailed": "Registrierung fehlgeschlagen. Überprüfen Sie Ihre Informationen.",
     "signUpTitle": "Konto erstellen",
-    "signUpWelcome": "Willkommen {name}! Überprüfen Sie Ihre E-Mail, um Ihr Konto zu bestätigen.",
+    "signUpWelcome": "Willkommen {{name}}! Überprüfen Sie Ihre E-Mail, um Ihr Konto zu bestätigen.",
     "testimonial": "\"Diese Vorlage hat mir unzählige Arbeitsstunden erspart und mir geholfen, atemberaubende Designs schneller als je zuvor an meine Kunden zu liefern.\"",
     "socialLogin": {
       "continueWith": "Mit {{provider}} fortfahren",
@@ -387,6 +499,21 @@
     "chat": "Chat"
   },
   "dashboard": {
+    "demoTitle": "Dashboard Demo",
+    "demoSubtitle": "Statisches Demo-Dashboard mit Beispieldaten",
+    "subtitle": "Ihre umfassende KI-SaaS-Plattform",
+    "aiFeatures": {
+      "documents": "Dokumenten-Intelligenz",
+      "documentsDesc": "Laden Sie Dokumente hoch, verarbeiten Sie sie und chatten Sie mit ihnen mit KI",
+      "content": "Inhaltsgenerierung",
+      "contentDesc": "Generieren Sie hochwertige Inhalte mit KI-gestützten Vorlagen",
+      "analytics": "KI-Analytik",
+      "analyticsDesc": "Generieren Sie Erkenntnisse und Visualisierungen aus Ihren Daten",
+      "open": "Öffnen"
+    },
+    "filters": "Filter",
+    "export": "Exportieren",
+    "generateReport": "Bericht Generieren",
     "metrics": {
       "activeNow": "Jetzt aktiv",
       "download": "Herunterladen",
@@ -397,14 +524,26 @@
       "sales": "Verkäufe",
       "sinceLastHour": "+201 seit der letzten Stunde",
       "subscriptions": "Abonnements",
-      "totalRevenue": "Gesamtumsatz"
+      "totalRevenue": "Gesamtumsatz",
+      "aiCredits": "KI-Credits Verwendet",
+      "thisMonth": "diesen Monat",
+      "documentsProcessed": "Dokumente Verarbeitet",
+      "today": "heute",
+      "contentGenerated": "Inhalt Generiert",
+      "thisWeek": "diese Woche",
+      "analyticsQueries": "Analytik-Abfragen"
     },
     "tabs": {
       "analytics": "Analysen",
       "notifications": "Benachrichtigungen",
       "overview": "Übersicht",
-      "reports": "Berichte"
+      "reports": "Berichte",
+      "aiDocuments": "KI-Dokumente",
+      "aiContent": "KI-Inhalt",
+      "aiAnalytics": "KI-Analytik"
     },
+    "overview": "Übersicht",
+    "reports": "Berichte",
     "title": "Dashboard"
   },
   "emailVerification": {
@@ -470,6 +609,11 @@
     "youHaveBeenInvited": "Sie wurden eingeladen, dieser Organisation beizutreten."
   },
   "navigation": {
+    "aiApplications": "KI-Anwendungen",
+    "aiAnalytics": "KI-Analytik",
+    "aiContent": "KI-Inhalt",
+    "aiDocuments": "KI-Dokumente",
+    "dashboardDemo": "Dashboard Demo",
     "staticPages": "Statische Seiten & Beispiele",
     "account": "Konto",
     "apps": "Apps",
@@ -504,8 +648,8 @@
     "noMembers": "Noch keine Mitglieder",
     "noOrganizations": "Noch keine Organisationen",
     "noOrganizationsYet": "Noch keine Organisationen",
-    "organizationCount_one": "organizations.organizationCount",
-    "organizationCount_other": "organizations.organizationCount",
+    "organizationCount_one": "{{count}} Organisation",
+    "organizationCount_other": "{{count}} Organisationen",
     "pendingInvitations": "Ausstehende Einladungen",
     "pendingInvitationsDesc": "Anzeigen und verwalten von ausstehenden Teameinladungen",
     "settings": "Einstellungen",
@@ -877,5 +1021,85 @@
         "roleRequired": "Rolle ist erforderlich."
       }
     }
+  },
+  "aiDocuments": {
+    "title": "KI-Dokumentenintelligenz",
+    "description": "Laden Sie Dokumente hoch, verarbeiten Sie sie und chatten Sie mit ihnen mit KI",
+    "uploadDocument": "Dokument Hochladen",
+    "upload": "Hochladen",
+    "library": "Bibliothek",
+    "chat": "Chat",
+    "settings": "Einstellungen",
+    "selectDocumentToChat": "Wählen Sie ein Dokument aus, um zu chatten",
+    "uploadDocuments": "Dokumente Hochladen",
+    "uploadDescription": "Laden Sie PDF-, DOCX- oder TXT-Dateien hoch, um sie mit KI zu verarbeiten",
+    "dropFilesHere": "Dateien hier ablegen...",
+    "dragDropFiles": "Dateien hier hineinziehen und ablegen oder klicken zum Auswählen",
+    "supportedFormats": "PDF-, DOCX-, TXT-Dateien bis zu 10MB",
+    "selectedFiles": "Ausgewählte Dateien",
+    "uploading": "Hochladen...",
+    "uploadAll": "Alle Hochladen",
+    "pdfSupport": "PDF-Dokumente",
+    "docxSupport": "Word-Dokumente",
+    "txtSupport": "Textdateien",
+    "documentLibrary": "Dokumentenbibliothek",
+    "libraryDescription": "Verwalten und interagieren Sie mit Ihren KI-verarbeiteten Dokumenten",
+    "refresh": "Aktualisieren",
+    "searchDocuments": "Dokumente suchen...",
+    "all": "Alle",
+    "completed": "Abgeschlossen",
+    "processing": "Verarbeitung",
+    "documents": "Dokumente",
+    "noDocuments": "Keine Dokumente gefunden",
+    "noDocumentsMatch": "Keine Dokumente entsprechen Ihrer Suche",
+    "uploadFirstDocument": "Laden Sie Ihr erstes Dokument hoch, um zu beginnen",
+    "name": "Name",
+    "status": "Status",
+    "size": "Größe",
+    "created": "Erstellt",
+    "view": "Anzeigen",
+    "download": "Herunterladen",
+    "delete": "Löschen",
+    "loadingDocuments": "Dokumente werden geladen...",
+    "loadingDocument": "Dokument wird geladen...",
+    "chatWithDocument": "Mit Dokument Chatten",
+    "chatDescription": "Stellen Sie Fragen zum Dokumentinhalt",
+    "startConversation": "Gespräch beginnen",
+    "askQuestion": "Stellen Sie eine Frage zum Dokument, um zu beginnen",
+    "thinking": "KI denkt nach...",
+    "send": "Senden",
+    "relevantSections": "Relevante Abschnitte:",
+    "tokens": "Tokens",
+    "cost": "Kosten",
+    "noSummary": "Keine Zusammenfassung verfügbar",
+    "keyPoints": "Schlüsselpunkte",
+    "documentSettings": "Dokumenteinstellungen",
+    "settingsDescription": "Konfigurieren Sie, wie Dokumente verarbeitet und analysiert werden",
+    "saveSettings": "Einstellungen Speichern",
+    "settingsSaved": "Einstellungen erfolgreich gespeichert",
+    "processingSettings": "Verarbeitungseinstellungen",
+    "processingDescription": "Konfigurieren Sie, wie Dokumente aufgeteilt und verarbeitet werden",
+    "chunkSize": "Chunk-Größe",
+    "chunkSizeDescription": "Anzahl der Zeichen pro Chunk (100-2000)",
+    "chunkOverlap": "Chunk-Überlappung",
+    "chunkOverlapDescription": "Überlappung zwischen Chunks für besseren Kontext",
+    "maxTokensPerChunk": "Max Tokens pro Chunk",
+    "maxTokensDescription": "Maximale Tokens für KI-Verarbeitung pro Chunk",
+    "featureSettings": "Funktionseinstellungen",
+    "featureDescription": "KI-Funktionen für Dokumente aktivieren oder deaktivieren",
+    "enableSummarization": "Zusammenfassung Aktivieren",
+    "summarizationDescription": "Automatisch Dokumentenzusammenfassungen generieren",
+    "enableKeyPoints": "Schlüsselpunkte Aktivieren",
+    "keyPointsDescription": "Schlüsselpunkte und Erkenntnisse extrahieren",
+    "enableChat": "Chat Aktivieren",
+    "chatDescription": "Chatten mit Dokumenten ermöglichen",
+    "autoProcess": "Automatische Verarbeitung",
+    "autoProcessDescription": "Dokumente beim Hochladen automatisch verarbeiten",
+    "usageStatistics": "Nutzungsstatistiken",
+    "usageDescription": "Aktuelle Nutzung und Grenzen für Dokumentenfunktionen",
+    "totalTokens": "Gesamt Tokens",
+    "totalCost": "Gesamtkosten",
+    "loadingStats": "Statistiken werden geladen...",
+    "chats": "Chats"
   }
 }

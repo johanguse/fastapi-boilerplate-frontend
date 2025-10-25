@@ -77,13 +77,13 @@ const providerIcons = {
 
 const providerColors = {
   google:
-    'hover:bg-blue-50 dark:hover:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400',
+    'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
   github:
     'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
   microsoft:
-    'hover:bg-blue-50 dark:hover:bg-blue-950/30 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-400',
+    'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
   apple:
-    'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100',
+    'hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300',
 } as const
 
 const socialProviders = [
@@ -104,7 +104,7 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
       // Use Better Auth social sign in
       const result = await signIn.social({
         provider: providerId as 'google' | 'github' | 'microsoft' | 'apple',
-        callbackURL: redirectTo || window.location.origin + '/dashboard',
+        callbackURL: redirectTo || window.location.origin + '/',
       })
 
       if (result.error) {

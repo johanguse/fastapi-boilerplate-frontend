@@ -5,6 +5,7 @@ import {
   Building2,
   Construction,
   FileX,
+  FileText,
   HelpCircle,
   LayoutDashboard,
   ListTodo,
@@ -21,6 +22,8 @@ import {
   Users,
   UserX,
   Wrench,
+  BarChart3,
+  Brain,
 } from 'lucide-react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -66,13 +69,38 @@ export function useSidebarData(): SidebarData {
           ],
         },
         {
-          title: t('navigation.staticPages', 'Static Pages & Examples'),
+          title: t('navigation.aiApplications', 'AI Applications'),
           items: [
             {
-              title: t('navigation.tasks', 'Tasks'),
-              url: '/tasks',
-              icon: ListTodo,
+              title: t('navigation.aiDocuments', 'AI Documents'),
+              url: '/ai-documents',
+              icon: FileText,
             },
+            {
+              title: t('navigation.aiContent', 'AI Content'),
+              url: '/ai-content',
+              icon: MessagesSquare,
+            },
+            {
+              title: t('navigation.aiAnalytics', 'AI Analytics'),
+              url: '/ai-analytics',
+              icon: BarChart3,
+            },
+          ],
+        },
+                {
+                  title: t('navigation.staticPages', 'Static Pages & Examples'),
+                  items: [
+                    {
+                      title: t('navigation.dashboardDemo', 'Dashboard Demo'),
+                      url: '/dashboard-demo',
+                      icon: LayoutDashboard,
+                    },
+                    {
+                      title: t('navigation.tasks', 'Tasks'),
+                      url: '/tasks',
+                      icon: ListTodo,
+                    },
             {
               title: t('navigation.apps', 'Apps'),
               url: '/apps',
@@ -94,27 +122,27 @@ export function useSidebarData(): SidebarData {
               icon: Settings,
               items: [
                 {
-                  title: t('settings.profile', 'Profile'),
+                  title: t('settings.nav.profile', 'Profile'),
                   url: '/settings',
                   icon: UserCog,
                 },
                 {
-                  title: t('settings.account', 'Account'),
+                  title: t('settings.nav.account', 'Account'),
                   url: '/settings/account',
                   icon: Wrench,
                 },
                 {
-                  title: t('settings.appearance', 'Appearance'),
+                  title: t('settings.nav.appearance', 'Appearance'),
                   url: '/settings/appearance',
                   icon: Palette,
                 },
                 {
-                  title: t('settings.notifications', 'Notifications'),
+                  title: t('settings.nav.notifications', 'Notifications'),
                   url: '/settings/notifications',
                   icon: Bell,
                 },
                 {
-                  title: t('settings.display', 'Display'),
+                  title: t('settings.nav.display', 'Display'),
                   url: '/settings/display',
                   icon: Monitor,
                 },

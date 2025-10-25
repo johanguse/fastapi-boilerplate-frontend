@@ -129,6 +129,111 @@
       "verified": "Verificado"
     }
   },
+  "onboarding": {
+    "title": "Bienvenido a tu Espacio de Trabajo",
+    "subtitle": "Te ayudamos a configurar todo en unos pocos pasos",
+    "progress": "Progreso",
+    "loading": "Cargando configuración inicial...",
+    "error": {
+      "title": "Error",
+      "description": "Error al cargar el estado de configuración inicial. Por favor, inténtalo de nuevo.",
+      "fetchStatus": "Error al cargar el estado de configuración inicial",
+      "complete": "Error al completar la configuración inicial"
+    },
+    "success": {
+      "completed": "¡Bienvenido! Tu cuenta está completamente configurada."
+    },
+    "steps": {
+      "profile": {
+        "title": "Completa tu Perfil",
+        "description": "Cuéntanos un poco sobre ti"
+      },
+      "organization": {
+        "title": "Crea tu Organización",
+        "description": "Configura tu espacio de trabajo"
+      },
+      "complete": {
+        "title": "¡Todo Listo!",
+        "description": "Bienvenido a tu nuevo espacio de trabajo"
+      }
+    },
+    "profile": {
+      "title": "Completa tu Perfil",
+      "description": "Cuéntanos un poco sobre ti para personalizar tu experiencia",
+      "name": "Nombre Completo",
+      "namePlaceholder": "Ingresa tu nombre completo",
+      "company": "Empresa",
+      "companyPlaceholder": "Ingresa el nombre de tu empresa",
+      "jobTitle": "Cargo",
+      "jobTitlePlaceholder": "ej., Ingeniero de Software",
+      "country": "País",
+      "countryPlaceholder": "Selecciona tu país",
+      "phone": "Número de Teléfono",
+      "phonePlaceholder": "+34 91 123 45 67",
+      "website": "Sitio Web",
+      "websitePlaceholder": "https://tusitio.com",
+      "bio": "Biografía",
+      "bioPlaceholder": "Cuéntanos un poco sobre ti...",
+      "saving": "Guardando...",
+      "continue": "Continuar",
+      "success": "¡Perfil actualizado exitosamente!",
+      "error": "Error al actualizar el perfil. Por favor, inténtalo de nuevo."
+    },
+    "organization": {
+      "title": "Crea tu Organización",
+      "description": "Configura tu espacio de trabajo para colaborar con tu equipo",
+      "name": "Nombre de la Organización",
+      "namePlaceholder": "Ingresa el nombre de tu organización",
+      "slug": "URL Slug",
+      "slugPlaceholder": "mi-organizacion",
+      "slugHelp": "Opcional: Un identificador único para la URL de tu organización",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Cuéntanos sobre tu organización...",
+      "creating": "Creando...",
+      "continue": "Crear Organización",
+      "success": "¡Organización creada exitosamente!",
+      "error": "Error al crear la organización. Por favor, inténtalo de nuevo.",
+      "benefits": {
+        "title": "Lo que obtendrás:",
+        "team": "Herramientas de colaboración en equipo",
+        "projects": "Gestión de proyectos",
+        "analytics": "Análisis e insights",
+        "support": "Soporte prioritario"
+      }
+    },
+    "complete": {
+      "title": "¡Todo Listo!",
+      "description": "Bienvenido a tu nuevo espacio de trabajo. ¡Exploremos lo que puedes hacer!",
+      "welcome": {
+        "title": "¡Bienvenido, {name}!",
+        "description": "Tu espacio de trabajo está listo. Ahora puedes comenzar a colaborar con tu equipo y explorar todas las características que tenemos para ofrecer."
+      },
+      "features": {
+        "title": "Lo que puedes hacer ahora:",
+        "team": {
+          "title": "Colaboración en Equipo",
+          "description": "Invita miembros del equipo y trabaja juntos sin problemas"
+        },
+        "analytics": {
+          "title": "Panel de Análisis",
+          "description": "Rastrea tu progreso con insights detallados"
+        },
+        "automation": {
+          "title": "Herramientas con IA",
+          "description": "Aprovecha la IA para impulsar tu productividad"
+        }
+      },
+      "nextSteps": {
+        "title": "Próximos Pasos:",
+        "profile": "Completa tu perfil",
+        "organization": "Crea tu organización",
+        "explore": "Explora tu panel",
+        "invite": "Invita miembros del equipo"
+      },
+      "finishing": "Finalizando configuración...",
+      "getStarted": "Comenzar"
+    }
+  },
   "auth": {
     "and": "y",
     "byClickingLogin": "Al hacer clic en iniciar sesión, aceptas nuestros",
@@ -145,11 +250,15 @@
     "forgotPasswordEmailPlaceholder": "nombre@ejemplo.com",
     "forgotPasswordEmailRequired": "Por favor ingresa tu email",
     "forgotPasswordEmailSent": "Reset email sent to {{email}}",
+    "forgotPasswordRateLimited": "Por favor espera {{time}} antes de solicitar otro restablecimiento de contraseña",
+    "forgotPasswordNextRequest": "Próxima solicitud disponible en",
+    "userNotFound": "No se encontró ninguna cuenta con esta dirección de email. ¿Te gustaría crear una cuenta?",
     "forgotPasswordSendingEmail": "Enviando email...",
     "forgotPasswordTitle": "Contraseña olvidada",
     "internalServerError": "Error interno del servidor",
     "invalidCredentials": "Email o contraseña inválidos",
     "loginDescription": "Ingresa tu email y contraseña a continuación para iniciar sesión en tu cuenta",
+    "loginDontHaveAccount": "¿No tienes una cuenta?",
     "loginTitle": "Iniciar sesión",
     "maintenanceError": "Error de mantenimiento",
     "nameTooShort_one": "",
@@ -163,6 +272,9 @@
       "verifyButton": "Verificar",
       "haventReceived": "¿No lo has recibido?",
       "resendCode": "Reenviar un nuevo código.",
+      "resendIn": "Reenvío disponible en",
+      "resendSuccess": "Email de verificación enviado exitosamente",
+      "backToSignIn": "Volver al Inicio de Sesión",
       "validation": {
         "required": "Por favor ingresa el código de 6 dígitos."
       }
@@ -192,7 +304,7 @@
     "signUpPasswordPlaceholder": "********",
     "signUpRegistrationFailed": "Error en el registro. Verifica tu información.",
     "signUpTitle": "Crear una cuenta",
-    "signUpWelcome": "¡Bienvenido {name}! Revisa tu email para verificar tu cuenta.",
+    "signUpWelcome": "¡Bienvenido {{name}}! Revisa tu email para verificar tu cuenta.",
     "testimonial": "\"Esta plantilla me ha ahorrado incontables horas de trabajo y me ha ayudado a entregar diseños impresionantes a mis clientes más rápido que nunca.\"",
     "socialLogin": {
       "continueWith": "Continuar con {{provider}}",
@@ -391,6 +503,21 @@
     "chat": "Chat"
   },
   "dashboard": {
+    "demoTitle": "Demo del Panel",
+    "demoSubtitle": "Panel de demostración estático con datos de muestra",
+    "subtitle": "Tu plataforma SaaS de IA integral",
+    "aiFeatures": {
+      "documents": "Inteligencia de Documentos",
+      "documentsDesc": "Sube, procesa y chatea con documentos usando IA",
+      "content": "Generación de Contenido",
+      "contentDesc": "Genera contenido de alta calidad con plantillas impulsadas por IA",
+      "analytics": "Analíticas de IA",
+      "analyticsDesc": "Genera insights y visualizaciones de tus datos",
+      "open": "Abrir"
+    },
+    "filters": "Filtros",
+    "export": "Exportar",
+    "generateReport": "Generar Informe",
     "metrics": {
       "activeNow": "Activos Ahora",
       "download": "Descargar",
@@ -401,14 +528,26 @@
       "sales": "Ventas",
       "sinceLastHour": "+201 desde la última hora",
       "subscriptions": "Suscripciones",
-      "totalRevenue": "Ingresos Totales"
+      "totalRevenue": "Ingresos Totales",
+      "aiCredits": "Créditos de IA Utilizados",
+      "thisMonth": "este mes",
+      "documentsProcessed": "Documentos Procesados",
+      "today": "hoy",
+      "contentGenerated": "Contenido Generado",
+      "thisWeek": "esta semana",
+      "analyticsQueries": "Consultas de Analíticas"
     },
     "tabs": {
       "analytics": "Analíticas",
       "notifications": "Notificaciones",
       "overview": "Resumen",
-      "reports": "Reportes"
+      "reports": "Reportes",
+      "aiDocuments": "Documentos de IA",
+      "aiContent": "Contenido de IA",
+      "aiAnalytics": "Analíticas de IA"
     },
+    "overview": "Resumen",
+    "reports": "Reportes",
     "title": "Panel de Control"
   },
   "emailVerification": {
@@ -474,6 +613,11 @@
     "youHaveBeenInvited": "Has sido invitado a unirte a esta organización."
   },
   "navigation": {
+    "aiApplications": "Aplicaciones de IA",
+    "aiAnalytics": "Análisis de IA",
+    "aiContent": "Contenido de IA",
+    "aiDocuments": "Documentos de IA",
+    "dashboardDemo": "Demo del Panel",
     "staticPages": "Páginas Estáticas & Ejemplos",
     "account": "Cuenta",
     "apps": "Aplicaciones",
@@ -508,9 +652,9 @@
     "noMembers": "Aún no hay miembros",
     "noOrganizations": "Aún no hay organizaciones",
     "noOrganizationsYet": "Aún no hay organizaciones",
-    "organizationCount_one": "organizations.organizationCount",
-    "organizationCount_many": "organizations.organizationCount",
-    "organizationCount_other": "organizations.organizationCount",
+    "organizationCount_one": "{{count}} organización",
+    "organizationCount_many": "{{count}} organizaciones",
+    "organizationCount_other": "{{count}} organizaciones",
     "pendingInvitations": "Invitaciones Pendientes",
     "pendingInvitationsDesc": "Ver y gestionar invitaciones de equipo pendientes",
     "settings": "Configuración",
@@ -884,5 +1028,85 @@
         "roleRequired": "El rol es requerido."
       }
     }
+  },
+  "aiDocuments": {
+    "title": "Inteligencia de Documentos con IA",
+    "description": "Sube, procesa y chatea con tus documentos usando IA",
+    "uploadDocument": "Subir Documento",
+    "upload": "Subir",
+    "library": "Biblioteca",
+    "chat": "Chat",
+    "settings": "Configuración",
+    "selectDocumentToChat": "Selecciona un documento para empezar a chatear",
+    "uploadDocuments": "Subir Documentos",
+    "uploadDescription": "Sube archivos PDF, DOCX o TXT para procesarlos con IA",
+    "dropFilesHere": "Suelta los archivos aquí...",
+    "dragDropFiles": "Arrastra y suelta archivos aquí, o haz clic para seleccionar",
+    "supportedFormats": "Archivos PDF, DOCX, TXT hasta 10MB",
+    "selectedFiles": "Archivos Seleccionados",
+    "uploading": "Subiendo...",
+    "uploadAll": "Subir Todo",
+    "pdfSupport": "Documentos PDF",
+    "docxSupport": "Documentos Word",
+    "txtSupport": "Archivos de texto",
+    "documentLibrary": "Biblioteca de Documentos",
+    "libraryDescription": "Gestiona e interactúa con tus documentos procesados por IA",
+    "refresh": "Actualizar",
+    "searchDocuments": "Buscar documentos...",
+    "all": "Todos",
+    "completed": "Completado",
+    "processing": "Procesando",
+    "documents": "Documentos",
+    "noDocuments": "No se encontraron documentos",
+    "noDocumentsMatch": "Ningún documento coincide con tu búsqueda",
+    "uploadFirstDocument": "Sube tu primer documento para empezar",
+    "name": "Nombre",
+    "status": "Estado",
+    "size": "Tamaño",
+    "created": "Creado",
+    "view": "Ver",
+    "download": "Descargar",
+    "delete": "Eliminar",
+    "loadingDocuments": "Cargando documentos...",
+    "loadingDocument": "Cargando documento...",
+    "chatWithDocument": "Chatear con Documento",
+    "chatDescription": "Haz preguntas sobre el contenido del documento",
+    "startConversation": "Iniciar una conversación",
+    "askQuestion": "Haz una pregunta sobre el documento para empezar",
+    "thinking": "La IA está pensando...",
+    "send": "Enviar",
+    "relevantSections": "Secciones relevantes:",
+    "tokens": "Tokens",
+    "cost": "Costo",
+    "noSummary": "No hay resumen disponible",
+    "keyPoints": "Puntos Clave",
+    "documentSettings": "Configuración de Documentos",
+    "settingsDescription": "Configura cómo se procesan y analizan los documentos",
+    "saveSettings": "Guardar Configuración",
+    "settingsSaved": "Configuración guardada exitosamente",
+    "processingSettings": "Configuración de Procesamiento",
+    "processingDescription": "Configura cómo se dividen y procesan los documentos",
+    "chunkSize": "Tamaño de Fragmento",
+    "chunkSizeDescription": "Número de caracteres por fragmento (100-2000)",
+    "chunkOverlap": "Superposición de Fragmentos",
+    "chunkOverlapDescription": "Superposición entre fragmentos para mejor contexto",
+    "maxTokensPerChunk": "Máximo Tokens por Fragmento",
+    "maxTokensDescription": "Máximo tokens para procesamiento de IA por fragmento",
+    "featureSettings": "Configuración de Características",
+    "featureDescription": "Habilitar o deshabilitar características de IA para documentos",
+    "enableSummarization": "Habilitar Resumen",
+    "summarizationDescription": "Generar automáticamente resúmenes de documentos",
+    "enableKeyPoints": "Habilitar Puntos Clave",
+    "keyPointsDescription": "Extraer puntos clave e ideas",
+    "enableChat": "Habilitar Chat",
+    "chatDescription": "Permitir chatear con documentos",
+    "autoProcess": "Procesamiento Automático",
+    "autoProcessDescription": "Procesar automáticamente documentos al subirlos",
+    "usageStatistics": "Estadísticas de Uso",
+    "usageDescription": "Uso actual y límites para características de documentos",
+    "totalTokens": "Total de Tokens",
+    "totalCost": "Costo Total",
+    "loadingStats": "Cargando estadísticas...",
+    "chats": "Chats"
   }
 }

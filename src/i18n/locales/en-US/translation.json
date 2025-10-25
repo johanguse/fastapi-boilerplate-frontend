@@ -127,7 +127,113 @@
       "verified": "Verified"
     }
   },
+  "onboarding": {
+    "title": "Welcome to Your Workspace",
+    "subtitle": "Let's get you set up in just a few steps",
+    "progress": "Progress",
+    "loading": "Loading onboarding...",
+    "error": {
+      "title": "Error",
+      "description": "Failed to load onboarding status. Please try again.",
+      "fetchStatus": "Failed to load onboarding status",
+      "complete": "Failed to complete onboarding"
+    },
+    "success": {
+      "completed": "Welcome! Your account is all set up."
+    },
+    "steps": {
+      "profile": {
+        "title": "Complete Your Profile",
+        "description": "Tell us a bit about yourself"
+      },
+      "organization": {
+        "title": "Create Your Organization",
+        "description": "Set up your workspace"
+      },
+      "complete": {
+        "title": "You're All Set!",
+        "description": "Welcome to your new workspace"
+      }
+    },
+    "profile": {
+      "title": "Complete Your Profile",
+      "description": "Tell us a bit about yourself to personalize your experience",
+      "name": "Full Name",
+      "namePlaceholder": "Enter your full name",
+      "company": "Company",
+      "companyPlaceholder": "Enter your company name",
+      "jobTitle": "Job Title",
+      "jobTitlePlaceholder": "e.g., Software Engineer",
+      "country": "Country",
+      "countryPlaceholder": "Select your country",
+      "phone": "Phone Number",
+      "phonePlaceholder": "+1 (555) 123-4567",
+      "website": "Website",
+      "websitePlaceholder": "https://yourwebsite.com",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell us a bit about yourself...",
+      "saving": "Saving...",
+      "continue": "Continue",
+      "success": "Profile updated successfully!",
+      "error": "Failed to update profile. Please try again."
+    },
+    "organization": {
+      "title": "Create Your Organization",
+      "description": "Set up your workspace to collaborate with your team",
+      "name": "Organization Name",
+      "namePlaceholder": "Enter your organization name",
+      "slug": "URL Slug",
+      "slugPlaceholder": "my-organization",
+      "slugHelp": "Optional: A unique identifier for your organization URL",
+      "description": "Description",
+      "descriptionPlaceholder": "Tell us about your organization...",
+      "creating": "Creating...",
+      "continue": "Create Organization",
+      "success": "Organization created successfully!",
+      "error": "Failed to create organization. Please try again.",
+      "benefits": {
+        "title": "What you'll get:",
+        "team": "Team collaboration tools",
+        "projects": "Project management",
+        "analytics": "Analytics and insights",
+        "support": "Priority support"
+      }
+    },
+    "complete": {
+      "title": "You're All Set!",
+      "description": "Welcome to your new workspace. Let's explore what you can do!",
+      "welcome": {
+        "title": "Welcome, {name}!",
+        "description": "Your workspace is ready. You can now start collaborating with your team and exploring all the features we have to offer."
+      },
+      "features": {
+        "title": "What you can do now:",
+        "team": {
+          "title": "Team Collaboration",
+          "description": "Invite team members and work together seamlessly"
+        },
+        "analytics": {
+          "title": "Analytics Dashboard",
+          "description": "Track your progress with detailed insights"
+        },
+        "automation": {
+          "title": "AI-Powered Tools",
+          "description": "Leverage AI to boost your productivity"
+        }
+      },
+      "nextSteps": {
+        "title": "Next Steps:",
+        "profile": "Complete your profile",
+        "organization": "Create your organization",
+        "explore": "Explore your dashboard",
+        "invite": "Invite team members"
+      },
+      "finishing": "Finishing setup...",
+      "getStarted": "Get Started"
+    }
+  },
   "auth": {
+    "and": "and",
     "byClickingLogin": "By clicking login, you agree to our",
     "confirmPassword": "Confirm Password",
     "dontHaveAccount": "Don't have an account?",
@@ -144,9 +250,13 @@
     "forgotPasswordEmailSent": "Reset email sent to {{email}}",
     "forgotPasswordSendingEmail": "Sending email...",
     "forgotPasswordTitle": "Forgot Password",
+    "forgotPasswordRateLimited": "Please wait {{time}} before requesting another password reset",
+    "forgotPasswordNextRequest": "Next request available in",
+    "userNotFound": "No account found with this email address. Would you like to create an account?",
     "internalServerError": "Internal Server Error",
     "invalidCredentials": "Invalid email or password",
     "loginDescription": "Enter your email and password below to log into your account",
+    "loginDontHaveAccount": "Don't have an account?",
     "loginTitle": "Login",
     "maintenanceError": "Maintenance Error",
     "nameTooShort_one": "Name must be at least 2 characters",
@@ -158,7 +268,10 @@
       "label": "One-Time Password",
       "verifyButton": "Verify",
       "haventReceived": "Haven't received it?",
-      "resendCode": "Resend a new code.",
+      "resendCode": "Resend a new code",
+      "resendIn": "Resend available in",
+      "resendSuccess": "Verification email sent successfully",
+      "backToSignIn": "Back to Sign In",
       "validation": {
         "required": "Please enter the 6-digit code."
       }
@@ -169,6 +282,7 @@
     "passwordTooShort_one": "Password must be at least 6 characters",
     "passwordTooShort_other": "Password must be at least 6 characters",
     "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
     "signIn": "Sign In",
     "signOutConfirm": "Sign out",
     "signOutDescription": "Are you sure you want to sign out? You will need to sign in again to access your account.",
@@ -187,7 +301,7 @@
     "signUpPasswordPlaceholder": "********",
     "signUpRegistrationFailed": "Registration failed. Please check your information.",
     "signUpTitle": "Create an account",
-    "signUpWelcome": "Welcome {name}! Please check your email to verify your account.",
+    "signUpWelcome": "Welcome {{name}}! Please check your email to verify your account.",
     "testimonial": "\"This template has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.\"",
     "socialLogin": {
       "continueWith": "Continue with {{provider}}",
@@ -390,6 +504,13 @@
     "addUser": "Add User"
   },
   "dashboard": {
+    "demoTitle": "Dashboard Demo",
+    "demoSubtitle": "Static demo dashboard with sample data",
+    "subtitle": "Your comprehensive AI SaaS platform",
+    "aiFeatures": "AI Features",
+    "filters": "Filters",
+    "export": "Export",
+    "generateReport": "Generate Report",
     "metrics": {
       "activeNow": "Active Now",
       "download": "Download",
@@ -400,14 +521,34 @@
       "sales": "Sales",
       "sinceLastHour": "+201 since last hour",
       "subscriptions": "Subscriptions",
-      "totalRevenue": "Total Revenue"
+      "totalRevenue": "Total Revenue",
+      "aiCredits": "AI Credits Used",
+      "thisMonth": "this month",
+      "documentsProcessed": "Documents Processed",
+      "today": "today",
+      "contentGenerated": "Content Generated",
+      "thisWeek": "this week",
+      "analyticsQueries": "Analytics Queries"
     },
     "tabs": {
+      "overview": "Overview",
       "analytics": "Analytics",
       "notifications": "Notifications",
-      "overview": "Overview",
-      "reports": "Reports"
+      "aiDocuments": "AI Documents",
+      "aiContent": "AI Content",
+      "aiAnalytics": "AI Analytics"
     },
+    "aiFeatures": {
+      "documents": "Document Intelligence",
+      "documentsDesc": "Upload, process, and chat with documents using AI",
+      "content": "Content Generation",
+      "contentDesc": "Generate high-quality content with AI-powered templates",
+      "analytics": "AI Analytics",
+      "analyticsDesc": "Generate insights and visualizations from your data",
+      "open": "Open"
+    },
+    "overview": "Overview",
+    "reports": "Reports",
     "title": "Dashboard"
   },
   "emailVerification": {
@@ -473,6 +614,11 @@
     "youHaveBeenInvited": "You have been invited to join this organization."
   },
   "navigation": {
+    "aiApplications": "AI Applications",
+    "aiAnalytics": "AI Analytics",
+    "aiContent": "AI Content",
+    "aiDocuments": "AI Documents",
+    "dashboardDemo": "Dashboard Demo",
     "staticPages": "Static Pages & Examples",
     "account": "Account",
     "apps": "Apps",
@@ -507,8 +653,8 @@
     "noMembers": "No members yet",
     "noOrganizations": "No organizations yet",
     "noOrganizationsYet": "No organizations yet",
-    "organizationCount_one": "organizations.organizationCount",
-    "organizationCount_other": "organizations.organizationCount",
+    "organizationCount_one": "{{count}} organization",
+    "organizationCount_other": "{{count}} organizations",
     "pendingInvitations": "Pending Invitations",
     "pendingInvitationsDesc": "View and manage pending team invitations",
     "settings": "Settings",
@@ -878,5 +1024,85 @@
         "roleRequired": "Role is required."
       }
     }
+  },
+  "aiDocuments": {
+    "title": "AI Document Intelligence",
+    "description": "Upload, process, and chat with your documents using AI",
+    "uploadDocument": "Upload Document",
+    "upload": "Upload",
+    "library": "Library",
+    "chat": "Chat",
+    "settings": "Settings",
+    "selectDocumentToChat": "Select a document to start chatting",
+    "uploadDocuments": "Upload Documents",
+    "uploadDescription": "Upload PDF, DOCX, or TXT files to process with AI",
+    "dropFilesHere": "Drop files here...",
+    "dragDropFiles": "Drag & drop files here, or click to select",
+    "supportedFormats": "PDF, DOCX, TXT files up to 10MB",
+    "selectedFiles": "Selected Files",
+    "uploading": "Uploading...",
+    "uploadAll": "Upload All",
+    "pdfSupport": "PDF documents",
+    "docxSupport": "Word documents",
+    "txtSupport": "Text files",
+    "documentLibrary": "Document Library",
+    "libraryDescription": "Manage and interact with your AI-processed documents",
+    "refresh": "Refresh",
+    "searchDocuments": "Search documents...",
+    "all": "All",
+    "completed": "Completed",
+    "processing": "Processing",
+    "documents": "Documents",
+    "noDocuments": "No documents found",
+    "noDocumentsMatch": "No documents match your search",
+    "uploadFirstDocument": "Upload your first document to get started",
+    "name": "Name",
+    "status": "Status",
+    "size": "Size",
+    "created": "Created",
+    "view": "View",
+    "download": "Download",
+    "delete": "Delete",
+    "loadingDocuments": "Loading documents...",
+    "loadingDocument": "Loading document...",
+    "chatWithDocument": "Chat with Document",
+    "chatDescription": "Ask questions about the document content",
+    "startConversation": "Start a conversation",
+    "askQuestion": "Ask a question about the document to get started",
+    "thinking": "AI is thinking...",
+    "send": "Send",
+    "relevantSections": "Relevant sections:",
+    "tokens": "Tokens",
+    "cost": "Cost",
+    "noSummary": "No summary available",
+    "keyPoints": "Key Points",
+    "documentSettings": "Document Settings",
+    "settingsDescription": "Configure how documents are processed and analyzed",
+    "saveSettings": "Save Settings",
+    "settingsSaved": "Settings saved successfully",
+    "processingSettings": "Processing Settings",
+    "processingDescription": "Configure how documents are chunked and processed",
+    "chunkSize": "Chunk Size",
+    "chunkSizeDescription": "Number of characters per chunk (100-2000)",
+    "chunkOverlap": "Chunk Overlap",
+    "chunkOverlapDescription": "Overlap between chunks for better context",
+    "maxTokensPerChunk": "Max Tokens per Chunk",
+    "maxTokensDescription": "Maximum tokens for AI processing per chunk",
+    "featureSettings": "Feature Settings",
+    "featureDescription": "Enable or disable AI features for documents",
+    "enableSummarization": "Enable Summarization",
+    "summarizationDescription": "Automatically generate document summaries",
+    "enableKeyPoints": "Enable Key Points",
+    "keyPointsDescription": "Extract key points and insights",
+    "enableChat": "Enable Chat",
+    "chatDescription": "Allow chatting with documents",
+    "autoProcess": "Auto Process",
+    "autoProcessDescription": "Automatically process documents on upload",
+    "usageStatistics": "Usage Statistics",
+    "usageDescription": "Current usage and limits for document features",
+    "totalTokens": "Total Tokens",
+    "totalCost": "Total Cost",
+    "loadingStats": "Loading statistics...",
+    "chats": "Chats"
   }
 }
