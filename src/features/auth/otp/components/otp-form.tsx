@@ -23,7 +23,7 @@ import {
   InputOTPSlot,
 } from '@/components/ui/input-otp'
 import { cn } from '@/lib/utils'
-import { useAuth, useAuthStore } from '@/stores/auth-store'
+import { useAuthStore } from '@/stores/auth-store'
 
 const createFormSchema = (t: (key: string, defaultValue: string) => string) =>
   z.object({
@@ -46,9 +46,7 @@ type OtpFormProps = React.HTMLAttributes<HTMLFormElement>
 export function OtpForm({ className, ...props }: OtpFormProps) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { login } = useAuth()
   const [step, setStep] = useState<'email' | 'otp'>('email')
-  const [isLoading, setIsLoading] = useState(false)
   const [userExists, setUserExists] = useState<boolean | null>(null)
 
   const formSchema = createFormSchema(t)
@@ -112,7 +110,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
 
       return response.json()
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       // Set user in auth store
       const authState = useAuthStore.getState()
       authState.setUser(data.user)
@@ -120,6 +118,9 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
       authState.setInitialized(true)
 
       toast.success(t('auth.otp.success', 'Welcome! You are now logged in'))
+      
+      // Small delay to ensure Zustand state is fully updated
+      await new Promise(resolve => setTimeout(resolve, 0))
       
       // Redirect based on onboarding status
       if (data.user.onboarding_completed) {
@@ -224,7 +225,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
                     <InputOTP
                       maxLength={6}
                       {...field}
-                      containerClassName="justify-between sm:[&>[data-slot="input-otp-group"]>div]:w-12"
+                      containerClassName='justify-between sm:[&>[data-slot="input-otp-group"]>div]:w-12'
                     >
                       <InputOTPGroup>
                         <InputOTPSlot index={0} />

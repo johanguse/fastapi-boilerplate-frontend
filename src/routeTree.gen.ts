@@ -27,6 +27,7 @@ import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
 import { Route as authOnboardingRouteImport } from './routes/(auth)/onboarding'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
+import { Route as authCheckEmailRouteImport } from './routes/(auth)/check-email'
 import { Route as authAcceptInvitationRouteImport } from './routes/(auth)/accept-invitation'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
@@ -142,6 +143,11 @@ const authOnboardingRoute = authOnboardingRouteImport.update({
 const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
   id: '/(auth)/forgot-password',
   path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authCheckEmailRoute = authCheckEmailRouteImport.update({
+  id: '/(auth)/check-email',
+  path: '/check-email',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authAcceptInvitationRoute = authAcceptInvitationRouteImport.update({
@@ -283,6 +289,7 @@ const authOauthAppleCallbackRoute = authOauthAppleCallbackRouteImport.update({
 export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/accept-invitation': typeof authAcceptInvitationRoute
+  '/check-email': typeof authCheckEmailRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/onboarding': typeof authOnboardingRoute
   '/otp': typeof authOtpRoute
@@ -325,6 +332,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/accept-invitation': typeof authAcceptInvitationRoute
+  '/check-email': typeof authCheckEmailRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/onboarding': typeof authOnboardingRoute
   '/otp': typeof authOtpRoute
@@ -370,6 +378,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/(auth)/accept-invitation': typeof authAcceptInvitationRoute
+  '/(auth)/check-email': typeof authCheckEmailRoute
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
   '/(auth)/onboarding': typeof authOnboardingRoute
   '/(auth)/otp': typeof authOtpRoute
@@ -415,6 +424,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/settings'
     | '/accept-invitation'
+    | '/check-email'
     | '/forgot-password'
     | '/onboarding'
     | '/otp'
@@ -457,6 +467,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/accept-invitation'
+    | '/check-email'
     | '/forgot-password'
     | '/onboarding'
     | '/otp'
@@ -501,6 +512,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_authenticated/settings'
     | '/(auth)/accept-invitation'
+    | '/(auth)/check-email'
     | '/(auth)/forgot-password'
     | '/(auth)/onboarding'
     | '/(auth)/otp'
@@ -545,6 +557,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   authAcceptInvitationRoute: typeof authAcceptInvitationRoute
+  authCheckEmailRoute: typeof authCheckEmailRoute
   authForgotPasswordRoute: typeof authForgotPasswordRoute
   authOnboardingRoute: typeof authOnboardingRoute
   authOtpRoute: typeof authOtpRoute
@@ -689,6 +702,13 @@ declare module '@tanstack/react-router' {
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof authForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/check-email': {
+      id: '/(auth)/check-email'
+      path: '/check-email'
+      fullPath: '/check-email'
+      preLoaderRoute: typeof authCheckEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/accept-invitation': {
@@ -936,6 +956,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   authAcceptInvitationRoute: authAcceptInvitationRoute,
+  authCheckEmailRoute: authCheckEmailRoute,
   authForgotPasswordRoute: authForgotPasswordRoute,
   authOnboardingRoute: authOnboardingRoute,
   authOtpRoute: authOtpRoute,

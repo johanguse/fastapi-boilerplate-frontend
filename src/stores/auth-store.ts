@@ -1,12 +1,5 @@
 import { create } from 'zustand'
-import {
-  getSession,
-  type Session,
-  signIn,
-  signOut,
-  signUp,
-  type User,
-} from '@/lib/auth'
+import type { Session, User } from '@/lib/auth'
 
 interface AuthState {
   user: User | null
@@ -21,8 +14,8 @@ interface AuthState {
   setInitialized: (initialized: boolean) => void
 
   // Auth methods
-  login: (email: string, password: string) => Promise<void>
-  register: (email: string, password: string, name: string) => Promise<void>
+  login: (email: string, password: string) => Promise<User>
+  register: (email: string, password: string, name: string) => Promise<User>
   logout: () => Promise<void>
   checkSession: () => Promise<void>
   reset: () => void
@@ -152,8 +145,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       // Set user and session from our custom AuthResponse format
       if (data.user && data.session) {
         set({ 
-          user: data.user, 
-          session: data.session, 
+          user: data.user,           session: data.session, 
           isInitialized: true 
         })
         return data.user // Return user data for onSuccess callback

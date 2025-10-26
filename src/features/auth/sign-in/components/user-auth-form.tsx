@@ -19,7 +19,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { getLoginSchema, type LoginFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
-import { useAuth, useAuthStore } from '@/stores/auth-store'
+import { useAuth } from '@/stores/auth-store'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLFormElement> {
   readonly redirectTo?: string
@@ -44,28 +44,70 @@ export function UserAuthForm({
 
   const loginMutation = useMutation({
     mutationFn: ({ email, password }: LoginFormData) => login(email, password),
-    onSuccess: (user) => {
+    onSuccess: async (user) => {
       // Clear any form errors on success
       form.clearErrors()
 
-      // Redirect based on onboarding completion
-      if (user && !user.onboarding_completed) {
-        navigate({ to: '/onboarding', replace: true })
-      } else {
-        // Redirect to the stored location or default to root page
-        const targetPath = redirectTo || '/'
-        navigate({ to: targetPath, replace: true })
-      }
+      // biome-ignore lint/suspicious/noConsole: Debug login flow
+      console.log('Login onSuccess - user data:', user)
 
+      // Show success toast immediately
       toast.success(t('auth.welcome', 'Welcome!'))
+
+      // Longer delay to ensure cookies are fully set and Zustand state is updated
+      // This is critical for the onboarding page to have access to auth state
+      setTimeout(() => {
+        // Priority 1: Check onboarding status first
+        if (user && !user.onboarding_completed) {
+          // User hasn't completed onboarding - always go to onboarding
+          // biome-ignore lint/suspicious/noConsole: Debug navigation
+          console.log('Navigating to /onboarding')
+          navigate({ to: '/onboarding', replace: true })
+        } else {
+          // User has completed onboarding or doesn't have onboarding
+          // Priority 2: Use redirectTo if it's NOT the onboarding page
+          // Priority 3: Default to root page
+          const targetPath = (redirectTo && redirectTo !== '/onboarding') ? redirectTo : '/'
+          // biome-ignore lint/suspicious/noConsole: Debug navigation
+          console.log('Navigating to:', targetPath)
+          navigate({ to: targetPath, replace: true })
+        }
+      }, 300) // Increased to 300ms to ensure cookies are set
     },
     onError: (error: unknown) => {
       // Handle error from Better Auth login
-      // Always use translated message instead of backend English message
-      const errorMessage = t(
-        'auth.invalidCredentials',
-        'Invalid email or password.'
-      )
+      const axiosError = error as {
+        response?: {
+          data?: {
+            detail?: {
+              error?: string
+              message?: string
+            }
+          }
+        }
+      }
+
+      // Check for specific error types
+      const errorType = axiosError.response?.data?.detail?.error
+      const backendMessage = axiosError.response?.data?.detail?.message
+
+      let errorMessage: string
+
+      if (errorType === 'EMAIL_NOT_VERIFIED') {
+        // Email not verified error
+        errorMessage =
+          backendMessage ||
+          t(
+            'auth.emailNotVerified',
+            'Please verify your email address before logging in. Check your inbox for the verification link.'
+          )
+      } else {
+        // Default invalid credentials message
+        errorMessage = t(
+          'auth.invalidCredentials',
+          'Invalid email or password.'
+        )
+      }
 
       // Set inline error on form root
       form.setError('root', {

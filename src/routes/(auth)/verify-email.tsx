@@ -37,7 +37,7 @@ function VerifyEmailPage() {
 
     const verifyEmail = async () => {
       try {
-        await api.post(`/api/v1/invitations/verify-email/${token}`)
+        await api.post(`/invitations/verify-email/${token}`)
         setStatus('success')
         // Redirect to dashboard after 3 seconds
         setTimeout(() => {

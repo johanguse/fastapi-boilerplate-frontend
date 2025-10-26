@@ -9,50 +9,23 @@ import { OnboardingOrganization } from './components/onboarding-organization'
 import { OnboardingComplete } from './components/onboarding-complete'
 import { useAuth } from '@/stores/auth-store'
 
-interface OnboardingStatus {
-  onboarding_completed: boolean
-  onboarding_step: number
-  has_organization: boolean
-  profile_complete: boolean
-  next_step: string
-}
-
 export function Onboarding() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { user } = useAuth()
   const [currentStep, setCurrentStep] = useState(0)
-  const [onboardingStatus, setOnboardingStatus] = useState<OnboardingStatus | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
 
-  // Fetch onboarding status
+  // Set initial step from user data
   useEffect(() => {
-    const fetchOnboardingStatus = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/onboarding/status`, {
-          credentials: 'include',
-        })
-        
-        if (response.ok) {
-          const status = await response.json()
-          setOnboardingStatus(status)
-          setCurrentStep(status.onboarding_step)
-        }
-      } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: Error logging for debugging
-        console.error('Failed to fetch onboarding status:', error)
-        toast.error(t('onboarding.error.fetchStatus', 'Failed to load onboarding status'))
-      } finally {
-        setIsLoading(false)
-      }
+    if (user) {
+      setCurrentStep(user.onboarding_step || 0)
+      setIsLoading(false)
     }
-
-    fetchOnboardingStatus()
-  }, [t])
+  }, [user])
 
   const handleStepComplete = (step: number) => {
     setCurrentStep(step)
-    setOnboardingStatus(prev => prev ? { ...prev, onboarding_step: step } : null)
   }
 
   const handleOnboardingComplete = async () => {
@@ -79,28 +52,13 @@ export function Onboarding() {
     }
   }
 
-  if (isLoading) {
+  if (isLoading || !user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-muted-foreground">{t('onboarding.loading', 'Loading onboarding...')}</p>
         </div>
-      </div>
-    )
-  }
-
-  if (!onboardingStatus) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle className="text-center">{t('onboarding.error.title', 'Error')}</CardTitle>
-            <CardDescription className="text-center">
-              {t('onboarding.error.description', 'Failed to load onboarding status. Please try again.')}
-            </CardDescription>
-          </CardHeader>
-        </Card>
       </div>
     )
   }

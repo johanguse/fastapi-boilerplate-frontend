@@ -14,9 +14,9 @@ import type { User as UserType } from '@/lib/auth'
 
 const profileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
-  company: z.string().min(1, 'Company is required'),
+  company: z.string().optional(),
   job_title: z.string().optional(),
-  country: z.string().min(1, 'Country is required'),
+  country: z.string().optional(),
   phone: z.string().optional(),
   bio: z.string().max(500, 'Bio must be less than 500 characters').optional(),
   website: z.string().url('Please enter a valid URL').optional().or(z.literal('')),
@@ -103,7 +103,7 @@ export function OnboardingProfile({ onComplete, user }: OnboardingProfileProps) 
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('onboarding.profile.name', 'Full Name')} *</FormLabel>
+                  <FormLabel>{t('onboarding.profile.name', 'Full Name')}</FormLabel>
                   <FormControl>
                     <Input placeholder={t('onboarding.profile.namePlaceholder', 'Enter your full name')} {...field} />
                   </FormControl>
@@ -117,7 +117,7 @@ export function OnboardingProfile({ onComplete, user }: OnboardingProfileProps) 
               name="company"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('onboarding.profile.company', 'Company')} *</FormLabel>
+                  <FormLabel>{t('onboarding.profile.company', 'Company')}</FormLabel>
                   <FormControl>
                     <Input placeholder={t('onboarding.profile.companyPlaceholder', 'Enter your company name')} {...field} />
                   </FormControl>
@@ -145,7 +145,7 @@ export function OnboardingProfile({ onComplete, user }: OnboardingProfileProps) 
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('onboarding.profile.country', 'Country')} *</FormLabel>
+                  <FormLabel>{t('onboarding.profile.country', 'Country')}</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>

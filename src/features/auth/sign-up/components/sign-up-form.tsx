@@ -43,16 +43,21 @@ export function SignUpForm({
   const registerMutation = useMutation({
     mutationFn: ({ name, email, password }: RegisterFormData) =>
       register(email, password, name),
-    onSuccess: (user) => {
+    onSuccess: async () => {
       // Clear any form errors on success
       form.clearErrors()
 
-      toast.success(
-        t('auth.signUpWelcome', 'Welcome, {name}! Please check your email to verify your account.', {
-          name: form.getValues('name') || 'User',
-        })
-      )
-      navigate({ to: '/onboarding' })
+      const email = form.getValues('email')
+      
+      // Small delay to ensure Zustand state is fully updated
+      await new Promise(resolve => setTimeout(resolve, 0))
+      
+      // Redirect to check email page with email parameter
+      navigate({ 
+        to: '/check-email', 
+        search: { email },
+        replace: true 
+      })
     },
     onError: (error: unknown) => {
       // biome-ignore lint/suspicious/noConsole: Intentional error logging

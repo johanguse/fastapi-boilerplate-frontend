@@ -26,13 +26,12 @@ export function EmailVerificationBanner({ className }: EmailVerificationBannerPr
 
     setIsResending(true)
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/resend-verification`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/invitations/verify-email/resend`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({ email: user.email }),
       })
 
       if (response.ok) {
