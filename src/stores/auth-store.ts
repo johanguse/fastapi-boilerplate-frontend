@@ -123,14 +123,17 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-in/email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email, password }),
-      })
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-in/email`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({ email, password }),
+        }
+      )
 
       if (!response.ok) {
         const error = await response.json()
@@ -141,12 +144,13 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       }
 
       const data = await response.json()
-      
+
       // Set user and session from our custom AuthResponse format
       if (data.user && data.session) {
-        set({ 
-          user: data.user,           session: data.session, 
-          isInitialized: true 
+        set({
+          user: data.user,
+          session: data.session,
+          isInitialized: true,
         })
         return data.user // Return user data for onSuccess callback
       } else {
@@ -166,14 +170,17 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-up/email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email, password, name }),
-      })
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-up/email`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({ email, password, name }),
+        }
+      )
 
       if (!response.ok) {
         const error = await response.json()
@@ -184,13 +191,13 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       }
 
       const data = await response.json()
-      
+
       // Set user and session from our custom AuthResponse format
       if (data.user && data.session) {
-        set({ 
-          user: data.user, 
-          session: data.session, 
-          isInitialized: true 
+        set({
+          user: data.user,
+          session: data.session,
+          isInitialized: true,
         })
         return data.user // Return user data for onSuccess callback
       } else {
@@ -210,10 +217,13 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-out`, {
-        method: 'POST',
-        credentials: 'include',
-      })
+      await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-out`,
+        {
+          method: 'POST',
+          credentials: 'include',
+        }
+      )
       set({ user: null, session: null, isInitialized: true })
     } catch (e: unknown) {
       // Even if logout fails on server, clear local state
@@ -229,10 +239,13 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/session`, {
-        method: 'GET',
-        credentials: 'include',
-      })
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/session`,
+        {
+          method: 'GET',
+          credentials: 'include',
+        }
+      )
 
       if (response.ok) {
         const sessionData = await response.json()
@@ -248,7 +261,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       } else {
         set({ user: null, session: null, isInitialized: true })
       }
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       // Gracefully handle errors
       set({ user: null, session: null, isInitialized: true })
     } finally {

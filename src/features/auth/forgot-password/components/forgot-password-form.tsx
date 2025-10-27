@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { ArrowRight, Loader2 } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -16,9 +16,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { formatTime, useTimer } from '@/hooks/use-timer'
 import { cn } from '@/lib/utils'
-import { useTimer, formatTime } from '@/hooks/use-timer'
-import { forgetPassword } from '@/lib/auth'
 
 export function ForgotPasswordForm({
   className,
@@ -28,12 +27,12 @@ export function ForgotPasswordForm({
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
   const [canSubmit, setCanSubmit] = useState(true)
-  
+
   // Rate limiting timer (5 minutes = 300 seconds)
   const timer = useTimer(300, {
     onComplete: () => {
       setCanSubmit(true)
-    }
+    },
   })
 
   const formSchema = z.object({
@@ -71,31 +70,40 @@ export function ForgotPasswordForm({
 
     try {
       // Call the backend forgot password endpoint directly
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/forgot-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email: data.email }),
-      })
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/forgot-password`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({ email: data.email }),
+        }
+      )
 
       const result = await response.json()
 
       if (response.ok) {
         // Success - email sent
-        toast.success(result.message || t('auth.forgotPasswordEmailSent', 'Password reset link sent to your email address.'))
+        toast.success(
+          result.message ||
+            t(
+              'auth.forgotPasswordEmailSent',
+              'Password reset link sent to your email address.'
+            )
+        )
         setCanSubmit(false)
         timer.reset()
         timer.start()
         form.reset()
-        
+
         // If user doesn't exist, show option to sign up
         if (result.user_exists === false) {
           setTimeout(() => {
-            navigate({ 
-              to: '/sign-up', 
-              search: { email: data.email } 
+            navigate({
+              to: '/sign-up',
+              search: { email: data.email },
             })
           }, 2000)
         } else {
@@ -103,7 +111,11 @@ export function ForgotPasswordForm({
         }
       } else {
         // Handle error response
-        toast.error(result.detail?.message || result.message || t('common.error', 'An error occurred'))
+        toast.error(
+          result.detail?.message ||
+            result.message ||
+            t('common.error', 'An error occurred')
+        )
       }
     } catch (error) {
       // biome-ignore lint/suspicious/noConsole: Error logging for debugging
@@ -140,22 +152,20 @@ export function ForgotPasswordForm({
             </FormItem>
           )}
         />
-        
+
         {!canSubmit && (
           <div className='text-center text-muted-foreground text-sm'>
             <p>
-              {t('auth.forgotPasswordNextRequest', 'Next request available in')}:{' '}
+              {t('auth.forgotPasswordNextRequest', 'Next request available in')}
+              :{' '}
               <span className='font-mono font-semibold text-primary'>
                 {formatTime(timer.timeLeft)}
               </span>
             </p>
           </div>
         )}
-        
-        <Button 
-          className='mt-2' 
-          disabled={isLoading || !canSubmit}
-        >
+
+        <Button className='mt-2' disabled={isLoading || !canSubmit}>
           {t('auth.forgotPasswordContinue', 'Continue')}
           {isLoading ? <Loader2 className='animate-spin' /> : <ArrowRight />}
         </Button>

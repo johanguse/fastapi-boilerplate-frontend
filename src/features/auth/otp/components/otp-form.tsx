@@ -27,7 +27,9 @@ import { useAuthStore } from '@/stores/auth-store'
 
 const createFormSchema = (t: (key: string, defaultValue: string) => string) =>
   z.object({
-    email: z.string().email(t('auth.email.invalid', 'Please enter a valid email address')),
+    email: z
+      .string()
+      .email(t('auth.email.invalid', 'Please enter a valid email address')),
     otp: z
       .string()
       .min(
@@ -52,10 +54,10 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
   const formSchema = createFormSchema(t)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { 
-      email: '', 
-      otp: '', 
-      name: '' 
+    defaultValues: {
+      email: '',
+      otp: '',
+      name: '',
     },
   })
 
@@ -65,18 +67,23 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
   // Send OTP mutation
   const sendOtpMutation = useMutation({
     mutationFn: async (email: string) => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/send`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ email }),
-      })
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/send`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({ email }),
+        }
+      )
 
       if (!response.ok) {
         const error = await response.json()
-        throw new Error(error.detail?.message || 'Failed to send verification code')
+        throw new Error(
+          error.detail?.message || 'Failed to send verification code'
+        )
       }
 
       return response.json()
@@ -93,15 +100,22 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
 
   // Verify OTP mutation
   const verifyOtpMutation = useMutation({
-    mutationFn: async (data: { email: string; code: string; name?: string }) => {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/verify`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(data),
-      })
+    mutationFn: async (data: {
+      email: string
+      code: string
+      name?: string
+    }) => {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/verify`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(data),
+        }
+      )
 
       if (!response.ok) {
         const error = await response.json()
@@ -118,10 +132,10 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
       authState.setInitialized(true)
 
       toast.success(t('auth.otp.success', 'Welcome! You are now logged in'))
-      
+
       // Small delay to ensure Zustand state is fully updated
-      await new Promise(resolve => setTimeout(resolve, 0))
-      
+      await new Promise((resolve) => setTimeout(resolve, 0))
+
       // Redirect based on onboarding status
       if (data.user.onboarding_completed) {
         navigate({ to: '/', replace: true })
@@ -160,22 +174,30 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
       >
         {step === 'email' && (
           <>
-            <div className="text-center mb-4">
-              <h2 className="text-2xl font-bold">{t('auth.otp.title', 'Sign in with email')}</h2>
-              <p className="text-muted-foreground mt-2">
-                {t('auth.otp.subtitle', 'Enter your email address to receive a verification code')}
+            <div className='mb-4 text-center'>
+              <h2 className='font-bold text-2xl'>
+                {t('auth.otp.title', 'Sign in with email')}
+              </h2>
+              <p className='mt-2 text-muted-foreground'>
+                {t(
+                  'auth.otp.subtitle',
+                  'Enter your email address to receive a verification code'
+                )}
               </p>
             </div>
 
             <FormField
               control={form.control}
-              name="email"
+              name='email'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t('auth.email', 'Email')}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={t('auth.emailPlaceholder', 'Enter your email address')}
+                      placeholder={t(
+                        'auth.emailPlaceholder',
+                        'Enter your email address'
+                      )}
                       {...field}
                     />
                   </FormControl>
@@ -184,30 +206,35 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
               )}
             />
 
-            <Button 
-              type="submit" 
+            <Button
+              type='submit'
               disabled={!email || sendOtpMutation.isPending}
-              className="w-full"
+              className='w-full'
             >
-              {sendOtpMutation.isPending 
-                ? t('auth.otp.sending', 'Sending...') 
-                : t('auth.otp.sendCode', 'Send verification code')
-              }
+              {sendOtpMutation.isPending
+                ? t('auth.otp.sending', 'Sending...')
+                : t('auth.otp.sendCode', 'Send verification code')}
             </Button>
           </>
         )}
 
         {step === 'otp' && (
           <>
-            <div className="text-center mb-4">
-              <h2 className="text-2xl font-bold">{t('auth.otp.verifyTitle', 'Enter verification code')}</h2>
-              <p className="text-muted-foreground mt-2">
-                {t('auth.otp.verifySubtitle', 'We sent a 6-digit code to {email}', { email })}
+            <div className='mb-4 text-center'>
+              <h2 className='font-bold text-2xl'>
+                {t('auth.otp.verifyTitle', 'Enter verification code')}
+              </h2>
+              <p className='mt-2 text-muted-foreground'>
+                {t(
+                  'auth.otp.verifySubtitle',
+                  'We sent a 6-digit code to {email}',
+                  { email }
+                )}
               </p>
-              <Button 
-                variant="link" 
+              <Button
+                variant='link'
                 onClick={goBackToEmail}
-                className="p-0 h-auto text-sm"
+                className='h-auto p-0 text-sm'
               >
                 {t('auth.otp.changeEmail', 'Change email address')}
               </Button>
@@ -215,10 +242,10 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
 
             <FormField
               control={form.control}
-              name="otp"
+              name='otp'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">
+                  <FormLabel className='sr-only'>
                     {t('auth.otp.label', 'One-Time Password')}
                   </FormLabel>
                   <FormControl>
@@ -251,13 +278,18 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
             {userExists === false && (
               <FormField
                 control={form.control}
-                name="name"
+                name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('auth.signUpFullName', 'Full Name')}</FormLabel>
+                    <FormLabel>
+                      {t('auth.signUpFullName', 'Full Name')}
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={t('auth.signUpFullNamePlaceholder', 'Enter your full name')}
+                        placeholder={t(
+                          'auth.signUpFullNamePlaceholder',
+                          'Enter your full name'
+                        )}
                         {...field}
                       />
                     </FormControl>
@@ -267,15 +299,14 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
               />
             )}
 
-            <Button 
-              type="submit" 
+            <Button
+              type='submit'
               disabled={otp.length < 6 || verifyOtpMutation.isPending}
-              className="w-full"
+              className='w-full'
             >
-              {verifyOtpMutation.isPending 
-                ? t('auth.otp.verifying', 'Verifying...') 
-                : t('auth.otp.verifyButton', 'Verify')
-              }
+              {verifyOtpMutation.isPending
+                ? t('auth.otp.verifying', 'Verifying...')
+                : t('auth.otp.verifyButton', 'Verify')}
             </Button>
           </>
         )}

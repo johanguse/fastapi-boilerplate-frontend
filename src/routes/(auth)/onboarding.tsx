@@ -7,7 +7,7 @@ export const Route = createFileRoute('/(auth)/onboarding')({
   beforeLoad: async () => {
     // Get the current auth state directly from the store
     const { user } = useAuthStore.getState()
-    
+
     // Check if user is authenticated
     if (!user) {
       throw redirect({
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/(auth)/onboarding')({
         },
       })
     }
-    
+
     // Check if onboarding is already completed
     if (user.onboarding_completed) {
       throw redirect({

@@ -1,11 +1,12 @@
 import {
   Activity,
+  BarChart3,
   Bell,
   Bug,
   Building2,
   Construction,
-  FileX,
   FileText,
+  FileX,
   HelpCircle,
   LayoutDashboard,
   ListTodo,
@@ -22,8 +23,6 @@ import {
   Users,
   UserX,
   Wrench,
-  BarChart3,
-  Brain,
 } from 'lucide-react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -88,19 +87,19 @@ export function useSidebarData(): SidebarData {
             },
           ],
         },
-                {
-                  title: t('navigation.staticPages', 'Static Pages & Examples'),
-                  items: [
-                    {
-                      title: t('navigation.dashboardDemo', 'Dashboard Demo'),
-                      url: '/dashboard-demo',
-                      icon: LayoutDashboard,
-                    },
-                    {
-                      title: t('navigation.tasks', 'Tasks'),
-                      url: '/tasks',
-                      icon: ListTodo,
-                    },
+        {
+          title: t('navigation.staticPages', 'Static Pages & Examples'),
+          items: [
+            {
+              title: t('navigation.dashboardDemo', 'Dashboard Demo'),
+              url: '/dashboard-demo',
+              icon: LayoutDashboard,
+            },
+            {
+              title: t('navigation.tasks', 'Tasks'),
+              url: '/tasks',
+              icon: ListTodo,
+            },
             {
               title: t('navigation.apps', 'Apps'),
               url: '/apps',

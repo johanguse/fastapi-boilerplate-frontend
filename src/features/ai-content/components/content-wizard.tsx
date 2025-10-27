@@ -1,53 +1,62 @@
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Badge } from '@/components/ui/badge'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Progress } from '@/components/ui/progress'
-import { 
-  Wand2, 
-  ArrowRight, 
-  ArrowLeft, 
-  CheckCircle, 
-  Loader2,
+import { useMutation } from '@tanstack/react-query'
+import {
   AlertCircle,
-  FileText,
-  MessageSquare,
-  Mail,
+  ArrowLeft,
+  ArrowRight,
   Calendar,
-  Users,
-  Target,
-  Lightbulb,
+  CheckCircle,
   Copy,
   Download,
-  Edit
+  Edit,
+  FileText,
+  Lightbulb,
+  Loader2,
+  Mail,
+  MessageSquare,
+  Target,
+  Wand2,
 } from 'lucide-react'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Progress } from '@/components/ui/progress'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { api } from '@/lib/api'
 
 interface ContentGeneration {
   id: string
   template_name: string
   content: string
-  metadata: any
+  metadata: Record<string, unknown>
   created_at: string
   tokens_used: number
   cost: number
 }
 
-interface ContentWizardProps {}
-
-export function ContentWizard({}: ContentWizardProps) {
+export function ContentWizard() {
   const { t } = useTranslation()
   const [currentStep, setCurrentStep] = useState(1)
-  const [isGenerating, setIsGenerating] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [generatedContent, setGeneratedContent] = useState<ContentGeneration | null>(null)
-  
+  const [generatedContent, setGeneratedContent] =
+    useState<ContentGeneration | null>(null)
+
   // Form data
   const [formData, setFormData] = useState({
     template: '',
@@ -58,6 +67,26 @@ export function ContentWizard({}: ContentWizardProps) {
     keywords: '',
     additionalContext: '',
     language: 'en',
+  })
+
+  const generateMutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
+      const response = await api.post('/ai-content/generate', {
+        template_name: data.template,
+        topic: data.topic,
+        audience: data.audience,
+        tone: data.tone,
+        length: data.length,
+        keywords: data.keywords,
+        additional_context: data.additionalContext,
+        language: data.language,
+      })
+      return response.data as ContentGeneration
+    },
+    onSuccess: (data) => {
+      setGeneratedContent(data)
+      setCurrentStep(4) // Move to results step
+    },
   })
 
   const templates = [
@@ -141,42 +170,21 @@ export function ContentWizard({}: ContentWizardProps) {
     }
   }
 
-  const handleGenerate = async () => {
-    try {
-      setIsGenerating(true)
-      setError(null)
-
-      const response = await api.post('/ai-content/generate', {
-        template_name: formData.template,
-        topic: formData.topic,
-        audience: formData.audience,
-        tone: formData.tone,
-        length: formData.length,
-        keywords: formData.keywords,
-        additional_context: formData.additionalContext,
-        language: formData.language,
-      })
-
-      setGeneratedContent(response.data)
-      setCurrentStep(4) // Move to results step
-    } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to generate content')
-    } finally {
-      setIsGenerating(false)
-    }
+  const handleGenerate = () => {
+    generateMutation.mutate(formData)
   }
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
-    } catch (err) {
-      console.error('Failed to copy text: ', err)
+    } catch (_err) {
+      // Silently handle clipboard errors (e.g., insufficient permissions)
     }
   }
 
   const downloadContent = () => {
     if (!generatedContent) return
-    
+
     const blob = new Blob([generatedContent.content], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -192,29 +200,38 @@ export function ContentWizard({}: ContentWizardProps) {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
+          <div className='space-y-6'>
             <div>
-              <h3 className="text-lg font-semibold mb-4">
+              <h3 className='mb-4 font-semibold text-lg'>
                 {t('aiContent.selectTemplate', 'Select a Template')}
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
                 {templates.map((template) => {
                   const Icon = template.icon
                   return (
-                    <Card 
+                    <Card
                       key={template.id}
                       className={`cursor-pointer transition-all hover:shadow-md ${
-                        formData.template === template.id ? 'ring-2 ring-blue-500' : ''
+                        formData.template === template.id
+                          ? 'ring-2 ring-blue-500'
+                          : ''
                       }`}
-                      onClick={() => setFormData(prev => ({ ...prev, template: template.id }))}
+                      onClick={() =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          template: template.id,
+                        }))
+                      }
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <Icon className="h-6 w-6 text-blue-600 mt-1" />
-                          <div className="flex-1">
-                            <h4 className="font-medium">{template.name}</h4>
-                            <p className="text-sm text-muted-foreground">{template.description}</p>
-                            <Badge variant="secondary" className="mt-2">
+                      <CardContent className='p-4'>
+                        <div className='flex items-start gap-3'>
+                          <Icon className='mt-1 h-6 w-6 text-blue-600' />
+                          <div className='flex-1'>
+                            <h4 className='font-medium'>{template.name}</h4>
+                            <p className='text-muted-foreground text-sm'>
+                              {template.description}
+                            </p>
+                            <Badge variant='secondary' className='mt-2'>
                               {template.category}
                             </Badge>
                           </div>
@@ -230,39 +247,57 @@ export function ContentWizard({}: ContentWizardProps) {
 
       case 2:
         return (
-          <div className="space-y-6">
+          <div className='space-y-6'>
             <div>
-              <h3 className="text-lg font-semibold mb-4">
+              <h3 className='mb-4 font-semibold text-lg'>
                 {t('aiContent.contentDetails', 'Content Details')}
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
+              <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+                <div className='space-y-4'>
                   <div>
-                    <Label htmlFor="topic">
+                    <Label htmlFor='topic'>
                       {t('aiContent.topic', 'Topic')} *
                     </Label>
                     <Input
-                      id="topic"
-                      placeholder={t('aiContent.topicPlaceholder', 'What should the content be about?')}
+                      id='topic'
+                      placeholder={t(
+                        'aiContent.topicPlaceholder',
+                        'What should the content be about?'
+                      )}
                       value={formData.topic}
-                      onChange={(e) => setFormData(prev => ({ ...prev, topic: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          topic: e.target.value,
+                        }))
+                      }
                     />
                   </div>
-                  
+
                   <div>
-                    <Label htmlFor="audience">
+                    <Label htmlFor='audience'>
                       {t('aiContent.audience', 'Target Audience')}
                     </Label>
-                    <Select 
-                      value={formData.audience} 
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, audience: value }))}
+                    <Select
+                      value={formData.audience}
+                      onValueChange={(value) =>
+                        setFormData((prev) => ({ ...prev, audience: value }))
+                      }
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder={t('aiContent.selectAudience', 'Select audience')} />
+                        <SelectValue
+                          placeholder={t(
+                            'aiContent.selectAudience',
+                            'Select audience'
+                          )}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         {audiences.map((audience) => (
-                          <SelectItem key={audience.value} value={audience.value}>
+                          <SelectItem
+                            key={audience.value}
+                            value={audience.value}
+                          >
                             {audience.label}
                           </SelectItem>
                         ))}
@@ -271,15 +306,17 @@ export function ContentWizard({}: ContentWizardProps) {
                   </div>
 
                   <div>
-                    <Label htmlFor="tone">
-                      {t('aiContent.tone', 'Tone')}
-                    </Label>
-                    <Select 
-                      value={formData.tone} 
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, tone: value }))}
+                    <Label htmlFor='tone'>{t('aiContent.tone', 'Tone')}</Label>
+                    <Select
+                      value={formData.tone}
+                      onValueChange={(value) =>
+                        setFormData((prev) => ({ ...prev, tone: value }))
+                      }
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder={t('aiContent.selectTone', 'Select tone')} />
+                        <SelectValue
+                          placeholder={t('aiContent.selectTone', 'Select tone')}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         {tones.map((tone) => (
@@ -292,17 +329,24 @@ export function ContentWizard({}: ContentWizardProps) {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className='space-y-4'>
                   <div>
-                    <Label htmlFor="length">
+                    <Label htmlFor='length'>
                       {t('aiContent.length', 'Length')}
                     </Label>
-                    <Select 
-                      value={formData.length} 
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, length: value }))}
+                    <Select
+                      value={formData.length}
+                      onValueChange={(value) =>
+                        setFormData((prev) => ({ ...prev, length: value }))
+                      }
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder={t('aiContent.selectLength', 'Select length')} />
+                        <SelectValue
+                          placeholder={t(
+                            'aiContent.selectLength',
+                            'Select length'
+                          )}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         {lengths.map((length) => (
@@ -315,34 +359,44 @@ export function ContentWizard({}: ContentWizardProps) {
                   </div>
 
                   <div>
-                    <Label htmlFor="keywords">
+                    <Label htmlFor='keywords'>
                       {t('aiContent.keywords', 'Keywords')}
                     </Label>
                     <Input
-                      id="keywords"
-                      placeholder={t('aiContent.keywordsPlaceholder', 'Enter keywords separated by commas')}
+                      id='keywords'
+                      placeholder={t(
+                        'aiContent.keywordsPlaceholder',
+                        'Enter keywords separated by commas'
+                      )}
                       value={formData.keywords}
-                      onChange={(e) => setFormData(prev => ({ ...prev, keywords: e.target.value }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          keywords: e.target.value,
+                        }))
+                      }
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="language">
+                    <Label htmlFor='language'>
                       {t('aiContent.language', 'Language')}
                     </Label>
-                    <Select 
-                      value={formData.language} 
-                      onValueChange={(value) => setFormData(prev => ({ ...prev, language: value }))}
+                    <Select
+                      value={formData.language}
+                      onValueChange={(value) =>
+                        setFormData((prev) => ({ ...prev, language: value }))
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="en">English</SelectItem>
-                        <SelectItem value="es">Spanish</SelectItem>
-                        <SelectItem value="fr">French</SelectItem>
-                        <SelectItem value="de">German</SelectItem>
-                        <SelectItem value="pt">Portuguese</SelectItem>
+                        <SelectItem value='en'>English</SelectItem>
+                        <SelectItem value='es'>Spanish</SelectItem>
+                        <SelectItem value='fr'>French</SelectItem>
+                        <SelectItem value='de'>German</SelectItem>
+                        <SelectItem value='pt'>Portuguese</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -354,21 +408,32 @@ export function ContentWizard({}: ContentWizardProps) {
 
       case 3:
         return (
-          <div className="space-y-6">
+          <div className='space-y-6'>
             <div>
-              <h3 className="text-lg font-semibold mb-4">
+              <h3 className='mb-4 font-semibold text-lg'>
                 {t('aiContent.additionalContext', 'Additional Context')}
               </h3>
-              <div className="space-y-4">
+              <div className='space-y-4'>
                 <div>
-                  <Label htmlFor="additionalContext">
-                    {t('aiContent.contextLabel', 'Additional Context (Optional)')}
+                  <Label htmlFor='additionalContext'>
+                    {t(
+                      'aiContent.contextLabel',
+                      'Additional Context (Optional)'
+                    )}
                   </Label>
                   <Textarea
-                    id="additionalContext"
-                    placeholder={t('aiContent.contextPlaceholder', 'Add any additional context, requirements, or specific instructions...')}
+                    id='additionalContext'
+                    placeholder={t(
+                      'aiContent.contextPlaceholder',
+                      'Add any additional context, requirements, or specific instructions...'
+                    )}
                     value={formData.additionalContext}
-                    onChange={(e) => setFormData(prev => ({ ...prev, additionalContext: e.target.value }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        additionalContext: e.target.value,
+                      }))
+                    }
                     rows={6}
                   />
                 </div>
@@ -379,70 +444,81 @@ export function ContentWizard({}: ContentWizardProps) {
 
       case 4:
         return (
-          <div className="space-y-6">
+          <div className='space-y-6'>
             <div>
-              <h3 className="text-lg font-semibold mb-4">
+              <h3 className='mb-4 font-semibold text-lg'>
                 {t('aiContent.generatedContent', 'Generated Content')}
               </h3>
-              
+
               {generatedContent ? (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                      <span className="text-sm text-muted-foreground">
-                        {t('aiContent.generationComplete', 'Content generated successfully')}
+                <div className='space-y-4'>
+                  <div className='flex items-center justify-between'>
+                    <div className='flex items-center gap-2'>
+                      <CheckCircle className='h-5 w-5 text-green-600' />
+                      <span className='text-muted-foreground text-sm'>
+                        {t(
+                          'aiContent.generationComplete',
+                          'Content generated successfully'
+                        )}
                       </span>
                     </div>
-                    <div className="flex gap-2">
+                    <div className='flex gap-2'>
                       <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => copyToClipboard(generatedContent.content)}
-                        className="gap-2"
+                        variant='outline'
+                        size='sm'
+                        onClick={() =>
+                          copyToClipboard(generatedContent.content)
+                        }
+                        className='gap-2'
                       >
-                        <Copy className="h-4 w-4" />
+                        <Copy className='h-4 w-4' />
                         {t('aiContent.copy', 'Copy')}
                       </Button>
                       <Button
-                        variant="outline"
-                        size="sm"
+                        variant='outline'
+                        size='sm'
                         onClick={downloadContent}
-                        className="gap-2"
+                        className='gap-2'
                       >
-                        <Download className="h-4 w-4" />
+                        <Download className='h-4 w-4' />
                         {t('aiContent.download', 'Download')}
                       </Button>
                     </div>
                   </div>
 
                   <Card>
-                    <CardContent className="p-6">
-                      <div className="prose max-w-none">
-                        <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">
+                    <CardContent className='p-6'>
+                      <div className='prose max-w-none'>
+                        <pre className='whitespace-pre-wrap font-sans text-sm leading-relaxed'>
                           {generatedContent.content}
                         </pre>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <div className='flex items-center gap-4 text-muted-foreground text-sm'>
                     <span>
-                      {t('aiContent.tokensUsed', 'Tokens Used')}: {generatedContent.tokens_used}
+                      {t('aiContent.tokensUsed', 'Tokens Used')}:{' '}
+                      {generatedContent.tokens_used}
                     </span>
                     <span>
-                      {t('aiContent.cost', 'Cost')}: ${generatedContent.cost.toFixed(4)}
+                      {t('aiContent.cost', 'Cost')}: $
+                      {generatedContent.cost.toFixed(4)}
                     </span>
                     <span>
-                      {t('aiContent.generatedAt', 'Generated')}: {new Date(generatedContent.created_at).toLocaleString()}
+                      {t('aiContent.generatedAt', 'Generated')}:{' '}
+                      {new Date(generatedContent.created_at).toLocaleString()}
                     </span>
                   </div>
                 </div>
               ) : (
-                <div className="text-center py-12">
-                  <Wand2 className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <p className="text-muted-foreground">
-                    {t('aiContent.noContentGenerated', 'No content generated yet')}
+                <div className='py-12 text-center'>
+                  <Wand2 className='mx-auto mb-4 h-12 w-12 text-gray-400' />
+                  <p className='text-muted-foreground'>
+                    {t(
+                      'aiContent.noContentGenerated',
+                      'No content generated yet'
+                    )}
                   </p>
                 </div>
               )}
@@ -456,88 +532,92 @@ export function ContentWizard({}: ContentWizardProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className='space-y-6'>
       {/* Progress */}
       <Card>
-        <CardContent className="p-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">
-                {t('aiContent.step', 'Step')} {currentStep} {t('aiContent.of', 'of')} 4
+        <CardContent className='p-6'>
+          <div className='space-y-4'>
+            <div className='flex items-center justify-between'>
+              <span className='font-medium text-sm'>
+                {t('aiContent.step', 'Step')} {currentStep}{' '}
+                {t('aiContent.of', 'of')} 4
               </span>
-              <span className="text-sm text-muted-foreground">
+              <span className='text-muted-foreground text-sm'>
                 {Math.round((currentStep / 4) * 100)}%
               </span>
             </div>
-            <Progress value={(currentStep / 4) * 100} className="h-2" />
+            <Progress value={(currentStep / 4) * 100} className='h-2' />
           </div>
         </CardContent>
       </Card>
 
       {/* Error Alert */}
-      {error && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{error}</AlertDescription>
+      {generateMutation.isError && (
+        <Alert variant='destructive'>
+          <AlertCircle className='h-4 w-4' />
+          <AlertDescription>
+            {t('aiContent.generationError', 'Failed to generate content')}
+          </AlertDescription>
         </Alert>
       )}
 
       {/* Main Content */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Wand2 className="h-5 w-5" />
+          <CardTitle className='flex items-center gap-2'>
+            <Wand2 className='h-5 w-5' />
             {t('aiContent.contentWizard', 'Content Wizard')}
           </CardTitle>
           <CardDescription>
-            {t('aiContent.wizardDescription', 'Follow the steps to generate high-quality content with AI')}
+            {t(
+              'aiContent.wizardDescription',
+              'Follow the steps to generate high-quality content with AI'
+            )}
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          {renderStep()}
-        </CardContent>
+        <CardContent>{renderStep()}</CardContent>
       </Card>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between">
+      <div className='flex items-center justify-between'>
         <Button
-          variant="outline"
+          variant='outline'
           onClick={handlePrevious}
           disabled={currentStep === 1}
-          className="gap-2"
+          className='gap-2'
         >
-          <ArrowLeft className="h-4 w-4" />
+          <ArrowLeft className='h-4 w-4' />
           {t('aiContent.previous', 'Previous')}
         </Button>
 
-        <div className="flex gap-2">
+        <div className='flex gap-2'>
           {currentStep < 3 ? (
-            <Button onClick={handleNext} className="gap-2">
+            <Button onClick={handleNext} className='gap-2'>
               {t('aiContent.next', 'Next')}
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className='h-4 w-4' />
             </Button>
           ) : currentStep === 3 ? (
-            <Button 
-              onClick={handleGenerate} 
-              disabled={isGenerating || !formData.template || !formData.topic}
-              className="gap-2"
-            >
-              {isGenerating ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Wand2 className="h-4 w-4" />
-              )}
-              {isGenerating 
-                ? t('aiContent.generating', 'Generating...') 
-                : t('aiContent.generate', 'Generate Content')
+            <Button
+              onClick={handleGenerate}
+              disabled={
+                generateMutation.isPending ||
+                !formData.template ||
+                !formData.topic
               }
+              className='gap-2'
+            >
+              {generateMutation.isPending ? (
+                <Loader2 className='h-4 w-4 animate-spin' />
+              ) : (
+                <Wand2 className='h-4 w-4' />
+              )}
+              {generateMutation.isPending
+                ? t('aiContent.generating', 'Generating...')
+                : t('aiContent.generate', 'Generate Content')}
             </Button>
           ) : (
-            <Button 
-              onClick={() => setCurrentStep(1)} 
-              className="gap-2"
-            >
-              <Edit className="h-4 w-4" />
+            <Button onClick={() => setCurrentStep(1)} className='gap-2'>
+              <Edit className='h-4 w-4' />
               {t('aiContent.createNew', 'Create New')}
             </Button>
           )}

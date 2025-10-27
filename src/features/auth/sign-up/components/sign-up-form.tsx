@@ -25,7 +25,9 @@ export function SignUpForm({
   className,
   defaultEmail,
   ...props
-}: Readonly<React.HTMLAttributes<HTMLFormElement> & { defaultEmail?: string }>) {
+}: Readonly<
+  React.HTMLAttributes<HTMLFormElement> & { defaultEmail?: string }
+>) {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { register } = useAuth()
@@ -48,15 +50,15 @@ export function SignUpForm({
       form.clearErrors()
 
       const email = form.getValues('email')
-      
+
       // Small delay to ensure Zustand state is fully updated
-      await new Promise(resolve => setTimeout(resolve, 0))
-      
+      await new Promise((resolve) => setTimeout(resolve, 0))
+
       // Redirect to check email page with email parameter
-      navigate({ 
-        to: '/check-email', 
+      navigate({
+        to: '/check-email',
         search: { email },
-        replace: true 
+        replace: true,
       })
     },
     onError: (error: unknown) => {

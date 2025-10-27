@@ -22,8 +22,12 @@ export function TeamSwitcher() {
   const { isMobile } = useSidebar()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { organizations, activeOrganization, setActiveOrganization, isLoading } =
-    useOrganizations()
+  const {
+    organizations,
+    activeOrganization,
+    setActiveOrganization,
+    isLoading,
+  } = useOrganizations()
 
   // Use active organization from React Query, or show placeholder
   const displayOrganization = activeOrganization || {
@@ -56,7 +60,7 @@ export function TeamSwitcher() {
                 {isLoading ? (
                   <>
                     <Skeleton className='h-4 w-32' />
-                    <Skeleton className='h-3 w-20 mt-1' />
+                    <Skeleton className='mt-1 h-3 w-20' />
                   </>
                 ) : (
                   <>
@@ -87,13 +91,13 @@ export function TeamSwitcher() {
             </DropdownMenuLabel>
             {isLoading ? (
               <>
-                <div className='gap-2 p-2 flex items-center'>
+                <div className='flex items-center gap-2 p-2'>
                   <div className='flex size-6 items-center justify-center rounded-sm border'>
                     <Building2 className='size-4 shrink-0' />
                   </div>
                   <Skeleton className='h-4 w-24' />
                 </div>
-                <div className='gap-2 p-2 flex items-center'>
+                <div className='flex items-center gap-2 p-2'>
                   <div className='flex size-6 items-center justify-center rounded-sm border'>
                     <Building2 className='size-4 shrink-0' />
                   </div>

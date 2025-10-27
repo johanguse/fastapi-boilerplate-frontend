@@ -26,13 +26,24 @@
     "enabled": true,
     "rules": {
       "recommended": false,
+      "correctness": {
+        "noUnusedImports": "error"
+      },
       "nursery": {
         "useSortedClasses": {
           "fix": "unsafe",
           "level": "warn",
           "options": {
-            "attributes": ["classList"],
-            "functions": ["clsx", "cn", "cva", "tw"]
+            "attributes": ["classList", "className"],
+            "functions": [
+              "clsx",
+              "cn",
+              "cva",
+              "tw",
+              "twMerge",
+              "twMergeClass",
+              "cx"
+            ]
           }
         }
       }

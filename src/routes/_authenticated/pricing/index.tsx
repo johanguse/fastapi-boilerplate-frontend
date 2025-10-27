@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { Check, Loader2 } from 'lucide-react'
 import { useState } from 'react'
@@ -118,7 +119,42 @@ function PricingPage() {
   const { t, i18n } = useTranslation()
   const { activeOrganization } = useOrganizations()
   const [isYearly, setIsYearly] = useState(false)
-  const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
+
+  const subscribeMutation = useMutation({
+    mutationFn: async ({
+      plan,
+      isYearly,
+    }: {
+      plan: Plan
+      isYearly: boolean
+    }) => {
+      const response = await api.post(
+        `/api/v1/subscriptions/organizations/${activeOrganization!.id}/checkout`,
+        {
+          price_id: `price_${plan.id}_${isYearly ? 'yearly' : 'monthly'}`,
+          success_url: `${window.location.origin}/settings?subscription=success`,
+          cancel_url: `${window.location.origin}/pricing?subscription=canceled`,
+        }
+      )
+      return response.data
+    },
+    onError: (error: unknown) => {
+      const errorMessage =
+        (error &&
+          typeof error === 'object' &&
+          'response' in error &&
+          error.response &&
+          typeof error.response === 'object' &&
+          'data' in error.response &&
+          error.response.data &&
+          typeof error.response.data === 'object' &&
+          'detail' in error.response.data &&
+          typeof error.response.data.detail === 'string' &&
+          error.response.data.detail) ||
+        t('pricing.errors.checkoutFailed')
+      toast.error(errorMessage)
+    },
+  })
 
   const getCurrency = () => {
     const lang = i18n.language
@@ -150,37 +186,23 @@ function PricingPage() {
     }).format(amount)
   }
 
-  const handleSubscribe = async (plan: Plan) => {
+  const handleSubscribe = (plan: Plan) => {
     if (!activeOrganization) {
       toast.error(t('pricing.errors.noOrganization'))
       return
     }
 
-    setLoadingPlanId(plan.id)
-
-    try {
-      // Create checkout session
-      const response = await api.post(
-        `/api/v1/subscriptions/organizations/${activeOrganization.id}/checkout`,
-        {
-          price_id: `price_${plan.id}_${isYearly ? 'yearly' : 'monthly'}`,
-          success_url: `${window.location.origin}/settings?subscription=success`,
-          cancel_url: `${window.location.origin}/pricing?subscription=canceled`,
-        }
-      )
-
-      // Redirect to Stripe checkout
-      if (response.data.checkout_url) {
-        window.location.href = response.data.checkout_url
+    subscribeMutation.mutate(
+      { plan, isYearly },
+      {
+        onSuccess: (data) => {
+          // Redirect to Stripe checkout
+          if (data.checkout_url) {
+            window.location.href = data.checkout_url
+          }
+        },
       }
-    } catch (error) {
-      const errorDetail = (
-        error as { response?: { data?: { detail?: string } } }
-      ).response?.data?.detail
-      toast.error(errorDetail || t('pricing.errors.checkoutFailed'))
-    } finally {
-      setLoadingPlanId(null)
-    }
+    )
   }
 
   return (
@@ -301,9 +323,9 @@ function PricingPage() {
                   className='w-full'
                   variant={plan.is_popular ? 'default' : 'outline'}
                   onClick={() => handleSubscribe(plan)}
-                  disabled={loadingPlanId !== null}
+                  disabled={subscribeMutation.isPending}
                 >
-                  {loadingPlanId === plan.id ? (
+                  {subscribeMutation.isPending ? (
                     <>
                       <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                       {t('pricing.loading', 'Processing...')}

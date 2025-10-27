@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   AlertCircle,
@@ -99,6 +99,87 @@ interface BillingHistoryItem {
 function BillingPage() {
   const { t, i18n } = useTranslation()
   const { activeOrganization } = useOrganizations()
+  const queryClient = useQueryClient()
+
+  const managePortalMutation = useMutation({
+    mutationFn: async () => {
+      const response = await api.post(
+        `/api/v1/subscriptions/organizations/${activeOrganization!.id}/portal`,
+        null,
+        {
+          params: {
+            return_url: window.location.href,
+          },
+        }
+      )
+      return response.data
+    },
+    onSuccess: (data) => {
+      window.location.href = data.portal_url
+    },
+    onError: (error: unknown) => {
+      let errorMessage = t(
+        'billing.errors.portalFailed',
+        'Failed to open billing portal'
+      )
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        error.response &&
+        typeof error.response === 'object' &&
+        'data' in error.response &&
+        error.response.data &&
+        typeof error.response.data === 'object' &&
+        'detail' in error.response.data &&
+        typeof error.response.data.detail === 'string'
+      ) {
+        errorMessage = error.response.data.detail
+      }
+      toast.error(errorMessage)
+    },
+  })
+
+  const cancelSubscriptionMutation = useMutation({
+    mutationFn: async () => {
+      await api.post(
+        `/api/v1/subscriptions/organizations/${activeOrganization!.id}/cancel`
+      )
+    },
+    onSuccess: () => {
+      // Invalidate subscription query to refetch updated data
+      queryClient.invalidateQueries({
+        queryKey: ['subscription', activeOrganization?.id],
+      })
+      toast.success(
+        t(
+          'billing.cancelSuccess',
+          'Subscription canceled. It will remain active until the end of the billing period.'
+        )
+      )
+    },
+    onError: (error: unknown) => {
+      let errorMessage = t(
+        'billing.errors.cancelFailed',
+        'Failed to cancel subscription'
+      )
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        error.response &&
+        typeof error.response === 'object' &&
+        'data' in error.response &&
+        error.response.data &&
+        typeof error.response.data === 'object' &&
+        'detail' in error.response.data &&
+        typeof error.response.data.detail === 'string'
+      ) {
+        errorMessage = error.response.data.detail
+      }
+      toast.error(errorMessage)
+    },
+  })
 
   const { data: subscription, isLoading: loadingSubscription } =
     useQuery<Subscription>({
@@ -137,30 +218,11 @@ function BillingPage() {
     enabled: !!activeOrganization?.id,
   })
 
-  const handleManageBilling = async () => {
-    try {
-      const response = await api.post(
-        `/api/v1/subscriptions/organizations/${activeOrganization?.id}/portal`,
-        null,
-        {
-          params: {
-            return_url: window.location.href,
-          },
-        }
-      )
-      window.location.href = response.data.portal_url
-    } catch (error) {
-      const errorDetail = (
-        error as { response?: { data?: { detail?: string } } }
-      ).response?.data?.detail
-      toast.error(
-        errorDetail ||
-          t('billing.errors.portalFailed', 'Failed to open billing portal')
-      )
-    }
+  const handleManageBilling = () => {
+    managePortalMutation.mutate()
   }
 
-  const handleCancelSubscription = async () => {
+  const handleCancelSubscription = () => {
     if (
       !confirm(
         t(
@@ -171,26 +233,7 @@ function BillingPage() {
     ) {
       return
     }
-
-    try {
-      await api.post(
-        `/api/v1/subscriptions/organizations/${activeOrganization?.id}/cancel`
-      )
-      toast.success(
-        t(
-          'billing.cancelSuccess',
-          'Subscription canceled. It will remain active until the end of the billing period.'
-        )
-      )
-    } catch (error) {
-      const errorDetail = (
-        error as { response?: { data?: { detail?: string } } }
-      ).response?.data?.detail
-      toast.error(
-        errorDetail ||
-          t('billing.errors.cancelFailed', 'Failed to cancel subscription')
-      )
-    }
+    cancelSubscriptionMutation.mutate()
   }
 
   const formatDate = (dateString: string) => {
@@ -290,9 +333,14 @@ function BillingPage() {
             {t('billing.subtitle', 'Manage your subscription and billing')}
           </p>
         </div>
-        <Button onClick={handleManageBilling}>
+        <Button
+          onClick={handleManageBilling}
+          disabled={managePortalMutation.isPending}
+        >
           <ExternalLink className='mr-2 h-4 w-4' />
-          {t('billing.managePortal', 'Manage Billing')}
+          {managePortalMutation.isPending
+            ? t('billing.loading', 'Loading...')
+            : t('billing.managePortal', 'Manage Billing')}
         </Button>
       </div>
 
@@ -357,8 +405,11 @@ function BillingPage() {
                   variant='outline'
                   className='w-full text-destructive'
                   onClick={handleCancelSubscription}
+                  disabled={cancelSubscriptionMutation.isPending}
                 >
-                  {t('billing.cancelSubscription', 'Cancel Subscription')}
+                  {cancelSubscriptionMutation.isPending
+                    ? t('billing.processing', 'Processing...')
+                    : t('billing.cancelSubscription', 'Cancel Subscription')}
                 </Button>
               </div>
             )}

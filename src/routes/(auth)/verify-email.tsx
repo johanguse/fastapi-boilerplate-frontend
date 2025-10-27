@@ -1,6 +1,7 @@
+import { useMutation } from '@tanstack/react-query'
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { CheckCircle2, Loader2, Mail, XCircle } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import {
@@ -23,44 +24,72 @@ function VerifyEmailPage() {
   const { token } = useSearch({ from: '/(auth)/verify-email' }) as {
     token?: string
   }
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>(
-    'loading'
-  )
-  const [error, setError] = useState<string>('')
+
+  const verifyMutation = useMutation({
+    mutationFn: async (verificationToken: string) => {
+      const response = await api.post(
+        `/invitations/verify-email/${verificationToken}`
+      )
+      return response.data
+    },
+  })
 
   useEffect(() => {
-    if (!token) {
-      setStatus('error')
-      setError(t('emailVerification.noToken', 'No token provided'))
-      return
+    if (token) {
+      verifyMutation.mutate(token)
     }
+    // verifyMutation.mutate is stable from useMutation
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, verifyMutation.mutate])
 
-    const verifyEmail = async () => {
-      try {
-        await api.post(`/invitations/verify-email/${token}`)
-        setStatus('success')
-        // Redirect to dashboard after 3 seconds
-        setTimeout(() => {
-          navigate({ to: '/' })
-        }, 3000)
-      } catch (err) {
-        setStatus('error')
-        // If using axios, err is likely AxiosError; otherwise, check for response property
-        const errorDetail = (
-          err as { response?: { data?: { detail?: string } } }
-        ).response?.data?.detail
-        setError(
-          errorDetail ||
-            t(
-              'emailVerification.verificationFailed',
-              'Email verification failed'
-            )
-        )
+  useEffect(() => {
+    if (verifyMutation.isSuccess) {
+      // Redirect to dashboard after 3 seconds
+      const timer = setTimeout(() => {
+        navigate({ to: '/' })
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [verifyMutation.isSuccess, navigate])
+
+  const getErrorMessage = (): string => {
+    if (!token) {
+      return t('emailVerification.noToken', 'No token provided')
+    }
+    if (verifyMutation.error) {
+      const error = verifyMutation.error
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        error.response &&
+        typeof error.response === 'object' &&
+        'data' in error.response &&
+        error.response.data &&
+        typeof error.response.data === 'object' &&
+        'detail' in error.response.data &&
+        typeof error.response.data.detail === 'string'
+      ) {
+        return error.response.data.detail
       }
     }
+    return t(
+      'emailVerification.verificationFailed',
+      'Email verification failed'
+    )
+  }
 
-    verifyEmail()
-  }, [token, navigate, t])
+  const status = !token
+    ? 'error'
+    : verifyMutation.isPending
+      ? 'loading'
+      : verifyMutation.isSuccess
+        ? 'success'
+        : verifyMutation.isError
+          ? 'error'
+          : 'loading'
+
+  const errorMessage = status === 'error' ? getErrorMessage() : ''
 
   return (
     <div className='flex min-h-screen items-center justify-center bg-muted/40 p-4'>
@@ -101,7 +130,7 @@ function VerifyEmailPage() {
                 'emailVerification.successDescription',
                 'Your email has been verified successfully'
               )}
-            {status === 'error' && error}
+            {status === 'error' && errorMessage}
           </CardDescription>
         </CardHeader>
 

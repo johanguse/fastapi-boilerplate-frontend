@@ -67,7 +67,8 @@ export function UserAuthForm({
           // User has completed onboarding or doesn't have onboarding
           // Priority 2: Use redirectTo if it's NOT the onboarding page
           // Priority 3: Default to root page
-          const targetPath = (redirectTo && redirectTo !== '/onboarding') ? redirectTo : '/'
+          const targetPath =
+            redirectTo && redirectTo !== '/onboarding' ? redirectTo : '/'
           // biome-ignore lint/suspicious/noConsole: Debug navigation
           console.log('Navigating to:', targetPath)
           navigate({ to: targetPath, replace: true })

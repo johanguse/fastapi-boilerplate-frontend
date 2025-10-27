@@ -58,7 +58,7 @@ function CheckEmailPage() {
             )
         )
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error(
         t(
           'auth.emailVerification.resendFailed',

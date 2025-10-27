@@ -1,6 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -9,21 +11,19 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { formatTime, useTimer } from '@/hooks/use-timer'
 import { AuthLayout } from '../auth-layout'
 import { OtpForm } from './components/otp-form'
-import { useTimer, formatTime } from '@/hooks/use-timer'
-import { toast } from 'sonner'
 
 export function Otp() {
   const { t } = useTranslation()
   const [canResend, setCanResend] = useState(false)
-  
+
   // Timer for resend cooldown (5 minutes = 300 seconds)
   const timer = useTimer(300, {
     onComplete: () => {
       setCanResend(true)
-    }
+    },
   })
 
   const handleResend = async () => {
@@ -31,7 +31,9 @@ export function Otp() {
       try {
         // TODO: Implement proper resend verification logic with Better Auth
         // For now, just show a success message
-        toast.success(t('auth.otp.resendSuccess', 'Verification email sent successfully'))
+        toast.success(
+          t('auth.otp.resendSuccess', 'Verification email sent successfully')
+        )
         setCanResend(false)
         timer.reset()
         timer.start()
@@ -85,7 +87,7 @@ export function Otp() {
             )}
             <Link
               to='/sign-in'
-              className='text-center text-sm text-muted-foreground underline underline-offset-4 hover:text-primary'
+              className='text-center text-muted-foreground text-sm underline underline-offset-4 hover:text-primary'
             >
               {t('auth.otp.backToSignIn', 'Back to Sign In')}
             </Link>
