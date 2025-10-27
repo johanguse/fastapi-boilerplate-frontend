@@ -139,19 +139,21 @@ function PricingPage() {
       return response.data
     },
     onError: (error: unknown) => {
-      const errorMessage =
-        (error &&
-          typeof error === 'object' &&
-          'response' in error &&
-          error.response &&
-          typeof error.response === 'object' &&
-          'data' in error.response &&
-          error.response.data &&
-          typeof error.response.data === 'object' &&
-          'detail' in error.response.data &&
-          typeof error.response.data.detail === 'string' &&
-          error.response.data.detail) ||
-        t('pricing.errors.checkoutFailed')
+      let errorMessage = t('pricing.errors.checkoutFailed')
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        error.response &&
+        typeof error.response === 'object' &&
+        'data' in error.response &&
+        error.response.data &&
+        typeof error.response.data === 'object' &&
+        'detail' in error.response.data &&
+        typeof error.response.data.detail === 'string'
+      ) {
+        errorMessage = error.response.data.detail
+      }
       toast.error(errorMessage)
     },
   })
