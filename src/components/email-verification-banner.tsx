@@ -1,9 +1,11 @@
-import { AlertTriangle, Mail, X } from 'lucide-react'
+import { useMutation } from '@tanstack/react-query'
+import { AlertCircle, Mail, RefreshCw } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
+import { formatTime, useTimer } from '@/hooks/use-timer'
 import { useAuth } from '@/stores/auth-store'
 
 interface EmailVerificationBannerProps {
@@ -15,96 +17,126 @@ export function EmailVerificationBanner({
 }: EmailVerificationBannerProps) {
   const { t } = useTranslation()
   const { user } = useAuth()
-  const [isResending, setIsResending] = useState(false)
-  const [isDismissed, setIsDismissed] = useState(false)
+  const [canResend, setCanResend] = useState(true)
 
-  // Don't show banner if user is verified or dismissed
-  if (!user || user.is_verified || isDismissed) {
-    return null
-  }
+  // Rate limiting timer (60 seconds)
+  const timer = useTimer(60, {
+    onComplete: () => {
+      setCanResend(true)
+    },
+  })
 
-  const handleResendVerification = async () => {
-    if (!user?.email) return
+  const resendMutation = useMutation({
+    mutationFn: async () => {
+      if (!user?.email) {
+        throw new Error('No email address found')
+      }
 
-    setIsResending(true)
-    try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/invitations/verify-email/resend`,
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/resend-verification`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           credentials: 'include',
+          body: JSON.stringify({ email: user.email }),
         }
       )
 
-      if (response.ok) {
-        toast.success(
-          t(
-            'auth.emailVerification.resent',
-            'Verification email sent! Please check your inbox.'
-          )
-        )
-      } else {
+      if (!response.ok) {
         const error = await response.json()
-        toast.error(
-          error.message ||
-            t(
-              'auth.emailVerification.resendFailed',
-              'Failed to resend verification email'
-            )
-        )
+        throw new Error(error.message || 'Failed to resend verification email')
       }
-    } catch (_error) {
-      toast.error(
+
+      return response.json()
+    },
+    onSuccess: () => {
+      toast.success(
         t(
-          'auth.emailVerification.resendFailed',
-          'Failed to resend verification email'
+          'auth.emailVerification.resent',
+          'Verification email sent! Please check your inbox.'
         )
       )
-    } finally {
-      setIsResending(false)
+      setCanResend(false)
+      timer.reset()
+      timer.start()
+    },
+    onError: (error: Error) => {
+      toast.error(
+        error.message ||
+          t(
+            'auth.emailVerification.resendFailed',
+            'Failed to resend verification email'
+          )
+      )
+    },
+  })
+
+  const handleResend = () => {
+    if (!canResend) {
+      toast.error(
+        t(
+          'auth.emailVerification.rateLimited',
+          'Please wait {{time}} before requesting another verification email',
+          { time: formatTime(timer.timeLeft) }
+        )
+      )
+      return
     }
+
+    resendMutation.mutate()
   }
 
-  const handleDismiss = () => {
-    setIsDismissed(true)
+  // Don't show if user is verified
+  if (!user || user.is_verified) {
+    return null
   }
 
   return (
-    <Alert className={`border-orange-200 bg-orange-50 ${className}`}>
-      <AlertTriangle className='h-4 w-4 text-orange-600' />
-      <AlertDescription className='flex items-center justify-between'>
-        <div className='flex items-center gap-2'>
-          <Mail className='h-4 w-4 text-orange-600' />
-          <span className='text-orange-800'>
-            {t(
-              'auth.emailVerification.message',
-              'Please verify your email address to access all features.'
-            )}
-          </span>
-        </div>
-        <div className='flex items-center gap-2'>
+    <Alert
+      variant='default'
+      className={`relative border-yellow-200 bg-yellow-50 dark:border-yellow-900 dark:bg-yellow-950 ${className || ''}`}
+    >
+      <AlertCircle className='h-4 w-4 text-yellow-600 dark:text-yellow-500' />
+      <AlertTitle className='text-yellow-900 dark:text-yellow-100'>
+        {t('auth.emailVerification.bannerTitle', 'Email Verification Required')}
+      </AlertTitle>
+      <AlertDescription className='flex flex-col gap-3 text-yellow-800 dark:text-yellow-200'>
+        <p>
+          {t(
+            'auth.emailVerification.bannerDescription',
+            'Please verify your email address to unlock all features. Check your inbox for the verification link.'
+          )}
+        </p>
+        <div className='flex flex-wrap items-center gap-2'>
           <Button
+            size='sm'
             variant='outline'
-            size='sm'
-            onClick={handleResendVerification}
-            disabled={isResending}
-            className='border-orange-300 text-orange-700 hover:bg-orange-100'
+            onClick={handleResend}
+            disabled={resendMutation.isPending || !canResend}
+            className='border-yellow-300 bg-yellow-100 hover:bg-yellow-200 dark:border-yellow-800 dark:bg-yellow-900 dark:hover:bg-yellow-800'
           >
-            {isResending
-              ? t('auth.emailVerification.sending', 'Sending...')
-              : t('auth.emailVerification.resend', 'Resend')}
+            {resendMutation.isPending ? (
+              <>
+                <RefreshCw className='mr-2 h-3 w-3 animate-spin' />
+                {t('auth.emailVerification.sending', 'Sending...')}
+              </>
+            ) : (
+              <>
+                <Mail className='mr-2 h-3 w-3' />
+                {t('auth.emailVerification.resendButton', 'Resend Email')}
+              </>
+            )}
           </Button>
-          <Button
-            variant='ghost'
-            size='sm'
-            onClick={handleDismiss}
-            className='h-8 w-8 p-1 text-orange-600 hover:bg-orange-100'
-          >
-            <X className='h-4 w-4' />
-          </Button>
+          {!canResend && (
+            <span className='text-xs text-yellow-700 dark:text-yellow-300'>
+              {t('auth.emailVerification.nextRequest', 'Next request in')}:{' '}
+              <span className='font-mono font-semibold'>
+                {formatTime(timer.timeLeft)}
+              </span>
+            </span>
+          )}
         </div>
       </AlertDescription>
     </Alert>

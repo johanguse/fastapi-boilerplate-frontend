@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { ArrowLeft, Mail, RefreshCw } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { formatTime, useTimer } from '@/hooks/use-timer'
 
 export const Route = createFileRoute('/(auth)/check-email')({
   component: CheckEmailPage,
@@ -20,49 +21,100 @@ export const Route = createFileRoute('/(auth)/check-email')({
 function CheckEmailPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { email } = useSearch({ from: '/(auth)/check-email' }) as {
+  const { email, type } = useSearch({ from: '/(auth)/check-email' }) as {
     email?: string
+    type?: string
   }
+  
+  const isPasswordReset = type === 'password-reset'
   const [isResending, setIsResending] = useState(false)
+  const [canResend, setCanResend] = useState(true)
+
+  // Rate limiting timer (1 minute = 60 seconds)
+  const timer = useTimer(60, {
+    onComplete: () => {
+      setCanResend(true)
+    },
+  })
+
+  // Start timer when component mounts
+  useEffect(() => {
+    timer.start()
+  }, [timer])
 
   const handleResendEmail = async () => {
     if (!email) return
 
+    if (!canResend) {
+      toast.error(
+        t(
+          isPasswordReset
+            ? 'auth.forgotPasswordRateLimited'
+            : 'auth.emailVerification.rateLimited',
+          isPasswordReset
+            ? 'Please wait {{time}} before requesting another password reset'
+            : 'Please wait {{time}} before requesting another verification email',
+          { time: formatTime(timer.timeLeft) }
+        )
+      )
+      return
+    }
+
     setIsResending(true)
     try {
+      const endpoint = isPasswordReset
+        ? '/api/v1/auth/forgot-password'
+        : '/api/v1/auth/resend-verification'
+      
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/invitations/verify-email/resend`,
+        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${endpoint}`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           credentials: 'include',
+          body: JSON.stringify({ email }),
         }
       )
 
       if (response.ok) {
         toast.success(
           t(
-            'auth.emailVerification.resent',
-            'Verification email sent! Please check your inbox.'
+            isPasswordReset
+              ? 'auth.forgotPasswordEmailSent'
+              : 'auth.emailVerification.resent',
+            isPasswordReset
+              ? 'Password reset link sent! Please check your inbox.'
+              : 'Verification email sent! Please check your inbox.'
           )
         )
+        setCanResend(false)
+        timer.reset()
+        timer.start()
       } else {
         const error = await response.json()
         toast.error(
           error.message ||
             t(
-              'auth.emailVerification.resendFailed',
-              'Failed to resend verification email'
+              isPasswordReset
+                ? 'auth.forgotPasswordError'
+                : 'auth.emailVerification.resendFailed',
+              isPasswordReset
+                ? 'Failed to resend password reset email'
+                : 'Failed to resend verification email'
             )
         )
       }
     } catch (_error) {
       toast.error(
         t(
-          'auth.emailVerification.resendFailed',
-          'Failed to resend verification email'
+          isPasswordReset
+            ? 'auth.forgotPasswordError'
+            : 'auth.emailVerification.resendFailed',
+          isPasswordReset
+            ? 'Failed to resend password reset email'
+            : 'Failed to resend verification email'
         )
       )
     } finally {
@@ -79,23 +131,35 @@ function CheckEmailPage() {
           </div>
 
           <CardTitle className='text-center'>
-            {t('auth.checkEmail.title', 'Check your email')}
+            {isPasswordReset
+              ? t('auth.checkEmail.passwordResetTitle', 'Check your email')
+              : t('auth.checkEmail.title', 'Check your email')}
           </CardTitle>
 
           <CardDescription className='text-center'>
             {email ? (
               <>
-                {t(
-                  'auth.checkEmail.descriptionWithEmail',
-                  'We sent a verification link to'
-                )}{' '}
+                {isPasswordReset
+                  ? t(
+                      'auth.checkEmail.passwordResetDescriptionWithEmail',
+                      'We sent a password reset link to'
+                    )
+                  : t(
+                      'auth.checkEmail.descriptionWithEmail',
+                      'We sent a verification link to'
+                    )}{' '}
                 <strong className='font-medium text-foreground'>{email}</strong>
               </>
             ) : (
-              t(
-                'auth.checkEmail.description',
-                'We sent you a verification link. Please check your email.'
-              )
+              isPasswordReset
+                ? t(
+                    'auth.checkEmail.passwordResetDescription',
+                    'We sent you a password reset link. Please check your email.'
+                  )
+                : t(
+                    'auth.checkEmail.description',
+                    'We sent you a verification link. Please check your email.'
+                  )
             )}
           </CardDescription>
         </CardHeader>
@@ -119,29 +183,40 @@ function CheckEmailPage() {
                 <li className='flex items-start gap-2'>
                   <span className='mt-0.5'>2.</span>
                   <span>
-                    {t(
-                      'auth.checkEmail.step2',
-                      'Click the verification link in the email'
-                    )}
+                    {isPasswordReset
+                      ? t(
+                          'auth.checkEmail.passwordResetStep2',
+                          'Click the password reset link in the email'
+                        )
+                      : t(
+                          'auth.checkEmail.step2',
+                          'Click the verification link in the email'
+                        )}
                   </span>
                 </li>
                 <li className='flex items-start gap-2'>
                   <span className='mt-0.5'>3.</span>
                   <span>
-                    {t(
-                      'auth.checkEmail.step3',
-                      "You'll be redirected to complete your profile"
-                    )}
+                    {isPasswordReset
+                      ? t(
+                          'auth.checkEmail.passwordResetStep3',
+                          'Enter your new password and sign in'
+                        )
+                      : t(
+                          'auth.checkEmail.step3',
+                          "Your email will be verified and you'll have full access"
+                        )}
                   </span>
                 </li>
               </ol>
             </div>
 
-            <div className='rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-900 dark:bg-yellow-950'>
-              <p className='text-muted-foreground text-sm'>
+            <div className='rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950'>
+              <p className='text-blue-900 dark:text-blue-100 text-sm'>
+                <strong>{t('auth.checkEmail.note', 'Note:')}</strong>{' '}
                 {t(
-                  'auth.checkEmail.cantFindEmail',
-                  "Can't find the email? Check your spam folder or request a new one."
+                  'auth.checkEmail.noteDescription',
+                  'You can continue using the app, but some features require email verification.'
                 )}
               </p>
             </div>
@@ -149,20 +224,45 @@ function CheckEmailPage() {
         </CardContent>
 
         <CardFooter className='flex flex-col gap-2'>
+          {!canResend && (
+            <div className='w-full text-center text-muted-foreground text-sm mb-2'>
+              <p>
+                {t(
+                  'auth.emailVerification.nextRequest',
+                  'Next request available in'
+                )}
+                :{' '}
+                <span className='font-mono font-semibold text-primary'>
+                  {formatTime(timer.timeLeft)}
+                </span>
+              </p>
+            </div>
+          )}
+
           <Button
             className='w-full'
             onClick={handleResendEmail}
-            disabled={isResending}
+            disabled={isResending || !canResend}
           >
             {isResending ? (
               <>
                 <RefreshCw className='mr-2 h-4 w-4 animate-spin' />
-                {t('auth.checkEmail.resending', 'Resending...')}
+                {t(
+                  isPasswordReset
+                    ? 'auth.resendingPasswordReset'
+                    : 'auth.checkEmail.resending',
+                  isPasswordReset ? 'Resending...' : 'Resending...'
+                )}
               </>
             ) : (
               <>
                 <RefreshCw className='mr-2 h-4 w-4' />
-                {t('auth.checkEmail.resendEmail', 'Resend Email')}
+                {t(
+                  isPasswordReset
+                    ? 'auth.resendPasswordReset'
+                    : 'auth.checkEmail.resendEmail',
+                  isPasswordReset ? 'Resend Reset Link' : 'Resend Email'
+                )}
               </>
             )}
           </Button>
@@ -170,10 +270,10 @@ function CheckEmailPage() {
           <Button
             variant='outline'
             className='w-full'
-            onClick={() => navigate({ to: '/sign-in' })}
+            onClick={() => navigate({ to: '/' })}
           >
             <ArrowLeft className='mr-2 h-4 w-4' />
-            {t('auth.checkEmail.backToSignIn', 'Back to Sign In')}
+            {t('auth.checkEmail.continueToDashboard', 'Continue to Dashboard')}
           </Button>
         </CardFooter>
       </Card>

@@ -49,15 +49,20 @@ export function SignUpForm({
       // Clear any form errors on success
       form.clearErrors()
 
-      const email = form.getValues('email')
-
       // Small delay to ensure Zustand state is fully updated
       await new Promise((resolve) => setTimeout(resolve, 0))
 
-      // Redirect to check email page with email parameter
+      // Show success message
+      toast.success(
+        t(
+          'auth.signUpSuccess',
+          'Account created successfully! A verification email has been sent.'
+        )
+      )
+
+      // Redirect to onboarding - user is now logged in!
       navigate({
-        to: '/check-email',
-        search: { email },
+        to: '/onboarding',
         replace: true,
       })
     },
@@ -69,24 +74,52 @@ export function SignUpForm({
         response?: {
           status?: number
           data?: {
-            detail?: { error?: string; message?: string }
+            detail?: string | { error?: string; message?: string }
             error?: string
             message?: string
           }
         }
+        message?: string
+      }
+
+      // First, check if the error message itself contains "already exists"
+      const errorMessage = axiosError.message || ''
+      const isUserExistsInMessage =
+        errorMessage.toLowerCase().includes('already exists') ||
+        errorMessage.toLowerCase().includes('already registered')
+
+      if (isUserExistsInMessage) {
+        const message = t(
+          'auth.signUpEmailExists',
+          'This email is already registered. Please sign in instead or use a different email.'
+        )
+        form.setError('email', {
+          type: 'manual',
+          message: message,
+        })
+        toast.error(message)
+        return
       }
 
       if (axiosError.response?.status === 400) {
         // Handle nested detail structure from backend
         const detail = axiosError.response.data?.detail
-        const errorData = detail || axiosError.response.data
+        const errorData =
+          typeof detail === 'object' ? detail : axiosError.response.data
 
-        if (errorData?.error === 'USER_EXISTS') {
+        // Check for "User with this email already exists" message
+        const detailMessage = typeof detail === 'string' ? detail : ''
+        const isUserExists =
+          errorData?.error === 'USER_EXISTS' ||
+          detailMessage.toLowerCase().includes('already exists') ||
+          detailMessage.toLowerCase().includes('already registered')
+
+        if (isUserExists) {
           const errorMessage = t(
             'auth.signUpEmailExists',
-            'This email is already registered'
+            'This email is already registered. Please sign in instead or use a different email.'
           )
-          form.setError('root', {
+          form.setError('email', {
             type: 'manual',
             message: errorMessage,
           })
@@ -94,6 +127,7 @@ export function SignUpForm({
         } else {
           const errorMessage =
             errorData?.message ||
+            detailMessage ||
             t(
               'auth.signUpRegistrationFailed',
               'Registration failed. Please try again.'
@@ -115,10 +149,22 @@ export function SignUpForm({
         })
         toast.error(errorMessage)
       } else {
-        const errorMessage = t(
-          'auth.signUpRegistrationFailed',
-          'Registration failed. Please try again.'
-        )
+        // Handle network errors and other errors
+        const isNetworkError =
+          axiosError.message?.toLowerCase().includes('network error') ||
+          axiosError.message?.toLowerCase().includes('failed to fetch') ||
+          !axiosError.response
+
+        const errorMessage = isNetworkError
+          ? t(
+              'auth.networkError',
+              'Network error. Please check your connection and try again.'
+            )
+          : t(
+              'auth.signUpRegistrationFailed',
+              'Registration failed. Please try again.'
+            )
+
         form.setError('root', {
           type: 'manual',
           message: errorMessage,

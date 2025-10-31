@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import type { User as UserType } from '@/lib/auth'
+import { useOnboarding } from '../context/onboarding-context'
 
 interface OnboardingCompleteProps {
   onComplete: () => void
@@ -14,14 +15,19 @@ export function OnboardingComplete({
   user,
 }: OnboardingCompleteProps) {
   const { t } = useTranslation()
+  const { profile } = useOnboarding()
   const [isCompleting, setIsCompleting] = useState(false)
 
-  const handleComplete = async () => {
+  // Get name from context (from profile step) or from user as fallback
+  const displayName = profile.name || user?.name || 'User'
+
+  const handleComplete = () => {
     setIsCompleting(true)
+    // Just navigate to dashboard - onboarding is already complete via save-all
     // Add a small delay for better UX
     setTimeout(() => {
       onComplete()
-    }, 1000)
+    }, 500)
   }
 
   const features = [
@@ -80,8 +86,8 @@ export function OnboardingComplete({
           <Rocket className='mt-1 h-6 w-6 text-primary' />
           <div>
             <h4 className='mb-2 font-semibold text-primary'>
-              {t('onboarding.complete.welcome.title', 'Welcome, {name}!', {
-                name: user?.name || 'User',
+              {t('onboarding.complete.welcome.title', 'Welcome, {{name}}!', {
+                name: displayName,
               })}
             </h4>
             <p className='text-muted-foreground text-sm'>
@@ -159,7 +165,10 @@ export function OnboardingComplete({
           {isCompleting ? (
             <>
               <div className='mr-2 h-4 w-4 animate-spin rounded-full border-2 border-background border-t-transparent' />
-              {t('onboarding.complete.finishing', 'Finishing setup...')}
+              {t(
+                'onboarding.complete.redirecting',
+                'Redirecting to dashboard...'
+              )}
             </>
           ) : (
             <>

@@ -203,7 +203,7 @@
       "title": "Alles Bereit!",
       "description": "Willkommen in Ihrem neuen Arbeitsbereich. Lassen Sie uns erkunden, was Sie tun können!",
       "welcome": {
-        "title": "Willkommen, {name}!",
+        "title": "Willkommen, {{name}}!",
         "description": "Ihr Arbeitsbereich ist bereit. Sie können jetzt mit der Zusammenarbeit mit Ihrem Team beginnen und alle Funktionen erkunden, die wir zu bieten haben."
       },
       "features": {
@@ -229,7 +229,8 @@
         "invite": "Laden Sie Teammitglieder ein"
       },
       "finishing": "Einrichtung wird abgeschlossen...",
-      "getStarted": "Loslegen"
+      "getStarted": "Loslegen",
+      "redirecting": "Weiterleitung zum Dashboard..."
     }
   },
   "auth": {
@@ -404,7 +405,13 @@
     "reset": "Zurücksetzen",
     "searchPlaceholder": "Suchen...",
     "tryAgain": "Erneut versuchen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "uploadImage": "Bild hochladen",
+    "changeImage": "Bild ändern",
+    "removeImage": "Bild entfernen",
+    "dragDropImage": "Bild hierher ziehen oder klicken, um auszuwählen",
+    "imageUploading": "Bild wird hochgeladen...",
+    "imageProcessing": "Bild wird verarbeitet..."
   },
   "theme": {
     "title": "Design",
@@ -420,6 +427,8 @@
   "profile": {
     "profile": "Profil",
     "billing": "Abrechnung",
+    "appearance": "Erscheinungsbild",
+    "notifications": "Benachrichtigungen",
     "settings": "Einstellungen",
     "newTeam": "Neues Team",
     "signOut": "Abmelden"
@@ -433,6 +442,11 @@
     "goBack": "Zurück",
     "backToHome": "Zurück zur Startseite",
     "learnMore": "Mehr erfahren",
+    "fileTooLarge": "Die Datei ist zu groß. Maximale Größe ist {{maxSize}}MB.",
+    "invalidFileType": "Ungültiger Dateityp. Erlaubte Typen: {{types}}.",
+    "imageUploadFailed": "Fehler beim Hochladen des Bildes. Bitte versuchen Sie es erneut.",
+    "imageDeleteFailed": "Fehler beim Löschen des Bildes. Bitte versuchen Sie es erneut.",
+    "imageOptimizationFailed": "Fehler bei der Bildoptimierung. Bitte versuchen Sie es erneut.",
     "notFound": {
       "title": "Ups! Seite nicht gefunden",
       "description": "Es scheint, als ob die Seite, nach der Sie suchen",
@@ -671,7 +685,17 @@
     "updateSuccess": "Organisation erfolgreich aktualisiert",
     "updateError": "Fehler beim Aktualisieren der Organisation",
     "updating": "Wird aktualisiert...",
-    "updateOrganization": "Organisation Aktualisieren"
+    "updateOrganization": "Organisation Aktualisieren",
+    "logo": "Logo",
+    "logoDescription": "Laden Sie ein Logo für Ihre Organisation hoch.",
+    "logoUpdateDescription": "Aktualisieren Sie das Logo Ihrer Organisation.",
+    "uploadLogo": "Logo hochladen",
+    "changeLogo": "Logo ändern",
+    "removeLogo": "Logo entfernen",
+    "logoUploaded": "Logo erfolgreich hochgeladen",
+    "logoDeleted": "Logo erfolgreich gelöscht",
+    "logoUploadFailed": "Fehler beim Hochladen des Logos",
+    "logoDeleteFailed": "Fehler beim Löschen des Logos"
   },
   "pricing": {
     "errors": {
@@ -730,6 +754,7 @@
     "description": "Verwalten Sie Ihre Kontoeinstellungen und legen Sie E-Mail-Präferenzen fest.",
     "nav": {
       "profile": "Profil",
+      "billing": "Abrechnung",
       "account": "Konto",
       "appearance": "Erscheinungsbild",
       "notifications": "Benachrichtigungen",
@@ -792,6 +817,16 @@
     "profile": {
       "title": "Profil",
       "description": "So werden Sie von anderen auf der Website gesehen.",
+      "profileImage": "Profilbild",
+      "uploadProfileImage": "Profilbild hochladen",
+      "changeProfileImage": "Profilbild ändern",
+      "removeProfileImage": "Profilbild entfernen",
+      "profileImageDescription": "Empfohlene Formate: JPG, PNG, WebP. Maximale Größe: 5MB.",
+      "imageUploaded": "Profilbild erfolgreich hochgeladen",
+      "imageDeleted": "Profilbild erfolgreich gelöscht",
+      "updateSuccess": "Profil erfolgreich aktualisiert",
+      "updateError": "Fehler beim Aktualisieren des Profils",
+      "fetchError": "Fehler beim Abrufen der Profilinformationen",
       "username": "Benutzername",
       "usernamePlaceholder": "shadcn",
       "usernameDescription": "Dies ist Ihr öffentlicher Anzeigename. Es kann Ihr echter Name oder ein Pseudonym sein. Sie können dies nur alle 30 Tage einmal ändern.",
@@ -809,7 +844,12 @@
         "usernameRequired": "Bitte geben Sie Ihren Benutzernamen ein.",
         "usernameMinLength": "Der Benutzername muss mindestens 2 Zeichen lang sein.",
         "usernameMaxLength": "Der Benutzername darf nicht länger als 30 Zeichen sein.",
+        "nameMinLength": "Der Name muss mindestens 2 Zeichen lang sein.",
+        "nameMaxLength": "Der Name darf nicht länger als 50 Zeichen sein.",
+        "bioMaxLength": "Die Biografie darf nicht länger als 500 Zeichen sein.",
         "emailRequired": "Bitte wählen Sie eine E-Mail zum Anzeigen aus.",
+        "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "websiteInvalid": "Bitte geben Sie eine gültige Website-URL ein.",
         "urlRequired": "Bitte geben Sie eine gültige URL ein."
       }
     },
@@ -849,6 +889,12 @@
     "leftToRight": "Links nach Rechts",
     "rightToLeft": "Rechts nach Links",
     "directionDescription": "Wählen Sie zwischen Links-nach-Rechts oder Rechts-nach-Links Website-Richtung"
+  },
+  "sidebar": {
+    "currentPlan": "Aktueller Plan",
+    "usage": "Nutzung",
+    "remaining": "verbleibend",
+    "upgradeToPro": "Auf Pro upgraden"
   },
   "tasks": {
     "title": "Aufgaben",

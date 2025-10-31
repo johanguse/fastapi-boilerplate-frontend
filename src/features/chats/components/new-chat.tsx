@@ -1,8 +1,8 @@
-import { Check, X } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Check, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -10,107 +10,114 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command'
+} from "@/components/ui/command";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { showSubmittedData } from '@/lib/show-submitted-data'
-import { type ChatUser } from '../data/chat-types'
+} from "@/components/ui/dialog";
+import { showSubmittedData } from "@/lib/show-submitted-data";
+import { type ChatUser } from "../data/chat-types";
 
-type User = Omit<ChatUser, 'messages'>
+type User = Omit<ChatUser, "messages">;
 
 type NewChatProps = {
-  users: User[]
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}
+  users: User[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+};
 export function NewChat({ users, onOpenChange, open }: NewChatProps) {
-  const { t } = useTranslation()
-  const [selectedUsers, setSelectedUsers] = useState<User[]>([])
+  const { t } = useTranslation();
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
 
   const handleSelectUser = (user: User) => {
     if (!selectedUsers.find((u) => u.id === user.id)) {
-      setSelectedUsers([...selectedUsers, user])
+      setSelectedUsers([...selectedUsers, user]);
     } else {
-      handleRemoveUser(user.id)
+      handleRemoveUser(user.id);
     }
-  }
+  };
 
   const handleRemoveUser = (userId: string) => {
-    setSelectedUsers(selectedUsers.filter((user) => user.id !== userId))
-  }
+    setSelectedUsers(selectedUsers.filter((user) => user.id !== userId));
+  };
 
   useEffect(() => {
     if (!open) {
-      setSelectedUsers([])
+      setSelectedUsers([]);
     }
-  }, [open])
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className='sm:max-w-[600px]'>
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>{t('chats.newMessage', 'New Message')}</DialogTitle>
+          <DialogTitle>{t("chats.newMessage", "New Message")}</DialogTitle>
+          <DialogDescription>
+            {t(
+              "chats.newMessageDescription",
+              "Select users to start a new conversation."
+            )}
+          </DialogDescription>
         </DialogHeader>
-        <div className='flex flex-col gap-4'>
-          <div className='items-baseline-last flex flex-wrap gap-2'>
-            <span className='min-h-6 text-muted-foreground text-sm'>
-              {t('chats.to', 'To')}:
+        <div className="flex flex-col gap-4">
+          <div className="items-baseline-last flex flex-wrap gap-2">
+            <span className="min-h-6 text-muted-foreground text-sm">
+              {t("chats.to", "To")}:
             </span>
             {selectedUsers.map((user) => (
-              <Badge key={user.id} variant='default'>
+              <Badge key={user.id} variant="default">
                 {user.fullName}
                 <button
-                  className='ms-1 rounded-full outline-hidden ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2'
+                  className="ms-1 rounded-full outline-hidden ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleRemoveUser(user.id)
+                    if (e.key === "Enter") {
+                      handleRemoveUser(user.id);
                     }
                   }}
                   onClick={() => handleRemoveUser(user.id)}
                 >
-                  <X className='h-3 w-3 text-muted-foreground hover:text-foreground' />
+                  <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                 </button>
               </Badge>
             ))}
           </div>
-          <Command className='rounded-lg border'>
+          <Command className="rounded-lg border">
             <CommandInput
-              placeholder={t('chats.searchPeople', 'Search people')}
-              className='text-foreground'
+              placeholder={t("chats.searchPeople", "Search people")}
+              className="text-foreground"
             />
             <CommandList>
               <CommandEmpty>
-                {t('chats.noPeopleFound', 'No people found')}
+                {t("chats.noPeopleFound", "No people found")}
               </CommandEmpty>
               <CommandGroup>
                 {users.map((user) => (
                   <CommandItem
                     key={user.id}
                     onSelect={() => handleSelectUser(user)}
-                    className='flex items-center justify-between gap-2 hover:bg-accent hover:text-accent-foreground'
+                    className="flex items-center justify-between gap-2 hover:bg-accent hover:text-accent-foreground"
                   >
-                    <div className='flex items-center gap-2'>
+                    <div className="flex items-center gap-2">
                       <img
-                        src={user.profile || '/placeholder.svg'}
+                        src={user.profile || "/placeholder.svg"}
                         alt={user.fullName}
-                        className='h-8 w-8 rounded-full'
+                        className="h-8 w-8 rounded-full"
                       />
-                      <div className='flex flex-col'>
-                        <span className='font-medium text-sm'>
+                      <div className="flex flex-col">
+                        <span className="font-medium text-sm">
                           {user.fullName}
                         </span>
-                        <span className='text-accent-foreground/70 text-xs'>
+                        <span className="text-accent-foreground/70 text-xs">
                           {user.username}
                         </span>
                       </div>
                     </div>
 
                     {selectedUsers.find((u) => u.id === user.id) && (
-                      <Check className='h-4 w-4' />
+                      <Check className="h-4 w-4" />
                     )}
                   </CommandItem>
                 ))}
@@ -118,14 +125,14 @@ export function NewChat({ users, onOpenChange, open }: NewChatProps) {
             </CommandList>
           </Command>
           <Button
-            variant={'default'}
+            variant={"default"}
             onClick={() => showSubmittedData(selectedUsers)}
             disabled={selectedUsers.length === 0}
           >
-            {t('chats.chat', 'Chat')}
+            {t("chats.chat", "Chat")}
           </Button>
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

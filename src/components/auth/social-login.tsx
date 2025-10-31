@@ -152,7 +152,10 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
   }
 
   return (
-    <div className={cn('space-y-3', className)}>
+    <div
+      className={cn('space-y-3', className)}
+      data-testid='social-login-container'
+    >
       <div className='relative'>
         <div className='absolute inset-0 flex items-center'>
           <span className='w-full border-t' />
@@ -196,13 +199,6 @@ export function SocialLogin({ className, redirectTo }: SocialLoginProps) {
           )
         })}
       </div>
-
-      <p className='text-center text-muted-foreground text-xs'>
-        {t(
-          'auth.socialLogin.disclaimer',
-          'By continuing, you agree to our Terms of Service and Privacy Policy'
-        )}
-      </p>
     </div>
   )
 }

@@ -149,7 +149,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       if (data.user && data.session) {
         set({
           user: data.user,
-          session: data.session,
+          session: {
+            user: data.user,
+            session: data.session,
+          },
           isInitialized: true,
         })
         return data.user // Return user data for onSuccess callback
@@ -196,7 +199,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       if (data.user && data.session) {
         set({
           user: data.user,
-          session: data.session,
+          session: {
+            user: data.user,
+            session: data.session,
+          },
           isInitialized: true,
         })
         return data.user // Return user data for onSuccess callback
@@ -252,7 +258,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
         if (sessionData.user && sessionData.session) {
           set({
             user: sessionData.user,
-            session: sessionData.session,
+            session: {
+              user: sessionData.user,
+              session: sessionData.session,
+            },
             isInitialized: true,
           })
         } else {

@@ -98,17 +98,11 @@ export function ForgotPasswordForm({
         timer.start()
         form.reset()
 
-        // If user doesn't exist, show option to sign up
-        if (result.user_exists === false) {
-          setTimeout(() => {
-            navigate({
-              to: '/sign-up',
-              search: { email: data.email },
-            })
-          }, 2000)
-        } else {
-          navigate({ to: '/sign-in' })
-        }
+        // Redirect to check-email page with better UI
+        navigate({
+          to: '/check-email',
+          search: { email: data.email, type: 'password-reset' },
+        })
       } else {
         // Handle error response
         toast.error(

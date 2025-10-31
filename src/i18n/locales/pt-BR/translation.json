@@ -205,7 +205,7 @@
       "title": "Tudo Pronto!",
       "description": "Bem-vindo ao seu novo espaço de trabalho. Vamos explorar o que você pode fazer!",
       "welcome": {
-        "title": "Bem-vindo, {name}!",
+        "title": "Bem-vindo, {{name}}!",
         "description": "Seu espaço de trabalho está pronto. Agora você pode começar a colaborar com sua equipe e explorar todos os recursos que temos para oferecer."
       },
       "features": {
@@ -231,7 +231,8 @@
         "invite": "Convide membros da equipe"
       },
       "finishing": "Finalizando configuração...",
-      "getStarted": "Começar"
+      "getStarted": "Começar",
+      "redirecting": "Redirecionando para o painel..."
     }
   },
   "auth": {
@@ -404,7 +405,13 @@
     "reset": "Redefinir",
     "searchPlaceholder": "Buscar...",
     "tryAgain": "Tentar novamente",
-    "close": "Fechar"
+    "close": "Fechar",
+    "uploadImage": "Enviar imagem",
+    "changeImage": "Alterar imagem",
+    "removeImage": "Remover imagem",
+    "dragDropImage": "Arraste e solte uma imagem aqui, ou clique para selecionar",
+    "imageUploading": "Enviando imagem...",
+    "imageProcessing": "Processando imagem..."
   },
   "theme": {
     "title": "Tema",
@@ -420,6 +427,8 @@
   "profile": {
     "profile": "Perfil",
     "billing": "Faturamento",
+    "appearance": "Aparência",
+    "notifications": "Notificações",
     "settings": "Configurações",
     "newTeam": "Nova Equipe",
     "signOut": "Sair"
@@ -433,6 +442,11 @@
     "goBack": "Voltar",
     "backToHome": "Voltar ao Início",
     "learnMore": "Saiba mais",
+    "fileTooLarge": "O arquivo é muito grande. O tamanho máximo é {{maxSize}}MB.",
+    "invalidFileType": "Tipo de arquivo inválido. Tipos permitidos: {{types}}.",
+    "imageUploadFailed": "Falha ao enviar imagem. Por favor, tente novamente.",
+    "imageDeleteFailed": "Falha ao excluir imagem. Por favor, tente novamente.",
+    "imageOptimizationFailed": "Falha ao otimizar imagem. Por favor, tente novamente.",
     "notFound": {
       "title": "Ops! Página Não Encontrada",
       "description": "Parece que a página que você está procurando",
@@ -672,7 +686,17 @@
     "updateSuccess": "Organização atualizada com sucesso",
     "updateError": "Falha ao atualizar organização",
     "updating": "Atualizando...",
-    "updateOrganization": "Atualizar Organização"
+    "updateOrganization": "Atualizar Organização",
+    "logo": "Logo",
+    "logoDescription": "Envie um logo para sua organização.",
+    "logoUpdateDescription": "Atualize o logo da sua organização.",
+    "uploadLogo": "Enviar logo",
+    "changeLogo": "Alterar logo",
+    "removeLogo": "Remover logo",
+    "logoUploaded": "Logo enviado com sucesso",
+    "logoDeleted": "Logo excluído com sucesso",
+    "logoUploadFailed": "Falha ao enviar logo",
+    "logoDeleteFailed": "Falha ao excluir logo"
   },
   "pricing": {
     "errors": {
@@ -733,6 +757,7 @@
     "description": "Gerencie as configurações da sua conta e defina as preferências de e-mail.",
     "nav": {
       "profile": "Perfil",
+      "billing": "Faturamento",
       "account": "Conta",
       "appearance": "Aparência",
       "notifications": "Notificações",
@@ -795,6 +820,16 @@
     "profile": {
       "title": "Perfil",
       "description": "É assim que outros te verão no site.",
+      "profileImage": "Imagem de perfil",
+      "uploadProfileImage": "Enviar imagem de perfil",
+      "changeProfileImage": "Alterar imagem de perfil",
+      "removeProfileImage": "Remover imagem de perfil",
+      "profileImageDescription": "Formatos recomendados: JPG, PNG, WebP. Tamanho máximo: 5MB.",
+      "imageUploaded": "Imagem de perfil enviada com sucesso",
+      "imageDeleted": "Imagem de perfil excluída com sucesso",
+      "updateSuccess": "Perfil atualizado com sucesso",
+      "updateError": "Falha ao atualizar perfil",
+      "fetchError": "Falha ao buscar informações do perfil",
       "username": "Nome de usuário",
       "usernamePlaceholder": "shadcn",
       "usernameDescription": "Este é seu nome público de exibição. Pode ser seu nome real ou um pseudônimo. Você só pode alterá-lo uma vez a cada 30 dias.",
@@ -812,7 +847,12 @@
         "usernameRequired": "Por favor, insira seu nome de usuário.",
         "usernameMinLength": "O nome de usuário deve ter pelo menos 2 caracteres.",
         "usernameMaxLength": "O nome de usuário não deve ter mais de 30 caracteres.",
+        "nameMinLength": "O nome deve ter pelo menos 2 caracteres.",
+        "nameMaxLength": "O nome não deve ter mais de 50 caracteres.",
+        "bioMaxLength": "A biografia não deve ter mais de 500 caracteres.",
         "emailRequired": "Por favor, selecione um email para exibir.",
+        "emailInvalid": "Por favor, insira um endereço de email válido.",
+        "websiteInvalid": "Por favor, insira uma URL de site válida.",
         "urlRequired": "Por favor, insira uma URL válida."
       }
     },
@@ -852,6 +892,12 @@
     "leftToRight": "Esquerda para Direita",
     "rightToLeft": "Direita para Esquerda",
     "directionDescription": "Escolha entre direção do site da esquerda para direita ou da direita para esquerda"
+  },
+  "sidebar": {
+    "currentPlan": "Plano Atual",
+    "usage": "Uso",
+    "remaining": "restante",
+    "upgradeToPro": "Atualizar para Pro"
   },
   "tasks": {
     "title": "Tarefas",

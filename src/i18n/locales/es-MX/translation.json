@@ -231,7 +231,8 @@
         "invite": "Invita miembros del equipo"
       },
       "finishing": "Finalizando configuración...",
-      "getStarted": "Comenzar"
+      "getStarted": "Comenzar",
+      "redirecting": "Redirigiendo al dashboard..."
     }
   },
   "auth": {
@@ -404,7 +405,13 @@
     "reset": "Restablecer",
     "searchPlaceholder": "Buscar...",
     "tryAgain": "Intentar de nuevo",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "uploadImage": "Subir imagen",
+    "changeImage": "Cambiar imagen",
+    "removeImage": "Eliminar imagen",
+    "dragDropImage": "Arrastra y suelta una imagen aquí, o haz clic para seleccionar",
+    "imageUploading": "Subiendo imagen...",
+    "imageProcessing": "Procesando imagen..."
   },
   "theme": {
     "title": "Tema",
@@ -420,6 +427,8 @@
   "profile": {
     "profile": "Perfil",
     "billing": "Facturación",
+    "appearance": "Apariencia",
+    "notifications": "Notificaciones",
     "settings": "Configuración",
     "newTeam": "Nuevo Equipo",
     "signOut": "Cerrar sesión"
@@ -433,6 +442,11 @@
     "goBack": "Volver",
     "backToHome": "Volver al Inicio",
     "learnMore": "Saber más",
+    "fileTooLarge": "El archivo es demasiado grande. El tamaño máximo es {{maxSize}}MB.",
+    "invalidFileType": "Tipo de archivo no válido. Los tipos permitidos son: {{types}}.",
+    "imageUploadFailed": "Error al subir la imagen. Por favor, inténtalo de nuevo.",
+    "imageDeleteFailed": "Error al eliminar la imagen. Por favor, inténtalo de nuevo.",
+    "imageOptimizationFailed": "Error al optimizar la imagen. Por favor, inténtalo de nuevo.",
     "notFound": {
       "title": "¡Ups! Página No Encontrada",
       "description": "Parece que la página que buscas",
@@ -672,7 +686,17 @@
     "updateSuccess": "Organización actualizada exitosamente",
     "updateError": "Error al actualizar la organización",
     "updating": "Actualizando...",
-    "updateOrganization": "Actualizar Organización"
+    "updateOrganization": "Actualizar Organización",
+    "logo": "Logo",
+    "logoDescription": "Sube un logo para tu organización.",
+    "logoUpdateDescription": "Actualiza el logo de tu organización.",
+    "uploadLogo": "Subir logo",
+    "changeLogo": "Cambiar logo",
+    "removeLogo": "Eliminar logo",
+    "logoUploaded": "Logo subido exitosamente",
+    "logoDeleted": "Logo eliminado exitosamente",
+    "logoUploadFailed": "Error al subir el logo",
+    "logoDeleteFailed": "Error al eliminar el logo"
   },
   "pricing": {
     "errors": {
@@ -733,6 +757,7 @@
     "description": "Gestiona la configuración de tu cuenta y establece las preferencias de correo electrónico.",
     "nav": {
       "profile": "Perfil",
+      "billing": "Facturación",
       "account": "Cuenta",
       "appearance": "Apariencia",
       "notifications": "Notificaciones",
@@ -795,6 +820,16 @@
     "profile": {
       "title": "Perfil",
       "description": "Así es como otros te verán en el sitio.",
+      "profileImage": "Imagen de perfil",
+      "uploadProfileImage": "Subir imagen de perfil",
+      "changeProfileImage": "Cambiar imagen de perfil",
+      "removeProfileImage": "Eliminar imagen de perfil",
+      "profileImageDescription": "Formatos recomendados: JPG, PNG, WebP. Tamaño máximo: 5MB.",
+      "imageUploaded": "Imagen de perfil subida exitosamente",
+      "imageDeleted": "Imagen de perfil eliminada exitosamente",
+      "updateSuccess": "Perfil actualizado exitosamente",
+      "updateError": "Error al actualizar el perfil",
+      "fetchError": "Error al obtener información del perfil",
       "username": "Nombre de usuario",
       "usernamePlaceholder": "shadcn",
       "usernameDescription": "Este es tu nombre público. Puede ser tu nombre real o un pseudónimo. Solo puedes cambiarlo una vez cada 30 días.",
@@ -812,7 +847,12 @@
         "usernameRequired": "Por favor ingresa tu nombre de usuario.",
         "usernameMinLength": "El nombre de usuario debe tener al menos 2 caracteres.",
         "usernameMaxLength": "El nombre de usuario no debe tener más de 30 caracteres.",
+        "nameMinLength": "El nombre debe tener al menos 2 caracteres.",
+        "nameMaxLength": "El nombre no debe tener más de 50 caracteres.",
+        "bioMaxLength": "La biografía no debe tener más de 500 caracteres.",
         "emailRequired": "Por favor selecciona un email para mostrar.",
+        "emailInvalid": "Por favor ingresa una dirección de email válida.",
+        "websiteInvalid": "Por favor ingresa una URL de sitio web válida.",
         "urlRequired": "Por favor ingresa una URL válida."
       }
     },
@@ -852,6 +892,12 @@
     "leftToRight": "Izquierda a Derecha",
     "rightToLeft": "Derecha a Izquierda",
     "directionDescription": "Elige entre dirección del sitio de izquierda a derecha o de derecha a izquierda"
+  },
+  "sidebar": {
+    "currentPlan": "Plan Actual",
+    "usage": "Uso",
+    "remaining": "restante",
+    "upgradeToPro": "Actualizar a Pro"
   },
   "tasks": {
     "title": "Tareas",

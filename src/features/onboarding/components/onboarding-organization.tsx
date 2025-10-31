@@ -14,8 +14,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { ImageUpload } from '@/components/ui/image-upload'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { api } from '@/lib/api'
+import { useOnboarding } from '../context/onboarding-context'
 
 const organizationSchema = z.object({
   name: z.string().min(2, 'Organization name must be at least 2 characters'),
@@ -36,14 +39,16 @@ export function OnboardingOrganization({
   onComplete,
 }: OnboardingOrganizationProps) {
   const { t } = useTranslation()
+  const { profile, organization, updateOrganization } = useOnboarding()
   const [isLoading, setIsLoading] = useState(false)
+  const [orgLogo, setOrgLogo] = useState<File | null>(null)
 
   const form = useForm<OrganizationFormData>({
     resolver: zodResolver(organizationSchema),
     defaultValues: {
-      name: '',
-      slug: '',
-      description: '',
+      name: organization.name || '',
+      slug: organization.slug || '',
+      description: organization.description || '',
     },
   })
 
@@ -51,38 +56,149 @@ export function OnboardingOrganization({
     setIsLoading(true)
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/onboarding/organization`,
-        {
-          method: 'POST',
+      // Upload profile image first if provided
+      if (profile?.image instanceof File) {
+        const formData = new FormData()
+        formData.append('file', profile.image)
+        await api.post('/users/me/upload-image', formData, {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
-          credentials: 'include',
-          body: JSON.stringify(data),
-        }
+        })
+      }
+
+      // Use save-all endpoint to save both profile and organization, and mark as complete
+      const saveAllData = {
+        profile: {
+          name: profile?.name,
+          company: profile?.company,
+          job_title: profile?.job_title,
+          country: profile?.country,
+          phone: profile?.phone,
+          bio: profile?.bio,
+          website: profile?.website,
+        },
+        organization: {
+          name: data.name,
+          slug: data.slug,
+          description: data.description,
+        },
+      }
+
+      const response = await api.post('/auth/onboarding/save-all', saveAllData)
+      const result = response.data
+
+      // Upload organization logo if provided and organization was created
+      if (orgLogo && result.organization?.id) {
+        const formData = new FormData()
+        formData.append('file', orgLogo)
+        await api.post(
+          `/organizations/${result.organization.id}/upload-logo`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        )
+      }
+
+      // Update context
+      updateOrganization({
+        ...data,
+        logo: orgLogo,
+      })
+
+      toast.success(
+        t(
+          'onboarding.organization.success',
+          'Onboarding completed successfully!'
+        )
       )
 
-      if (response.ok) {
-        toast.success(
-          t(
-            'onboarding.organization.success',
-            'Organization created successfully!'
-          )
-        )
-        onComplete()
-      } else {
-        const error = await response.json()
-        throw new Error(error.detail || 'Failed to create organization')
-      }
-    } catch (error) {
+      onComplete()
+    } catch (error: unknown) {
       // biome-ignore lint/suspicious/noConsole: Error logging for debugging
       console.error('Organization creation error:', error)
-      toast.error(
-        t(
-          'onboarding.organization.error',
-          'Failed to create organization. Please try again.'
+
+      // Check for specific error types
+      const axiosError = error as {
+        response?: {
+          status?: number
+          data?: {
+            detail?: string | { error?: string; message?: string }
+          }
+        }
+        message?: string
+        code?: string
+      }
+
+      // Handle network errors (CORS, connection issues)
+      if (axiosError.code === 'ERR_NETWORK' || !axiosError.response) {
+        toast.error(
+          t(
+            'onboarding.organization.networkError',
+            'Network error. Please check your connection and try again.'
+          )
         )
+        return
+      }
+
+      // Handle 409 Conflict - Organization already exists
+      if (axiosError.response?.status === 409) {
+        const detail = axiosError.response.data?.detail
+        const errorMessage =
+          typeof detail === 'string'
+            ? detail
+            : typeof detail === 'object'
+              ? detail.message || detail.error
+              : null
+
+        toast.error(
+          errorMessage ||
+            t(
+              'onboarding.organization.alreadyExists',
+              'An organization with this name already exists. Please choose a different name.'
+            )
+        )
+        return
+      }
+
+      // Handle 400 Bad Request - Invalid data
+      if (axiosError.response?.status === 400) {
+        const detail = axiosError.response.data?.detail
+        const errorMessage =
+          typeof detail === 'string'
+            ? detail
+            : typeof detail === 'object'
+              ? detail.message || detail.error
+              : null
+
+        toast.error(
+          errorMessage ||
+            t(
+              'onboarding.saveAllError',
+              'Failed to save onboarding data. Please check your input and try again.'
+            )
+        )
+        return
+      }
+
+      // Handle other errors
+      const detail = axiosError.response?.data?.detail
+      const errorMessage =
+        typeof detail === 'string'
+          ? detail
+          : typeof detail === 'object'
+            ? detail.message || detail.error
+            : null
+
+      toast.error(
+        errorMessage ||
+          t(
+            'onboarding.organization.error',
+            'Failed to complete onboarding. Please try again.'
+          )
       )
     } finally {
       setIsLoading(false)
@@ -108,6 +224,18 @@ export function OnboardingOrganization({
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+          {/* Organization Logo Upload */}
+          <div className='flex justify-center'>
+            <ImageUpload
+              type='logo'
+              value={null}
+              onChange={setOrgLogo}
+              size='xl'
+              name={form.watch('name')}
+              className='flex flex-col items-center justify-center'
+            />
+          </div>
+
           <FormField
             control={form.control}
             name='name'
@@ -123,6 +251,17 @@ export function OnboardingOrganization({
                       'Enter your organization name'
                     )}
                     {...field}
+                    onChange={(e) => {
+                      field.onChange(e)
+                      // Auto-generate slug as user types
+                      const autoSlug = e.target.value
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/(^-|-$)/g, '')
+                      form.setValue('slug', autoSlug, {
+                        shouldValidate: true,
+                      })
+                    }}
                   />
                 </FormControl>
                 <FormMessage />

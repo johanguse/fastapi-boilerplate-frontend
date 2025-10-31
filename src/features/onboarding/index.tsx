@@ -1,7 +1,6 @@
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
 import {
   Card,
   CardContent,
@@ -10,12 +9,13 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
-import { useAuth } from '@/stores/auth-store'
+import { useAuth, useAuthStore } from '@/stores/auth-store'
 import { OnboardingComplete } from './components/onboarding-complete'
 import { OnboardingOrganization } from './components/onboarding-organization'
 import { OnboardingProfile } from './components/onboarding-profile'
+import { OnboardingProvider } from './context/onboarding-context'
 
-export function Onboarding() {
+function OnboardingContent() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { user } = useAuth()
@@ -25,47 +25,28 @@ export function Onboarding() {
   // Set initial step from user data
   useEffect(() => {
     if (user) {
-      setCurrentStep(user.onboarding_step || 0)
+      const step = user.onboarding_step || 0
+      setCurrentStep(step)
       setIsLoading(false)
     }
   }, [user])
 
-  const handleStepComplete = (step: number) => {
-    setCurrentStep(step)
+  const handleStepComplete = async (step: number) => {
+    // If completing step 2 (organization), move to step 3 (complete/welcome screen)
+    // Step 2 already saved everything via save-all, so onboarding is complete
+    if (step === 2) {
+      // Refresh auth store to get updated user data
+      const { checkSession } = useAuthStore.getState()
+      await checkSession()
+      // Move to step 3 (welcome screen)
+      setCurrentStep(2)
+    } else {
+      setCurrentStep(step)
+    }
   }
 
-  const handleOnboardingComplete = async () => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/onboarding/complete`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({ completed: true }),
-        }
-      )
-
-      if (response.ok) {
-        toast.success(
-          t(
-            'onboarding.success.completed',
-            'Welcome! Your account is all set up.'
-          )
-        )
-        navigate({ to: '/' })
-      } else {
-        throw new Error('Failed to complete onboarding')
-      }
-    } catch (error) {
-      // biome-ignore lint/suspicious/noConsole: Error logging for debugging
-      console.error('Failed to complete onboarding:', error)
-      toast.error(
-        t('onboarding.error.complete', 'Failed to complete onboarding')
-      )
-    }
+  const handleNavigateToDashboard = () => {
+    navigate({ to: '/' })
   }
 
   if (isLoading || !user) {
@@ -183,7 +164,7 @@ export function Onboarding() {
                     )}
                     {step.id === 'complete' && (
                       <OnboardingComplete
-                        onComplete={handleOnboardingComplete}
+                        onComplete={handleNavigateToDashboard}
                         user={user}
                       />
                     )}
@@ -195,5 +176,13 @@ export function Onboarding() {
         </div>
       </div>
     </div>
+  )
+}
+
+export function Onboarding() {
+  return (
+    <OnboardingProvider>
+      <OnboardingContent />
+    </OnboardingProvider>
   )
 }
