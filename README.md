@@ -48,6 +48,7 @@ This project serves as a complete frontend boilerplate for FastAPI applications,
 - **TanStack Router**: Type-safe routing with automatic code splitting
 - **React Query**: Data fetching and caching
 - **Zustand**: Lightweight state management
+- **Hey API**: Auto-generated TypeScript SDK from backend OpenAPI spec for end-to-end type safety
 
 ## 📋 Project Structure
 
@@ -77,6 +78,7 @@ src/
 ## 🌍 Internationalization Status
 
 ### Current Implementation
+
 - ✅ **Migration Complete**: Successfully migrated from HTTP backend to import-based loading
 - ✅ **CLI Integration**: i18next-cli configured for automated key extraction and validation
 - ✅ **TypeScript Support**: Full type safety and autocomplete for translation keys
@@ -84,6 +86,7 @@ src/
 - ✅ **Documentation**: Comprehensive i18n documentation in `docs/i18n.md`
 
 ### Available Scripts
+
 ```bash
 # Extract translation keys from your code
 bun run i18n:extract
@@ -99,6 +102,7 @@ bun test
 ```
 
 ### Next Steps
+
 - Gradually internationalize existing hardcoded strings
 - Re-enable linting when more strings are properly internationalized
 - Consider integration with translation management services
@@ -201,12 +205,14 @@ bun run lint
 This project uses [Biome](https://biomejs.dev/) for blazing-fast linting and formatting:
 
 **Why Biome?**
+
 - ⚡ **10-100x faster** than ESLint + Prettier
 - 🔧 **Single tool** for linting AND formatting
 - 🎯 **Zero configuration** needed to get started
 - 📦 **Smaller footprint** - one dependency instead of dozens
 
 **Configuration**: See `biome.json` for the complete setup. The configuration:
+
 - Enforces consistent code style (single quotes, 2-space indentation, no semicolons)
 - Checks for common errors and code quality issues
 - Automatically organizes imports
@@ -229,6 +235,7 @@ The frontend is configured to work with Better Auth backend. Ensure your FastAPI
 The project uses [i18next-cli](https://github.com/i18next/i18next-cli) for automated translation management:
 
 **Available Commands:**
+
 ```bash
 bun run i18n:extract        # Extract translation keys from code
 bun run i18n:extract:watch  # Watch mode - auto-extract as you code
@@ -237,12 +244,14 @@ bun run i18n:sync          # Sync translations between languages
 ```
 
 **Adding New Languages:**
+
 1. Add language code to `i18next.config.ts`
 2. Run `bun run i18n:extract` to create translation files
 3. Translate the generated keys in `src/i18n/locales/[lang]/translation.json`
 4. Update the language switcher component
 
 **Translation Structure:**
+
 - All translations are in `src/i18n/locales/`
 - Import-based loading for better TypeScript integration
 - Automatic key extraction from your codebase
@@ -329,6 +338,15 @@ bun run format:check     # Check formatting without modifying files
 # Testing
 bun test                 # Run all tests (includes i18n consistency tests)
 
+# API Client Generation (Hey API) - Make sure that the backend is running
+bun run gen:api          # Generate TypeScript SDK from backend OpenAPI spec
+bun run gen:api:watch    # Watch mode - regenerate SDK when spec changes
+bun run gen:api:check    # Regenerate and fail if types changed (for CI)
+
+# CI/CD
+bun run ci               # Run checks and tests
+bun run ci:full          # Run gen:api:check + checks + tests (ensures SDK in sync)
+
 # Internationalization
 bun run i18n:extract     # Extract translation keys from code
 bun run i18n:extract:watch # Watch mode - auto-extract as you code
@@ -352,6 +370,7 @@ bun run knip             # Find unused dependencies and exports
 8. Open a Pull Request
 
 **Code Quality Standards:**
+
 - All code must pass `bun run check` (Biome linting + formatting)
 - All translation keys must have default fallback text
 - New translations must be added to all 9 language files
