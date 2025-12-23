@@ -170,29 +170,14 @@ describe('OnboardingProfile', () => {
     await user.click(screen.getByRole('button', { name: /Continue/i }))
 
     await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('/api/v1/users/me/upload-image'),
-        expect.objectContaining({
-          method: 'POST',
-          credentials: 'include',
-        })
-      )
-    })
-
-    await waitFor(() => {
       expect(toast.success).toHaveBeenCalled()
       expect(mockOnComplete).toHaveBeenCalled()
     })
   })
 
-  it('handles API errors gracefully', async () => {
+  it('handles form submission correctly (context only, no API)', async () => {
     const user = userEvent.setup()
     const { toast } = await import('sonner')
-
-    ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValue({
-      ok: false,
-      status: 500,
-    } as Response)
 
     render(
       <OnboardingProvider>
@@ -204,8 +189,8 @@ describe('OnboardingProfile', () => {
     await user.click(screen.getByRole('button', { name: /Continue/i }))
 
     await waitFor(() => {
-      expect(toast.error).toHaveBeenCalled()
-      expect(mockOnComplete).not.toHaveBeenCalled()
+      expect(toast.success).toHaveBeenCalled()
+      expect(mockOnComplete).toHaveBeenCalled()
     })
   })
 })

@@ -155,10 +155,12 @@ describe('OnboardingOrganization', () => {
 
     await waitFor(() => {
       expect(api.post).toHaveBeenCalledWith(
-        '/organizations/',
+        '/auth/onboarding/save-all',
         expect.objectContaining({
-          name: 'Test Corp',
-          description: 'A test organization',
+          organization: expect.objectContaining({
+            name: 'Test Corp',
+            description: 'A test organization',
+          }),
         })
       )
     })

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "bun test && tsc -b && vite build",
+    "build": "bun run test && tsc -b && vite build",
     "lint": "biome lint .",
     "lint:write": "biome lint --write .",
     "format": "biome format --write .",

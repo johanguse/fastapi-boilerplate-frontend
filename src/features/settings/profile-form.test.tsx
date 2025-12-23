@@ -89,7 +89,7 @@ describe('ProfileForm', () => {
     expect(screen.getByLabelText(/website/i)).toBeInTheDocument()
     expect(screen.getByTestId('image-upload')).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: /save changes/i })
+      screen.getByRole('button', { name: /update profile/i })
     ).toBeInTheDocument()
   })
 
@@ -193,7 +193,7 @@ describe('ProfileForm', () => {
     })
 
     const nameInput = screen.getByLabelText(/full name/i)
-    const submitButton = screen.getByRole('button', { name: /save changes/i })
+    const submitButton = screen.getByRole('button', { name: /update profile/i })
 
     // Update name
     await user.clear(nameInput)
@@ -243,7 +243,7 @@ describe('ProfileForm', () => {
       type: 'image/jpeg',
     })
     const fileInput = screen.getByTestId('file-input')
-    const submitButton = screen.getByRole('button', { name: /save changes/i })
+    const submitButton = screen.getByRole('button', { name: /update profile/i })
 
     // Upload new image
     await user.upload(fileInput, file)
@@ -286,7 +286,7 @@ describe('ProfileForm', () => {
     })
 
     const nameInput = screen.getByLabelText(/full name/i)
-    const submitButton = screen.getByRole('button', { name: /save changes/i })
+    const submitButton = screen.getByRole('button', { name: /update profile/i })
 
     await user.clear(nameInput)
     await user.type(nameInput, 'Jane Smith')
