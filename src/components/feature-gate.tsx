@@ -54,7 +54,7 @@ export function FeatureGate({
 
   // If no tooltip needed, just render disabled children
   if (!showTooltip) {
-    return <div className='opacity-50 cursor-not-allowed'>{children}</div>
+    return <div className='cursor-not-allowed opacity-50'>{children}</div>
   }
 
   // Render with tooltip

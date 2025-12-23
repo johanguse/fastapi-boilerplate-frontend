@@ -81,7 +81,7 @@ function VerifyEmailPage() {
     }
     // Only run once when token is available
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token])
+  }, [token, verifyMutation.mutate])
 
   const getErrorMessage = (): string => {
     if (!token) {

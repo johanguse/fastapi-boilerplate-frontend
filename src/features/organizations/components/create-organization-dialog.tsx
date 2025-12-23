@@ -1,9 +1,9 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { z } from "zod/v4";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { z } from 'zod/v4'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -11,7 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog'
 import {
   Form,
   FormControl,
@@ -19,141 +19,140 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { ImageUpload } from "@/components/ui/image-upload";
-import { Input } from "@/components/ui/input";
-import { api } from "@/lib/api";
-import { useOrganizations } from "@/hooks/use-organizations";
+} from '@/components/ui/form'
+import { ImageUpload } from '@/components/ui/image-upload'
+import { Input } from '@/components/ui/input'
+import { useOrganizations } from '@/hooks/use-organizations'
+import { api } from '@/lib/api'
 
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100, "Name is too long"),
+  name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
   slug: z.string().optional(),
-});
+})
 
-type FormData = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof formSchema>
 
 interface CreateOrganizationDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
 export function CreateOrganizationDialog({
   open,
   onOpenChange,
 }: Readonly<CreateOrganizationDialogProps>) {
-  const [error, setError] = useState<string | null>(null);
-  const [logo, setLogo] = useState<File | null>(null);
-  const { t } = useTranslation();
-  const { createOrganizationAsync, isCreating } = useOrganizations();
+  const [error, setError] = useState<string | null>(null)
+  const [logo, setLogo] = useState<File | null>(null)
+  const { t } = useTranslation()
+  const { createOrganizationAsync, isCreating } = useOrganizations()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      slug: "",
+      name: '',
+      slug: '',
     },
-  });
+  })
 
   const onSubmit = async (data: FormData) => {
     try {
-      setError(null);
+      setError(null)
 
       // Generate slug from name if not provided
       const slug =
         data.slug ||
         data.name
           .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, "");
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '')
 
       // Create organization first
       const newOrg = await createOrganizationAsync({
         name: data.name,
         slug,
-      });
+      })
 
       // Upload logo if provided
       if (logo && newOrg?.id) {
-        const formData = new FormData();
-        formData.append("file", logo);
+        const formData = new FormData()
+        formData.append('file', logo)
         await api.post(`/organizations/${newOrg.id}/upload-logo`, formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
-        });
+        })
       }
 
-      form.reset();
-      setLogo(null);
-      onOpenChange(false);
+      form.reset()
+      setLogo(null)
+      onOpenChange(false)
     } catch (error: unknown) {
       const axiosError = error as {
-        response?: { data?: { detail?: { message?: string } } };
-      };
+        response?: { data?: { detail?: { message?: string } } }
+      }
       const errorMessage =
-        axiosError.response?.data?.detail?.message ||
-        t("common.error", "Error");
-      setError(errorMessage);
+        axiosError.response?.data?.detail?.message || t('common.error', 'Error')
+      setError(errorMessage)
     }
-  };
+  }
 
   const handleOpenChange = (newOpen: boolean) => {
     if (!newOpen && !isCreating) {
-      form.reset();
-      setError(null);
-      setLogo(null);
+      form.reset()
+      setError(null)
+      setLogo(null)
     }
-    onOpenChange(newOpen);
-  };
+    onOpenChange(newOpen)
+  }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
           <DialogTitle>
-            {t("organizations.createOrganization", "Create Organization")}
+            {t('organizations.createOrganization', 'Create Organization')}
           </DialogTitle>
           <DialogDescription>
             {t(
-              "organizations.createNewDescription",
-              "Create a new organization to collaborate with your team."
+              'organizations.createNewDescription',
+              'Create a new organization to collaborate with your team.'
             )}
           </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
             {error && (
-              <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3">
-                <p className="text-destructive text-sm">{error}</p>
+              <div className='rounded-md border border-destructive/20 bg-destructive/10 p-3'>
+                <p className='text-destructive text-sm'>{error}</p>
               </div>
             )}
 
             <FormField
               control={form.control}
-              name="name"
+              name='name'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    {t("organizations.name", "Organization Name")}
+                    {t('organizations.name', 'Organization Name')}
                   </FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t(
-                        "organizations.namePlaceholder",
-                        "My Organization"
+                        'organizations.namePlaceholder',
+                        'My Organization'
                       )}
                       {...field}
                       onChange={(e) => {
-                        field.onChange(e);
+                        field.onChange(e)
                         // Auto-generate slug as user types (unless manually edited)
                         const autoSlug = e.target.value
                           .toLowerCase()
-                          .replace(/[^a-z0-9]+/g, "-")
-                          .replace(/(^-|-$)/g, "");
-                        form.setValue("slug", autoSlug, {
+                          .replace(/[^a-z0-9]+/g, '-')
+                          .replace(/(^-|-$)/g, '')
+                        form.setValue('slug', autoSlug, {
                           shouldValidate: true,
-                        });
+                        })
                       }}
                     />
                   </FormControl>
@@ -164,42 +163,42 @@ export function CreateOrganizationDialog({
 
             <FormItem>
               <FormLabel>
-                {t("organizations.logo", "Organization Logo")}{" "}
-                {t("common.optional", "(Optional)")}
+                {t('organizations.logo', 'Organization Logo')}{' '}
+                {t('common.optional', '(Optional)')}
               </FormLabel>
               <FormControl>
-                <ImageUpload value={null} onChange={setLogo} type="logo" />
+                <ImageUpload value={null} onChange={setLogo} type='logo' />
               </FormControl>
-              <p className="text-muted-foreground text-xs">
+              <p className='text-muted-foreground text-xs'>
                 {t(
-                  "organizations.logoDescription",
-                  "Upload a logo for your organization (max 5MB)"
+                  'organizations.logoDescription',
+                  'Upload a logo for your organization (max 5MB)'
                 )}
               </p>
             </FormItem>
 
             <FormField
               control={form.control}
-              name="slug"
+              name='slug'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    {t("organizations.slug", "Slug (URL identifier)")}
+                    {t('organizations.slug', 'Slug (URL identifier)')}
                   </FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t(
-                        "organizations.slugPlaceholder",
-                        "my-organization"
+                        'organizations.slugPlaceholder',
+                        'my-organization'
                       )}
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
-                  <p className="text-muted-foreground text-xs">
+                  <p className='text-muted-foreground text-xs'>
                     {t(
-                      "organizations.slugDescription",
-                      "Used in URLs. Only lowercase letters, numbers, and hyphens allowed."
+                      'organizations.slugDescription',
+                      'Used in URLs. Only lowercase letters, numbers, and hyphens allowed.'
                     )}
                   </p>
                 </FormItem>
@@ -208,19 +207,19 @@ export function CreateOrganizationDialog({
 
             <DialogFooter>
               <Button
-                type="button"
-                variant="outline"
+                type='button'
+                variant='outline'
                 onClick={() => handleOpenChange(false)}
                 disabled={isCreating}
               >
-                {t("common.cancel", "Cancel")}
+                {t('common.cancel', 'Cancel')}
               </Button>
-              <Button type="submit" disabled={isCreating}>
+              <Button type='submit' disabled={isCreating}>
                 {isCreating
-                  ? t("organizations.creating", "Creating...")
+                  ? t('organizations.creating', 'Creating...')
                   : t(
-                      "organizations.createOrganization",
-                      "Create Organization"
+                      'organizations.createOrganization',
+                      'Create Organization'
                     )}
               </Button>
             </DialogFooter>
@@ -228,5 +227,5 @@ export function CreateOrganizationDialog({
         </Form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

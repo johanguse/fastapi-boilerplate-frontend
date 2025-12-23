@@ -1,11 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
-import { z } from "zod/v4";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
+import { z } from 'zod/v4'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -14,43 +14,43 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { ImageUpload } from "@/components/ui/image-upload";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form'
+import { ImageUpload } from '@/components/ui/image-upload'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { api } from "@/lib/api";
-import { useAuth } from "@/stores/auth-store";
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { api } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
 
 const countries = [
-  "United States",
-  "Canada",
-  "United Kingdom",
-  "Germany",
-  "France",
-  "Spain",
-  "Italy",
-  "Netherlands",
-  "Sweden",
-  "Norway",
-  "Denmark",
-  "Finland",
-  "Australia",
-  "Japan",
-  "South Korea",
-  "Singapore",
-  "India",
-  "Brazil",
-  "Mexico",
-  "Argentina",
-  "Other",
-];
+  'United States',
+  'Canada',
+  'United Kingdom',
+  'Germany',
+  'France',
+  'Spain',
+  'Italy',
+  'Netherlands',
+  'Sweden',
+  'Norway',
+  'Denmark',
+  'Finland',
+  'Australia',
+  'Japan',
+  'South Korea',
+  'Singapore',
+  'India',
+  'Brazil',
+  'Mexico',
+  'Argentina',
+  'Other',
+]
 
 const createProfileFormSchema = (
   t: (key: string, defaultValue: string) => string
@@ -61,27 +61,27 @@ const createProfileFormSchema = (
       .min(
         2,
         t(
-          "settings.profile.validation.nameMinLength",
-          "Name must be at least 2 characters."
+          'settings.profile.validation.nameMinLength',
+          'Name must be at least 2 characters.'
         )
       )
       .max(
         100,
         t(
-          "settings.profile.validation.nameMaxLength",
-          "Name must not be longer than 100 characters."
+          'settings.profile.validation.nameMaxLength',
+          'Name must not be longer than 100 characters.'
         )
       ),
     email: z
       .string()
-      .email(t("settings.profile.validation.emailInvalid", "Invalid email")),
+      .email(t('settings.profile.validation.emailInvalid', 'Invalid email')),
     bio: z
       .string()
       .max(
         500,
         t(
-          "settings.profile.validation.bioMaxLength",
-          "Bio must be less than 500 characters."
+          'settings.profile.validation.bioMaxLength',
+          'Bio must be less than 500 characters.'
         )
       )
       .optional(),
@@ -92,128 +92,130 @@ const createProfileFormSchema = (
     website: z
       .string()
       .url(
-        t("settings.profile.validation.websiteInvalid", "Invalid website URL")
+        t('settings.profile.validation.websiteInvalid', 'Invalid website URL')
       )
       .optional()
-      .or(z.literal("")),
-  });
+      .or(z.literal('')),
+  })
 
-type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>;
+type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>
 
 export function ProfileForm() {
-  const { t } = useTranslation();
-  const { user, checkSession } = useAuth();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFetching, setIsFetching] = useState(true);
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const { t } = useTranslation()
+  const { user, checkSession } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isFetching, setIsFetching] = useState(true)
+  const [profileImage, setProfileImage] = useState<File | null>(null)
 
-  const profileFormSchema = createProfileFormSchema(t);
+  const profileFormSchema = createProfileFormSchema(t)
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      bio: "",
-      company: "",
-      job_title: "",
-      country: "",
-      phone: "",
-      website: "",
+      name: '',
+      email: '',
+      bio: '',
+      company: '',
+      job_title: '',
+      country: '',
+      phone: '',
+      website: '',
     },
-    mode: "onChange",
-  });
+    mode: 'onChange',
+  })
 
   // Fetch user profile data - update form when user data changes
   useEffect(() => {
     if (!user) {
-      setIsFetching(true);
-      return;
+      setIsFetching(true)
+      return
     }
 
-    setIsFetching(true);
+    setIsFetching(true)
 
     // Reset form with current user data
     form.reset({
-      name: user.name || "",
-      email: user.email || "",
-      bio: user.bio || "",
-      company: user.company || "",
-      job_title: user.job_title || "",
-      country: user.country || "",
-      phone: user.phone || "",
-      website: user.website || "",
-    });
+      name: user.name || '',
+      email: user.email || '',
+      bio: user.bio || '',
+      company: user.company || '',
+      job_title: user.job_title || '',
+      country: user.country || '',
+      phone: user.phone || '',
+      website: user.website || '',
+    })
 
-    setIsFetching(false);
+    setIsFetching(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]); // Only re-run when user object changes
+  }, [
+    user, // Reset form with current user data
+    form.reset,
+  ]) // Only re-run when user object changes
 
   const onSubmit = async (data: ProfileFormValues) => {
-    setIsLoading(true);
+    setIsLoading(true)
 
     try {
       // Upload image first if changed
       if (profileImage) {
-        const formData = new FormData();
-        formData.append("file", profileImage);
-        await api.post("/users/me/upload-image", formData, {
+        const formData = new FormData()
+        formData.append('file', profileImage)
+        await api.post('/users/me/upload-image', formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
-        });
+        })
         // Clear the profile image state after upload
-        setProfileImage(null);
+        setProfileImage(null)
       }
 
       // Update profile data
-      await api.patch("/users/me", data);
+      await api.patch('/users/me', data)
 
       // Refresh session to get updated user data
-      await checkSession();
+      await checkSession()
 
       toast.success(
-        t("settings.profile.updateSuccess", "Profile updated successfully!")
-      );
-    } catch (error) {
-      console.error("Profile update error:", error);
+        t('settings.profile.updateSuccess', 'Profile updated successfully!')
+      )
+    } catch (_error) {
       toast.error(
         t(
-          "settings.profile.updateError",
-          "Failed to update profile. Please try again."
+          'settings.profile.updateError',
+          'Failed to update profile. Please try again.'
         )
-      );
+      )
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   if (isFetching) {
     return (
-      <div className="flex items-center justify-center py-8">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      <div className='flex items-center justify-center py-8'>
+        <Loader2 className='h-8 w-8 animate-spin text-muted-foreground' />
       </div>
-    );
+    )
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
         {/* Profile Image */}
-        <div className="space-y-2">
+        <div className='space-y-2'>
           <FormLabel>
-            {t("settings.profile.profileImage", "Profile Image")}
+            {t('settings.profile.profileImage', 'Profile Image')}
           </FormLabel>
           <ImageUpload
-            type="avatar"
+            type='avatar'
             value={user?.image}
             onChange={setProfileImage}
-            size="lg"
-            name={form.watch("name") || user?.name}
+            size='lg'
+            name={form.watch('name') || user?.name}
           />
           <FormDescription>
             {t(
-              "settings.profile.profileImageDescription",
-              "Upload a profile picture. Max 5MB."
+              'settings.profile.profileImageDescription',
+              'Upload a profile picture. Max 5MB.'
             )}
           </FormDescription>
         </div>
@@ -221,23 +223,23 @@ export function ProfileForm() {
         {/* Name */}
         <FormField
           control={form.control}
-          name="name"
+          name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("settings.profile.name", "Full Name")} *</FormLabel>
+              <FormLabel>{t('settings.profile.name', 'Full Name')} *</FormLabel>
               <FormControl>
                 <Input
                   placeholder={t(
-                    "settings.profile.namePlaceholder",
-                    "Enter your full name"
+                    'settings.profile.namePlaceholder',
+                    'Enter your full name'
                   )}
                   {...field}
                 />
               </FormControl>
               <FormDescription>
                 {t(
-                  "settings.profile.nameDescription",
-                  "This is your public display name."
+                  'settings.profile.nameDescription',
+                  'This is your public display name.'
                 )}
               </FormDescription>
               <FormMessage />
@@ -248,17 +250,17 @@ export function ProfileForm() {
         {/* Email (read-only for now) */}
         <FormField
           control={form.control}
-          name="email"
+          name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("settings.profile.email", "Email")} *</FormLabel>
+              <FormLabel>{t('settings.profile.email', 'Email')} *</FormLabel>
               <FormControl>
                 <Input {...field} disabled />
               </FormControl>
               <FormDescription>
                 {t(
-                  "settings.profile.emailDescription",
-                  "Your email address cannot be changed."
+                  'settings.profile.emailDescription',
+                  'Your email address cannot be changed.'
                 )}
               </FormDescription>
               <FormMessage />
@@ -267,20 +269,20 @@ export function ProfileForm() {
         />
 
         {/* Company & Job Title */}
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className='grid gap-4 md:grid-cols-2'>
           <FormField
             control={form.control}
-            name="company"
+            name='company'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {t("settings.profile.company", "Company")}
+                  {t('settings.profile.company', 'Company')}
                 </FormLabel>
                 <FormControl>
                   <Input
                     placeholder={t(
-                      "settings.profile.companyPlaceholder",
-                      "Your company name"
+                      'settings.profile.companyPlaceholder',
+                      'Your company name'
                     )}
                     {...field}
                   />
@@ -292,17 +294,17 @@ export function ProfileForm() {
 
           <FormField
             control={form.control}
-            name="job_title"
+            name='job_title'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {t("settings.profile.jobTitle", "Job Title")}
+                  {t('settings.profile.jobTitle', 'Job Title')}
                 </FormLabel>
                 <FormControl>
                   <Input
                     placeholder={t(
-                      "settings.profile.jobTitlePlaceholder",
-                      "e.g., Software Engineer"
+                      'settings.profile.jobTitlePlaceholder',
+                      'e.g., Software Engineer'
                     )}
                     {...field}
                   />
@@ -314,14 +316,14 @@ export function ProfileForm() {
         </div>
 
         {/* Country & Phone */}
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className='grid gap-4 md:grid-cols-2'>
           <FormField
             control={form.control}
-            name="country"
+            name='country'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  {t("settings.profile.country", "Country")}
+                  {t('settings.profile.country', 'Country')}
                 </FormLabel>
                 <Select
                   onValueChange={field.onChange}
@@ -331,8 +333,8 @@ export function ProfileForm() {
                     <SelectTrigger>
                       <SelectValue
                         placeholder={t(
-                          "settings.profile.countryPlaceholder",
-                          "Select your country"
+                          'settings.profile.countryPlaceholder',
+                          'Select your country'
                         )}
                       />
                     </SelectTrigger>
@@ -352,15 +354,15 @@ export function ProfileForm() {
 
           <FormField
             control={form.control}
-            name="phone"
+            name='phone'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{t("settings.profile.phone", "Phone")}</FormLabel>
+                <FormLabel>{t('settings.profile.phone', 'Phone')}</FormLabel>
                 <FormControl>
                   <Input
                     placeholder={t(
-                      "settings.profile.phonePlaceholder",
-                      "+1 (555) 123-4567"
+                      'settings.profile.phonePlaceholder',
+                      '+1 (555) 123-4567'
                     )}
                     {...field}
                   />
@@ -374,15 +376,15 @@ export function ProfileForm() {
         {/* Website */}
         <FormField
           control={form.control}
-          name="website"
+          name='website'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("settings.profile.website", "Website")}</FormLabel>
+              <FormLabel>{t('settings.profile.website', 'Website')}</FormLabel>
               <FormControl>
                 <Input
                   placeholder={t(
-                    "settings.profile.websitePlaceholder",
-                    "https://yourwebsite.com"
+                    'settings.profile.websitePlaceholder',
+                    'https://yourwebsite.com'
                   )}
                   {...field}
                 />
@@ -395,24 +397,24 @@ export function ProfileForm() {
         {/* Bio */}
         <FormField
           control={form.control}
-          name="bio"
+          name='bio'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("settings.profile.bio", "Bio")}</FormLabel>
+              <FormLabel>{t('settings.profile.bio', 'Bio')}</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder={t(
-                    "settings.profile.bioPlaceholder",
-                    "Tell us a little bit about yourself..."
+                    'settings.profile.bioPlaceholder',
+                    'Tell us a little bit about yourself...'
                   )}
-                  className="min-h-[100px] resize-none"
+                  className='min-h-[100px] resize-none'
                   {...field}
                 />
               </FormControl>
               <FormDescription>
                 {t(
-                  "settings.profile.bioDescription",
-                  "Brief description for your profile. Max 500 characters."
+                  'settings.profile.bioDescription',
+                  'Brief description for your profile. Max 500 characters.'
                 )}
               </FormDescription>
               <FormMessage />
@@ -420,17 +422,17 @@ export function ProfileForm() {
           )}
         />
 
-        <Button type="submit" disabled={isLoading}>
+        <Button type='submit' disabled={isLoading}>
           {isLoading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              {t("settings.profile.updating", "Updating...")}
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              {t('settings.profile.updating', 'Updating...')}
             </>
           ) : (
-            t("settings.profile.updateProfile", "Update Profile")
+            t('settings.profile.updateProfile', 'Update Profile')
           )}
         </Button>
       </form>
     </Form>
-  );
+  )
 }

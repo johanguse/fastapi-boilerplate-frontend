@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { ResetPassword } from '@/features/auth/reset-password'
 
 export const Route = createFileRoute('/(auth)/reset-password')({

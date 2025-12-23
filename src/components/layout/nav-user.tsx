@@ -1,6 +1,5 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from '@tanstack/react-router'
 import {
-  BadgeCheck,
   Bell,
   ChevronsUpDown,
   CreditCard,
@@ -8,10 +7,10 @@ import {
   LogOut,
   Sparkles,
   UserCog,
-} from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { SignOutDialog } from "@/components/sign-out-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+} from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { SignOutDialog } from '@/components/sign-out-dialog'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,51 +22,51 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import useDialogState from "@/hooks/use-dialog-state";
-import { useAuth } from "@/stores/auth-store";
+} from '@/components/ui/sidebar'
+import useDialogState from '@/hooks/use-dialog-state'
+import { useAuth } from '@/stores/auth-store'
 
 const languages = [
-  { code: "en-US", name: "English (US)", flag: "🇺🇸" },
-  { code: "en-GB", name: "English (UK)", flag: "🇬🇧" },
-  { code: "es-ES", name: "Español (España)", flag: "🇪🇸" },
-  { code: "es-MX", name: "Español (México)", flag: "🇲🇽" },
-  { code: "fr-FR", name: "Français (France)", flag: "🇫🇷" },
-  { code: "fr-CA", name: "Français (Canada)", flag: "🇨🇦" },
-  { code: "de-DE", name: "Deutsch (Deutschland)", flag: "🇩🇪" },
-  { code: "pt-BR", name: "Português (Brasil)", flag: "🇧🇷" },
-  { code: "pt-PT", name: "Português (Portugal)", flag: "🇵🇹" },
-];
+  { code: 'en-US', name: 'English (US)', flag: '🇺🇸' },
+  { code: 'en-GB', name: 'English (UK)', flag: '🇬🇧' },
+  { code: 'es-ES', name: 'Español (España)', flag: '🇪🇸' },
+  { code: 'es-MX', name: 'Español (México)', flag: '🇲🇽' },
+  { code: 'fr-FR', name: 'Français (France)', flag: '🇫🇷' },
+  { code: 'fr-CA', name: 'Français (Canada)', flag: '🇨🇦' },
+  { code: 'de-DE', name: 'Deutsch (Deutschland)', flag: '🇩🇪' },
+  { code: 'pt-BR', name: 'Português (Brasil)', flag: '🇧🇷' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' },
+]
 
 export function NavUser() {
-  const { isMobile } = useSidebar();
-  const [open, setOpen] = useDialogState();
-  const { t, i18n } = useTranslation();
-  const { user } = useAuth();
+  const { isMobile } = useSidebar()
+  const [open, setOpen] = useDialogState()
+  const { t, i18n } = useTranslation()
+  const { user } = useAuth()
 
   // Use current user data
-  const currentUser = user;
-  const userName = currentUser?.name || "User";
-  const userEmail = currentUser?.email || "user@example.com";
+  const currentUser = user
+  const userName = currentUser?.name || 'User'
+  const userEmail = currentUser?.email || 'user@example.com'
   const userInitials = userName
-    .split(" ")
+    .split(' ')
     .map((name: string) => name[0])
-    .join("")
+    .join('')
     .toUpperCase()
-    .slice(0, 2);
+    .slice(0, 2)
 
   const currentLanguage =
-    languages.find((lang) => lang.code === i18n.language) || languages[0];
+    languages.find((lang) => lang.code === i18n.language) || languages[0]
 
   const changeLanguage = (langCode: string) => {
-    i18n.changeLanguage(langCode);
-  };
+    i18n.changeLanguage(langCode)
+  }
 
   return (
     <>
@@ -76,39 +75,39 @@ export function NavUser() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
-                size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                size='lg'
+                className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
               >
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src="/avatars/shadcn.jpg" alt={userName} />
-                  <AvatarFallback className="rounded-lg">
+                <Avatar className='h-8 w-8 rounded-lg'>
+                  <AvatarImage src='/avatars/shadcn.jpg' alt={userName} />
+                  <AvatarFallback className='rounded-lg'>
                     {userInitials}
                   </AvatarFallback>
                 </Avatar>
-                <div className="grid flex-1 text-start text-sm leading-tight">
-                  <span className="truncate font-semibold">{userName}</span>
-                  <span className="truncate text-xs">{userEmail}</span>
+                <div className='grid flex-1 text-start text-sm leading-tight'>
+                  <span className='truncate font-semibold'>{userName}</span>
+                  <span className='truncate text-xs'>{userEmail}</span>
                 </div>
-                <ChevronsUpDown className="ms-auto size-4" />
+                <ChevronsUpDown className='ms-auto size-4' />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-              side={isMobile ? "bottom" : "right"}
-              align="end"
+              className='w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg'
+              side={isMobile ? 'bottom' : 'right'}
+              align='end'
               sideOffset={4}
             >
-              <DropdownMenuLabel className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src="/avatars/shadcn.jpg" alt={userName} />
-                    <AvatarFallback className="rounded-lg">
+              <DropdownMenuLabel className='p-0 font-normal'>
+                <div className='flex items-center gap-2 px-1 py-1.5 text-start text-sm'>
+                  <Avatar className='h-8 w-8 rounded-lg'>
+                    <AvatarImage src='/avatars/shadcn.jpg' alt={userName} />
+                    <AvatarFallback className='rounded-lg'>
                       {userInitials}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="grid flex-1 text-start text-sm leading-tight">
-                    <span className="truncate font-semibold">{userName}</span>
-                    <span className="truncate text-xs">{userEmail}</span>
+                  <div className='grid flex-1 text-start text-sm leading-tight'>
+                    <span className='truncate font-semibold'>{userName}</span>
+                    <span className='truncate text-xs'>{userEmail}</span>
                   </div>
                 </div>
               </DropdownMenuLabel>
@@ -116,7 +115,7 @@ export function NavUser() {
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <Sparkles />
-                  {t("navigation.upgradeToPro", "Upgrade to Pro")}
+                  {t('navigation.upgradeToPro', 'Upgrade to Pro')}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
@@ -125,8 +124,8 @@ export function NavUser() {
                   <DropdownMenuSubTrigger>
                     <Languages />
                     <span>
-                      {currentLanguage.flag}{" "}
-                      {t("settings.language", "Language")}
+                      {currentLanguage.flag}{' '}
+                      {t('settings.language', 'Language')}
                     </span>
                   </DropdownMenuSubTrigger>
                   <DropdownMenuSubContent>
@@ -134,12 +133,12 @@ export function NavUser() {
                       <DropdownMenuItem
                         key={language.code}
                         onClick={() => changeLanguage(language.code)}
-                        className="flex items-center gap-2"
+                        className='flex items-center gap-2'
                       >
                         <span>{language.flag}</span>
                         <span>{language.name}</span>
                         {i18n.language === language.code && (
-                          <span className="ml-auto">✓</span>
+                          <span className='ml-auto'>✓</span>
                         )}
                       </DropdownMenuItem>
                     ))}
@@ -149,28 +148,28 @@ export function NavUser() {
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                  <Link to="/settings">
+                  <Link to='/settings'>
                     <UserCog />
-                    {t("navigation.profile", "Profile")}
+                    {t('navigation.profile', 'Profile')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/settings">
+                  <Link to='/settings'>
                     <CreditCard />
-                    {t("navigation.billing", "Billing")}
+                    {t('navigation.billing', 'Billing')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/settings/notifications">
+                  <Link to='/settings/notifications'>
                     <Bell />
-                    {t("navigation.notifications", "Notifications")}
+                    {t('navigation.notifications', 'Notifications')}
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setOpen(true)}>
                 <LogOut />
-                {t("auth.signOutTitle", "Sign out")}
+                {t('auth.signOutTitle', 'Sign out')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -179,5 +178,5 @@ export function NavUser() {
 
       <SignOutDialog open={!!open} onOpenChange={setOpen} />
     </>
-  );
+  )
 }

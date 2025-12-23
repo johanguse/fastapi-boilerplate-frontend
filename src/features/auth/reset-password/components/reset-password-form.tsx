@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { PasswordInput } from '@/components/password-input'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -15,7 +16,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { PasswordInput } from '@/components/password-input'
 import { api } from '@/lib/api'
 
 type ResetPasswordFormProps = {
@@ -107,18 +107,13 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className='grid gap-4'
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className='grid gap-4'>
         <FormField
           control={form.control}
           name='password'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                {t('auth.newPassword', 'New Password')}
-              </FormLabel>
+              <FormLabel>{t('auth.newPassword', 'New Password')}</FormLabel>
               <FormControl>
                 <PasswordInput
                   placeholder={t(
@@ -155,11 +150,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           )}
         />
 
-        <Button
-          type='submit'
-          className='mt-2'
-          disabled={isLoading}
-        >
+        <Button type='submit' className='mt-2' disabled={isLoading}>
           {isLoading ? (
             <>
               <Loader2 className='mr-2 h-4 w-4 animate-spin' />
@@ -176,4 +167,3 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     </Form>
   )
 }
-

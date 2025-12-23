@@ -24,178 +24,178 @@ import {
   UserCog,
   Users,
   UserX,
-} from "lucide-react";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { useOrganizations } from "@/hooks/use-organizations";
-import { useAuth } from "@/stores/auth-store";
-import { type SidebarData } from "../types";
+} from 'lucide-react'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useOrganizations } from '@/hooks/use-organizations'
+import { useAuth } from '@/stores/auth-store'
+import { type SidebarData } from '../types'
 
 export function useSidebarData(): SidebarData {
-  const { t } = useTranslation();
-  const { user, isAdmin } = useAuth();
-  const { activeOrganization } = useOrganizations();
+  const { t } = useTranslation()
+  const { user, isAdmin } = useAuth()
+  const { activeOrganization } = useOrganizations()
 
   return useMemo(
     (): SidebarData => ({
       user: {
-        name: user?.name || t("common.loading", "Loading..."),
-        email: user?.email || t("common.loading", "Loading..."),
-        avatar: "/avatars/shadcn.jpg",
+        name: user?.name || t('common.loading', 'Loading...'),
+        email: user?.email || t('common.loading', 'Loading...'),
+        avatar: '/avatars/shadcn.jpg',
       },
       teams: [
         {
           name:
             activeOrganization?.name ||
-            t("organizations.title", "Organizations"),
+            t('organizations.title', 'Organizations'),
           logo: Building2,
-          plan: activeOrganization?.plan || "Free",
+          plan: activeOrganization?.plan || 'Free',
         },
       ],
       navGroups: [
         {
-          title: t("common.general", "General"),
+          title: t('common.general', 'General'),
           items: [
             {
-              title: t("navigation.dashboard", "Dashboard"),
-              url: "/",
+              title: t('navigation.dashboard', 'Dashboard'),
+              url: '/',
               icon: LayoutDashboard,
             },
             {
-              title: t("navigation.organizations", "Organizations"),
-              url: "/organizations",
+              title: t('navigation.organizations', 'Organizations'),
+              url: '/organizations',
               icon: Building2,
             },
           ],
         },
         {
-          title: t("navigation.aiApplications", "AI Applications"),
+          title: t('navigation.aiApplications', 'AI Applications'),
           items: [
             {
-              title: t("navigation.aiDocuments", "AI Documents"),
-              url: "/ai-documents",
+              title: t('navigation.aiDocuments', 'AI Documents'),
+              url: '/ai-documents',
               icon: FileText,
             },
             {
-              title: t("navigation.aiContent", "AI Content"),
-              url: "/ai-content",
+              title: t('navigation.aiContent', 'AI Content'),
+              url: '/ai-content',
               icon: MessagesSquare,
             },
             {
-              title: t("navigation.aiAnalytics", "AI Analytics"),
-              url: "/ai-analytics",
+              title: t('navigation.aiAnalytics', 'AI Analytics'),
+              url: '/ai-analytics',
               icon: BarChart3,
             },
           ],
         },
         {
-          title: t("navigation.staticPages", "Static Pages & Examples"),
+          title: t('navigation.staticPages', 'Static Pages & Examples'),
           items: [
             {
-              title: t("navigation.dashboardDemo", "Dashboard Demo"),
-              url: "/demo/dashboard-demo",
+              title: t('navigation.dashboardDemo', 'Dashboard Demo'),
+              url: '/demo/dashboard-demo',
               icon: LayoutDashboard,
             },
             {
-              title: t("navigation.tasks", "Tasks"),
-              url: "/demo/tasks",
+              title: t('navigation.tasks', 'Tasks'),
+              url: '/demo/tasks',
               icon: ListTodo,
             },
             {
-              title: t("navigation.apps", "Apps"),
-              url: "/demo/apps",
+              title: t('navigation.apps', 'Apps'),
+              url: '/demo/apps',
               icon: Package,
             },
             {
-              title: t("navigation.chats", "Chats"),
-              url: "/demo/chats",
-              badge: "3",
+              title: t('navigation.chats', 'Chats'),
+              url: '/demo/chats',
+              badge: '3',
               icon: MessagesSquare,
             },
             {
-              title: t("navigation.users", "Users"),
-              url: "/demo/users",
+              title: t('navigation.users', 'Users'),
+              url: '/demo/users',
               icon: Users,
             },
             {
-              title: t("navigation.settings", "Settings"),
+              title: t('navigation.settings', 'Settings'),
               icon: Settings,
               items: [
                 {
-                  title: t("settings.nav.profile", "Profile"),
-                  url: "/demo/settings",
+                  title: t('settings.nav.profile', 'Profile'),
+                  url: '/demo/settings',
                   icon: UserCog,
                 },
                 {
-                  title: t("settings.nav.appearance", "Appearance"),
-                  url: "/demo/settings/appearance",
+                  title: t('settings.nav.appearance', 'Appearance'),
+                  url: '/demo/settings/appearance',
                   icon: Palette,
                 },
                 {
-                  title: t("settings.nav.notifications", "Notifications"),
-                  url: "/demo/settings/notifications",
+                  title: t('settings.nav.notifications', 'Notifications'),
+                  url: '/demo/settings/notifications',
                   icon: Bell,
                 },
               ],
             },
             {
-              title: t("navigation.helpCenter", "Help Center"),
-              url: "/demo/help-center",
+              title: t('navigation.helpCenter', 'Help Center'),
+              url: '/demo/help-center',
               icon: HelpCircle,
             },
             {
-              title: t("navigation.auth", "Authentication"),
+              title: t('navigation.auth', 'Authentication'),
               icon: ShieldCheck,
               items: [
                 {
-                  title: t("auth.signIn", "Sign In"),
-                  url: "/sign-in",
+                  title: t('auth.signIn', 'Sign In'),
+                  url: '/sign-in',
                 },
                 {
-                  title: t("auth.signIn", "Sign In") + " (2 Col)",
-                  url: "/sign-in-2",
+                  title: t('auth.signIn', 'Sign In') + ' (2 Col)',
+                  url: '/sign-in-2',
                 },
                 {
-                  title: t("auth.signUp", "Sign Up"),
-                  url: "/sign-up",
+                  title: t('auth.signUp', 'Sign Up'),
+                  url: '/sign-up',
                 },
                 {
-                  title: t("auth.forgotPassword", "Forgot Password"),
-                  url: "/forgot-password",
+                  title: t('auth.forgotPassword', 'Forgot Password'),
+                  url: '/forgot-password',
                 },
                 {
-                  title: t("auth.otp.title", "Two-factor Authentication"),
-                  url: "/otp",
+                  title: t('auth.otp.title', 'Two-factor Authentication'),
+                  url: '/otp',
                 },
               ],
             },
             {
-              title: t("navigation.errors", "Errors"),
+              title: t('navigation.errors', 'Errors'),
               icon: Bug,
               items: [
                 {
-                  title: t("auth.unauthorized", "Unauthorized"),
-                  url: "/errors/unauthorized",
+                  title: t('auth.unauthorized', 'Unauthorized'),
+                  url: '/errors/unauthorized',
                   icon: Lock,
                 },
                 {
-                  title: t("auth.forbidden", "Forbidden"),
-                  url: "/errors/forbidden",
+                  title: t('auth.forbidden', 'Forbidden'),
+                  url: '/errors/forbidden',
                   icon: UserX,
                 },
                 {
-                  title: t("auth.notFound", "Not Found"),
-                  url: "/errors/not-found",
+                  title: t('auth.notFound', 'Not Found'),
+                  url: '/errors/not-found',
                   icon: FileX,
                 },
                 {
-                  title: t("auth.internalServerError", "Internal Server Error"),
-                  url: "/errors/internal-server-error",
+                  title: t('auth.internalServerError', 'Internal Server Error'),
+                  url: '/errors/internal-server-error',
                   icon: ServerOff,
                 },
                 {
-                  title: t("auth.maintenanceError", "Maintenance Error"),
-                  url: "/errors/maintenance-error",
+                  title: t('auth.maintenanceError', 'Maintenance Error'),
+                  url: '/errors/maintenance-error',
                   icon: Construction,
                 },
               ],
@@ -203,16 +203,16 @@ export function useSidebarData(): SidebarData {
           ],
         },
         {
-          title: t("navigation.settings", "Settings"),
+          title: t('navigation.settings', 'Settings'),
           items: [
             {
-              title: t("settings.nav.profile", "Profile"),
-              url: "/settings",
+              title: t('settings.nav.profile', 'Profile'),
+              url: '/settings',
               icon: UserCog,
             },
             {
-              title: t("settings.nav.billing", "Billing"),
-              url: "/settings/billing",
+              title: t('settings.nav.billing', 'Billing'),
+              url: '/settings/billing',
               icon: CreditCard,
             },
           ],
@@ -221,21 +221,21 @@ export function useSidebarData(): SidebarData {
         ...(isAdmin
           ? [
               {
-                title: t("admin.title", "Admin"),
+                title: t('admin.title', 'Admin'),
                 items: [
                   {
-                    title: t("admin.reports.title", "Reports & Analytics"),
-                    url: "/admin/reports",
+                    title: t('admin.reports.title', 'Reports & Analytics'),
+                    url: '/admin/reports',
                     icon: Shield,
                   },
                   {
-                    title: t("admin.users.title", "User Management"),
-                    url: "/admin/users",
+                    title: t('admin.users.title', 'User Management'),
+                    url: '/admin/users',
                     icon: Users,
                   },
                   {
-                    title: t("admin.activityLogs.title", "Activity Logs"),
-                    url: "/admin/activity-logs",
+                    title: t('admin.activityLogs.title', 'Activity Logs'),
+                    url: '/admin/activity-logs',
                     icon: Activity,
                   },
                 ],
@@ -245,17 +245,17 @@ export function useSidebarData(): SidebarData {
       ],
       secondaryNav: [
         {
-          title: t("navigation.support", "Support"),
-          url: "/support",
+          title: t('navigation.support', 'Support'),
+          url: '/support',
           icon: LifeBuoy,
         },
         {
-          title: t("navigation.feedback", "Feedback"),
-          url: "/feedback",
+          title: t('navigation.feedback', 'Feedback'),
+          url: '/feedback',
           icon: MessageCircle,
         },
       ],
     }),
     [t, user, isAdmin, activeOrganization]
-  );
+  )
 }

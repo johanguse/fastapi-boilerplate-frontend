@@ -25,7 +25,7 @@ function CheckEmailPage() {
     email?: string
     type?: string
   }
-  
+
   const isPasswordReset = type === 'password-reset'
   const [isResending, setIsResending] = useState(false)
   const [canResend, setCanResend] = useState(true)
@@ -65,7 +65,7 @@ function CheckEmailPage() {
       const endpoint = isPasswordReset
         ? '/api/v1/auth/forgot-password'
         : '/api/v1/auth/resend-verification'
-      
+
       const response = await fetch(
         `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${endpoint}`,
         {
@@ -150,16 +150,16 @@ function CheckEmailPage() {
                     )}{' '}
                 <strong className='font-medium text-foreground'>{email}</strong>
               </>
+            ) : isPasswordReset ? (
+              t(
+                'auth.checkEmail.passwordResetDescription',
+                'We sent you a password reset link. Please check your email.'
+              )
             ) : (
-              isPasswordReset
-                ? t(
-                    'auth.checkEmail.passwordResetDescription',
-                    'We sent you a password reset link. Please check your email.'
-                  )
-                : t(
-                    'auth.checkEmail.description',
-                    'We sent you a verification link. Please check your email.'
-                  )
+              t(
+                'auth.checkEmail.description',
+                'We sent you a verification link. Please check your email.'
+              )
             )}
           </CardDescription>
         </CardHeader>
@@ -212,7 +212,7 @@ function CheckEmailPage() {
             </div>
 
             <div className='rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950'>
-              <p className='text-blue-900 dark:text-blue-100 text-sm'>
+              <p className='text-blue-900 text-sm dark:text-blue-100'>
                 <strong>{t('auth.checkEmail.note', 'Note:')}</strong>{' '}
                 {t(
                   'auth.checkEmail.noteDescription',
@@ -225,7 +225,7 @@ function CheckEmailPage() {
 
         <CardFooter className='flex flex-col gap-2'>
           {!canResend && (
-            <div className='w-full text-center text-muted-foreground text-sm mb-2'>
+            <div className='mb-2 w-full text-center text-muted-foreground text-sm'>
               <p>
                 {t(
                   'auth.emailVerification.nextRequest',

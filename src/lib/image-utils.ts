@@ -5,13 +5,13 @@
 export const IMAGE_CONFIG = {
   maxSizeInMB: 5,
   maxSizeInBytes: 5 * 1024 * 1024, // 5MB
-  acceptedTypes: ["image/jpeg", "image/jpg", "image/png", "image/webp"],
-  acceptedExtensions: [".jpg", ".jpeg", ".png", ".webp"],
-} as const;
+  acceptedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'],
+  acceptedExtensions: ['.jpg', '.jpeg', '.png', '.webp'],
+} as const
 
 export interface ImageValidationError {
-  type: "size" | "format" | "general";
-  message: string;
+  type: 'size' | 'format' | 'general'
+  message: string
 }
 
 /**
@@ -29,10 +29,10 @@ export function validateImage(
     return {
       valid: false,
       error: {
-        type: "format",
-        message: `Invalid file format. Please upload ${IMAGE_CONFIG.acceptedExtensions.join(", ")} files only.`,
+        type: 'format',
+        message: `Invalid file format. Please upload ${IMAGE_CONFIG.acceptedExtensions.join(', ')} files only.`,
       },
-    };
+    }
   }
 
   // Check file size
@@ -40,13 +40,13 @@ export function validateImage(
     return {
       valid: false,
       error: {
-        type: "size",
+        type: 'size',
         message: `File size must be less than ${IMAGE_CONFIG.maxSizeInMB}MB.`,
       },
-    };
+    }
   }
 
-  return { valid: true };
+  return { valid: true }
 }
 
 /**
@@ -58,63 +58,63 @@ export async function optimizeImage(
   quality = 0.8
 ): Promise<File> {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+    const reader = new FileReader()
 
     reader.onload = (e) => {
-      const img = new Image();
+      const img = new Image()
       img.onload = () => {
-        const canvas = document.createElement("canvas");
-        let { width, height } = img;
+        const canvas = document.createElement('canvas')
+        let { width, height } = img
 
         // Calculate new dimensions
         if (width > maxWidth) {
-          height = (height * maxWidth) / width;
-          width = maxWidth;
+          height = (height * maxWidth) / width
+          width = maxWidth
         }
 
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = width
+        canvas.height = height
 
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext('2d')
         if (!ctx) {
-          reject(new Error("Failed to get canvas context"));
-          return;
+          reject(new Error('Failed to get canvas context'))
+          return
         }
 
-        ctx.drawImage(img, 0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height)
 
         canvas.toBlob(
           (blob) => {
             if (!blob) {
-              reject(new Error("Failed to create blob"));
-              return;
+              reject(new Error('Failed to create blob'))
+              return
             }
 
             const optimizedFile = new File([blob], file.name, {
               type: file.type,
               lastModified: Date.now(),
-            });
+            })
 
-            resolve(optimizedFile);
+            resolve(optimizedFile)
           },
           file.type,
           quality
-        );
-      };
+        )
+      }
 
       img.onerror = () => {
-        reject(new Error("Failed to load image"));
-      };
+        reject(new Error('Failed to load image'))
+      }
 
-      img.src = e.target?.result as string;
-    };
+      img.src = e.target?.result as string
+    }
 
     reader.onerror = () => {
-      reject(new Error("Failed to read file"));
-    };
+      reject(new Error('Failed to read file'))
+    }
 
-    reader.readAsDataURL(file);
-  });
+    reader.readAsDataURL(file)
+  })
 }
 
 /**
@@ -122,36 +122,36 @@ export async function optimizeImage(
  */
 export function fileToBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
 }
 
 /**
  * Get initials from name
  */
 export function getInitials(name: string): string {
-  if (!name) return "?";
+  if (!name) return '?'
 
-  const parts = name.trim().split(/\s+/);
+  const parts = name.trim().split(/\s+/)
   if (parts.length === 1) {
-    return parts[0].charAt(0).toUpperCase();
+    return parts[0].charAt(0).toUpperCase()
   }
 
-  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase()
 }
 
 /**
  * Generate a color from string (for avatar backgrounds)
  */
 export function stringToColor(str: string): string {
-  let hash = 0;
+  let hash = 0
   for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    hash = str.charCodeAt(i) + ((hash << 5) - hash)
   }
 
-  const hue = hash % 360;
-  return `hsl(${hue}, 65%, 50%)`;
+  const hue = hash % 360
+  return `hsl(${hue}, 65%, 50%)`
 }
