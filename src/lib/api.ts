@@ -127,6 +127,12 @@ export interface User {
   phone?: string
   bio?: string
   website?: string
+  tax_id?: string
+  address_street?: string
+  address_city?: string
+  address_state?: string
+  address_postal_code?: string
+  company_name?: string
 }
 
 export interface PaginatedResponse<T> {

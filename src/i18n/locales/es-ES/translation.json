@@ -392,7 +392,27 @@
     "title": "Facturación y Suscripción",
     "upgradePlan": "Actualizar Plan",
     "usage": "Uso",
-    "usageDescription": "Uso actual de los recursos de tu plan"
+    "usageDescription": "Uso actual de los recursos de tu plan",
+    "modalTitle": "Información de Facturación Requerida",
+    "modalDescription": "Por favor, proporcione sus detalles de facturación para {{action}}. Esta información se utilizará para las facturas.",
+    "saveSuccess": "¡Información de facturación guardada con éxito!",
+    "saveError": "Error al guardar la información de facturación. Por favor, inténtelo de nuevo.",
+    "saveAndContinue": "Guardar y Continuar",
+    "requiredFieldsInfo": "Todos los campos marcados son obligatorios para la generación de la factura.",
+    "fields": {
+      "companyName": "Nombre / Razón Social",
+      "taxId": "CIF / NIF / ID Fiscal",
+      "taxIdDescription": "NIF, CIF, IVA u otro número de identificación fiscal",
+      "country": "País",
+      "addressStreet": "Dirección",
+      "addressCity": "Ciudad",
+      "addressState": "Estado / Provincia",
+      "addressPostalCode": "Código Postal"
+    },
+    "placeholders": {
+      "companyName": "Su nombre o razón social",
+      "country": "Seleccione su país"
+    }
   },
   "dataTable": {
     "pagination": {

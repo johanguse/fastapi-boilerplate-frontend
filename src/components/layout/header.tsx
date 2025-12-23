@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useEffectEvent, useState } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
@@ -11,16 +11,16 @@ type HeaderProps = React.HTMLAttributes<HTMLElement> & {
 export function Header({ className, fixed, children, ...props }: HeaderProps) {
   const [offset, setOffset] = useState(0)
 
-  useEffect(() => {
-    const onScroll = () => {
-      setOffset(document.body.scrollTop || document.documentElement.scrollTop)
-    }
+  const onScrollEvent = useEffectEvent(() => {
+    setOffset(document.body.scrollTop || document.documentElement.scrollTop)
+  })
 
+  useEffect(() => {
     // Add scroll listener to the body
-    document.addEventListener('scroll', onScroll, { passive: true })
+    document.addEventListener('scroll', onScrollEvent, { passive: true })
 
     // Clean up the event listener on unmount
-    return () => document.removeEventListener('scroll', onScroll)
+    return () => document.removeEventListener('scroll', onScrollEvent)
   }, [])
 
   return (

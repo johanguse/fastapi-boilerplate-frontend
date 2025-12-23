@@ -392,7 +392,27 @@
     "title": "Faturamento e Assinatura",
     "upgradePlan": "Atualizar Plano",
     "usage": "Uso",
-    "usageDescription": "Uso atual dos recursos do seu plano"
+    "usageDescription": "Uso atual dos recursos do seu plano",
+    "modalTitle": "Informações de Cobrança Necessárias",
+    "modalDescription": "Por favor, forneça seus dados de cobrança para {{action}}. Estas informações serão usadas para faturas.",
+    "saveSuccess": "Informações de cobrança salvas com sucesso!",
+    "saveError": "Falha ao salvar informações de cobrança. Por favor, tente novamente.",
+    "saveAndContinue": "Salvar e Continuar",
+    "requiredFieldsInfo": "Todos os campos marcados são obrigatórios para emissão de nota fiscal.",
+    "fields": {
+      "companyName": "Nome / Razão Social",
+      "taxId": "CPF / CNPJ / ID Fiscal",
+      "taxIdDescription": "CPF, CNPJ, VAT ou outro número de identificação fiscal",
+      "country": "País",
+      "addressStreet": "Endereço",
+      "addressCity": "Cidade",
+      "addressState": "Estado / Província",
+      "addressPostalCode": "CEP / Código Postal"
+    },
+    "placeholders": {
+      "companyName": "Seu nome ou razão social",
+      "country": "Selecione seu país"
+    }
   },
   "dataTable": {
     "pagination": {

@@ -392,7 +392,27 @@
     "title": "Facturation et Abonnement",
     "upgradePlan": "Mettre à Niveau le Plan",
     "usage": "Utilisation",
-    "usageDescription": "Utilisation actuelle des ressources de votre plan"
+    "usageDescription": "Utilisation actuelle des ressources de votre plan",
+    "modalTitle": "Informations de facturation requises",
+    "modalDescription": "Veuillez fournir vos détails de facturation pour {{action}}. Ces informations seront utilisées pour les factures.",
+    "saveSuccess": "Informations de facturation enregistrées avec succès !",
+    "saveError": "Échec de l'enregistrement des informations de facturation. Veuillez réessayer.",
+    "saveAndContinue": "Enregistrer et Continuer",
+    "requiredFieldsInfo": "Tous les champs marqués sont requis pour la génération de la facture.",
+    "fields": {
+      "companyName": "Nom / Nom de l'entreprise",
+      "taxId": "Numéro de taxe / ID fiscal",
+      "taxIdDescription": "TPS, TVH, EIN, ou autre numéro d'identification fiscale",
+      "country": "Pays",
+      "addressStreet": "Adresse",
+      "addressCity": "Ville",
+      "addressState": "Province / État",
+      "addressPostalCode": "Code postal"
+    },
+    "placeholders": {
+      "companyName": "Votre nom ou nom de l'entreprise",
+      "country": "Sélectionnez votre pays"
+    }
   },
   "dataTable": {
     "pagination": {

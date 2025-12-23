@@ -1,15 +1,20 @@
 # Hey API - End-to-End Type Safety
 
-This project uses [Hey API](https://heyapi.dev/) to generate a type-safe TypeScript SDK from the FastAPI backend's OpenAPI specification.
+This project uses [Hey API](https://heyapi.dev/) to generate a type-safe TypeScript SDK from the backend's OpenAPI specification.
+
+**Supported Backends:**
+- **FastAPI** (Python) - Port 8000
+- **Bun + Hono** (TypeScript) - Port 3000
 
 ## Overview
 
-Hey API automatically generates TypeScript types and SDK methods from your Pydantic models and FastAPI routes. This provides:
+Hey API automatically generates TypeScript types and SDK methods from your backend's OpenAPI spec. This provides:
 
 - **End-to-end type safety**: Changes to backend models immediately flag TypeScript errors
 - **Full autocompletion**: Method names, parameters, and response objects are all typed
 - **Eliminates API drift**: The SDK always matches the actual API implementation
 - **Clean SDK methods**: Custom operation IDs generate intuitive method names
+- **Multi-backend support**: Same frontend works with either FastAPI or Bun+Hono
 
 ## Quick Start
 
@@ -18,8 +23,11 @@ Hey API automatically generates TypeScript types and SDK methods from your Pydan
 Make sure the backend is running, then:
 
 ```bash
-# Generate the TypeScript SDK
+# Generate from FastAPI backend (port 8000 - default)
 bun run gen:api
+
+# Generate from Bun + Hono backend (port 3000)
+bun run gen:api:bun
 
 # Or with watch mode during development
 bun run gen:api:watch
@@ -78,19 +86,61 @@ After regenerating the SDK (`bun run gen:api`), TypeScript will immediately show
 
 ## Configuration
 
-### Backend (FastAPI)
+### Backend Support
 
-The backend generates clean operation IDs for better SDK method names. See [src/common/openapi.py](../backend/src/common/openapi.py) for the custom OpenAPI schema generation.
+This frontend supports two backends:
+
+| Backend | Language | Port | OpenAPI Endpoint |
+|---------|----------|------|------------------|
+| FastAPI | Python | 8000 | `http://localhost:8000/openapi.json` |
+| Bun + Hono | TypeScript | 3000 | `http://localhost:3000/openapi.json` |
+
+### Switching Backends
+
+Set `VITE_BACKEND_TYPE` in your `.env` file:
+
+```bash
+# Use FastAPI backend (default)
+VITE_BACKEND_TYPE=fastapi
+
+# Use Bun + Hono backend
+VITE_BACKEND_TYPE=bun
+```
+
+Pre-configured `.env` files are available:
+- `.env.fastapi` - FastAPI configuration
+- `.env.bun` - Bun + Hono configuration
+
+Copy the appropriate file to `.env`:
+
+```bash
+# For FastAPI
+cp .env.fastapi .env
+
+# For Bun + Hono
+cp .env.bun .env
+```
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_BACKEND_TYPE` | Backend type: `fastapi` or `bun` | `fastapi` |
+| `VITE_API_URL_FASTAPI` | FastAPI API URL | `http://localhost:8000/api/v1` |
+| `VITE_API_URL_BUN` | Bun + Hono API URL | `http://localhost:3000/api/v1` |
+| `VITE_API_URL` | Override URL (takes precedence) | - |
+| `OPENAPI_FILE` | OpenAPI spec URL for SDK generation | Based on backend |
 
 ### Frontend Configuration
 
-Configuration is in [openapi-ts.config.ts](../frontend/openapi-ts.config.ts):
+Configuration is in [openapi-ts.config.ts](openapi-ts.config.ts):
 
 ```typescript
 import { defineConfig } from "@hey-api/openapi-ts";
 
 export default defineConfig({
-  input: "http://localhost:8000/openapi.json",
+  // Use OPENAPI_FILE env var or default to FastAPI
+  input: process.env.OPENAPI_FILE || "http://localhost:8000/openapi.json",
   output: {
     path: "src/client",
     format: "biome",
@@ -101,7 +151,7 @@ export default defineConfig({
     "@hey-api/sdk",
     {
       name: "@hey-api/client-axios",
-      runtimeConfigPath: "./src/hey-api.ts",
+      runtimeConfigPath: "../hey-api",
     },
   ],
 });
@@ -109,11 +159,12 @@ export default defineConfig({
 
 ### Runtime Configuration
 
-The client is configured in [src/hey-api.ts](../frontend/src/hey-api.ts) with:
+The client is configured in [src/hey-api.ts](src/hey-api.ts) with:
 
-- Base URL configuration
+- Dynamic backend URL selection based on `VITE_BACKEND_TYPE`
 - Auth token injection
 - Error handling interceptors
+- Development logging to show active backend
 
 ## Generated Method Names
 

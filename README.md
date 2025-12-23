@@ -1,8 +1,10 @@
-# FastAPI Boilerplate Frontend
+# Boilerplate Frontend
 
 Modern admin dashboard built with React, TypeScript, and Shadcn UI. Features internationalization, authentication with session persistence, and a comprehensive component library.
 
-This project serves as a complete frontend boilerplate for FastAPI applications, providing authentication, internationalization, and a beautiful admin interface out of the box.
+This project serves as a complete frontend boilerplate that works with **two backend options**:
+- **FastAPI** (Python) - Port 8000
+- **Bun + Hono** (TypeScript) - Port 3000
 
 ## ✨ Features
 
@@ -41,6 +43,7 @@ This project serves as a complete frontend boilerplate for FastAPI applications,
 
 ### 🛠 Developer Experience
 
+- **React 19.2**: Latest React with `useEffectEvent` for cleaner effect handling
 - **TypeScript**: Full type safety throughout the application
 - **Bun**: Ultra-fast JavaScript runtime and package manager
 - **Vite**: Fast build tool with Hot Module Replacement (HMR)
@@ -135,7 +138,9 @@ This project uses Shadcn UI components, with some customized for better RTL supp
 ### Prerequisites
 
 - Node.js 18+ and Bun (or pnpm/npm/yarn)
-- FastAPI backend running (for authentication)
+- One of the following backends running:
+  - **FastAPI** (Python) on port 8000
+  - **Bun + Hono** (TypeScript) on port 3000
 
 ### Installation
 
@@ -146,26 +151,48 @@ git clone <repository-url>
 cd boilerplate/frontend
 ```
 
-1. Install dependencies
+2. Install dependencies
 
 ```bash
 bun install
 ```
 
-1. Configure environment variables
+3. Configure environment variables
 
 ```bash
-cp .env.example .env.local
+# For FastAPI backend (default)
+cp .env.fastapi .env
+
+# For Bun + Hono backend
+cp .env.bun .env
 ```
 
-Edit `.env.local` with your configuration:
+Or create your own `.env` from the example:
 
-```env
-VITE_API_URL=
-VITE_APP_NAME="Your App Name"
+```bash
+cp .env.example .env
 ```
 
-1. Start the development server
+Key environment variables:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `VITE_BACKEND_TYPE` | Backend type: `fastapi` or `bun` | `fastapi` |
+| `VITE_API_URL_FASTAPI` | FastAPI API URL | `http://localhost:8000/api/v1` |
+| `VITE_API_URL_BUN` | Bun + Hono API URL | `http://localhost:3000/api/v1` |
+| `VITE_APP_NAME` | Application name | - |
+
+4. Generate the API client (Hey API)
+
+```bash
+# With FastAPI backend running
+bun run gen:api
+
+# With Bun + Hono backend running
+bun run gen:api:bun
+```
+
+5. Start the development server
 
 ```bash
 bun run dev
@@ -338,8 +365,9 @@ bun run format:check     # Check formatting without modifying files
 # Testing
 bun test                 # Run all tests (includes i18n consistency tests)
 
-# API Client Generation (Hey API) - Make sure that the backend is running
-bun run gen:api          # Generate TypeScript SDK from backend OpenAPI spec
+# API Client Generation (Hey API) - Make sure the backend is running
+bun run gen:api          # Generate SDK from FastAPI backend (port 8000)
+bun run gen:api:bun      # Generate SDK from Bun + Hono backend (port 3000)
 bun run gen:api:watch    # Watch mode - regenerate SDK when spec changes
 bun run gen:api:check    # Regenerate and fail if types changed (for CI)
 

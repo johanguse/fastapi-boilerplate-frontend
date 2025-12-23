@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { api } from '@/lib/api'
+import { authApi } from '@/lib/api'
 
 type ResetPasswordFormProps = {
   token: string
@@ -62,7 +62,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     setIsLoading(true)
 
     try {
-      await api.resetPassword(token, data.password)
+      await authApi.resetPassword(token, data.password)
 
       toast.success(
         t(

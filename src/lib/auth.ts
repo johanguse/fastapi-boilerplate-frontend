@@ -44,6 +44,8 @@ export interface User {
   email: string
   name: string
   emailVerified: boolean
+  status?: string
+  is_active?: boolean
   image?: string | null
   createdAt: Date
   updatedAt: Date
@@ -59,6 +61,12 @@ export interface User {
   phone?: string
   bio?: string
   website?: string
+  tax_id?: string
+  address_street?: string
+  address_city?: string
+  address_state?: string
+  address_postal_code?: string
+  company_name?: string
 }
 
 export interface Session {

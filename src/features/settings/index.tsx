@@ -1,5 +1,5 @@
 import { Outlet } from '@tanstack/react-router'
-import { Bell, Palette, UserCog } from 'lucide-react'
+import { Bell, CreditCard, Palette, UserCog } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
@@ -28,6 +28,11 @@ export function Settings() {
       title: t('settings.nav.notifications', 'Notifications'),
       href: '/settings/notifications',
       icon: <Bell size={18} />,
+    },
+    {
+      title: t('settings.nav.billing', 'Billing'),
+      href: '/settings/billing',
+      icon: <CreditCard size={18} />,
     },
   ]
 

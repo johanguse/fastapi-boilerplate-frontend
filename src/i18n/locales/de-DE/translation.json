@@ -392,7 +392,27 @@
     "title": "Abrechnung & Abonnement",
     "upgradePlan": "Plan Upgraden",
     "usage": "Nutzung",
-    "usageDescription": "Aktuelle Nutzung Ihrer Planressourcen"
+    "usageDescription": "Aktuelle Nutzung Ihrer Planressourcen",
+    "modalTitle": "Rechnungsinformationen Erforderlich",
+    "modalDescription": "Bitte geben Sie Ihre Rechnungsdaten an, um {{action}}. Diese Informationen werden für Rechnungen verwendet.",
+    "saveSuccess": "Rechnungsinformationen erfolgreich gespeichert!",
+    "saveError": "Fehler beim Speichern der Rechnungsinformationen. Bitte versuchen Sie es erneut.",
+    "saveAndContinue": "Speichern & Weiter",
+    "requiredFieldsInfo": "Alle markierten Felder sind für die Rechnungserstellung erforderlich.",
+    "fields": {
+      "companyName": "Name / Firmenname",
+      "taxId": "Steuernummer / USt-ID",
+      "taxIdDescription": "USt-ID, MwSt, EIN, CPF, CNPJ oder andere Steueridentifikationsnummer",
+      "country": "Land",
+      "addressStreet": "Straße",
+      "addressCity": "Stadt",
+      "addressState": "Bundesland / Kanton",
+      "addressPostalCode": "PLZ"
+    },
+    "placeholders": {
+      "companyName": "Ihr Name oder Firmenname",
+      "country": "Wählen Sie Ihr Land"
+    }
   },
   "dataTable": {
     "pagination": {

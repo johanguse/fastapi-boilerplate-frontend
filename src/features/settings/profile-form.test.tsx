@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import type { Mock } from 'vitest'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { User } from '@/lib/auth'
 import { ProfileForm } from './profile/profile-form'
@@ -172,10 +173,10 @@ describe('ProfileForm', () => {
     const user = userEvent.setup()
 
     // Mock successful API responses
-    ;(api.post as vi.Mock).mockResolvedValueOnce({
+    ;(api.post as Mock).mockResolvedValueOnce({
       data: { image: 'https://example.com/avatar.jpg' },
     })
-    ;(api.patch as vi.Mock).mockResolvedValueOnce({
+    ;(api.patch as Mock).mockResolvedValueOnce({
       data: {
         ...mockUser,
         name: 'Jane Smith',
@@ -217,12 +218,12 @@ describe('ProfileForm', () => {
     const user = userEvent.setup()
 
     // Mock image upload response
-    ;(api.post as vi.Mock).mockResolvedValueOnce({
+    ;(api.post as Mock).mockResolvedValueOnce({
       data: { image: 'https://example.com/new-avatar.jpg' },
     })
 
     // Mock profile update response
-    ;(api.patch as vi.Mock).mockResolvedValueOnce({
+    ;(api.patch as Mock).mockResolvedValueOnce({
       data: {
         ...mockUser,
         image: 'https://example.com/new-avatar.jpg',
@@ -275,7 +276,7 @@ describe('ProfileForm', () => {
     const user = userEvent.setup()
 
     // Mock failed API response
-    ;(api.patch as vi.Mock).mockRejectedValueOnce(new Error('Update failed'))
+    ;(api.patch as Mock).mockRejectedValueOnce(new Error('Update failed'))
 
     render(<ProfileForm />)
 

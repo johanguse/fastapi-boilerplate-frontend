@@ -392,7 +392,27 @@
     "title": "Billing & Subscription",
     "upgradePlan": "Upgrade Plan",
     "usage": "Usage",
-    "usageDescription": "Current usage of your plan resources"
+    "usageDescription": "Current usage of your plan resources",
+    "modalTitle": "Billing Information Required",
+    "modalDescription": "Please provide your billing details to {{action}}. This information will be used for invoices.",
+    "saveSuccess": "Billing information saved successfully!",
+    "saveError": "Failed to save billing information. Please try again.",
+    "saveAndContinue": "Save & Continue",
+    "requiredFieldsInfo": "All marked fields are required for invoice generation.",
+    "fields": {
+      "companyName": "Name / Company Name",
+      "taxId": "Tax ID / VAT Number",
+      "taxIdDescription": "VAT, GST, EIN, CPF, CNPJ or other tax identification number",
+      "country": "Country",
+      "addressStreet": "Street Address",
+      "addressCity": "City",
+      "addressState": "State / Province",
+      "addressPostalCode": "Postcode / ZIP"
+    },
+    "placeholders": {
+      "companyName": "Your name or company name",
+      "country": "Select your country"
+    }
   },
   "dataTable": {
     "pagination": {

@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useEffectEvent,
+  useMemo,
+  useState,
+} from 'react'
 import { getCookie, removeCookie, setCookie } from '@/lib/cookies'
 
 type Theme = 'dark' | 'light' | 'system'
@@ -52,28 +59,36 @@ export function ThemeProvider({
     return theme as ResolvedTheme
   }, [theme])
 
+  // React 19.2: useEffectEvent for system theme change handler
+  // This ensures the handler always has access to the latest theme value
+  // without needing to add theme to the effect dependencies
+  const handleSystemThemeChange = useEffectEvent(
+    (mediaQuery: MediaQueryList) => {
+      if (theme === 'system') {
+        const root = window.document.documentElement
+        const systemTheme = mediaQuery.matches ? 'dark' : 'light'
+        root.classList.remove('light', 'dark')
+        root.classList.add(systemTheme)
+      }
+    }
+  )
+
   useEffect(() => {
     const root = window.document.documentElement
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
-    const applyTheme = (currentResolvedTheme: ResolvedTheme) => {
-      root.classList.remove('light', 'dark') // Remove existing theme classes
-      root.classList.add(currentResolvedTheme) // Add the new theme class
-    }
+    // Apply current theme
+    root.classList.remove('light', 'dark')
+    root.classList.add(resolvedTheme)
 
-    const handleChange = () => {
-      if (theme === 'system') {
-        const systemTheme = mediaQuery.matches ? 'dark' : 'light'
-        applyTheme(systemTheme)
-      }
-    }
-
-    applyTheme(resolvedTheme)
-
+    // Handle system theme changes
+    const handleChange = () => handleSystemThemeChange(mediaQuery)
     mediaQuery.addEventListener('change', handleChange)
 
     return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [theme, resolvedTheme])
+    // Only re-run when resolvedTheme changes, not when theme changes
+    // handleSystemThemeChange always has latest theme via useEffectEvent
+  }, [resolvedTheme])
 
   const setTheme = (theme: Theme) => {
     setCookie(storageKey, theme, THEME_COOKIE_MAX_AGE)

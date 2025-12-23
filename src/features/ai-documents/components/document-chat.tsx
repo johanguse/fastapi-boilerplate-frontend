@@ -10,7 +10,7 @@ import {
   Send,
   User,
 } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useEffectEvent, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
@@ -56,7 +56,6 @@ export function DocumentChat({ documentId }: DocumentChatProps) {
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-  const prevMessagesLengthRef = useRef(0)
 
   // Fetch document details
   const { data: document, isLoading: isLoadingDocument } = useQuery({
@@ -117,16 +116,17 @@ export function DocumentChat({ documentId }: DocumentChatProps) {
     }
   }
 
+  // React 19.2: useEffectEvent for scrolling to bottom
+  const scrollToBottom = useEffectEvent(() => {
+    if (messages.length > 0) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  })
+
   // Scroll to bottom when messages change
   useEffect(() => {
-    if (
-      messages.length !== prevMessagesLengthRef.current &&
-      messages.length > 0
-    ) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-      prevMessagesLengthRef.current = messages.length
-    }
-  }, [messages.length])
+    scrollToBottom()
+  }, [])
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleTimeString('en-US', {

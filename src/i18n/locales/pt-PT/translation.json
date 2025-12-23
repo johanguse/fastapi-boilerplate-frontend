@@ -392,7 +392,27 @@
     "title": "Faturamento e Assinatura",
     "upgradePlan": "Atualizar Plano",
     "usage": "Uso",
-    "usageDescription": "Uso atual dos recursos do seu plano"
+    "usageDescription": "Uso atual dos recursos do seu plano",
+    "modalTitle": "Informação de Faturação Necessária",
+    "modalDescription": "Por favor, forneça os seus detalhes de faturação para {{action}}. Esta informação será usada para faturas.",
+    "saveSuccess": "Informação de faturação guardada com sucesso!",
+    "saveError": "Falha ao guardar informação de faturação. Por favor, tente novamente.",
+    "saveAndContinue": "Guardar e Continuar",
+    "requiredFieldsInfo": "Todos os campos assinalados são obrigatórios para a emissão da fatura.",
+    "fields": {
+      "companyName": "Nome / Nome da Empresa",
+      "taxId": "NIF / Número de Identificação Fiscal",
+      "taxIdDescription": "NIF, IVA, EIN, ou outro número de identificação fiscal",
+      "country": "País",
+      "addressStreet": "Morada",
+      "addressCity": "Cidade",
+      "addressState": "Distrito / Região",
+      "addressPostalCode": "Código Postal"
+    },
+    "placeholders": {
+      "companyName": "O seu nome ou nome da empresa",
+      "country": "Selecione o seu país"
+    }
   },
   "dataTable": {
     "pagination": {

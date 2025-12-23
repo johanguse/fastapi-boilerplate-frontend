@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
 import { ArrowRight, Loader2 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useEffectEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -49,10 +49,15 @@ export function ForgotPasswordForm({
     defaultValues: { email: '' },
   })
 
-  // Start timer when component mounts (rate limiting)
-  useEffect(() => {
+  // React 19.2: useEffectEvent captures latest timer.start
+  // Start timer once when component mounts without dependency issues
+  const startTimer = useEffectEvent(() => {
     timer.start()
-  }, [timer])
+  })
+
+  useEffect(() => {
+    startTimer()
+  }, [])
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     if (!canSubmit) {

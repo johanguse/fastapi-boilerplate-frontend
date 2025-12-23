@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useEffectEvent, useState } from 'react'
 
 interface UseTimerOptions {
   initialTime?: number
@@ -21,6 +21,12 @@ export function useTimer(
   const [timeLeft, setTimeLeft] = useState(initialTime)
   const [isActive, setIsActive] = useState(false)
 
+  // React 19.2: useEffectEvent captures latest onComplete
+  // without requiring it in useEffect dependencies
+  const onTimerComplete = useEffectEvent(() => {
+    onComplete?.()
+  })
+
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null
 
@@ -29,7 +35,8 @@ export function useTimer(
         setTimeLeft((time) => {
           if (time <= 1) {
             setIsActive(false)
-            onComplete?.()
+            // Call the Effect Event - always has latest onComplete
+            onTimerComplete()
             return 0
           }
           return time - 1
@@ -42,7 +49,8 @@ export function useTimer(
         clearInterval(interval)
       }
     }
-  }, [isActive, timeLeft, onComplete])
+    // onComplete is no longer needed in deps - onTimerComplete handles it
+  }, [isActive, timeLeft])
 
   const start = () => {
     setIsActive(true)

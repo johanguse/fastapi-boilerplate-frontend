@@ -30,7 +30,7 @@ beforeAll(() => {
         const event = {
           target: { result: this.result },
         } as ProgressEvent<FileReader>
-        this.onload.call(this, event)
+        this.onload.call(this as unknown as FileReader, event)
       }
     }
 
@@ -41,7 +41,7 @@ beforeAll(() => {
         const event = {
           target: { result: this.result },
         } as ProgressEvent<FileReader>
-        this.onload.call(this, event)
+        this.onload.call(this as unknown as FileReader, event)
       }
     }
 
@@ -105,8 +105,3 @@ vi.mock('@tanstack/react-router', async () => {
     }),
   }
 })
-
-// Extend Vitest's expect with jest-dom matchers
-declare module 'vitest' {
-  interface Assertion<T = unknown> extends jest.Matchers<void, T> {}
-}
