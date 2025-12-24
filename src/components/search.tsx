@@ -24,7 +24,7 @@ export function Search({ className = '', placeholder }: SearchProps) {
     >
       <SearchIcon
         aria-hidden='true'
-        className='-translate-y-1/2 absolute start-1.5 top-1/2'
+        className='absolute start-1.5 top-1/2 -translate-y-1/2'
         size={16}
       />
       <span className='ms-4'>

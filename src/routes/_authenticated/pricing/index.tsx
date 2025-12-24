@@ -297,7 +297,7 @@ function PricingPage() {
               }
             >
               {plan.is_popular && (
-                <div className='-top-4 -translate-x-1/2 absolute left-1/2'>
+                <div className='absolute -top-4 left-1/2 -translate-x-1/2'>
                   <Badge className='px-4 py-1'>
                     {t('pricing.popular', 'Most Popular')}
                   </Badge>

@@ -11,8 +11,10 @@ import {
   HardDrive,
   Users,
 } from 'lucide-react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import BillingInfoModal from '@/components/billing-info-modal'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -34,7 +36,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useOrganizations } from '@/hooks/use-organizations'
-import { api } from '@/lib/api'
+import { api, authApi } from '@/lib/api'
 
 interface Subscription {
   id: number
@@ -95,6 +97,24 @@ export function BillingDashboard() {
   const { t, i18n } = useTranslation()
   const { activeOrganization } = useOrganizations()
   const queryClient = useQueryClient()
+  const [isBillingModalOpen, setIsBillingModalOpen] = useState(false)
+  const [pendingAction, setPendingAction] = useState<'portal' | null>(null)
+
+  // Fetch current user data to check billing info
+  const { data: currentUser } = useQuery({
+    queryKey: ['user', 'me'],
+    queryFn: () => authApi.getCurrentUser(),
+  })
+
+  // Check if user has complete billing info
+  const hasBillingInfo =
+    currentUser?.address_street &&
+    currentUser?.address_city &&
+    currentUser?.address_state &&
+    currentUser?.address_postal_code &&
+    currentUser?.country &&
+    currentUser?.company_name &&
+    currentUser?.tax_id
 
   const managePortalMutation = useMutation({
     mutationFn: async () => {
@@ -112,13 +132,20 @@ export function BillingDashboard() {
     onSuccess: (data) => {
       window.location.href = data.portal_url
     },
-    onError: (error: any) => {
+    onError: (error) => {
       let errorMessage = t(
         'billing.errors.portalFailed',
         'Failed to open billing portal'
       )
-      if (error?.response?.data?.detail) {
-        errorMessage = error.response.data.detail
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        (error as { response: { data?: { detail?: string } } }).response?.data
+          ?.detail
+      ) {
+        errorMessage = (error as { response: { data: { detail: string } } })
+          .response.data.detail
       }
       toast.error(errorMessage)
     },
@@ -141,13 +168,21 @@ export function BillingDashboard() {
         )
       )
     },
-    onError: (error: any) => {
+    onError: (error) => {
       let errorMessage = t(
         'billing.errors.cancelFailed',
         'Failed to cancel subscription'
       )
-      if (error?.response?.data?.detail) {
-        errorMessage = error.response.data.detail
+
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        (error as { response: { data?: { detail?: string } } }).response?.data
+          ?.detail
+      ) {
+        errorMessage = (error as { response: { data: { detail: string } } })
+          .response.data.detail
       }
       toast.error(errorMessage)
     },
@@ -191,7 +226,22 @@ export function BillingDashboard() {
   })
 
   const handleManageBilling = () => {
+    // Check if user has complete billing info before allowing portal access
+    if (!hasBillingInfo) {
+      setPendingAction('portal')
+      setIsBillingModalOpen(true)
+      return
+    }
     managePortalMutation.mutate()
+  }
+
+  const handleBillingModalSuccess = () => {
+    setIsBillingModalOpen(false)
+    // After billing info is saved, proceed with the pending action
+    if (pendingAction === 'portal') {
+      managePortalMutation.mutate()
+    }
+    setPendingAction(null)
   }
 
   const handleCancelSubscription = () => {
@@ -288,6 +338,17 @@ export function BillingDashboard() {
 
   return (
     <div className='space-y-8'>
+      {/* Billing Info Modal - shown when user tries to manage billing without complete info */}
+      <BillingInfoModal
+        isOpen={isBillingModalOpen}
+        onClose={() => {
+          setIsBillingModalOpen(false)
+          setPendingAction(null)
+        }}
+        onSuccess={handleBillingModalSuccess}
+        actionType='subscription'
+      />
+
       {/* Plan and Usage */}
       <div className='grid gap-6 md:grid-cols-2'>
         <Card>
