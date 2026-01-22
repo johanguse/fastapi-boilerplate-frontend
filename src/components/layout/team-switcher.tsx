@@ -9,20 +9,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { OrganizationLogo } from '@/components/ui/organization-logo'
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useOrganizations } from '@/hooks/use-organizations'
 
 export function TeamSwitcher() {
   const { isMobile } = useSidebar()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { organizations, activeOrganization, setActiveOrganization } =
-    useOrganizations()
+  const {
+    organizations,
+    activeOrganization,
+    setActiveOrganization,
+    isLoading,
+  } = useOrganizations()
 
   // Use active organization from React Query, or show placeholder
   const displayOrganization = activeOrganization || {
@@ -48,20 +54,32 @@ export function TeamSwitcher() {
               size='lg'
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
-                <Building2 className='size-4' />
-              </div>
+              <OrganizationLogo
+                logo={displayOrganization.logo}
+                name={displayOrganization.name}
+                size='md'
+                shape='rounded'
+              />
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-semibold'>
-                  {displayOrganization.name}
-                </span>
-                <span className='truncate text-xs'>
-                  {organizations.length > 0
-                    ? t('organizations.organizationCount', {
-                        count: organizations.length,
-                      })
-                    : t('organizations.noOrganizations')}
-                </span>
+                {isLoading ? (
+                  <>
+                    <Skeleton className='h-4 w-32' />
+                    <Skeleton className='mt-1 h-3 w-20' />
+                  </>
+                ) : (
+                  <>
+                    <span className='truncate font-semibold'>
+                      {displayOrganization.name}
+                    </span>
+                    <span className='truncate text-xs'>
+                      {organizations.length > 0
+                        ? t('organizations.organizationCount', {
+                            count: organizations.length,
+                          })
+                        : t('organizations.noOrganizations')}
+                    </span>
+                  </>
+                )}
               </div>
               <ChevronsUpDown className='ml-auto' />
             </SidebarMenuButton>
@@ -75,7 +93,23 @@ export function TeamSwitcher() {
             <DropdownMenuLabel className='text-muted-foreground text-xs'>
               {t('organizations.title')}
             </DropdownMenuLabel>
-            {organizations.length > 0 ? (
+            {isLoading ? (
+              <>
+                <div className='flex items-center gap-2 p-2'>
+                  <div className='flex size-6 items-center justify-center rounded-sm border'>
+                    <Building2 className='size-4 shrink-0' />
+                  </div>
+                  <Skeleton className='h-4 w-24' />
+                </div>
+                <div className='flex items-center gap-2 p-2'>
+                  <div className='flex size-6 items-center justify-center rounded-sm border'>
+                    <Building2 className='size-4 shrink-0' />
+                  </div>
+                  <Skeleton className='h-4 w-20' />
+                </div>
+                <DropdownMenuSeparator />
+              </>
+            ) : organizations.length > 0 ? (
               <>
                 {organizations.map((org) => (
                   <DropdownMenuItem
@@ -83,9 +117,12 @@ export function TeamSwitcher() {
                     className='gap-2 p-2'
                     onSelect={() => handleSelectOrganization(org.id)}
                   >
-                    <div className='flex size-6 items-center justify-center rounded-sm border'>
-                      <Building2 className='size-4 shrink-0' />
-                    </div>
+                    <OrganizationLogo
+                      logo={org.logo}
+                      name={org.name}
+                      size='sm'
+                      shape='rounded'
+                    />
                     {org.name}
                   </DropdownMenuItem>
                 ))}

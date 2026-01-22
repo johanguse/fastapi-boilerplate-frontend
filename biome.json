@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": false
@@ -26,13 +26,24 @@
     "enabled": true,
     "rules": {
       "recommended": false,
+      "correctness": {
+        "noUnusedImports": "error"
+      },
       "nursery": {
         "useSortedClasses": {
           "fix": "unsafe",
           "level": "warn",
           "options": {
-            "attributes": ["classList"],
-            "functions": ["clsx", "cn", "cva", "tw"]
+            "attributes": ["classList", "className"],
+            "functions": [
+              "clsx",
+              "cn",
+              "cva",
+              "tw",
+              "twMerge",
+              "twMergeClass",
+              "cx"
+            ]
           }
         }
       }
@@ -54,7 +65,7 @@
   "html": { "formatter": { "selfCloseVoidElements": "always" } },
   "overrides": [
     {
-      "includes": ["**/*.{ts,tsx}"],
+      "includes": ["**/src/**/*.{ts,tsx}"],
       "linter": {
         "rules": {
           "complexity": {
@@ -121,9 +132,9 @@
         }
       }
     },
-    { "includes": ["**/*.{ts,tsx}"], "javascript": { "globals": [] } },
+    { "includes": ["**/src/**/*.{ts,tsx}"], "javascript": { "globals": [] } },
     {
-      "includes": ["**/*.{ts,tsx}"],
+      "includes": ["**/src/**/*.{ts,tsx}"],
       "linter": {
         "rules": {
           "complexity": { "noArguments": "error" },
@@ -155,7 +166,7 @@
       }
     },
     {
-      "includes": ["**/*.{ts,tsx}"],
+      "includes": ["**/src/**/*.{ts,tsx}"],
       "linter": {
         "rules": {
           "complexity": { "noUselessTypeConstraint": "error" },
@@ -176,9 +187,9 @@
         }
       }
     },
-    { "includes": ["**/*.{ts,tsx}"], "linter": { "rules": {} } },
+    { "includes": ["**/src/**/*.{ts,tsx}"], "linter": { "rules": {} } },
     {
-      "includes": ["**/*.{ts,tsx}"],
+      "includes": ["**/src/**/*.{ts,tsx}"],
       "javascript": {
         "globals": [
           "onanimationend",
@@ -329,6 +340,19 @@
       },
       "assist": {
         "enabled": false
+      }
+    },
+    {
+      "includes": ["src/client/**/*.gen.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          },
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
       }
     },
     {

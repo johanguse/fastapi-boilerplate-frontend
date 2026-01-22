@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useEffectEvent, useState } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
@@ -11,16 +11,16 @@ type HeaderProps = React.HTMLAttributes<HTMLElement> & {
 export function Header({ className, fixed, children, ...props }: HeaderProps) {
   const [offset, setOffset] = useState(0)
 
-  useEffect(() => {
-    const onScroll = () => {
-      setOffset(document.body.scrollTop || document.documentElement.scrollTop)
-    }
+  const onScrollEvent = useEffectEvent(() => {
+    setOffset(document.body.scrollTop || document.documentElement.scrollTop)
+  })
 
+  useEffect(() => {
     // Add scroll listener to the body
-    document.addEventListener('scroll', onScroll, { passive: true })
+    document.addEventListener('scroll', onScrollEvent, { passive: true })
 
     // Clean up the event listener on unmount
-    return () => document.removeEventListener('scroll', onScroll)
+    return () => document.removeEventListener('scroll', onScrollEvent)
   }, [])
 
   return (
@@ -38,7 +38,7 @@ export function Header({ className, fixed, children, ...props }: HeaderProps) {
           'relative flex h-full items-center gap-3 p-4 sm:gap-4',
           offset > 10 &&
             fixed &&
-            'after:-z-10 after:absolute after:inset-0 after:bg-background/20 after:backdrop-blur-lg'
+            'after:absolute after:inset-0 after:-z-10 after:bg-background/20 after:backdrop-blur-lg'
         )}
       >
         <SidebarTrigger variant='outline' className='max-md:scale-125' />

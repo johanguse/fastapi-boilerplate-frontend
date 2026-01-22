@@ -22,8 +22,9 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { ImageUpload } from '@/components/ui/image-upload'
 import { Input } from '@/components/ui/input'
-import { type Organization, organizationApi } from '@/lib/api'
+import { api, type Organization, organizationApi } from '@/lib/api'
 
 const getFormSchema = (t: (key: string, defaultValue: string) => string) =>
   z.object({
@@ -48,6 +49,7 @@ export function EditOrganizationDialog({
   onOpenChange,
 }: Readonly<EditOrganizationDialogProps>) {
   const [error, setError] = useState<string | null>(null)
+  const [logo, setLogo] = useState<File | null>(null)
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
@@ -92,21 +94,50 @@ export function EditOrganizationDialog({
     },
   })
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     setError(null)
 
-    // Generate slug from name if not provided
-    const slug =
-      data.slug ||
-      data.name
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '')
+    try {
+      // Generate slug from name if not provided
+      const slug =
+        data.slug ||
+        data.name
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '')
 
-    updateMutation.mutate({
-      name: data.name,
-      slug,
-    })
+      // Update organization data first
+      updateMutation.mutate({
+        name: data.name,
+        slug,
+      })
+
+      // Upload logo if changed
+      if (logo) {
+        const formData = new FormData()
+        formData.append('file', logo)
+        await api.post(
+          `/organizations/${organization.id}/upload-logo`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        )
+        // Invalidate queries to refetch with new logo
+        queryClient.invalidateQueries({ queryKey: ['organizations'] })
+      }
+    } catch (error: unknown) {
+      const axiosError = error as {
+        response?: { data?: { detail?: { message?: string } } }
+      }
+      const errorMessage =
+        axiosError.response?.data?.detail?.message ||
+        t('organizations.updateError', 'Failed to update organization')
+      setError(errorMessage)
+      toast.error(errorMessage)
+    }
   }
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -116,6 +147,7 @@ export function EditOrganizationDialog({
         slug: organization.slug,
       })
       setError(null)
+      setLogo(null)
     }
     onOpenChange(newOpen)
   }
@@ -162,6 +194,26 @@ export function EditOrganizationDialog({
                 </FormItem>
               )}
             />
+
+            <FormItem>
+              <FormLabel>
+                {t('organizations.logo', 'Organization Logo')}{' '}
+                {t('common.optional', '(Optional)')}
+              </FormLabel>
+              <FormControl>
+                <ImageUpload
+                  value={organization.logo}
+                  onChange={setLogo}
+                  type='logo'
+                />
+              </FormControl>
+              <p className='text-muted-foreground text-xs'>
+                {t(
+                  'organizations.logoUpdateDescription',
+                  'Upload a new logo to replace the current one, or leave empty to keep existing'
+                )}
+              </p>
+            </FormItem>
 
             <FormField
               control={form.control}

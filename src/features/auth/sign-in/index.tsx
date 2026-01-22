@@ -1,4 +1,4 @@
-import { useSearch } from '@tanstack/react-router'
+import { Link, useSearch } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import {
   Card,
@@ -23,7 +23,14 @@ export function SignIn() {
             {t('auth.loginTitle', 'Sign In')}
           </CardTitle>
           <CardDescription>
-            {t('auth.loginDescription', 'Sign in to your account')}
+            {t('auth.loginDescription', 'Sign in to your account')} <br />
+            {t('auth.loginDontHaveAccount', "Don't have an account?")}{' '}
+            <Link
+              to='/sign-up'
+              className='underline underline-offset-4 hover:text-primary'
+            >
+              {t('auth.signUp', 'Sign Up')}
+            </Link>
           </CardDescription>
         </CardHeader>
         <CardContent>

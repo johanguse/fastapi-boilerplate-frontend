@@ -20,8 +20,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { ImageUpload } from '@/components/ui/image-upload'
 import { Input } from '@/components/ui/input'
 import { useOrganizations } from '@/hooks/use-organizations'
+import { api } from '@/lib/api'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
@@ -40,8 +42,9 @@ export function CreateOrganizationDialog({
   onOpenChange,
 }: Readonly<CreateOrganizationDialogProps>) {
   const [error, setError] = useState<string | null>(null)
+  const [logo, setLogo] = useState<File | null>(null)
   const { t } = useTranslation()
-  const { createOrganization, isCreating } = useOrganizations()
+  const { createOrganizationAsync, isCreating } = useOrganizations()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -63,12 +66,25 @@ export function CreateOrganizationDialog({
           .replace(/[^a-z0-9]+/g, '-')
           .replace(/(^-|-$)/g, '')
 
-      await createOrganization({
+      // Create organization first
+      const newOrg = await createOrganizationAsync({
         name: data.name,
         slug,
       })
 
+      // Upload logo if provided
+      if (logo && newOrg?.id) {
+        const formData = new FormData()
+        formData.append('file', logo)
+        await api.post(`/organizations/${newOrg.id}/upload-logo`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+      }
+
       form.reset()
+      setLogo(null)
       onOpenChange(false)
     } catch (error: unknown) {
       const axiosError = error as {
@@ -84,6 +100,7 @@ export function CreateOrganizationDialog({
     if (!newOpen && !isCreating) {
       form.reset()
       setError(null)
+      setLogo(null)
     }
     onOpenChange(newOpen)
   }
@@ -143,6 +160,22 @@ export function CreateOrganizationDialog({
                 </FormItem>
               )}
             />
+
+            <FormItem>
+              <FormLabel>
+                {t('organizations.logo', 'Organization Logo')}{' '}
+                {t('common.optional', '(Optional)')}
+              </FormLabel>
+              <FormControl>
+                <ImageUpload value={null} onChange={setLogo} type='logo' />
+              </FormControl>
+              <p className='text-muted-foreground text-xs'>
+                {t(
+                  'organizations.logoDescription',
+                  'Upload a logo for your organization (max 5MB)'
+                )}
+              </p>
+            </FormItem>
 
             <FormField
               control={form.control}

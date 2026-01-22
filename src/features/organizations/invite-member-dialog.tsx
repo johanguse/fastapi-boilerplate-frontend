@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
 import { Mail, UserPlus } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -68,30 +69,52 @@ export function InviteMemberDialog({
     },
   })
 
-  const onSubmit = async (data: InvitationFormData) => {
-    try {
-      await api.post(
+  const inviteMutation = useMutation({
+    mutationFn: async (data: InvitationFormData) => {
+      const response = await api.post(
         `/api/v1/invitations/organizations/${organizationId}/invitations`,
         data
       )
-
+      return response.data
+    },
+    onSuccess: (_, variables) => {
       toast.success(t('invitations.inviteSent', 'Invitation sent'), {
         description:
-          t('invitations.inviteSentDescription', { email: data.email }) ||
-          `Invitation sent to ${data.email}`,
+          t('invitations.inviteSentDescription', { email: variables.email }) ||
+          `Invitation sent to ${variables.email}`,
       })
 
       form.reset()
       setOpen(false)
       onSuccess?.()
-    } catch (error: unknown) {
-      const err = error as { response?: { data?: { detail?: string } } }
+    },
+    onError: (error: unknown) => {
+      let errorMessage = t(
+        'invitations.inviteFailedGeneric',
+        'Failed to send invitation'
+      )
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        error.response &&
+        typeof error.response === 'object' &&
+        'data' in error.response &&
+        error.response.data &&
+        typeof error.response.data === 'object' &&
+        'detail' in error.response.data &&
+        typeof error.response.data.detail === 'string'
+      ) {
+        errorMessage = error.response.data.detail
+      }
       toast.error(t('common.error', 'An error occurred'), {
-        description:
-          err.response?.data?.detail ||
-          t('invitations.inviteFailedGeneric', 'Failed to send invitation'),
+        description: errorMessage,
       })
-    }
+    },
+  })
+
+  const onSubmit = (data: InvitationFormData) => {
+    inviteMutation.mutate(data)
   }
 
   return (
@@ -270,8 +293,8 @@ export function InviteMemberDialog({
               >
                 {t('common.cancel', 'Cancel')}
               </Button>
-              <Button type='submit' disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting
+              <Button type='submit' disabled={inviteMutation.isPending}>
+                {inviteMutation.isPending
                   ? t('common.loading', 'Loading...')
                   : t('invitations.sendInvite', 'Send Invite')}
               </Button>

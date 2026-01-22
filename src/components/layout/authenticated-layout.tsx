@@ -1,6 +1,8 @@
 import { Outlet } from '@tanstack/react-router'
 import { EmailVerificationBanner } from '@/components/email-verification-banner'
 import { AppSidebar } from '@/components/layout/app-sidebar'
+import { NavPlanCard } from '@/components/nav-plan-card'
+import { NavSecondary } from '@/components/nav-secondary'
 import { SkipToMain } from '@/components/skip-to-main'
 import {
   SidebarContent,
@@ -43,6 +45,13 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
               {sidebarData.navGroups.map((props) => (
                 <NavGroup key={props.title} {...props} />
               ))}
+              {sidebarData.secondaryNav && (
+                <NavSecondary
+                  items={sidebarData.secondaryNav}
+                  className='mt-auto'
+                />
+              )}
+              <NavPlanCard />
             </SidebarContent>
             <SidebarFooter>
               <NavUser />
@@ -66,7 +75,7 @@ export function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
           >
             {user && !user.is_verified && (
               <div className='px-4 pt-4'>
-                <EmailVerificationBanner email={user.email} />
+                <EmailVerificationBanner />
               </div>
             )}
             {children ?? <Outlet />}

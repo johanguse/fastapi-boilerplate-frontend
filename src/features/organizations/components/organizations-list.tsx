@@ -34,6 +34,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { OrganizationLogo } from '@/components/ui/organization-logo'
 import { useOrganizations } from '@/hooks/use-organizations'
 import { type Organization } from '@/lib/api'
 import { useAuth } from '@/stores/auth-store'
@@ -155,7 +156,12 @@ export function OrganizationsList() {
               >
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <div className='flex items-center space-x-2'>
-                    <Building2 className='h-5 w-5 text-muted-foreground' />
+                    <OrganizationLogo
+                      logo={organization.logo}
+                      name={organization.name}
+                      size='sm'
+                      shape='rounded'
+                    />
                     <CardTitle className='font-medium text-sm'>
                       {organization.name}
                     </CardTitle>

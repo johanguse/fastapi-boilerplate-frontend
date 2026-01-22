@@ -127,6 +127,111 @@
       "verified": "Verifiziert"
     }
   },
+  "onboarding": {
+    "title": "Willkommen in Ihrem Arbeitsbereich",
+    "subtitle": "Lassen Sie uns alles in wenigen Schritten einrichten",
+    "progress": "Fortschritt",
+    "loading": "Onboarding wird geladen...",
+    "error": {
+      "title": "Fehler",
+      "description": "Fehler beim Laden des Onboarding-Status. Bitte versuchen Sie es erneut.",
+      "fetchStatus": "Fehler beim Laden des Onboarding-Status",
+      "complete": "Fehler beim Abschließen des Onboardings"
+    },
+    "success": {
+      "completed": "Willkommen! Ihr Konto ist vollständig eingerichtet."
+    },
+    "steps": {
+      "profile": {
+        "title": "Vervollständigen Sie Ihr Profil",
+        "description": "Erzählen Sie uns etwas über sich"
+      },
+      "organization": {
+        "title": "Erstellen Sie Ihre Organisation",
+        "description": "Richten Sie Ihren Arbeitsbereich ein"
+      },
+      "complete": {
+        "title": "Alles Bereit!",
+        "description": "Willkommen in Ihrem neuen Arbeitsbereich"
+      }
+    },
+    "profile": {
+      "title": "Vervollständigen Sie Ihr Profil",
+      "description": "Erzählen Sie uns etwas über sich, um Ihre Erfahrung zu personalisieren",
+      "name": "Vollständiger Name",
+      "namePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+      "company": "Unternehmen",
+      "companyPlaceholder": "Geben Sie den Namen Ihres Unternehmens ein",
+      "jobTitle": "Berufsbezeichnung",
+      "jobTitlePlaceholder": "z.B., Softwareentwickler",
+      "country": "Land",
+      "countryPlaceholder": "Wählen Sie Ihr Land",
+      "phone": "Telefonnummer",
+      "phonePlaceholder": "+49 30 12345678",
+      "website": "Website",
+      "websitePlaceholder": "https://ihrewebsite.com",
+      "bio": "Biografie",
+      "bioPlaceholder": "Erzählen Sie uns etwas über sich...",
+      "saving": "Speichern...",
+      "continue": "Weiter",
+      "success": "Profil erfolgreich aktualisiert!",
+      "error": "Fehler beim Aktualisieren des Profils. Bitte versuchen Sie es erneut."
+    },
+    "organization": {
+      "title": "Erstellen Sie Ihre Organisation",
+      "description": "Beschreibung",
+      "name": "Organisationsname",
+      "namePlaceholder": "Geben Sie den Namen Ihrer Organisation ein",
+      "slug": "URL Slug",
+      "slugPlaceholder": "meine-organisation",
+      "slugHelp": "Optional: Ein eindeutiger Bezeichner für die URL Ihrer Organisation",
+      "descriptionPlaceholder": "Erzählen Sie uns von Ihrer Organisation...",
+      "creating": "Erstellen...",
+      "continue": "Organisation Erstellen",
+      "success": "Organisation erfolgreich erstellt!",
+      "error": "Fehler beim Erstellen der Organisation. Bitte versuchen Sie es erneut.",
+      "benefits": {
+        "title": "Was Sie erhalten:",
+        "team": "Team-Kollaborationstools",
+        "projects": "Projektmanagement",
+        "analytics": "Analysen und Einblicke",
+        "support": "Prioritäts-Support"
+      }
+    },
+    "complete": {
+      "title": "Alles Bereit!",
+      "description": "Willkommen in Ihrem neuen Arbeitsbereich. Lassen Sie uns erkunden, was Sie tun können!",
+      "welcome": {
+        "title": "Willkommen, {{name}}!",
+        "description": "Ihr Arbeitsbereich ist bereit. Sie können jetzt mit der Zusammenarbeit mit Ihrem Team beginnen und alle Funktionen erkunden, die wir zu bieten haben."
+      },
+      "features": {
+        "title": "Was Sie jetzt tun können:",
+        "team": {
+          "title": "Team-Kollaboration",
+          "description": "Laden Sie Teammitglieder ein und arbeiten Sie nahtlos zusammen"
+        },
+        "analytics": {
+          "title": "Analytics-Dashboard",
+          "description": "Verfolgen Sie Ihren Fortschritt mit detaillierten Einblicken"
+        },
+        "automation": {
+          "title": "KI-gestützte Tools",
+          "description": "Nutzen Sie KI, um Ihre Produktivität zu steigern"
+        }
+      },
+      "nextSteps": {
+        "title": "Nächste Schritte:",
+        "profile": "Vervollständigen Sie Ihr Profil",
+        "organization": "Erstellen Sie Ihre Organisation",
+        "explore": "Erkunden Sie Ihr Dashboard",
+        "invite": "Laden Sie Teammitglieder ein"
+      },
+      "finishing": "Einrichtung wird abgeschlossen...",
+      "getStarted": "Loslegen",
+      "redirecting": "Weiterleitung zum Dashboard..."
+    }
+  },
   "auth": {
     "and": "und",
     "byClickingLogin": "Durch Klicken auf Anmelden stimmen Sie unseren",
@@ -145,9 +250,13 @@
     "forgotPasswordEmailSent": "Reset email sent to {{email}}",
     "forgotPasswordSendingEmail": "E-Mail wird gesendet...",
     "forgotPasswordTitle": "Passwort vergessen",
+    "forgotPasswordRateLimited": "Bitte warten Sie {{time}} bevor Sie eine weitere Passwort-Zurücksetzung anfordern",
+    "forgotPasswordNextRequest": "Nächste Anfrage verfügbar in",
+    "userNotFound": "Kein Konto mit dieser E-Mail-Adresse gefunden. Möchten Sie ein Konto erstellen?",
     "internalServerError": "Interner Serverfehler",
     "invalidCredentials": "Ungültige E-Mail oder Passwort",
     "loginDescription": "Geben Sie unten Ihre E-Mail und Ihr Passwort ein, um sich in Ihr Konto einzuloggen",
+    "loginDontHaveAccount": "Haben Sie kein Konto?",
     "loginTitle": "Anmelden",
     "maintenanceError": "Wartungsfehler",
     "nameTooShort_one": "",
@@ -160,6 +269,9 @@
       "verifyButton": "Verifizieren",
       "haventReceived": "Nicht erhalten?",
       "resendCode": "Neuen Code senden.",
+      "resendIn": "Erneut senden verfügbar in",
+      "resendSuccess": "Bestätigungs-E-Mail erfolgreich gesendet",
+      "backToSignIn": "Zurück zur Anmeldung",
       "validation": {
         "required": "Bitte geben Sie den 6-stelligen Code ein."
       }
@@ -170,6 +282,7 @@
     "passwordTooShort_one": "",
     "passwordTooShort_other": "",
     "privacy": "Datenschutzrichtlinie",
+    "terms": "Nutzungsbedingungen",
     "signIn": "Anmelden",
     "signOutConfirm": "Abmelden",
     "signOutDescription": "Sind Sie sicher, dass Sie sich abmelden möchten? Sie müssen sich erneut anmelden, um auf Ihr Konto zuzugreifen.",
@@ -188,7 +301,7 @@
     "signUpPasswordPlaceholder": "********",
     "signUpRegistrationFailed": "Registrierung fehlgeschlagen. Überprüfen Sie Ihre Informationen.",
     "signUpTitle": "Konto erstellen",
-    "signUpWelcome": "Willkommen {name}! Überprüfen Sie Ihre E-Mail, um Ihr Konto zu bestätigen.",
+    "signUpWelcome": "Willkommen {{name}}! Überprüfen Sie Ihre E-Mail, um Ihr Konto zu bestätigen.",
     "testimonial": "\"Diese Vorlage hat mir unzählige Arbeitsstunden erspart und mir geholfen, atemberaubende Designs schneller als je zuvor an meine Kunden zu liefern.\"",
     "socialLogin": {
       "continueWith": "Mit {{provider}} fortfahren",
@@ -203,9 +316,45 @@
       "completingSignIn": "Anmeldung wird abgeschlossen...",
       "pleaseWait": "Bitte warten Sie, während wir Ihre {{provider}} Authentifizierung abschließen"
     },
-    "terms": "Nutzungsbedingungen",
     "unauthorized": "Nicht autorisiert",
     "welcome": "Willkommen!"
+  },
+  "chats": {
+    "title": "Posteingang",
+    "searchLabel": "Suchen",
+    "searchPlaceholder": "Chat suchen...",
+    "messageInputLabel": "Chat-Textfeld",
+    "messageInputPlaceholder": "Tippen Sie Ihre Nachrichten...",
+    "sendButton": "Senden",
+    "emptyState": {
+      "title": "Ihre Nachrichten",
+      "description": "Senden Sie eine Nachricht, um einen Chat zu starten.",
+      "sendMessageButton": "Nachricht senden"
+    },
+    "newMessage": "Neue Nachricht",
+    "newMessageDescription": "",
+    "to": "An",
+    "searchPeople": "Personen suchen...",
+    "noPeopleFound": "Keine Personen gefunden.",
+    "chat": "Chat"
+  },
+  "account": {
+    "name": "Name",
+    "namePlaceholder": "Ihr Name",
+    "nameDescription": "Dies ist der Name, der in Ihrem Profil und in E-Mails angezeigt wird.",
+    "nameRequired": "Bitte geben Sie Ihren Namen ein.",
+    "nameMinLength": "Der Name muss mindestens 2 Zeichen lang sein.",
+    "nameMaxLength": "Der Name darf nicht länger als 30 Zeichen sein.",
+    "dateOfBirth": "Geburtsdatum",
+    "dobDescription": "Ihr Geburtsdatum wird zur Berechnung Ihres Alters verwendet.",
+    "dobRequired": "Bitte wählen Sie Ihr Geburtsdatum.",
+    "language": "Sprache",
+    "languageDescription": "Dies ist die Sprache, die im Dashboard verwendet wird.",
+    "languageRequired": "Bitte wählen Sie eine Sprache.",
+    "selectLanguage": "Sprache auswählen",
+    "searchLanguage": "Sprache suchen...",
+    "noLanguageFound": "Keine Sprache gefunden.",
+    "updateAccount": "Konto aktualisieren"
   },
   "billing": {
     "cancelScheduled": "Ihr Abonnement wird am Ende des Abrechnungszeitraums gekündigt.",
@@ -243,7 +392,27 @@
     "title": "Abrechnung & Abonnement",
     "upgradePlan": "Plan Upgraden",
     "usage": "Nutzung",
-    "usageDescription": "Aktuelle Nutzung Ihrer Planressourcen"
+    "usageDescription": "Aktuelle Nutzung Ihrer Planressourcen",
+    "modalTitle": "Rechnungsinformationen Erforderlich",
+    "modalDescription": "Bitte geben Sie Ihre Rechnungsdaten an, um {{action}}. Diese Informationen werden für Rechnungen verwendet.",
+    "saveSuccess": "Rechnungsinformationen erfolgreich gespeichert!",
+    "saveError": "Fehler beim Speichern der Rechnungsinformationen. Bitte versuchen Sie es erneut.",
+    "saveAndContinue": "Speichern & Weiter",
+    "requiredFieldsInfo": "Alle markierten Felder sind für die Rechnungserstellung erforderlich.",
+    "fields": {
+      "companyName": "Name / Firmenname",
+      "taxId": "Steuernummer / USt-ID",
+      "taxIdDescription": "USt-ID, MwSt, EIN, CPF, CNPJ oder andere Steueridentifikationsnummer",
+      "country": "Land",
+      "addressStreet": "Straße",
+      "addressCity": "Stadt",
+      "addressState": "Bundesland / Kanton",
+      "addressPostalCode": "PLZ"
+    },
+    "placeholders": {
+      "companyName": "Ihr Name oder Firmenname",
+      "country": "Wählen Sie Ihr Land"
+    }
   },
   "dataTable": {
     "pagination": {
@@ -292,7 +461,13 @@
     "reset": "Zurücksetzen",
     "searchPlaceholder": "Suchen...",
     "tryAgain": "Erneut versuchen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "uploadImage": "Bild hochladen",
+    "changeImage": "Bild ändern",
+    "removeImage": "Bild entfernen",
+    "dragDropImage": "Bild hierher ziehen oder klicken, um auszuwählen",
+    "imageUploading": "Bild wird hochgeladen...",
+    "imageProcessing": "Bild wird verarbeitet..."
   },
   "theme": {
     "title": "Design",
@@ -308,6 +483,8 @@
   "profile": {
     "profile": "Profil",
     "billing": "Abrechnung",
+    "appearance": "Erscheinungsbild",
+    "notifications": "Benachrichtigungen",
     "settings": "Einstellungen",
     "newTeam": "Neues Team",
     "signOut": "Abmelden"
@@ -321,6 +498,11 @@
     "goBack": "Zurück",
     "backToHome": "Zurück zur Startseite",
     "learnMore": "Mehr erfahren",
+    "fileTooLarge": "Die Datei ist zu groß. Maximale Größe ist {{maxSize}}MB.",
+    "invalidFileType": "Ungültiger Dateityp. Erlaubte Typen: {{types}}.",
+    "imageUploadFailed": "Fehler beim Hochladen des Bildes. Bitte versuchen Sie es erneut.",
+    "imageDeleteFailed": "Fehler beim Löschen des Bildes. Bitte versuchen Sie es erneut.",
+    "imageOptimizationFailed": "Fehler bei der Bildoptimierung. Bitte versuchen Sie es erneut.",
     "notFound": {
       "title": "Ups! Seite nicht gefunden",
       "description": "Es scheint, als ob die Seite, nach der Sie suchen",
@@ -350,43 +532,86 @@
   "accessibility": {
     "skipToMain": "Zum Hauptinhalt springen"
   },
-  "account": {
-    "name": "Name",
-    "namePlaceholder": "Ihr Name",
-    "nameDescription": "Dies ist der Name, der in Ihrem Profil und in E-Mails angezeigt wird.",
-    "nameRequired": "Bitte geben Sie Ihren Namen ein.",
-    "nameMinLength": "Der Name muss mindestens 2 Zeichen lang sein.",
-    "nameMaxLength": "Der Name darf nicht länger als 30 Zeichen sein.",
-    "dateOfBirth": "Geburtsdatum",
-    "dobDescription": "Ihr Geburtsdatum wird zur Berechnung Ihres Alters verwendet.",
-    "dobRequired": "Bitte wählen Sie Ihr Geburtsdatum.",
-    "language": "Sprache",
-    "languageDescription": "Dies ist die Sprache, die im Dashboard verwendet wird.",
-    "languageRequired": "Bitte wählen Sie eine Sprache.",
-    "selectLanguage": "Sprache auswählen",
-    "searchLanguage": "Sprache suchen...",
-    "noLanguageFound": "Keine Sprache gefunden.",
-    "updateAccount": "Konto aktualisieren"
-  },
-  "chats": {
-    "title": "Posteingang",
-    "searchLabel": "Suchen",
-    "searchPlaceholder": "Chat suchen...",
-    "messageInputLabel": "Chat-Textfeld",
-    "messageInputPlaceholder": "Tippen Sie Ihre Nachrichten...",
-    "sendButton": "Senden",
-    "emptyState": {
-      "title": "Ihre Nachrichten",
-      "description": "Senden Sie eine Nachricht, um einen Chat zu starten.",
-      "sendMessageButton": "Nachricht senden"
+  "users": {
+    "title": "Benutzerliste",
+    "description": "Verwalten Sie Ihre Benutzer und deren Rollen hier.",
+    "active": "Aktiv",
+    "filterUsers": "Benutzer filtern...",
+    "inactive": "Inaktiv",
+    "invited": "",
+    "noResults": "",
+    "role": "",
+    "status": "",
+    "suspended": "",
+    "bulkActions": {
+      "activatingUsers": "Benutzer aktivieren...",
+      "activatedUsers": "{{count}} {{count, plural, one {Benutzer aktiviert} other {Benutzer aktiviert}}}",
+      "deactivatingUsers": "Benutzer deaktivieren...",
+      "deactivatedUsers": "{{count}} {{count, plural, one {Benutzer deaktiviert} other {Benutzer deaktiviert}}}",
+      "invitingUsers": "Benutzer einladen...",
+      "invitedUsers": "{{count}} {{count, plural, one {Benutzer eingeladen} other {Benutzer eingeladen}}}",
+      "errorActivatingUsers": "Fehler beim Aktivieren der Benutzer",
+      "errorDeactivatingUsers": "Fehler beim Deaktivieren der Benutzer",
+      "errorInvitingUsers": "Fehler beim Einladen der Benutzer",
+      "inviteSelectedUsers": "Ausgewählte Benutzer einladen",
+      "activateSelectedUsers": "Ausgewählte Benutzer aktivieren",
+      "deactivateSelectedUsers": "Ausgewählte Benutzer deaktivieren",
+      "deleteSelectedUsers": "Ausgewählte Benutzer löschen"
     },
-    "newMessage": "Neue Nachricht",
-    "to": "An",
-    "searchPeople": "Personen suchen...",
-    "noPeopleFound": "Keine Personen gefunden.",
-    "chat": "Chat"
+    "deleteUser": "Benutzer Löschen",
+    "deleteConfirmQuestion": "Sind Sie sicher, dass Sie löschen möchten",
+    "deleteConfirmDescription": "Diese Aktion wird den Benutzer mit der Rolle dauerhaft entfernen",
+    "deleteConfirmWarning": "aus dem System. Dies kann nicht rückgängig gemacht werden.",
+    "usernameLabel": "Benutzername:",
+    "usernamePlaceholder": "Geben Sie den Benutzernamen ein, um die Löschung zu bestätigen.",
+    "warningTitle": "Warnung!",
+    "warningDescription": "Bitte seien Sie vorsichtig, diese Operation kann nicht rückgängig gemacht werden.",
+    "deleteSuccessMessage": "Der folgende Benutzer wurde gelöscht:",
+    "delete": {
+      "confirmWord": "LÖSCHEN",
+      "confirmPrompt": "Bitte geben Sie \"{{confirmWord}}\" zur Bestätigung ein.",
+      "deleting": "Benutzer werden gelöscht...",
+      "success": "{{count}} {{count, plural, one {Benutzer gelöscht} other {Benutzer gelöscht}}}",
+      "title": "{{count}} {{count, plural, one {Benutzer löschen} other {Benutzer löschen}}}",
+      "description": "Sind Sie sicher, dass Sie die ausgewählten Benutzer löschen möchten?",
+      "warningDescription": "Diese Aktion kann nicht rückgängig gemacht werden.",
+      "confirmLabel": "Bestätigen Sie durch Eingabe von \"{{confirmWord}}\":",
+      "confirmPlaceholder": "Geben Sie \"{{confirmWord}}\" zur Bestätigung ein.",
+      "warningTitle": "Warnung!",
+      "confirmButton": "Löschen"
+    },
+    "invite": {
+      "title": "Benutzer Einladen",
+      "description": "Laden Sie einen neuen Benutzer ein, Ihrem Team beizutreten, indem Sie ihm eine E-Mail-Einladung senden. Weisen Sie eine Rolle zu, um sein Zugriffsniveau zu definieren.",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "z.B: max.mustermann@gmail.com",
+      "roleLabel": "Rolle",
+      "rolePlaceholder": "Rolle auswählen",
+      "descriptionLabel": "Beschreibung (optional)",
+      "descriptionPlaceholder": "Fügen Sie eine persönliche Notiz zu Ihrer Einladung hinzu (optional)",
+      "button": "Einladen",
+      "validation": {
+        "emailRequired": "Bitte geben Sie eine E-Mail-Adresse für die Einladung ein.",
+        "roleRequired": "Rolle ist erforderlich."
+      }
+    }
   },
   "dashboard": {
+    "demoTitle": "Dashboard Demo",
+    "demoSubtitle": "Statisches Demo-Dashboard mit Beispieldaten",
+    "subtitle": "Ihre umfassende KI-SaaS-Plattform",
+    "aiFeatures": {
+      "documents": "Dokumenten-Intelligenz",
+      "documentsDesc": "Laden Sie Dokumente hoch, verarbeiten Sie sie und chatten Sie mit ihnen mit KI",
+      "content": "Inhaltsgenerierung",
+      "contentDesc": "Generieren Sie hochwertige Inhalte mit KI-gestützten Vorlagen",
+      "analytics": "KI-Analytik",
+      "analyticsDesc": "Generieren Sie Erkenntnisse und Visualisierungen aus Ihren Daten",
+      "open": "Öffnen"
+    },
+    "filters": "Filter",
+    "export": "Exportieren",
+    "generateReport": "Bericht Generieren",
     "metrics": {
       "activeNow": "Jetzt aktiv",
       "download": "Herunterladen",
@@ -397,14 +622,25 @@
       "sales": "Verkäufe",
       "sinceLastHour": "+201 seit der letzten Stunde",
       "subscriptions": "Abonnements",
-      "totalRevenue": "Gesamtumsatz"
+      "totalRevenue": "Gesamtumsatz",
+      "aiCredits": "KI-Credits Verwendet",
+      "thisMonth": "diesen Monat",
+      "documentsProcessed": "Dokumente Verarbeitet",
+      "today": "heute",
+      "contentGenerated": "Inhalt Generiert",
+      "thisWeek": "diese Woche",
+      "analyticsQueries": "Analytik-Abfragen"
     },
     "tabs": {
+      "overview": "Übersicht",
       "analytics": "Analysen",
       "notifications": "Benachrichtigungen",
-      "overview": "Übersicht",
-      "reports": "Berichte"
+      "aiDocuments": "KI-Dokumente",
+      "aiContent": "KI-Inhalt",
+      "aiAnalytics": "KI-Analytik"
     },
+    "overview": "Übersicht",
+    "reports": "Berichte",
     "title": "Dashboard"
   },
   "emailVerification": {
@@ -470,6 +706,11 @@
     "youHaveBeenInvited": "Sie wurden eingeladen, dieser Organisation beizutreten."
   },
   "navigation": {
+    "aiApplications": "KI-Anwendungen",
+    "aiAnalytics": "KI-Analytik",
+    "aiContent": "KI-Inhalt",
+    "aiDocuments": "KI-Dokumente",
+    "dashboardDemo": "Dashboard Demo",
     "staticPages": "Statische Seiten & Beispiele",
     "account": "Konto",
     "apps": "Apps",
@@ -478,12 +719,14 @@
     "chats": "Chats",
     "dashboard": "Dashboard",
     "errors": "Fehler",
+    "feedback": "",
     "helpCenter": "Hilfecenter",
     "notifications": "Benachrichtigungen",
     "organizations": "Organisationen",
     "other": "Andere",
     "pages": "Seiten",
     "settings": "Einstellungen",
+    "support": "",
     "tasks": "Aufgaben",
     "upgradeToPro": "Auf Pro upgraden",
     "users": "Benutzer"
@@ -504,8 +747,8 @@
     "noMembers": "Noch keine Mitglieder",
     "noOrganizations": "Noch keine Organisationen",
     "noOrganizationsYet": "Noch keine Organisationen",
-    "organizationCount_one": "organizations.organizationCount",
-    "organizationCount_other": "organizations.organizationCount",
+    "organizationCount_one": "{{count}} Organisation",
+    "organizationCount_other": "{{count}} Organisationen",
     "pendingInvitations": "Ausstehende Einladungen",
     "pendingInvitationsDesc": "Anzeigen und verwalten von ausstehenden Teameinladungen",
     "settings": "Einstellungen",
@@ -527,7 +770,17 @@
     "updateSuccess": "Organisation erfolgreich aktualisiert",
     "updateError": "Fehler beim Aktualisieren der Organisation",
     "updating": "Wird aktualisiert...",
-    "updateOrganization": "Organisation Aktualisieren"
+    "updateOrganization": "Organisation Aktualisieren",
+    "logo": "Logo",
+    "logoDescription": "Laden Sie ein Logo für Ihre Organisation hoch.",
+    "logoUpdateDescription": "Aktualisieren Sie das Logo Ihrer Organisation.",
+    "uploadLogo": "Logo hochladen",
+    "changeLogo": "Logo ändern",
+    "removeLogo": "Logo entfernen",
+    "logoUploaded": "Logo erfolgreich hochgeladen",
+    "logoDeleted": "Logo erfolgreich gelöscht",
+    "logoUploadFailed": "Fehler beim Hochladen des Logos",
+    "logoDeleteFailed": "Fehler beim Löschen des Logos"
   },
   "pricing": {
     "errors": {
@@ -586,51 +839,39 @@
     "description": "Verwalten Sie Ihre Kontoeinstellungen und legen Sie E-Mail-Präferenzen fest.",
     "nav": {
       "profile": "Profil",
+      "billing": "Abrechnung",
       "account": "Konto",
       "appearance": "Erscheinungsbild",
       "notifications": "Benachrichtigungen",
       "display": "Anzeige"
     },
-    "account": {
-      "title": "Konto",
-      "description": "Aktualisieren Sie Ihre Kontoeinstellungen. Legen Sie Ihre bevorzugte Sprache und Zeitzone fest."
-    },
-    "appearance": {
-      "title": "Erscheinungsbild",
-      "description": "Passen Sie das Erscheinungsbild der App an. Wechseln Sie automatisch zwischen Tages- und Nachtthemen.",
-      "fontLabel": "Schriftart",
-      "fontDescription": "Legen Sie die Schriftart fest, die Sie im Dashboard verwenden möchten.",
-      "themeLabel": "Thema",
-      "themeDescription": "Wählen Sie das Thema für das Dashboard.",
-      "light": "Hell",
-      "dark": "Dunkel",
-      "updateButton": "Einstellungen aktualisieren"
-    },
-    "display": {
-      "sidebarLabel": "Seitenleiste",
-      "sidebarDescription": "Wählen Sie die Elemente aus, die Sie in der Seitenleiste anzeigen möchten.",
-      "updateButton": "Anzeige aktualisieren",
-      "items": {
-        "recents": "Neueste",
-        "home": "Startseite",
-        "applications": "Anwendungen",
-        "desktop": "Desktop",
-        "downloads": "Downloads",
-        "documents": "Dokumente"
-      },
-      "validation": {
-        "atLeastOne": "Sie müssen mindestens ein Element auswählen."
-      }
-    },
-    "notifications": {
-      "title": "Benachrichtigungen",
-      "description": "Konfigurieren Sie, wie Sie Benachrichtigungen erhalten."
-    },
     "account": "Konto",
     "appearance": "Erscheinungsbild",
     "display": "Anzeige",
+    "notifications": {
+      "notifyMeAbout": "Benachrichtige mich über...",
+      "allNewMessages": "Alle neuen Nachrichten",
+      "directMessagesAndMentions": "Direktnachrichten und Erwähnungen",
+      "nothing": "Nichts",
+      "emailNotifications": "E-Mail-Benachrichtigungen",
+      "communicationEmails": "Kommunikations-E-Mails",
+      "communicationEmailsDescription": "Erhalten Sie E-Mails über Ihre Kontenaktivität.",
+      "marketingEmails": "Marketing-E-Mails",
+      "marketingEmailsDescription": "Erhalten Sie E-Mails über neue Produkte, Funktionen und mehr.",
+      "socialEmails": "Soziale E-Mails",
+      "socialEmailsDescription": "Erhalten Sie E-Mails für Freundschaftsanfragen, Follower und mehr.",
+      "securityEmails": "Sicherheits-E-Mails",
+      "securityEmailsDescription": "Erhalten Sie E-Mails über Ihre Kontenaktivität und Sicherheit.",
+      "useDifferentSettingsForMobile": "Verschiedene Einstellungen für meine mobilen Geräte verwenden",
+      "mobileSettingsDescription": "Sie können Ihre mobilen Benachrichtigungen in den",
+      "mobileSettings": "mobilen Einstellungen",
+      "page": "Seite",
+      "updateNotifications": "Benachrichtigungen aktualisieren",
+      "validation": {
+        "typeRequired": "Bitte wählen Sie einen Benachrichtigungstyp aus."
+      }
+    },
     "language": "Sprache",
-    "notifications": "Benachrichtigungen",
     "openThemeSettings": "Theme-Einstellungen öffnen",
     "themeSettings": "Theme-Einstellungen",
     "themeSettingsDescription": "Passen Sie das Erscheinungsbild und Layout nach Ihren Vorlieben an.",
@@ -661,35 +902,27 @@
       "urlsDescription": "Fügen Sie Links zu Ihrer Website, Blog oder Social Media Profilen hinzu.",
       "addUrl": "URL hinzufügen",
       "updateProfile": "Profil aktualisieren",
+      "profileImage": "Profilbild",
+      "uploadProfileImage": "Profilbild hochladen",
+      "changeProfileImage": "Profilbild ändern",
+      "removeProfileImage": "Profilbild entfernen",
+      "profileImageDescription": "Empfohlene Formate: JPG, PNG, WebP. Maximale Größe: 5MB.",
+      "imageUploaded": "Profilbild erfolgreich hochgeladen",
+      "imageDeleted": "Profilbild erfolgreich gelöscht",
+      "updateSuccess": "Profil erfolgreich aktualisiert",
+      "updateError": "Fehler beim Aktualisieren des Profils",
+      "fetchError": "Fehler beim Abrufen der Profilinformationen",
       "validation": {
         "usernameRequired": "Bitte geben Sie Ihren Benutzernamen ein.",
         "usernameMinLength": "Der Benutzername muss mindestens 2 Zeichen lang sein.",
         "usernameMaxLength": "Der Benutzername darf nicht länger als 30 Zeichen sein.",
         "emailRequired": "Bitte wählen Sie eine E-Mail zum Anzeigen aus.",
-        "urlRequired": "Bitte geben Sie eine gültige URL ein."
-      }
-    },
-    "notifications": {
-      "notifyMeAbout": "Benachrichtige mich über...",
-      "allNewMessages": "Alle neuen Nachrichten",
-      "directMessagesAndMentions": "Direktnachrichten und Erwähnungen",
-      "nothing": "Nichts",
-      "emailNotifications": "E-Mail-Benachrichtigungen",
-      "communicationEmails": "Kommunikations-E-Mails",
-      "communicationEmailsDescription": "Erhalten Sie E-Mails über Ihre Kontenaktivität.",
-      "marketingEmails": "Marketing-E-Mails",
-      "marketingEmailsDescription": "Erhalten Sie E-Mails über neue Produkte, Funktionen und mehr.",
-      "socialEmails": "Soziale E-Mails",
-      "socialEmailsDescription": "Erhalten Sie E-Mails für Freundschaftsanfragen, Follower und mehr.",
-      "securityEmails": "Sicherheits-E-Mails",
-      "securityEmailsDescription": "Erhalten Sie E-Mails über Ihre Kontenaktivität und Sicherheit.",
-      "useDifferentSettingsForMobile": "Verschiedene Einstellungen für meine mobilen Geräte verwenden",
-      "mobileSettingsDescription": "Sie können Ihre mobilen Benachrichtigungen in den",
-      "mobileSettings": "mobilen Einstellungen",
-      "page": "Seite",
-      "updateNotifications": "Benachrichtigungen aktualisieren",
-      "validation": {
-        "typeRequired": "Bitte wählen Sie einen Benachrichtigungstyp aus."
+        "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "urlRequired": "Bitte geben Sie eine gültige URL ein.",
+        "websiteInvalid": "Bitte geben Sie eine gültige Website-URL ein.",
+        "nameMinLength": "Der Name muss mindestens 2 Zeichen lang sein.",
+        "nameMaxLength": "Der Name darf nicht länger als 50 Zeichen sein.",
+        "bioMaxLength": "Die Biografie darf nicht länger als 500 Zeichen sein."
       }
     },
     "floating": "Schwebend",
@@ -705,6 +938,12 @@
     "leftToRight": "Links nach Rechts",
     "rightToLeft": "Rechts nach Links",
     "directionDescription": "Wählen Sie zwischen Links-nach-Rechts oder Rechts-nach-Links Website-Richtung"
+  },
+  "sidebar": {
+    "currentPlan": "Aktueller Plan",
+    "usage": "Nutzung",
+    "remaining": "verbleibend",
+    "upgradeToPro": "Auf Pro upgraden"
   },
   "tasks": {
     "title": "Aufgaben",
@@ -812,70 +1051,83 @@
     "connected": "Verbunden",
     "connect": "Verbinden"
   },
-  "users": {
-    "title": "Benutzerliste",
-    "description": "Verwalten Sie Ihre Benutzer und deren Rollen hier.",
-    "active": "Aktiv",
-    "addUser": "Benutzer Hinzufügen",
-    "filterUsers": "Benutzer filtern...",
-    "inactive": "Inaktiv",
-    "inviteUser": "Benutzer Einladen",
-    "invited": "",
-    "noResults": "",
-    "role": "",
-    "status": "",
-    "suspended": "",
-    "bulkActions": {
-      "activatingUsers": "Benutzer aktivieren...",
-      "activatedUsers": "{{count}} {{count, plural, one {Benutzer aktiviert} other {Benutzer aktiviert}}}",
-      "deactivatingUsers": "Benutzer deaktivieren...",
-      "deactivatedUsers": "{{count}} {{count, plural, one {Benutzer deaktiviert} other {Benutzer deaktiviert}}}",
-      "invitingUsers": "Benutzer einladen...",
-      "invitedUsers": "{{count}} {{count, plural, one {Benutzer eingeladen} other {Benutzer eingeladen}}}",
-      "errorActivatingUsers": "Fehler beim Aktivieren der Benutzer",
-      "errorDeactivatingUsers": "Fehler beim Deaktivieren der Benutzer",
-      "errorInvitingUsers": "Fehler beim Einladen der Benutzer",
-      "inviteSelectedUsers": "Ausgewählte Benutzer einladen",
-      "activateSelectedUsers": "Ausgewählte Benutzer aktivieren",
-      "deactivateSelectedUsers": "Ausgewählte Benutzer deaktivieren",
-      "deleteSelectedUsers": "Ausgewählte Benutzer löschen"
-    },
-    "deleteUser": "Benutzer Löschen",
-    "deleteConfirmQuestion": "Sind Sie sicher, dass Sie löschen möchten",
-    "deleteConfirmDescription": "Diese Aktion wird den Benutzer mit der Rolle dauerhaft entfernen",
-    "deleteConfirmWarning": "aus dem System. Dies kann nicht rückgängig gemacht werden.",
-    "usernameLabel": "Benutzername:",
-    "usernamePlaceholder": "Geben Sie den Benutzernamen ein, um die Löschung zu bestätigen.",
-    "warningTitle": "Warnung!",
-    "warningDescription": "Bitte seien Sie vorsichtig, diese Operation kann nicht rückgängig gemacht werden.",
-    "deleteSuccessMessage": "Der folgende Benutzer wurde gelöscht:",
-    "delete": {
-      "confirmWord": "LÖSCHEN",
-      "confirmPrompt": "Bitte geben Sie \"{{confirmWord}}\" zur Bestätigung ein.",
-      "deleting": "Benutzer werden gelöscht...",
-      "success": "{{count}} {{count, plural, one {Benutzer gelöscht} other {Benutzer gelöscht}}}",
-      "title": "{{count}} {{count, plural, one {Benutzer löschen} other {Benutzer löschen}}}",
-      "description": "Sind Sie sicher, dass Sie die ausgewählten Benutzer löschen möchten?",
-      "warningDescription": "Diese Aktion kann nicht rückgängig gemacht werden.",
-      "confirmLabel": "Bestätigen Sie durch Eingabe von \"{{confirmWord}}\":",
-      "confirmPlaceholder": "Geben Sie \"{{confirmWord}}\" zur Bestätigung ein.",
-      "warningTitle": "Warnung!",
-      "confirmButton": "Löschen"
-    },
-    "invite": {
-      "title": "Benutzer Einladen",
-      "description": "Laden Sie einen neuen Benutzer ein, Ihrem Team beizutreten, indem Sie ihm eine E-Mail-Einladung senden. Weisen Sie eine Rolle zu, um sein Zugriffsniveau zu definieren.",
-      "emailLabel": "E-Mail",
-      "emailPlaceholder": "z.B: max.mustermann@gmail.com",
-      "roleLabel": "Rolle",
-      "rolePlaceholder": "Rolle auswählen",
-      "descriptionLabel": "Beschreibung (optional)",
-      "descriptionPlaceholder": "Fügen Sie eine persönliche Notiz zu Ihrer Einladung hinzu (optional)",
-      "button": "Einladen",
-      "validation": {
-        "emailRequired": "Bitte geben Sie eine E-Mail-Adresse für die Einladung ein.",
-        "roleRequired": "Rolle ist erforderlich."
-      }
-    }
+  "aiDocuments": {
+    "title": "KI-Dokumentenintelligenz",
+    "description": "Laden Sie Dokumente hoch, verarbeiten Sie sie und chatten Sie mit ihnen mit KI",
+    "uploadDocument": "Dokument Hochladen",
+    "upload": "Hochladen",
+    "library": "Bibliothek",
+    "chat": "Chat",
+    "settings": "Einstellungen",
+    "selectDocumentToChat": "Wählen Sie ein Dokument aus, um zu chatten",
+    "uploadDocuments": "Dokumente Hochladen",
+    "uploadDescription": "Laden Sie PDF-, DOCX- oder TXT-Dateien hoch, um sie mit KI zu verarbeiten",
+    "dropFilesHere": "Dateien hier ablegen...",
+    "dragDropFiles": "Dateien hier hineinziehen und ablegen oder klicken zum Auswählen",
+    "supportedFormats": "PDF-, DOCX-, TXT-Dateien bis zu 10MB",
+    "selectedFiles": "Ausgewählte Dateien",
+    "uploading": "Hochladen...",
+    "uploadAll": "Alle Hochladen",
+    "pdfSupport": "PDF-Dokumente",
+    "docxSupport": "Word-Dokumente",
+    "txtSupport": "Textdateien",
+    "documentLibrary": "Dokumentenbibliothek",
+    "libraryDescription": "Verwalten und interagieren Sie mit Ihren KI-verarbeiteten Dokumenten",
+    "refresh": "Aktualisieren",
+    "searchDocuments": "Dokumente suchen...",
+    "all": "Alle",
+    "completed": "Abgeschlossen",
+    "processing": "Verarbeitung",
+    "documents": "Dokumente",
+    "noDocuments": "Keine Dokumente gefunden",
+    "noDocumentsMatch": "Keine Dokumente entsprechen Ihrer Suche",
+    "uploadFirstDocument": "Laden Sie Ihr erstes Dokument hoch, um zu beginnen",
+    "name": "Name",
+    "status": "Status",
+    "size": "Größe",
+    "created": "Erstellt",
+    "view": "Anzeigen",
+    "download": "Herunterladen",
+    "delete": "Löschen",
+    "loadingDocuments": "Dokumente werden geladen...",
+    "loadingDocument": "Dokument wird geladen...",
+    "chatWithDocument": "Mit Dokument Chatten",
+    "chatDescription": "Chatten mit Dokumenten ermöglichen",
+    "startConversation": "Gespräch beginnen",
+    "askQuestion": "Stellen Sie eine Frage zum Dokument, um zu beginnen",
+    "thinking": "KI denkt nach...",
+    "send": "Senden",
+    "relevantSections": "Relevante Abschnitte:",
+    "tokens": "Tokens",
+    "cost": "Kosten",
+    "noSummary": "Keine Zusammenfassung verfügbar",
+    "keyPoints": "Schlüsselpunkte",
+    "documentSettings": "Dokumenteinstellungen",
+    "settingsDescription": "Konfigurieren Sie, wie Dokumente verarbeitet und analysiert werden",
+    "saveSettings": "Einstellungen Speichern",
+    "settingsSaved": "Einstellungen erfolgreich gespeichert",
+    "processingSettings": "Verarbeitungseinstellungen",
+    "processingDescription": "Konfigurieren Sie, wie Dokumente aufgeteilt und verarbeitet werden",
+    "chunkSize": "Chunk-Größe",
+    "chunkSizeDescription": "Anzahl der Zeichen pro Chunk (100-2000)",
+    "chunkOverlap": "Chunk-Überlappung",
+    "chunkOverlapDescription": "Überlappung zwischen Chunks für besseren Kontext",
+    "maxTokensPerChunk": "Max Tokens pro Chunk",
+    "maxTokensDescription": "Maximale Tokens für KI-Verarbeitung pro Chunk",
+    "featureSettings": "Funktionseinstellungen",
+    "featureDescription": "KI-Funktionen für Dokumente aktivieren oder deaktivieren",
+    "enableSummarization": "Zusammenfassung Aktivieren",
+    "summarizationDescription": "Automatisch Dokumentenzusammenfassungen generieren",
+    "enableKeyPoints": "Schlüsselpunkte Aktivieren",
+    "keyPointsDescription": "Schlüsselpunkte und Erkenntnisse extrahieren",
+    "enableChat": "Chat Aktivieren",
+    "autoProcess": "Automatische Verarbeitung",
+    "autoProcessDescription": "Dokumente beim Hochladen automatisch verarbeiten",
+    "usageStatistics": "Nutzungsstatistiken",
+    "usageDescription": "Aktuelle Nutzung und Grenzen für Dokumentenfunktionen",
+    "totalTokens": "Gesamt Tokens",
+    "totalCost": "Gesamtkosten",
+    "loadingStats": "Statistiken werden geladen...",
+    "chats": "Chats"
   }
 }

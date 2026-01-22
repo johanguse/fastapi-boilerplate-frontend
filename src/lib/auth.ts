@@ -31,7 +31,6 @@ export const {
   useSession,
   getSession,
   resetPassword,
-  forgetPassword,
   verifyEmail,
 } = authClient
 
@@ -44,12 +43,29 @@ export interface User {
   email: string
   name: string
   emailVerified: boolean
+  status?: string
+  is_active?: boolean
   image?: string | null
   createdAt: Date
   updatedAt: Date
   role?: string // User role (admin, user, etc.)
   is_verified?: boolean // Backend uses snake_case
   is_superuser?: boolean // Backend admin flag
+  onboarding_completed?: boolean // Onboarding completion status
+  onboarding_step?: number // Current onboarding step
+  // Profile fields
+  company?: string
+  job_title?: string
+  country?: string
+  phone?: string
+  bio?: string
+  website?: string
+  tax_id?: string
+  address_street?: string
+  address_city?: string
+  address_state?: string
+  address_postal_code?: string
+  company_name?: string
 }
 
 export interface Session {
@@ -72,8 +88,12 @@ export interface Organization {
   name: string
   slug: string
   logo?: string | null
+  description?: string | null
+  plan?: string // Organization plan (Free, Starter, Pro, etc.)
   metadata?: Record<string, unknown> | null
   createdAt: Date
+  maxProjects?: number
+  activeProjects?: number
 }
 
 export interface Team {

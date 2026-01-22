@@ -20,14 +20,12 @@
       "notAvailable": "N/A",
       "organization": "Organização",
       "pageOf_one": "",
-      "pageOf_many": "",
       "pageOf_other": "",
       "payment": "Pagamento",
       "previous": "Anterior",
       "project": "Projeto",
       "security": "Segurança",
       "showingActivities_one": "",
-      "showingActivities_many": "",
       "showingActivities_other": "",
       "subtitle": "Monitore todas as atividades do sistema e ações dos usuários",
       "system": "Sistema",
@@ -129,6 +127,111 @@
       "verified": "Verificado"
     }
   },
+  "onboarding": {
+    "title": "Bem-vindo ao seu Espaço de Trabalho",
+    "subtitle": "Vamos configurar tudo em algumas etapas",
+    "progress": "Progresso",
+    "loading": "Carregando configuração inicial...",
+    "error": {
+      "title": "Erro",
+      "description": "Falha ao carregar o status da configuração inicial. Tente novamente.",
+      "fetchStatus": "Falha ao carregar o status da configuração inicial",
+      "complete": "Falha ao completar a configuração inicial"
+    },
+    "success": {
+      "completed": "Bem-vindo! Sua conta está totalmente configurada."
+    },
+    "steps": {
+      "profile": {
+        "title": "Complete seu Perfil",
+        "description": "Conte-nos um pouco sobre você"
+      },
+      "organization": {
+        "title": "Crie sua Organização",
+        "description": "Configure seu espaço de trabalho"
+      },
+      "complete": {
+        "title": "Tudo Pronto!",
+        "description": "Bem-vindo ao seu novo espaço de trabalho"
+      }
+    },
+    "profile": {
+      "title": "Complete seu Perfil",
+      "description": "Conte-nos um pouco sobre você para personalizar sua experiência",
+      "name": "Nome Completo",
+      "namePlaceholder": "Digite seu nome completo",
+      "company": "Empresa",
+      "companyPlaceholder": "Digite o nome da sua empresa",
+      "jobTitle": "Cargo",
+      "jobTitlePlaceholder": "ex., Engenheiro de Software",
+      "country": "País",
+      "countryPlaceholder": "Selecione seu país",
+      "phone": "Número de Telefone",
+      "phonePlaceholder": "+55 11 1234 5678",
+      "website": "Site",
+      "websitePlaceholder": "https://seusite.com",
+      "bio": "Biografia",
+      "bioPlaceholder": "Conte-nos um pouco sobre você...",
+      "saving": "Salvando...",
+      "continue": "Continuar",
+      "success": "Perfil atualizado com sucesso!",
+      "error": "Falha ao atualizar o perfil. Tente novamente."
+    },
+    "organization": {
+      "title": "Crie sua Organização",
+      "description": "Descrição",
+      "name": "Nome da Organização",
+      "namePlaceholder": "Digite o nome da sua organização",
+      "slug": "URL Slug",
+      "slugPlaceholder": "minha-organizacao",
+      "slugHelp": "Opcional: Um identificador único para a URL da sua organização",
+      "descriptionPlaceholder": "Conte-nos sobre sua organização...",
+      "creating": "Criando...",
+      "continue": "Criar Organização",
+      "success": "Organização criada com sucesso!",
+      "error": "Falha ao criar a organização. Tente novamente.",
+      "benefits": {
+        "title": "O que você obterá:",
+        "team": "Ferramentas de colaboração em equipe",
+        "projects": "Gerenciamento de projetos",
+        "analytics": "Análises e insights",
+        "support": "Suporte prioritário"
+      }
+    },
+    "complete": {
+      "title": "Tudo Pronto!",
+      "description": "Bem-vindo ao seu novo espaço de trabalho. Vamos explorar o que você pode fazer!",
+      "welcome": {
+        "title": "Bem-vindo, {{name}}!",
+        "description": "Seu espaço de trabalho está pronto. Agora você pode começar a colaborar com sua equipe e explorar todos os recursos que temos para oferecer."
+      },
+      "features": {
+        "title": "O que você pode fazer agora:",
+        "team": {
+          "title": "Colaboração em Equipe",
+          "description": "Convide membros da equipe e trabalhe juntos sem problemas"
+        },
+        "analytics": {
+          "title": "Painel de Análises",
+          "description": "Acompanhe seu progresso com insights detalhados"
+        },
+        "automation": {
+          "title": "Ferramentas com IA",
+          "description": "Aproveite a IA para impulsionar sua produtividade"
+        }
+      },
+      "nextSteps": {
+        "title": "Próximos Passos:",
+        "profile": "Complete seu perfil",
+        "organization": "Crie sua organização",
+        "explore": "Explore seu painel",
+        "invite": "Convide membros da equipe"
+      },
+      "finishing": "Finalizando configuração...",
+      "getStarted": "Começar",
+      "redirecting": "Redirecionando para o painel..."
+    }
+  },
   "auth": {
     "and": "e",
     "byClickingLogin": "Ao clicar em login, você concorda com nossos",
@@ -147,13 +250,16 @@
     "forgotPasswordEmailSent": "Reset email sent to {{email}}",
     "forgotPasswordSendingEmail": "Enviando e-mail...",
     "forgotPasswordTitle": "Esqueceu a senha",
+    "forgotPasswordRateLimited": "Por favor aguarde {{time}} antes de solicitar outro reset de senha",
+    "forgotPasswordNextRequest": "Próxima solicitação disponível em",
+    "userNotFound": "Nenhuma conta encontrada com este endereço de e-mail. Gostaria de criar uma conta?",
     "internalServerError": "Erro interno do servidor",
     "invalidCredentials": "E-mail ou senha inválidos",
     "loginDescription": "Digite seu e-mail e senha abaixo para fazer login em sua conta",
+    "loginDontHaveAccount": "Não tem uma conta?",
     "loginTitle": "Entrar",
     "maintenanceError": "Erro de manutenção",
     "nameTooShort_one": "",
-    "nameTooShort_many": "",
     "nameTooShort_other": "",
     "notFound": "Não encontrado",
     "otp": {
@@ -163,6 +269,9 @@
       "verifyButton": "Verificar",
       "haventReceived": "Não recebeu?",
       "resendCode": "Reenviar um novo código.",
+      "resendIn": "Reenvio disponível em",
+      "resendSuccess": "Email de verificação enviado com sucesso",
+      "backToSignIn": "Voltar ao Login",
       "validation": {
         "required": "Por favor, insira o código de 6 dígitos."
       }
@@ -171,9 +280,9 @@
     "passwordPlaceholder": "Digite sua senha",
     "passwordsDontMatch": "As senhas não coincidem",
     "passwordTooShort_one": "",
-    "passwordTooShort_many": "",
     "passwordTooShort_other": "",
     "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
     "signIn": "Entrar",
     "signOutConfirm": "Sair",
     "signOutDescription": "Tem certeza de que deseja sair? Você precisará fazer login novamente para acessar sua conta.",
@@ -192,7 +301,7 @@
     "signUpPasswordPlaceholder": "********",
     "signUpRegistrationFailed": "Falha no registro. Verifique suas informações.",
     "signUpTitle": "Criar uma conta",
-    "signUpWelcome": "Bem-vindo {name}! Verifique seu e-mail para confirmar sua conta.",
+    "signUpWelcome": "Bem-vindo {{name}}! Verifique seu e-mail para confirmar sua conta.",
     "testimonial": "\"Este modelo me economizou incontáveis horas de trabalho e me ajudou a entregar designs impressionantes aos meus clientes mais rapidamente que nunca.\"",
     "socialLogin": {
       "continueWith": "Continuar com {{provider}}",
@@ -207,9 +316,45 @@
       "completingSignIn": "Finalizando login...",
       "pleaseWait": "Por favor, aguarde enquanto finalizamos sua autenticação {{provider}}"
     },
-    "terms": "Termos de Serviço",
     "unauthorized": "Não autorizado",
     "welcome": "Bem-vindo!"
+  },
+  "chats": {
+    "title": "Caixa de Entrada",
+    "searchLabel": "Pesquisar",
+    "searchPlaceholder": "Pesquisar chat...",
+    "messageInputLabel": "Caixa de Texto do Chat",
+    "messageInputPlaceholder": "Digite suas mensagens...",
+    "sendButton": "Enviar",
+    "emptyState": {
+      "title": "Suas mensagens",
+      "description": "Envie uma mensagem para iniciar um chat.",
+      "sendMessageButton": "Enviar mensagem"
+    },
+    "newMessage": "Nova mensagem",
+    "newMessageDescription": "",
+    "to": "Para",
+    "searchPeople": "Pesquisar pessoas...",
+    "noPeopleFound": "Nenhuma pessoa encontrada.",
+    "chat": "Chat"
+  },
+  "account": {
+    "name": "Nome",
+    "namePlaceholder": "Seu nome",
+    "nameDescription": "Este é o nome que será exibido no seu perfil e nos e-mails.",
+    "nameRequired": "Por favor, digite seu nome.",
+    "nameMinLength": "O nome deve ter pelo menos 2 caracteres.",
+    "nameMaxLength": "O nome não deve ter mais de 30 caracteres.",
+    "dateOfBirth": "Data de nascimento",
+    "dobDescription": "Sua data de nascimento é usada para calcular sua idade.",
+    "dobRequired": "Por favor, selecione sua data de nascimento.",
+    "language": "Idioma",
+    "languageDescription": "Este é o idioma que será usado no painel.",
+    "languageRequired": "Por favor, selecione um idioma.",
+    "selectLanguage": "Selecionar idioma",
+    "searchLanguage": "Pesquisar idioma...",
+    "noLanguageFound": "Nenhum idioma encontrado.",
+    "updateAccount": "Atualizar conta"
   },
   "billing": {
     "cancelScheduled": "Sua assinatura será cancelada ao final do período de faturamento.",
@@ -247,7 +392,27 @@
     "title": "Faturamento e Assinatura",
     "upgradePlan": "Atualizar Plano",
     "usage": "Uso",
-    "usageDescription": "Uso atual dos recursos do seu plano"
+    "usageDescription": "Uso atual dos recursos do seu plano",
+    "modalTitle": "Informações de Cobrança Necessárias",
+    "modalDescription": "Por favor, forneça seus dados de cobrança para {{action}}. Estas informações serão usadas para faturas.",
+    "saveSuccess": "Informações de cobrança salvas com sucesso!",
+    "saveError": "Falha ao salvar informações de cobrança. Por favor, tente novamente.",
+    "saveAndContinue": "Salvar e Continuar",
+    "requiredFieldsInfo": "Todos os campos marcados são obrigatórios para emissão de nota fiscal.",
+    "fields": {
+      "companyName": "Nome / Razão Social",
+      "taxId": "CPF / CNPJ / ID Fiscal",
+      "taxIdDescription": "CPF, CNPJ, VAT ou outro número de identificação fiscal",
+      "country": "País",
+      "addressStreet": "Endereço",
+      "addressCity": "Cidade",
+      "addressState": "Estado / Província",
+      "addressPostalCode": "CEP / Código Postal"
+    },
+    "placeholders": {
+      "companyName": "Seu nome ou razão social",
+      "country": "Selecione seu país"
+    }
   },
   "dataTable": {
     "pagination": {
@@ -265,17 +430,21 @@
       "clearFilters": "Limpar filtros"
     },
     "columnHeader": {
-      "ascending": "Crescente",
-      "descending": "Decrescente",
+      "ascending": "Cres.",
+      "descending": "Decres.",
       "hide": "Ocultar"
     },
     "bulkActions": {
-      "announcement": "{{count}} {{entityName}}{{count, plural, one {} other {s}}} selecionados. Barra de ferramentas de ações em massa está disponível.",
+      "announcement": "{{count}} {{entityName}}{{count, plural, one {} other {s}}} selecionados. A barra de ferramentas de ações em massa está disponível.",
       "ariaLabel": "Ações em massa para {{count}} {{entityName}}{{count, plural, one {} other {s}}} selecionados",
       "clearSelection": "Limpar seleção",
       "clearSelectionTitle": "Limpar seleção (Escape)",
       "selectedCount": "{{count}} selecionados",
       "selected": "selecionados"
+    },
+    "viewOptions": {
+      "view": "Visualizar",
+      "toggleColumns": "Alternar colunas"
     }
   },
   "common": {
@@ -292,7 +461,13 @@
     "reset": "Redefinir",
     "searchPlaceholder": "Buscar...",
     "tryAgain": "Tentar novamente",
-    "close": "Fechar"
+    "close": "Fechar",
+    "uploadImage": "Enviar imagem",
+    "changeImage": "Alterar imagem",
+    "removeImage": "Remover imagem",
+    "dragDropImage": "Arraste e solte uma imagem aqui, ou clique para selecionar",
+    "imageUploading": "Enviando imagem...",
+    "imageProcessing": "Processando imagem..."
   },
   "theme": {
     "title": "Tema",
@@ -308,6 +483,8 @@
   "profile": {
     "profile": "Perfil",
     "billing": "Faturamento",
+    "appearance": "Aparência",
+    "notifications": "Notificações",
     "settings": "Configurações",
     "newTeam": "Nova Equipe",
     "signOut": "Sair"
@@ -321,6 +498,11 @@
     "goBack": "Voltar",
     "backToHome": "Voltar ao Início",
     "learnMore": "Saiba mais",
+    "fileTooLarge": "O arquivo é muito grande. O tamanho máximo é {{maxSize}}MB.",
+    "invalidFileType": "Tipo de arquivo inválido. Tipos permitidos: {{types}}.",
+    "imageUploadFailed": "Falha ao enviar imagem. Por favor, tente novamente.",
+    "imageDeleteFailed": "Falha ao excluir imagem. Por favor, tente novamente.",
+    "imageOptimizationFailed": "Falha ao otimizar imagem. Por favor, tente novamente.",
     "notFound": {
       "title": "Ops! Página Não Encontrada",
       "description": "Parece que a página que você está procurando",
@@ -350,43 +532,86 @@
   "accessibility": {
     "skipToMain": "Pular para o conteúdo principal"
   },
-  "account": {
-    "name": "Nome",
-    "namePlaceholder": "Seu nome",
-    "nameDescription": "Este é o nome que será exibido no seu perfil e nos e-mails.",
-    "nameRequired": "Por favor, digite seu nome.",
-    "nameMinLength": "O nome deve ter pelo menos 2 caracteres.",
-    "nameMaxLength": "O nome não deve ter mais de 30 caracteres.",
-    "dateOfBirth": "Data de nascimento",
-    "dobDescription": "Sua data de nascimento é usada para calcular sua idade.",
-    "dobRequired": "Por favor, selecione sua data de nascimento.",
-    "language": "Idioma",
-    "languageDescription": "Este é o idioma que será usado no painel.",
-    "languageRequired": "Por favor, selecione um idioma.",
-    "selectLanguage": "Selecionar idioma",
-    "searchLanguage": "Pesquisar idioma...",
-    "noLanguageFound": "Nenhum idioma encontrado.",
-    "updateAccount": "Atualizar conta"
-  },
-  "chats": {
-    "title": "Caixa de Entrada",
-    "searchLabel": "Pesquisar",
-    "searchPlaceholder": "Pesquisar chat...",
-    "messageInputLabel": "Caixa de Texto do Chat",
-    "messageInputPlaceholder": "Digite suas mensagens...",
-    "sendButton": "Enviar",
-    "emptyState": {
-      "title": "Suas mensagens",
-      "description": "Envie uma mensagem para iniciar um chat.",
-      "sendMessageButton": "Enviar mensagem"
+  "users": {
+    "title": "Lista de Usuários",
+    "description": "Gerencie seus usuários e suas funções aqui.",
+    "active": "Ativo",
+    "filterUsers": "Filtrar usuários...",
+    "inactive": "Inativo",
+    "invited": "",
+    "noResults": "",
+    "role": "",
+    "status": "",
+    "suspended": "",
+    "bulkActions": {
+      "activatingUsers": "Ativando usuários...",
+      "activatedUsers": "{{count}} {{count, plural, one {usuário ativado} other {usuários ativados}}}",
+      "deactivatingUsers": "Desativando usuários...",
+      "deactivatedUsers": "{{count}} {{count, plural, one {usuário desativado} other {usuários desativados}}}",
+      "invitingUsers": "Convidando usuários...",
+      "invitedUsers": "{{count}} {{count, plural, one {usuário convidado} other {usuários convidados}}}",
+      "errorActivatingUsers": "Erro ao ativar usuários",
+      "errorDeactivatingUsers": "Erro ao desativar usuários",
+      "errorInvitingUsers": "Erro ao convidar usuários",
+      "inviteSelectedUsers": "Convidar usuários selecionados",
+      "activateSelectedUsers": "Ativar usuários selecionados",
+      "deactivateSelectedUsers": "Desativar usuários selecionados",
+      "deleteSelectedUsers": "Excluir usuários selecionados"
     },
-    "newMessage": "Nova mensagem",
-    "to": "Para",
-    "searchPeople": "Pesquisar pessoas...",
-    "noPeopleFound": "Nenhuma pessoa encontrada.",
-    "chat": "Chat"
+    "deleteUser": "Excluir Usuário",
+    "deleteConfirmQuestion": "Tem certeza de que deseja excluir",
+    "deleteConfirmDescription": "Esta ação removerá permanentemente o usuário com a função de",
+    "deleteConfirmWarning": "do sistema. Isso não pode ser desfeito.",
+    "usernameLabel": "Nome de usuário:",
+    "usernamePlaceholder": "Digite o nome de usuário para confirmar a exclusão.",
+    "warningTitle": "Aviso!",
+    "warningDescription": "Por favor, tenha cuidado, esta operação não pode ser revertida.",
+    "deleteSuccessMessage": "O seguinte usuário foi excluído:",
+    "delete": {
+      "confirmWord": "EXCLUIR",
+      "confirmPrompt": "Por favor digite \"{{confirmWord}}\" para confirmar.",
+      "deleting": "Excluindo usuários...",
+      "success": "{{count}} {{count, plural, one {usuário excluído} other {usuários excluídos}}}",
+      "title": "Excluir {{count}} {{count, plural, one {usuário} other {usuários}}}",
+      "description": "Tem certeza de que deseja excluir os usuários selecionados?",
+      "warningDescription": "Esta ação não pode ser desfeita.",
+      "confirmLabel": "Confirme digitando \"{{confirmWord}}\":",
+      "confirmPlaceholder": "Digite \"{{confirmWord}}\" para confirmar.",
+      "warningTitle": "Aviso!",
+      "confirmButton": "Excluir"
+    },
+    "invite": {
+      "title": "Convidar Usuário",
+      "description": "Convide um novo usuário para se juntar à sua equipe enviando-lhe um convite por e-mail. Atribua uma função para definir seu nível de acesso.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "ex: joao.silva@gmail.com",
+      "roleLabel": "Função",
+      "rolePlaceholder": "Selecionar uma função",
+      "descriptionLabel": "Descrição (opcional)",
+      "descriptionPlaceholder": "Adicione uma nota pessoal ao seu convite (opcional)",
+      "button": "Convidar",
+      "validation": {
+        "emailRequired": "Por favor, digite um e-mail para convidar.",
+        "roleRequired": "A função é obrigatória."
+      }
+    }
   },
   "dashboard": {
+    "demoTitle": "Demo do Painel",
+    "demoSubtitle": "Painel de demonstração estático com dados de exemplo",
+    "subtitle": "Sua plataforma SaaS de IA abrangente",
+    "aiFeatures": {
+      "documents": "Inteligência de Documentos",
+      "documentsDesc": "Faça upload, processe e converse com documentos usando IA",
+      "content": "Geração de Conteúdo",
+      "contentDesc": "Gere conteúdo de alta qualidade com modelos alimentados por IA",
+      "analytics": "Analíticas de IA",
+      "analyticsDesc": "Gere insights e visualizações dos seus dados",
+      "open": "Abrir"
+    },
+    "filters": "Filtros",
+    "export": "Exportar",
+    "generateReport": "Gerar Relatório",
     "metrics": {
       "activeNow": "Ativo agora",
       "download": "Baixar",
@@ -397,14 +622,25 @@
       "sales": "Vendas",
       "sinceLastHour": "+201 desde a última hora",
       "subscriptions": "Assinaturas",
-      "totalRevenue": "Receita total"
+      "totalRevenue": "Receita total",
+      "aiCredits": "Créditos de IA Usados",
+      "thisMonth": "este mês",
+      "documentsProcessed": "Documentos Processados",
+      "today": "hoje",
+      "contentGenerated": "Conteúdo Gerado",
+      "thisWeek": "esta semana",
+      "analyticsQueries": "Consultas de Analíticas"
     },
     "tabs": {
+      "overview": "Visão geral",
       "analytics": "Análises",
       "notifications": "Notificações",
-      "overview": "Visão geral",
-      "reports": "Relatórios"
+      "aiDocuments": "Documentos de IA",
+      "aiContent": "Conteúdo de IA",
+      "aiAnalytics": "Analíticas de IA"
     },
+    "overview": "Visão Geral",
+    "reports": "Relatórios",
     "title": "Painel"
   },
   "emailVerification": {
@@ -470,6 +706,11 @@
     "youHaveBeenInvited": "Você foi convidado para participar desta organização."
   },
   "navigation": {
+    "aiApplications": "Aplicações de IA",
+    "aiAnalytics": "Análises de IA",
+    "aiContent": "Conteúdo de IA",
+    "aiDocuments": "Documentos de IA",
+    "dashboardDemo": "Demo do Painel",
     "staticPages": "Páginas Estáticas & Exemplos",
     "account": "Conta",
     "apps": "Aplicativos",
@@ -478,12 +719,14 @@
     "chats": "Conversas",
     "dashboard": "Painel",
     "errors": "Erros",
+    "feedback": "",
     "helpCenter": "Central de Ajuda",
     "notifications": "Notificações",
     "organizations": "Organizações",
     "other": "Outros",
     "pages": "Páginas",
     "settings": "Configurações",
+    "support": "",
     "tasks": "Tarefas",
     "upgradeToPro": "Atualizar para Pro",
     "users": "Usuários"
@@ -504,9 +747,8 @@
     "noMembers": "Ainda não há membros",
     "noOrganizations": "Ainda não há organizações",
     "noOrganizationsYet": "Ainda não há organizações",
-    "organizationCount_one": "organizations.organizationCount",
-    "organizationCount_many": "organizations.organizationCount",
-    "organizationCount_other": "organizations.organizationCount",
+    "organizationCount_one": "{{count}} organização",
+    "organizationCount_other": "{{count}} organizações",
     "pendingInvitations": "Convites Pendentes",
     "pendingInvitationsDesc": "Ver e gerenciar convites de equipe pendentes",
     "settings": "Configurações",
@@ -528,7 +770,17 @@
     "updateSuccess": "Organização atualizada com sucesso",
     "updateError": "Falha ao atualizar organização",
     "updating": "Atualizando...",
-    "updateOrganization": "Atualizar Organização"
+    "updateOrganization": "Atualizar Organização",
+    "logo": "Logo",
+    "logoDescription": "Envie um logo para sua organização.",
+    "logoUpdateDescription": "Atualize o logo da sua organização.",
+    "uploadLogo": "Enviar logo",
+    "changeLogo": "Alterar logo",
+    "removeLogo": "Remover logo",
+    "logoUploaded": "Logo enviado com sucesso",
+    "logoDeleted": "Logo excluído com sucesso",
+    "logoUploadFailed": "Falha ao enviar logo",
+    "logoDeleteFailed": "Falha ao excluir logo"
   },
   "pricing": {
     "errors": {
@@ -556,11 +808,9 @@
     },
     "features": {
       "projects_one": "",
-      "projects_many": "",
       "projects_other": "",
       "storage": "{{size}}GB de armazenamento",
       "users_one": "",
-      "users_many": "",
       "users_other": ""
     },
     "loading": "Processando...",
@@ -589,51 +839,39 @@
     "description": "Gerencie as configurações da sua conta e defina as preferências de e-mail.",
     "nav": {
       "profile": "Perfil",
+      "billing": "Faturamento",
       "account": "Conta",
       "appearance": "Aparência",
       "notifications": "Notificações",
       "display": "Exibição"
     },
-    "account": {
-      "title": "Conta",
-      "description": "Atualize as configurações da sua conta. Defina seu idioma e fuso horário preferidos."
-    },
-    "appearance": {
-      "title": "Aparência",
-      "description": "Personalize a aparência do aplicativo. Alterne automaticamente entre temas diurnos e noturnos.",
-      "fontLabel": "Fonte",
-      "fontDescription": "Defina a fonte que você quer usar no painel de controle.",
-      "themeLabel": "Tema",
-      "themeDescription": "Selecione o tema para o painel de controle.",
-      "light": "Claro",
-      "dark": "Escuro",
-      "updateButton": "Atualizar preferências"
-    },
-    "display": {
-      "sidebarLabel": "Barra lateral",
-      "sidebarDescription": "Selecione os itens que você quer exibir na barra lateral.",
-      "updateButton": "Atualizar exibição",
-      "items": {
-        "recents": "Recentes",
-        "home": "Início",
-        "applications": "Aplicativos",
-        "desktop": "Desktop",
-        "downloads": "Downloads",
-        "documents": "Documentos"
-      },
-      "validation": {
-        "atLeastOne": "Você deve selecionar pelo menos um item."
-      }
-    },
-    "notifications": {
-      "title": "Notificações",
-      "description": "Configure como você recebe notificações."
-    },
     "account": "Conta",
     "appearance": "Aparência",
     "display": "Exibição",
+    "notifications": {
+      "notifyMeAbout": "Notificar-me sobre...",
+      "allNewMessages": "Todas as novas mensagens",
+      "directMessagesAndMentions": "Mensagens diretas e menções",
+      "nothing": "Nada",
+      "emailNotifications": "Notificações por Email",
+      "communicationEmails": "Emails de comunicação",
+      "communicationEmailsDescription": "Receba emails sobre a atividade da sua conta.",
+      "marketingEmails": "Emails de marketing",
+      "marketingEmailsDescription": "Receba emails sobre novos produtos, recursos e mais.",
+      "socialEmails": "Emails sociais",
+      "socialEmailsDescription": "Receba emails para solicitações de amizade, seguidores e mais.",
+      "securityEmails": "Emails de segurança",
+      "securityEmailsDescription": "Receba emails sobre a atividade e segurança da sua conta.",
+      "useDifferentSettingsForMobile": "Usar configurações diferentes para meus dispositivos móveis",
+      "mobileSettingsDescription": "Você pode gerenciar suas notificações móveis nas",
+      "mobileSettings": "configurações móveis",
+      "page": "página",
+      "updateNotifications": "Atualizar notificações",
+      "validation": {
+        "typeRequired": "Por favor, selecione um tipo de notificação."
+      }
+    },
     "language": "Idioma",
-    "notifications": "Notificações",
     "openThemeSettings": "Abrir configurações de tema",
     "themeSettings": "Configurações de Tema",
     "themeSettingsDescription": "Ajuste a aparência e layout de acordo com suas preferências.",
@@ -664,35 +902,27 @@
       "urlsDescription": "Adicione links para seu site, blog ou perfis de redes sociais.",
       "addUrl": "Adicionar URL",
       "updateProfile": "Atualizar perfil",
+      "profileImage": "Imagem de perfil",
+      "uploadProfileImage": "Enviar imagem de perfil",
+      "changeProfileImage": "Alterar imagem de perfil",
+      "removeProfileImage": "Remover imagem de perfil",
+      "profileImageDescription": "Formatos recomendados: JPG, PNG, WebP. Tamanho máximo: 5MB.",
+      "imageUploaded": "Imagem de perfil enviada com sucesso",
+      "imageDeleted": "Imagem de perfil excluída com sucesso",
+      "updateSuccess": "Perfil atualizado com sucesso",
+      "updateError": "Falha ao atualizar perfil",
+      "fetchError": "Falha ao buscar informações do perfil",
       "validation": {
         "usernameRequired": "Por favor, insira seu nome de usuário.",
         "usernameMinLength": "O nome de usuário deve ter pelo menos 2 caracteres.",
         "usernameMaxLength": "O nome de usuário não deve ter mais de 30 caracteres.",
         "emailRequired": "Por favor, selecione um email para exibir.",
-        "urlRequired": "Por favor, insira uma URL válida."
-      }
-    },
-    "notifications": {
-      "notifyMeAbout": "Notificar-me sobre...",
-      "allNewMessages": "Todas as novas mensagens",
-      "directMessagesAndMentions": "Mensagens diretas e menções",
-      "nothing": "Nada",
-      "emailNotifications": "Notificações por Email",
-      "communicationEmails": "Emails de comunicação",
-      "communicationEmailsDescription": "Receba emails sobre a atividade da sua conta.",
-      "marketingEmails": "Emails de marketing",
-      "marketingEmailsDescription": "Receba emails sobre novos produtos, recursos e mais.",
-      "socialEmails": "Emails sociais",
-      "socialEmailsDescription": "Receba emails para solicitações de amizade, seguidores e mais.",
-      "securityEmails": "Emails de segurança",
-      "securityEmailsDescription": "Receba emails sobre a atividade e segurança da sua conta.",
-      "useDifferentSettingsForMobile": "Usar configurações diferentes para meus dispositivos móveis",
-      "mobileSettingsDescription": "Você pode gerenciar suas notificações móveis nas",
-      "mobileSettings": "configurações móveis",
-      "page": "página",
-      "updateNotifications": "Atualizar notificações",
-      "validation": {
-        "typeRequired": "Por favor, selecione um tipo de notificação."
+        "emailInvalid": "Por favor, insira um endereço de email válido.",
+        "urlRequired": "Por favor, insira uma URL válida.",
+        "websiteInvalid": "Por favor, insira uma URL de site válida.",
+        "nameMinLength": "O nome deve ter pelo menos 2 caracteres.",
+        "nameMaxLength": "O nome não deve ter mais de 50 caracteres.",
+        "bioMaxLength": "A biografia não deve ter mais de 500 caracteres."
       }
     },
     "floating": "Flutuante",
@@ -708,6 +938,12 @@
     "leftToRight": "Esquerda para Direita",
     "rightToLeft": "Direita para Esquerda",
     "directionDescription": "Escolha entre direção do site da esquerda para direita ou da direita para esquerda"
+  },
+  "sidebar": {
+    "currentPlan": "Plano Atual",
+    "usage": "Uso",
+    "remaining": "restante",
+    "upgradeToPro": "Atualizar para Pro"
   },
   "tasks": {
     "title": "Tarefas",
@@ -815,103 +1051,83 @@
     "connected": "Conectado",
     "connect": "Conectar"
   },
-  "dataTable": {
-    "pagination": {
-      "pageOf": "Página {{current}} de {{total}}",
-      "rowsPerPage": "Linhas por página",
-      "goToFirstPage": "Ir para a primeira página",
-      "goToPreviousPage": "Ir para a página anterior",
-      "goToPage": "Ir para a página {{page}}",
-      "goToNextPage": "Ir para a próxima página",
-      "goToLastPage": "Ir para a última página"
-    },
-    "facetedFilter": {
-      "selectedCount": "{{count}} selecionados",
-      "noResults": "Nenhum resultado encontrado.",
-      "clearFilters": "Limpar filtros"
-    },
-    "columnHeader": {
-      "ascending": "Cres.",
-      "descending": "Decres.",
-      "hide": "Ocultar"
-    },
-    "bulkActions": {
-      "announcement": "{{count}} {{entityName}}{{count, plural, one {} other {s}}} selecionados. A barra de ferramentas de ações em massa está disponível.",
-      "ariaLabel": "Ações em massa para {{count}} {{entityName}}{{count, plural, one {} other {s}}} selecionados",
-      "clearSelection": "Limpar seleção",
-      "clearSelectionTitle": "Limpar seleção (Escape)",
-      "selectedCount": "{{count}} selecionados",
-      "selected": "selecionados"
-    },
-    "viewOptions": {
-      "view": "Visualizar",
-      "toggleColumns": "Alternar colunas"
-    }
-  },
-  "users": {
-    "title": "Lista de Usuários",
-    "description": "Gerencie seus usuários e suas funções aqui.",
-    "active": "Ativo",
-    "addUser": "Adicionar Usuário",
-    "filterUsers": "Filtrar usuários...",
-    "inactive": "Inativo",
-    "inviteUser": "Convidar Usuário",
-    "invited": "",
-    "noResults": "",
-    "role": "",
-    "status": "",
-    "suspended": "",
-    "bulkActions": {
-      "activatingUsers": "Ativando usuários...",
-      "activatedUsers": "{{count}} {{count, plural, one {usuário ativado} other {usuários ativados}}}",
-      "deactivatingUsers": "Desativando usuários...",
-      "deactivatedUsers": "{{count}} {{count, plural, one {usuário desativado} other {usuários desativados}}}",
-      "invitingUsers": "Convidando usuários...",
-      "invitedUsers": "{{count}} {{count, plural, one {usuário convidado} other {usuários convidados}}}",
-      "errorActivatingUsers": "Erro ao ativar usuários",
-      "errorDeactivatingUsers": "Erro ao desativar usuários",
-      "errorInvitingUsers": "Erro ao convidar usuários",
-      "inviteSelectedUsers": "Convidar usuários selecionados",
-      "activateSelectedUsers": "Ativar usuários selecionados",
-      "deactivateSelectedUsers": "Desativar usuários selecionados",
-      "deleteSelectedUsers": "Excluir usuários selecionados"
-    },
-    "deleteUser": "Excluir Usuário",
-    "deleteConfirmQuestion": "Tem certeza de que deseja excluir",
-    "deleteConfirmDescription": "Esta ação removerá permanentemente o usuário com a função de",
-    "deleteConfirmWarning": "do sistema. Isso não pode ser desfeito.",
-    "usernameLabel": "Nome de usuário:",
-    "usernamePlaceholder": "Digite o nome de usuário para confirmar a exclusão.",
-    "warningTitle": "Aviso!",
-    "warningDescription": "Por favor, tenha cuidado, esta operação não pode ser revertida.",
-    "deleteSuccessMessage": "O seguinte usuário foi excluído:",
-    "delete": {
-      "confirmWord": "EXCLUIR",
-      "confirmPrompt": "Por favor digite \"{{confirmWord}}\" para confirmar.",
-      "deleting": "Excluindo usuários...",
-      "success": "{{count}} {{count, plural, one {usuário excluído} other {usuários excluídos}}}",
-      "title": "Excluir {{count}} {{count, plural, one {usuário} other {usuários}}}",
-      "description": "Tem certeza de que deseja excluir os usuários selecionados?",
-      "warningDescription": "Esta ação não pode ser desfeita.",
-      "confirmLabel": "Confirme digitando \"{{confirmWord}}\":",
-      "confirmPlaceholder": "Digite \"{{confirmWord}}\" para confirmar.",
-      "warningTitle": "Aviso!",
-      "confirmButton": "Excluir"
-    },
-    "invite": {
-      "title": "Convidar Usuário",
-      "description": "Convide um novo usuário para se juntar à sua equipe enviando-lhe um convite por e-mail. Atribua uma função para definir seu nível de acesso.",
-      "emailLabel": "E-mail",
-      "emailPlaceholder": "ex: joao.silva@gmail.com",
-      "roleLabel": "Função",
-      "rolePlaceholder": "Selecionar uma função",
-      "descriptionLabel": "Descrição (opcional)",
-      "descriptionPlaceholder": "Adicione uma nota pessoal ao seu convite (opcional)",
-      "button": "Convidar",
-      "validation": {
-        "emailRequired": "Por favor, digite um e-mail para convidar.",
-        "roleRequired": "A função é obrigatória."
-      }
-    }
+  "aiDocuments": {
+    "title": "Inteligência de Documentos com IA",
+    "description": "Faça upload, processe e converse com seus documentos usando IA",
+    "uploadDocument": "Fazer Upload de Documento",
+    "upload": "Upload",
+    "library": "Biblioteca",
+    "chat": "Chat",
+    "settings": "Configurações",
+    "selectDocumentToChat": "Selecione um documento para começar a conversar",
+    "uploadDocuments": "Fazer Upload de Documentos",
+    "uploadDescription": "Faça upload de arquivos PDF, DOCX ou TXT para processar com IA",
+    "dropFilesHere": "Solte os arquivos aqui...",
+    "dragDropFiles": "Arraste e solte arquivos aqui, ou clique para selecionar",
+    "supportedFormats": "Arquivos PDF, DOCX, TXT até 10MB",
+    "selectedFiles": "Arquivos Selecionados",
+    "uploading": "Fazendo upload...",
+    "uploadAll": "Fazer Upload de Todos",
+    "pdfSupport": "Documentos PDF",
+    "docxSupport": "Documentos Word",
+    "txtSupport": "Arquivos de texto",
+    "documentLibrary": "Biblioteca de Documentos",
+    "libraryDescription": "Gerencie e interaja com seus documentos processados por IA",
+    "refresh": "Atualizar",
+    "searchDocuments": "Buscar documentos...",
+    "all": "Todos",
+    "completed": "Concluído",
+    "processing": "Processando",
+    "documents": "Documentos",
+    "noDocuments": "Nenhum documento encontrado",
+    "noDocumentsMatch": "Nenhum documento corresponde à sua busca",
+    "uploadFirstDocument": "Faça upload do seu primeiro documento para começar",
+    "name": "Nome",
+    "status": "Status",
+    "size": "Tamanho",
+    "created": "Criado",
+    "view": "Visualizar",
+    "download": "Baixar",
+    "delete": "Excluir",
+    "loadingDocuments": "Carregando documentos...",
+    "loadingDocument": "Carregando documento...",
+    "chatWithDocument": "Conversar com Documento",
+    "chatDescription": "Permitir conversar com documentos",
+    "startConversation": "Iniciar uma conversa",
+    "askQuestion": "Faça uma pergunta sobre o documento para começar",
+    "thinking": "IA está pensando...",
+    "send": "Enviar",
+    "relevantSections": "Seções relevantes:",
+    "tokens": "Tokens",
+    "cost": "Custo",
+    "noSummary": "Nenhum resumo disponível",
+    "keyPoints": "Pontos Principais",
+    "documentSettings": "Configurações de Documento",
+    "settingsDescription": "Configure como os documentos são processados e analisados",
+    "saveSettings": "Salvar Configurações",
+    "settingsSaved": "Configurações salvas com sucesso",
+    "processingSettings": "Configurações de Processamento",
+    "processingDescription": "Configure como os documentos são divididos e processados",
+    "chunkSize": "Tamanho do Fragmento",
+    "chunkSizeDescription": "Número de caracteres por fragmento (100-2000)",
+    "chunkOverlap": "Sobreposição de Fragmentos",
+    "chunkOverlapDescription": "Sobreposição entre fragmentos para melhor contexto",
+    "maxTokensPerChunk": "Máximo Tokens por Fragmento",
+    "maxTokensDescription": "Máximo de tokens para processamento de IA por fragmento",
+    "featureSettings": "Configurações de Recursos",
+    "featureDescription": "Ativar ou desativar recursos de IA para documentos",
+    "enableSummarization": "Ativar Resumo",
+    "summarizationDescription": "Gerar automaticamente resumos de documentos",
+    "enableKeyPoints": "Ativar Pontos Principais",
+    "keyPointsDescription": "Extrair pontos principais e insights",
+    "enableChat": "Ativar Chat",
+    "autoProcess": "Processamento Automático",
+    "autoProcessDescription": "Processar automaticamente documentos no upload",
+    "usageStatistics": "Estatísticas de Uso",
+    "usageDescription": "Uso atual e limites para recursos de documentos",
+    "totalTokens": "Total de Tokens",
+    "totalCost": "Custo Total",
+    "loadingStats": "Carregando estatísticas...",
+    "chats": "Chats"
   }
 }

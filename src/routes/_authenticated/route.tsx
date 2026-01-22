@@ -4,15 +4,27 @@ import { useAuthStore } from '@/stores/auth-store'
 
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async () => {
-    const authState = useAuthStore.getState()
+    const authStore = useAuthStore.getState()
+    const { isInitialized, checkSession } = authStore
 
-    // If not authenticated, redirect to sign-in
-    if (!authState.user) {
+    if (!isInitialized) {
+      await checkSession()
+    }
+
+    const { user } = useAuthStore.getState()
+
+    if (!user) {
       throw redirect({
         to: '/sign-in',
         search: {
           redirect: window.location.pathname,
         },
+      })
+    }
+
+    if (!user.onboarding_completed) {
+      throw redirect({
+        to: '/onboarding',
       })
     }
   },

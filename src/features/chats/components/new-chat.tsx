@@ -14,6 +14,7 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -54,6 +55,12 @@ export function NewChat({ users, onOpenChange, open }: NewChatProps) {
       <DialogContent className='sm:max-w-[600px]'>
         <DialogHeader>
           <DialogTitle>{t('chats.newMessage', 'New Message')}</DialogTitle>
+          <DialogDescription>
+            {t(
+              'chats.newMessageDescription',
+              'Select users to start a new conversation.'
+            )}
+          </DialogDescription>
         </DialogHeader>
         <div className='flex flex-col gap-4'>
           <div className='items-baseline-last flex flex-wrap gap-2'>

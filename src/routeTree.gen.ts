@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedDashboardDemoRouteImport } from './routes/_authenticated/dashboard-demo'
+import { Route as AuthenticatedAiDocumentsRouteImport } from './routes/_authenticated/ai-documents'
+import { Route as AuthenticatedAiContentRouteImport } from './routes/_authenticated/ai-content'
+import { Route as AuthenticatedAiAnalyticsRouteImport } from './routes/_authenticated/ai-analytics'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
@@ -20,8 +24,11 @@ import { Route as authVerifyEmailRouteImport } from './routes/(auth)/verify-emai
 import { Route as authSignUpRouteImport } from './routes/(auth)/sign-up'
 import { Route as authSignIn2RouteImport } from './routes/(auth)/sign-in-2'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
+import { Route as authResetPasswordRouteImport } from './routes/(auth)/reset-password'
 import { Route as authOtpRouteImport } from './routes/(auth)/otp'
+import { Route as authOnboardingRouteImport } from './routes/(auth)/onboarding'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
+import { Route as authCheckEmailRouteImport } from './routes/(auth)/check-email'
 import { Route as authAcceptInvitationRouteImport } from './routes/(auth)/accept-invitation'
 import { Route as AuthenticatedSettingsRouteRouteImport } from './routes/_authenticated/settings/route'
 import { Route as AuthenticatedUsersIndexRouteImport } from './routes/_authenticated/users/index'
@@ -33,15 +40,25 @@ import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
-import { Route as AuthenticatedSettingsDisplayRouteImport } from './routes/_authenticated/settings/display'
 import { Route as AuthenticatedSettingsBillingRouteImport } from './routes/_authenticated/settings/billing'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
-import { Route as AuthenticatedSettingsAccountRouteImport } from './routes/_authenticated/settings/account'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
+import { Route as AuthenticatedDemoUsersRouteImport } from './routes/_authenticated/demo/users'
+import { Route as AuthenticatedDemoTasksRouteImport } from './routes/_authenticated/demo/tasks'
+import { Route as AuthenticatedDemoHelpCenterRouteImport } from './routes/_authenticated/demo/help-center'
+import { Route as AuthenticatedDemoDashboardDemoRouteImport } from './routes/_authenticated/demo/dashboard-demo'
+import { Route as AuthenticatedDemoChatsRouteImport } from './routes/_authenticated/demo/chats'
+import { Route as AuthenticatedDemoAppsRouteImport } from './routes/_authenticated/demo/apps'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin/reports'
 import { Route as AuthenticatedAdminActivityLogsRouteImport } from './routes/_authenticated/admin/activity-logs'
+import { Route as AuthenticatedDemoSettingsRouteRouteImport } from './routes/_authenticated/demo/settings/route'
 import { Route as AuthenticatedOrganizationsOrganizationIdIndexRouteImport } from './routes/_authenticated/organizations/$organizationId/index'
+import { Route as AuthenticatedDemoSettingsIndexRouteImport } from './routes/_authenticated/demo/settings/index'
+import { Route as AuthenticatedDemoSettingsNotificationsRouteImport } from './routes/_authenticated/demo/settings/notifications'
+import { Route as AuthenticatedDemoSettingsDisplayRouteImport } from './routes/_authenticated/demo/settings/display'
+import { Route as AuthenticatedDemoSettingsAppearanceRouteImport } from './routes/_authenticated/demo/settings/appearance'
+import { Route as AuthenticatedDemoSettingsAccountRouteImport } from './routes/_authenticated/demo/settings/account'
 import { Route as authOauthMicrosoftCallbackRouteImport } from './routes/(auth)/oauth/microsoft/callback'
 import { Route as authOauthGoogleCallbackRouteImport } from './routes/(auth)/oauth/google/callback'
 import { Route as authOauthGithubCallbackRouteImport } from './routes/(auth)/oauth/github/callback'
@@ -56,6 +73,29 @@ const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedDashboardDemoRoute =
+  AuthenticatedDashboardDemoRouteImport.update({
+    id: '/dashboard-demo',
+    path: '/dashboard-demo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAiDocumentsRoute =
+  AuthenticatedAiDocumentsRouteImport.update({
+    id: '/ai-documents',
+    path: '/ai-documents',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAiContentRoute = AuthenticatedAiContentRouteImport.update({
+  id: '/ai-content',
+  path: '/ai-content',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAiAnalyticsRoute =
+  AuthenticatedAiAnalyticsRouteImport.update({
+    id: '/ai-analytics',
+    path: '/ai-analytics',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const errors503Route = errors503RouteImport.update({
   id: '/(errors)/503',
   path: '/503',
@@ -101,14 +141,29 @@ const authSignInRoute = authSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authResetPasswordRoute = authResetPasswordRouteImport.update({
+  id: '/(auth)/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const authOtpRoute = authOtpRouteImport.update({
   id: '/(auth)/otp',
   path: '/otp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authOnboardingRoute = authOnboardingRouteImport.update({
+  id: '/(auth)/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const authForgotPasswordRoute = authForgotPasswordRouteImport.update({
   id: '/(auth)/forgot-password',
   path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authCheckEmailRoute = authCheckEmailRouteImport.update({
+  id: '/(auth)/check-email',
+  path: '/check-email',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authAcceptInvitationRoute = authAcceptInvitationRouteImport.update({
@@ -172,12 +227,6 @@ const AuthenticatedSettingsNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
-const AuthenticatedSettingsDisplayRoute =
-  AuthenticatedSettingsDisplayRouteImport.update({
-    id: '/display',
-    path: '/display',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
-  } as any)
 const AuthenticatedSettingsBillingRoute =
   AuthenticatedSettingsBillingRouteImport.update({
     id: '/billing',
@@ -190,18 +239,44 @@ const AuthenticatedSettingsAppearanceRoute =
     path: '/appearance',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
-const AuthenticatedSettingsAccountRoute =
-  AuthenticatedSettingsAccountRouteImport.update({
-    id: '/account',
-    path: '/account',
-    getParentRoute: () => AuthenticatedSettingsRouteRoute,
-  } as any)
 const AuthenticatedErrorsErrorRoute =
   AuthenticatedErrorsErrorRouteImport.update({
     id: '/errors/$error',
     path: '/errors/$error',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDemoUsersRoute = AuthenticatedDemoUsersRouteImport.update({
+  id: '/demo/users',
+  path: '/demo/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDemoTasksRoute = AuthenticatedDemoTasksRouteImport.update({
+  id: '/demo/tasks',
+  path: '/demo/tasks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDemoHelpCenterRoute =
+  AuthenticatedDemoHelpCenterRouteImport.update({
+    id: '/demo/help-center',
+    path: '/demo/help-center',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDemoDashboardDemoRoute =
+  AuthenticatedDemoDashboardDemoRouteImport.update({
+    id: '/demo/dashboard-demo',
+    path: '/demo/dashboard-demo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDemoChatsRoute = AuthenticatedDemoChatsRouteImport.update({
+  id: '/demo/chats',
+  path: '/demo/chats',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDemoAppsRoute = AuthenticatedDemoAppsRouteImport.update({
+  id: '/demo/apps',
+  path: '/demo/apps',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
@@ -219,11 +294,47 @@ const AuthenticatedAdminActivityLogsRoute =
     path: '/admin/activity-logs',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDemoSettingsRouteRoute =
+  AuthenticatedDemoSettingsRouteRouteImport.update({
+    id: '/demo/settings',
+    path: '/demo/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedOrganizationsOrganizationIdIndexRoute =
   AuthenticatedOrganizationsOrganizationIdIndexRouteImport.update({
     id: '/organizations/$organizationId/',
     path: '/organizations/$organizationId/',
     getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDemoSettingsIndexRoute =
+  AuthenticatedDemoSettingsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDemoSettingsRouteRoute,
+  } as any)
+const AuthenticatedDemoSettingsNotificationsRoute =
+  AuthenticatedDemoSettingsNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedDemoSettingsRouteRoute,
+  } as any)
+const AuthenticatedDemoSettingsDisplayRoute =
+  AuthenticatedDemoSettingsDisplayRouteImport.update({
+    id: '/display',
+    path: '/display',
+    getParentRoute: () => AuthenticatedDemoSettingsRouteRoute,
+  } as any)
+const AuthenticatedDemoSettingsAppearanceRoute =
+  AuthenticatedDemoSettingsAppearanceRouteImport.update({
+    id: '/appearance',
+    path: '/appearance',
+    getParentRoute: () => AuthenticatedDemoSettingsRouteRoute,
+  } as any)
+const AuthenticatedDemoSettingsAccountRoute =
+  AuthenticatedDemoSettingsAccountRouteImport.update({
+    id: '/account',
+    path: '/account',
+    getParentRoute: () => AuthenticatedDemoSettingsRouteRoute,
   } as any)
 const authOauthMicrosoftCallbackRoute =
   authOauthMicrosoftCallbackRouteImport.update({
@@ -250,8 +361,11 @@ const authOauthAppleCallbackRoute = authOauthAppleCallbackRouteImport.update({
 export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/accept-invitation': typeof authAcceptInvitationRoute
+  '/check-email': typeof authCheckEmailRoute
   '/forgot-password': typeof authForgotPasswordRoute
+  '/onboarding': typeof authOnboardingRoute
   '/otp': typeof authOtpRoute
+  '/reset-password': typeof authResetPasswordRoute
   '/sign-in': typeof authSignInRoute
   '/sign-in-2': typeof authSignIn2Route
   '/sign-up': typeof authSignUpRoute
@@ -261,15 +375,24 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/ai-analytics': typeof AuthenticatedAiAnalyticsRoute
+  '/ai-content': typeof AuthenticatedAiContentRoute
+  '/ai-documents': typeof AuthenticatedAiDocumentsRoute
+  '/dashboard-demo': typeof AuthenticatedDashboardDemoRoute
   '/': typeof AuthenticatedIndexRoute
+  '/demo/settings': typeof AuthenticatedDemoSettingsRouteRouteWithChildren
   '/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/demo/apps': typeof AuthenticatedDemoAppsRoute
+  '/demo/chats': typeof AuthenticatedDemoChatsRoute
+  '/demo/dashboard-demo': typeof AuthenticatedDemoDashboardDemoRoute
+  '/demo/help-center': typeof AuthenticatedDemoHelpCenterRoute
+  '/demo/tasks': typeof AuthenticatedDemoTasksRoute
+  '/demo/users': typeof AuthenticatedDemoUsersRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
-  '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/billing': typeof AuthenticatedSettingsBillingRoute
-  '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
@@ -283,12 +406,20 @@ export interface FileRoutesByFullPath {
   '/oauth/github/callback': typeof authOauthGithubCallbackRoute
   '/oauth/google/callback': typeof authOauthGoogleCallbackRoute
   '/oauth/microsoft/callback': typeof authOauthMicrosoftCallbackRoute
+  '/demo/settings/account': typeof AuthenticatedDemoSettingsAccountRoute
+  '/demo/settings/appearance': typeof AuthenticatedDemoSettingsAppearanceRoute
+  '/demo/settings/display': typeof AuthenticatedDemoSettingsDisplayRoute
+  '/demo/settings/notifications': typeof AuthenticatedDemoSettingsNotificationsRoute
+  '/demo/settings/': typeof AuthenticatedDemoSettingsIndexRoute
   '/organizations/$organizationId': typeof AuthenticatedOrganizationsOrganizationIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/accept-invitation': typeof authAcceptInvitationRoute
+  '/check-email': typeof authCheckEmailRoute
   '/forgot-password': typeof authForgotPasswordRoute
+  '/onboarding': typeof authOnboardingRoute
   '/otp': typeof authOtpRoute
+  '/reset-password': typeof authResetPasswordRoute
   '/sign-in': typeof authSignInRoute
   '/sign-in-2': typeof authSignIn2Route
   '/sign-up': typeof authSignUpRoute
@@ -298,15 +429,23 @@ export interface FileRoutesByTo {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/ai-analytics': typeof AuthenticatedAiAnalyticsRoute
+  '/ai-content': typeof AuthenticatedAiContentRoute
+  '/ai-documents': typeof AuthenticatedAiDocumentsRoute
+  '/dashboard-demo': typeof AuthenticatedDashboardDemoRoute
   '/': typeof AuthenticatedIndexRoute
   '/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/demo/apps': typeof AuthenticatedDemoAppsRoute
+  '/demo/chats': typeof AuthenticatedDemoChatsRoute
+  '/demo/dashboard-demo': typeof AuthenticatedDemoDashboardDemoRoute
+  '/demo/help-center': typeof AuthenticatedDemoHelpCenterRoute
+  '/demo/tasks': typeof AuthenticatedDemoTasksRoute
+  '/demo/users': typeof AuthenticatedDemoUsersRoute
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
-  '/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/billing': typeof AuthenticatedSettingsBillingRoute
-  '/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
@@ -320,6 +459,11 @@ export interface FileRoutesByTo {
   '/oauth/github/callback': typeof authOauthGithubCallbackRoute
   '/oauth/google/callback': typeof authOauthGoogleCallbackRoute
   '/oauth/microsoft/callback': typeof authOauthMicrosoftCallbackRoute
+  '/demo/settings/account': typeof AuthenticatedDemoSettingsAccountRoute
+  '/demo/settings/appearance': typeof AuthenticatedDemoSettingsAppearanceRoute
+  '/demo/settings/display': typeof AuthenticatedDemoSettingsDisplayRoute
+  '/demo/settings/notifications': typeof AuthenticatedDemoSettingsNotificationsRoute
+  '/demo/settings': typeof AuthenticatedDemoSettingsIndexRoute
   '/organizations/$organizationId': typeof AuthenticatedOrganizationsOrganizationIdIndexRoute
 }
 export interface FileRoutesById {
@@ -327,8 +471,11 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/(auth)/accept-invitation': typeof authAcceptInvitationRoute
+  '/(auth)/check-email': typeof authCheckEmailRoute
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
+  '/(auth)/onboarding': typeof authOnboardingRoute
   '/(auth)/otp': typeof authOtpRoute
+  '/(auth)/reset-password': typeof authResetPasswordRoute
   '/(auth)/sign-in': typeof authSignInRoute
   '/(auth)/sign-in-2': typeof authSignIn2Route
   '/(auth)/sign-up': typeof authSignUpRoute
@@ -338,15 +485,24 @@ export interface FileRoutesById {
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
+  '/_authenticated/ai-analytics': typeof AuthenticatedAiAnalyticsRoute
+  '/_authenticated/ai-content': typeof AuthenticatedAiContentRoute
+  '/_authenticated/ai-documents': typeof AuthenticatedAiDocumentsRoute
+  '/_authenticated/dashboard-demo': typeof AuthenticatedDashboardDemoRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/demo/settings': typeof AuthenticatedDemoSettingsRouteRouteWithChildren
   '/_authenticated/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/demo/apps': typeof AuthenticatedDemoAppsRoute
+  '/_authenticated/demo/chats': typeof AuthenticatedDemoChatsRoute
+  '/_authenticated/demo/dashboard-demo': typeof AuthenticatedDemoDashboardDemoRoute
+  '/_authenticated/demo/help-center': typeof AuthenticatedDemoHelpCenterRoute
+  '/_authenticated/demo/tasks': typeof AuthenticatedDemoTasksRoute
+  '/_authenticated/demo/users': typeof AuthenticatedDemoUsersRoute
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
-  '/_authenticated/settings/account': typeof AuthenticatedSettingsAccountRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/billing': typeof AuthenticatedSettingsBillingRoute
-  '/_authenticated/settings/display': typeof AuthenticatedSettingsDisplayRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
@@ -360,6 +516,11 @@ export interface FileRoutesById {
   '/(auth)/oauth/github/callback': typeof authOauthGithubCallbackRoute
   '/(auth)/oauth/google/callback': typeof authOauthGoogleCallbackRoute
   '/(auth)/oauth/microsoft/callback': typeof authOauthMicrosoftCallbackRoute
+  '/_authenticated/demo/settings/account': typeof AuthenticatedDemoSettingsAccountRoute
+  '/_authenticated/demo/settings/appearance': typeof AuthenticatedDemoSettingsAppearanceRoute
+  '/_authenticated/demo/settings/display': typeof AuthenticatedDemoSettingsDisplayRoute
+  '/_authenticated/demo/settings/notifications': typeof AuthenticatedDemoSettingsNotificationsRoute
+  '/_authenticated/demo/settings/': typeof AuthenticatedDemoSettingsIndexRoute
   '/_authenticated/organizations/$organizationId/': typeof AuthenticatedOrganizationsOrganizationIdIndexRoute
 }
 export interface FileRouteTypes {
@@ -367,8 +528,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/settings'
     | '/accept-invitation'
+    | '/check-email'
     | '/forgot-password'
+    | '/onboarding'
     | '/otp'
+    | '/reset-password'
     | '/sign-in'
     | '/sign-in-2'
     | '/sign-up'
@@ -378,15 +542,24 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/ai-analytics'
+    | '/ai-content'
+    | '/ai-documents'
+    | '/dashboard-demo'
     | '/'
+    | '/demo/settings'
     | '/admin/activity-logs'
     | '/admin/reports'
     | '/admin/users'
+    | '/demo/apps'
+    | '/demo/chats'
+    | '/demo/dashboard-demo'
+    | '/demo/help-center'
+    | '/demo/tasks'
+    | '/demo/users'
     | '/errors/$error'
-    | '/settings/account'
     | '/settings/appearance'
     | '/settings/billing'
-    | '/settings/display'
     | '/settings/notifications'
     | '/apps'
     | '/chats'
@@ -400,12 +573,20 @@ export interface FileRouteTypes {
     | '/oauth/github/callback'
     | '/oauth/google/callback'
     | '/oauth/microsoft/callback'
+    | '/demo/settings/account'
+    | '/demo/settings/appearance'
+    | '/demo/settings/display'
+    | '/demo/settings/notifications'
+    | '/demo/settings/'
     | '/organizations/$organizationId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/accept-invitation'
+    | '/check-email'
     | '/forgot-password'
+    | '/onboarding'
     | '/otp'
+    | '/reset-password'
     | '/sign-in'
     | '/sign-in-2'
     | '/sign-up'
@@ -415,15 +596,23 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/ai-analytics'
+    | '/ai-content'
+    | '/ai-documents'
+    | '/dashboard-demo'
     | '/'
     | '/admin/activity-logs'
     | '/admin/reports'
     | '/admin/users'
+    | '/demo/apps'
+    | '/demo/chats'
+    | '/demo/dashboard-demo'
+    | '/demo/help-center'
+    | '/demo/tasks'
+    | '/demo/users'
     | '/errors/$error'
-    | '/settings/account'
     | '/settings/appearance'
     | '/settings/billing'
-    | '/settings/display'
     | '/settings/notifications'
     | '/apps'
     | '/chats'
@@ -437,14 +626,22 @@ export interface FileRouteTypes {
     | '/oauth/github/callback'
     | '/oauth/google/callback'
     | '/oauth/microsoft/callback'
+    | '/demo/settings/account'
+    | '/demo/settings/appearance'
+    | '/demo/settings/display'
+    | '/demo/settings/notifications'
+    | '/demo/settings'
     | '/organizations/$organizationId'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_authenticated/settings'
     | '/(auth)/accept-invitation'
+    | '/(auth)/check-email'
     | '/(auth)/forgot-password'
+    | '/(auth)/onboarding'
     | '/(auth)/otp'
+    | '/(auth)/reset-password'
     | '/(auth)/sign-in'
     | '/(auth)/sign-in-2'
     | '/(auth)/sign-up'
@@ -454,15 +651,24 @@ export interface FileRouteTypes {
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
+    | '/_authenticated/ai-analytics'
+    | '/_authenticated/ai-content'
+    | '/_authenticated/ai-documents'
+    | '/_authenticated/dashboard-demo'
     | '/_authenticated/'
+    | '/_authenticated/demo/settings'
     | '/_authenticated/admin/activity-logs'
     | '/_authenticated/admin/reports'
     | '/_authenticated/admin/users'
+    | '/_authenticated/demo/apps'
+    | '/_authenticated/demo/chats'
+    | '/_authenticated/demo/dashboard-demo'
+    | '/_authenticated/demo/help-center'
+    | '/_authenticated/demo/tasks'
+    | '/_authenticated/demo/users'
     | '/_authenticated/errors/$error'
-    | '/_authenticated/settings/account'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/billing'
-    | '/_authenticated/settings/display'
     | '/_authenticated/settings/notifications'
     | '/_authenticated/apps/'
     | '/_authenticated/chats/'
@@ -476,14 +682,22 @@ export interface FileRouteTypes {
     | '/(auth)/oauth/github/callback'
     | '/(auth)/oauth/google/callback'
     | '/(auth)/oauth/microsoft/callback'
+    | '/_authenticated/demo/settings/account'
+    | '/_authenticated/demo/settings/appearance'
+    | '/_authenticated/demo/settings/display'
+    | '/_authenticated/demo/settings/notifications'
+    | '/_authenticated/demo/settings/'
     | '/_authenticated/organizations/$organizationId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   authAcceptInvitationRoute: typeof authAcceptInvitationRoute
+  authCheckEmailRoute: typeof authCheckEmailRoute
   authForgotPasswordRoute: typeof authForgotPasswordRoute
+  authOnboardingRoute: typeof authOnboardingRoute
   authOtpRoute: typeof authOtpRoute
+  authResetPasswordRoute: typeof authResetPasswordRoute
   authSignInRoute: typeof authSignInRoute
   authSignIn2Route: typeof authSignIn2Route
   authSignUpRoute: typeof authSignUpRoute
@@ -513,6 +727,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard-demo': {
+      id: '/_authenticated/dashboard-demo'
+      path: '/dashboard-demo'
+      fullPath: '/dashboard-demo'
+      preLoaderRoute: typeof AuthenticatedDashboardDemoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ai-documents': {
+      id: '/_authenticated/ai-documents'
+      path: '/ai-documents'
+      fullPath: '/ai-documents'
+      preLoaderRoute: typeof AuthenticatedAiDocumentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ai-content': {
+      id: '/_authenticated/ai-content'
+      path: '/ai-content'
+      fullPath: '/ai-content'
+      preLoaderRoute: typeof AuthenticatedAiContentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ai-analytics': {
+      id: '/_authenticated/ai-analytics'
+      path: '/ai-analytics'
+      fullPath: '/ai-analytics'
+      preLoaderRoute: typeof AuthenticatedAiAnalyticsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(errors)/503': {
@@ -578,6 +820,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/reset-password': {
+      id: '/(auth)/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof authResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(auth)/otp': {
       id: '/(auth)/otp'
       path: '/otp'
@@ -585,11 +834,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authOtpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/onboarding': {
+      id: '/(auth)/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof authOnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(auth)/forgot-password': {
       id: '/(auth)/forgot-password'
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof authForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/check-email': {
+      id: '/(auth)/check-email'
+      path: '/check-email'
+      fullPath: '/check-email'
+      preLoaderRoute: typeof authCheckEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/accept-invitation': {
@@ -669,13 +932,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsNotificationsRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
-    '/_authenticated/settings/display': {
-      id: '/_authenticated/settings/display'
-      path: '/display'
-      fullPath: '/settings/display'
-      preLoaderRoute: typeof AuthenticatedSettingsDisplayRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
-    }
     '/_authenticated/settings/billing': {
       id: '/_authenticated/settings/billing'
       path: '/billing'
@@ -690,18 +946,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsAppearanceRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
-    '/_authenticated/settings/account': {
-      id: '/_authenticated/settings/account'
-      path: '/account'
-      fullPath: '/settings/account'
-      preLoaderRoute: typeof AuthenticatedSettingsAccountRouteImport
-      parentRoute: typeof AuthenticatedSettingsRouteRoute
-    }
     '/_authenticated/errors/$error': {
       id: '/_authenticated/errors/$error'
       path: '/errors/$error'
       fullPath: '/errors/$error'
       preLoaderRoute: typeof AuthenticatedErrorsErrorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/demo/users': {
+      id: '/_authenticated/demo/users'
+      path: '/demo/users'
+      fullPath: '/demo/users'
+      preLoaderRoute: typeof AuthenticatedDemoUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/demo/tasks': {
+      id: '/_authenticated/demo/tasks'
+      path: '/demo/tasks'
+      fullPath: '/demo/tasks'
+      preLoaderRoute: typeof AuthenticatedDemoTasksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/demo/help-center': {
+      id: '/_authenticated/demo/help-center'
+      path: '/demo/help-center'
+      fullPath: '/demo/help-center'
+      preLoaderRoute: typeof AuthenticatedDemoHelpCenterRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/demo/dashboard-demo': {
+      id: '/_authenticated/demo/dashboard-demo'
+      path: '/demo/dashboard-demo'
+      fullPath: '/demo/dashboard-demo'
+      preLoaderRoute: typeof AuthenticatedDemoDashboardDemoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/demo/chats': {
+      id: '/_authenticated/demo/chats'
+      path: '/demo/chats'
+      fullPath: '/demo/chats'
+      preLoaderRoute: typeof AuthenticatedDemoChatsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/demo/apps': {
+      id: '/_authenticated/demo/apps'
+      path: '/demo/apps'
+      fullPath: '/demo/apps'
+      preLoaderRoute: typeof AuthenticatedDemoAppsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/users': {
@@ -725,12 +1016,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminActivityLogsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/demo/settings': {
+      id: '/_authenticated/demo/settings'
+      path: '/demo/settings'
+      fullPath: '/demo/settings'
+      preLoaderRoute: typeof AuthenticatedDemoSettingsRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/organizations/$organizationId/': {
       id: '/_authenticated/organizations/$organizationId/'
       path: '/organizations/$organizationId'
       fullPath: '/organizations/$organizationId'
       preLoaderRoute: typeof AuthenticatedOrganizationsOrganizationIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/demo/settings/': {
+      id: '/_authenticated/demo/settings/'
+      path: '/'
+      fullPath: '/demo/settings/'
+      preLoaderRoute: typeof AuthenticatedDemoSettingsIndexRouteImport
+      parentRoute: typeof AuthenticatedDemoSettingsRouteRoute
+    }
+    '/_authenticated/demo/settings/notifications': {
+      id: '/_authenticated/demo/settings/notifications'
+      path: '/notifications'
+      fullPath: '/demo/settings/notifications'
+      preLoaderRoute: typeof AuthenticatedDemoSettingsNotificationsRouteImport
+      parentRoute: typeof AuthenticatedDemoSettingsRouteRoute
+    }
+    '/_authenticated/demo/settings/display': {
+      id: '/_authenticated/demo/settings/display'
+      path: '/display'
+      fullPath: '/demo/settings/display'
+      preLoaderRoute: typeof AuthenticatedDemoSettingsDisplayRouteImport
+      parentRoute: typeof AuthenticatedDemoSettingsRouteRoute
+    }
+    '/_authenticated/demo/settings/appearance': {
+      id: '/_authenticated/demo/settings/appearance'
+      path: '/appearance'
+      fullPath: '/demo/settings/appearance'
+      preLoaderRoute: typeof AuthenticatedDemoSettingsAppearanceRouteImport
+      parentRoute: typeof AuthenticatedDemoSettingsRouteRoute
+    }
+    '/_authenticated/demo/settings/account': {
+      id: '/_authenticated/demo/settings/account'
+      path: '/account'
+      fullPath: '/demo/settings/account'
+      preLoaderRoute: typeof AuthenticatedDemoSettingsAccountRouteImport
+      parentRoute: typeof AuthenticatedDemoSettingsRouteRoute
     }
     '/(auth)/oauth/microsoft/callback': {
       id: '/(auth)/oauth/microsoft/callback'
@@ -764,20 +1097,16 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedSettingsRouteRouteChildren {
-  AuthenticatedSettingsAccountRoute: typeof AuthenticatedSettingsAccountRoute
   AuthenticatedSettingsAppearanceRoute: typeof AuthenticatedSettingsAppearanceRoute
   AuthenticatedSettingsBillingRoute: typeof AuthenticatedSettingsBillingRoute
-  AuthenticatedSettingsDisplayRoute: typeof AuthenticatedSettingsDisplayRoute
   AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
   AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
 }
 
 const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteChildren =
   {
-    AuthenticatedSettingsAccountRoute: AuthenticatedSettingsAccountRoute,
     AuthenticatedSettingsAppearanceRoute: AuthenticatedSettingsAppearanceRoute,
     AuthenticatedSettingsBillingRoute: AuthenticatedSettingsBillingRoute,
-    AuthenticatedSettingsDisplayRoute: AuthenticatedSettingsDisplayRoute,
     AuthenticatedSettingsNotificationsRoute:
       AuthenticatedSettingsNotificationsRoute,
     AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
@@ -788,12 +1117,49 @@ const AuthenticatedSettingsRouteRouteWithChildren =
     AuthenticatedSettingsRouteRouteChildren,
   )
 
+interface AuthenticatedDemoSettingsRouteRouteChildren {
+  AuthenticatedDemoSettingsAccountRoute: typeof AuthenticatedDemoSettingsAccountRoute
+  AuthenticatedDemoSettingsAppearanceRoute: typeof AuthenticatedDemoSettingsAppearanceRoute
+  AuthenticatedDemoSettingsDisplayRoute: typeof AuthenticatedDemoSettingsDisplayRoute
+  AuthenticatedDemoSettingsNotificationsRoute: typeof AuthenticatedDemoSettingsNotificationsRoute
+  AuthenticatedDemoSettingsIndexRoute: typeof AuthenticatedDemoSettingsIndexRoute
+}
+
+const AuthenticatedDemoSettingsRouteRouteChildren: AuthenticatedDemoSettingsRouteRouteChildren =
+  {
+    AuthenticatedDemoSettingsAccountRoute:
+      AuthenticatedDemoSettingsAccountRoute,
+    AuthenticatedDemoSettingsAppearanceRoute:
+      AuthenticatedDemoSettingsAppearanceRoute,
+    AuthenticatedDemoSettingsDisplayRoute:
+      AuthenticatedDemoSettingsDisplayRoute,
+    AuthenticatedDemoSettingsNotificationsRoute:
+      AuthenticatedDemoSettingsNotificationsRoute,
+    AuthenticatedDemoSettingsIndexRoute: AuthenticatedDemoSettingsIndexRoute,
+  }
+
+const AuthenticatedDemoSettingsRouteRouteWithChildren =
+  AuthenticatedDemoSettingsRouteRoute._addFileChildren(
+    AuthenticatedDemoSettingsRouteRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedSettingsRouteRoute: typeof AuthenticatedSettingsRouteRouteWithChildren
+  AuthenticatedAiAnalyticsRoute: typeof AuthenticatedAiAnalyticsRoute
+  AuthenticatedAiContentRoute: typeof AuthenticatedAiContentRoute
+  AuthenticatedAiDocumentsRoute: typeof AuthenticatedAiDocumentsRoute
+  AuthenticatedDashboardDemoRoute: typeof AuthenticatedDashboardDemoRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedDemoSettingsRouteRoute: typeof AuthenticatedDemoSettingsRouteRouteWithChildren
   AuthenticatedAdminActivityLogsRoute: typeof AuthenticatedAdminActivityLogsRoute
   AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedDemoAppsRoute: typeof AuthenticatedDemoAppsRoute
+  AuthenticatedDemoChatsRoute: typeof AuthenticatedDemoChatsRoute
+  AuthenticatedDemoDashboardDemoRoute: typeof AuthenticatedDemoDashboardDemoRoute
+  AuthenticatedDemoHelpCenterRoute: typeof AuthenticatedDemoHelpCenterRoute
+  AuthenticatedDemoTasksRoute: typeof AuthenticatedDemoTasksRoute
+  AuthenticatedDemoUsersRoute: typeof AuthenticatedDemoUsersRoute
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedAppsIndexRoute: typeof AuthenticatedAppsIndexRoute
   AuthenticatedChatsIndexRoute: typeof AuthenticatedChatsIndexRoute
@@ -807,10 +1173,22 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSettingsRouteRoute: AuthenticatedSettingsRouteRouteWithChildren,
+  AuthenticatedAiAnalyticsRoute: AuthenticatedAiAnalyticsRoute,
+  AuthenticatedAiContentRoute: AuthenticatedAiContentRoute,
+  AuthenticatedAiDocumentsRoute: AuthenticatedAiDocumentsRoute,
+  AuthenticatedDashboardDemoRoute: AuthenticatedDashboardDemoRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedDemoSettingsRouteRoute:
+    AuthenticatedDemoSettingsRouteRouteWithChildren,
   AuthenticatedAdminActivityLogsRoute: AuthenticatedAdminActivityLogsRoute,
   AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedDemoAppsRoute: AuthenticatedDemoAppsRoute,
+  AuthenticatedDemoChatsRoute: AuthenticatedDemoChatsRoute,
+  AuthenticatedDemoDashboardDemoRoute: AuthenticatedDemoDashboardDemoRoute,
+  AuthenticatedDemoHelpCenterRoute: AuthenticatedDemoHelpCenterRoute,
+  AuthenticatedDemoTasksRoute: AuthenticatedDemoTasksRoute,
+  AuthenticatedDemoUsersRoute: AuthenticatedDemoUsersRoute,
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedAppsIndexRoute: AuthenticatedAppsIndexRoute,
   AuthenticatedChatsIndexRoute: AuthenticatedChatsIndexRoute,
@@ -829,8 +1207,11 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   authAcceptInvitationRoute: authAcceptInvitationRoute,
+  authCheckEmailRoute: authCheckEmailRoute,
   authForgotPasswordRoute: authForgotPasswordRoute,
+  authOnboardingRoute: authOnboardingRoute,
   authOtpRoute: authOtpRoute,
+  authResetPasswordRoute: authResetPasswordRoute,
   authSignInRoute: authSignInRoute,
   authSignIn2Route: authSignIn2Route,
   authSignUpRoute: authSignUpRoute,

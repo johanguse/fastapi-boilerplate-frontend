@@ -159,6 +159,7 @@ export function useOrganizations() {
     // Actions
     setActiveOrganization,
     createOrganization: createMutation.mutate,
+    createOrganizationAsync: createMutation.mutateAsync,
     updateOrganization: updateMutation.mutate,
     deleteOrganization: deleteMutation.mutate,
     resetActive,

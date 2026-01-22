@@ -1,7 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Link } from '@tanstack/react-router'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { z } from 'zod/v4'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { ImageUpload } from '@/components/ui/image-upload'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -22,202 +25,412 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { showSubmittedData } from '@/lib/show-submitted-data'
-import { cn } from '@/lib/utils'
+import { api } from '@/lib/api'
+import { useAuth } from '@/stores/auth-store'
+
+const countries = [
+  'United States',
+  'Canada',
+  'United Kingdom',
+  'Germany',
+  'France',
+  'Spain',
+  'Italy',
+  'Netherlands',
+  'Sweden',
+  'Norway',
+  'Denmark',
+  'Finland',
+  'Australia',
+  'Japan',
+  'South Korea',
+  'Singapore',
+  'India',
+  'Brazil',
+  'Mexico',
+  'Argentina',
+  'Other',
+]
 
 const createProfileFormSchema = (
   t: (key: string, defaultValue: string) => string
 ) =>
   z.object({
-    username: z
-      .string(
-        t('profile.validation.usernameRequired', 'Please enter your username.')
-      )
+    name: z
+      .string()
       .min(
         2,
         t(
-          'profile.validation.usernameMinLength',
-          'Username must be at least 2 characters.'
+          'settings.profile.validation.nameMinLength',
+          'Name must be at least 2 characters.'
         )
       )
       .max(
-        30,
+        100,
         t(
-          'profile.validation.usernameMaxLength',
-          'Username must not be longer than 30 characters.'
+          'settings.profile.validation.nameMaxLength',
+          'Name must not be longer than 100 characters.'
         )
       ),
-    email: z.email({
-      error: (iss) =>
-        iss.input === undefined
-          ? t(
-              'profile.validation.emailRequired',
-              'Please select an email to display.'
-            )
-          : undefined,
-    }),
-    bio: z.string().max(160).min(4),
-    urls: z
-      .array(
-        z.object({
-          value: z.url(
-            t('profile.validation.urlRequired', 'Please enter a valid URL.')
-          ),
-        })
+    email: z
+      .string()
+      .email(t('settings.profile.validation.emailInvalid', 'Invalid email')),
+    bio: z
+      .string()
+      .max(
+        500,
+        t(
+          'settings.profile.validation.bioMaxLength',
+          'Bio must be less than 500 characters.'
+        )
       )
       .optional(),
+    company: z.string().optional(),
+    job_title: z.string().optional(),
+    country: z.string().optional(),
+    phone: z.string().optional(),
+    website: z
+      .string()
+      .url(
+        t('settings.profile.validation.websiteInvalid', 'Invalid website URL')
+      )
+      .optional()
+      .or(z.literal('')),
   })
 
 type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: 'I own a computer.',
-  urls: [
-    { value: 'https://shadcn.com' },
-    { value: 'http://twitter.com/shadcn' },
-  ],
-}
-
 export function ProfileForm() {
   const { t } = useTranslation()
+  const { user, checkSession } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isFetching, setIsFetching] = useState(true)
+  const [profileImage, setProfileImage] = useState<File | null>(null)
+
   const profileFormSchema = createProfileFormSchema(t)
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues,
+    defaultValues: {
+      name: '',
+      email: '',
+      bio: '',
+      company: '',
+      job_title: '',
+      country: '',
+      phone: '',
+      website: '',
+    },
     mode: 'onChange',
   })
 
-  const { fields, append } = useFieldArray({
-    name: 'urls',
-    control: form.control,
-  })
+  // Fetch user profile data - update form when user data changes
+  useEffect(() => {
+    if (!user) {
+      setIsFetching(true)
+      return
+    }
+
+    setIsFetching(true)
+
+    // Reset form with current user data
+    form.reset({
+      name: user.name || '',
+      email: user.email || '',
+      bio: user.bio || '',
+      company: user.company || '',
+      job_title: user.job_title || '',
+      country: user.country || '',
+      phone: user.phone || '',
+      website: user.website || '',
+    })
+
+    setIsFetching(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    user, // Reset form with current user data
+    form.reset,
+  ]) // Only re-run when user object changes
+
+  const onSubmit = async (data: ProfileFormValues) => {
+    setIsLoading(true)
+
+    try {
+      // Upload image first if changed
+      if (profileImage) {
+        const formData = new FormData()
+        formData.append('file', profileImage)
+        await api.post('/users/me/upload-image', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        // Clear the profile image state after upload
+        setProfileImage(null)
+      }
+
+      // Update profile data
+      await api.patch('/users/me', data)
+
+      // Refresh session to get updated user data
+      await checkSession()
+
+      toast.success(
+        t('settings.profile.updateSuccess', 'Profile updated successfully!')
+      )
+    } catch (_error) {
+      toast.error(
+        t(
+          'settings.profile.updateError',
+          'Failed to update profile. Please try again.'
+        )
+      )
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isFetching) {
+    return (
+      <div className='flex items-center justify-center py-8'>
+        <Loader2 className='h-8 w-8 animate-spin text-muted-foreground' />
+      </div>
+    )
+  }
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit((data) => showSubmittedData(data))}
-        className='space-y-8'
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+        {/* Profile Image */}
+        <div className='space-y-2'>
+          <FormLabel>
+            {t('settings.profile.profileImage', 'Profile Image')}
+          </FormLabel>
+          <ImageUpload
+            type='avatar'
+            value={user?.image}
+            onChange={setProfileImage}
+            size='lg'
+            name={form.watch('name') || user?.name}
+          />
+          <FormDescription>
+            {t(
+              'settings.profile.profileImageDescription',
+              'Upload a profile picture. Max 5MB.'
+            )}
+          </FormDescription>
+        </div>
+
+        {/* Name */}
         <FormField
           control={form.control}
-          name='username'
+          name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('profile.username', 'Username')}</FormLabel>
+              <FormLabel>{t('settings.profile.name', 'Full Name')} *</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={t('profile.usernamePlaceholder', 'shadcn')}
+                  placeholder={t(
+                    'settings.profile.namePlaceholder',
+                    'Enter your full name'
+                  )}
                   {...field}
                 />
               </FormControl>
               <FormDescription>
                 {t(
-                  'profile.usernameDescription',
-                  'This is your public display name. It can be your real name or a pseudonym. You can only change this once every 30 days.'
+                  'settings.profile.nameDescription',
+                  'This is your public display name.'
                 )}
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        {/* Email (read-only for now) */}
         <FormField
           control={form.control}
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t('profile.email', 'Email')}</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue
-                      placeholder={t(
-                        'profile.emailPlaceholder',
-                        'Select a verified email to display'
-                      )}
-                    />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value='m@example.com'>m@example.com</SelectItem>
-                  <SelectItem value='m@google.com'>m@google.com</SelectItem>
-                  <SelectItem value='m@support.com'>m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                {t(
-                  'profile.emailDescription',
-                  'You can manage verified email addresses in your'
-                )}{' '}
-                <Link to='/'>email settings</Link>.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='bio'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t('profile.bio', 'Bio')}</FormLabel>
+              <FormLabel>{t('settings.profile.email', 'Email')} *</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder={t(
-                    'profile.bioPlaceholder',
-                    'Tell us a little bit about yourself'
-                  )}
-                  className='resize-none'
-                  {...field}
-                />
+                <Input {...field} disabled />
               </FormControl>
               <FormDescription>
                 {t(
-                  'profile.bioDescription',
-                  'You can @mention other users and organizations to link to them.'
+                  'settings.profile.emailDescription',
+                  'Your email address cannot be changed.'
                 )}
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && 'sr-only')}>
-                    {t('profile.urls', 'URLs')}
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && 'sr-only')}>
-                    {t(
-                      'profile.urlsDescription',
-                      'Add links to your website, blog, or social media profiles.'
+
+        {/* Company & Job Title */}
+        <div className='grid gap-4 md:grid-cols-2'>
+          <FormField
+            control={form.control}
+            name='company'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t('settings.profile.company', 'Company')}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={t(
+                      'settings.profile.companyPlaceholder',
+                      'Your company name'
                     )}
-                  </FormDescription>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          <Button
-            type='button'
-            variant='outline'
-            size='sm'
-            className='mt-2'
-            onClick={() => append({ value: '' })}
-          >
-            {t('profile.addUrl', 'Add URL')}
-          </Button>
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='job_title'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t('settings.profile.jobTitle', 'Job Title')}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={t(
+                      'settings.profile.jobTitlePlaceholder',
+                      'e.g., Software Engineer'
+                    )}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-        <Button type='submit'>
-          {t('profile.updateProfile', 'Update profile')}
+
+        {/* Country & Phone */}
+        <div className='grid gap-4 md:grid-cols-2'>
+          <FormField
+            control={form.control}
+            name='country'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t('settings.profile.country', 'Country')}
+                </FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={t(
+                          'settings.profile.countryPlaceholder',
+                          'Select your country'
+                        )}
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {countries.map((country) => (
+                      <SelectItem key={country} value={country}>
+                        {country}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='phone'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('settings.profile.phone', 'Phone')}</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={t(
+                      'settings.profile.phonePlaceholder',
+                      '+1 (555) 123-4567'
+                    )}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* Website */}
+        <FormField
+          control={form.control}
+          name='website'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('settings.profile.website', 'Website')}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t(
+                    'settings.profile.websitePlaceholder',
+                    'https://yourwebsite.com'
+                  )}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Bio */}
+        <FormField
+          control={form.control}
+          name='bio'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('settings.profile.bio', 'Bio')}</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder={t(
+                    'settings.profile.bioPlaceholder',
+                    'Tell us a little bit about yourself...'
+                  )}
+                  className='min-h-[100px] resize-none'
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                {t(
+                  'settings.profile.bioDescription',
+                  'Brief description for your profile. Max 500 characters.'
+                )}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type='submit' disabled={isLoading}>
+          {isLoading ? (
+            <>
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              {t('settings.profile.updating', 'Updating...')}
+            </>
+          ) : (
+            t('settings.profile.updateProfile', 'Update Profile')
+          )}
         </Button>
       </form>
     </Form>

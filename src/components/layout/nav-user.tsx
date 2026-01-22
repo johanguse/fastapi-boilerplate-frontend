@@ -1,12 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import {
-  BadgeCheck,
   Bell,
   ChevronsUpDown,
   CreditCard,
   Languages,
   LogOut,
   Sparkles,
+  UserCog,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { SignOutDialog } from '@/components/sign-out-dialog'
@@ -148,9 +148,9 @@ export function NavUser() {
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem asChild>
-                  <Link to='/settings/account'>
-                    <BadgeCheck />
-                    {t('navigation.account', 'Account')}
+                  <Link to='/settings'>
+                    <UserCog />
+                    {t('navigation.profile', 'Profile')}
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>

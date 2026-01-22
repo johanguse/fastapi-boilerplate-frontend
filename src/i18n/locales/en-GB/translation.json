@@ -127,6 +127,111 @@
       "verified": "Verified"
     }
   },
+  "onboarding": {
+    "title": "Welcome to Your Workspace",
+    "subtitle": "Let's get you set up in just a few steps",
+    "progress": "Progress",
+    "loading": "Loading onboarding...",
+    "error": {
+      "title": "Error",
+      "description": "Failed to load onboarding status. Please try again.",
+      "fetchStatus": "Failed to load onboarding status",
+      "complete": "Failed to complete onboarding"
+    },
+    "success": {
+      "completed": "Welcome! Your account is all set up."
+    },
+    "steps": {
+      "profile": {
+        "title": "Complete Your Profile",
+        "description": "Tell us a bit about yourself"
+      },
+      "organization": {
+        "title": "Create Your Organisation",
+        "description": "Set up your workspace"
+      },
+      "complete": {
+        "title": "You're All Set!",
+        "description": "Welcome to your new workspace"
+      }
+    },
+    "profile": {
+      "title": "Complete Your Profile",
+      "description": "Tell us a bit about yourself to personalise your experience",
+      "name": "Full Name",
+      "namePlaceholder": "Enter your full name",
+      "company": "Company",
+      "companyPlaceholder": "Enter your company name",
+      "jobTitle": "Job Title",
+      "jobTitlePlaceholder": "e.g., Software Engineer",
+      "country": "Country",
+      "countryPlaceholder": "Select your country",
+      "phone": "Phone Number",
+      "phonePlaceholder": "+44 20 7946 0958",
+      "website": "Website",
+      "websitePlaceholder": "https://yourwebsite.com",
+      "bio": "Bio",
+      "bioPlaceholder": "Tell us a bit about yourself...",
+      "saving": "Saving...",
+      "continue": "Continue",
+      "success": "Profile updated successfully!",
+      "error": "Failed to update profile. Please try again."
+    },
+    "organization": {
+      "title": "Create Your Organisation",
+      "description": "Description",
+      "name": "Organisation Name",
+      "namePlaceholder": "Enter your organisation name",
+      "slug": "URL Slug",
+      "slugPlaceholder": "my-organisation",
+      "slugHelp": "Optional: A unique identifier for your organisation URL",
+      "descriptionPlaceholder": "Tell us about your organisation...",
+      "creating": "Creating...",
+      "continue": "Create Organisation",
+      "success": "Organisation created successfully!",
+      "error": "Failed to create organisation. Please try again.",
+      "benefits": {
+        "title": "What you'll get:",
+        "team": "Team collaboration tools",
+        "projects": "Project management",
+        "analytics": "Analytics and insights",
+        "support": "Priority support"
+      }
+    },
+    "complete": {
+      "title": "You're All Set!",
+      "description": "Welcome to your new workspace. Let's explore what you can do!",
+      "welcome": {
+        "title": "Welcome, {{name}}!",
+        "description": "Your workspace is ready. You can now start collaborating with your team and exploring all the features we have to offer."
+      },
+      "features": {
+        "title": "What you can do now:",
+        "team": {
+          "title": "Team Collaboration",
+          "description": "Invite team members and work together seamlessly"
+        },
+        "analytics": {
+          "title": "Analytics Dashboard",
+          "description": "Track your progress with detailed insights"
+        },
+        "automation": {
+          "title": "AI-Powered Tools",
+          "description": "Leverage AI to boost your productivity"
+        }
+      },
+      "nextSteps": {
+        "title": "Next Steps:",
+        "profile": "Complete your profile",
+        "organization": "Create your organisation",
+        "explore": "Explore your dashboard",
+        "invite": "Invite team members"
+      },
+      "finishing": "Finishing setup...",
+      "getStarted": "Get Started",
+      "redirecting": "Redirecting to dashboard..."
+    }
+  },
   "auth": {
     "and": "and",
     "byClickingLogin": "By clicking login, you agree to our",
@@ -145,9 +250,13 @@
     "forgotPasswordEmailSent": "Reset email sent to {{email}}",
     "forgotPasswordSendingEmail": "Sending email...",
     "forgotPasswordTitle": "Forgot Password",
+    "forgotPasswordRateLimited": "Please wait {{time}} before requesting another password reset",
+    "forgotPasswordNextRequest": "Next request available in",
+    "userNotFound": "No account found with this email address. Would you like to create an account?",
     "internalServerError": "Internal Server Error",
     "invalidCredentials": "Invalid email or password",
     "loginDescription": "Enter your email and password below to log into your account",
+    "loginDontHaveAccount": "Don't have an account?",
     "loginTitle": "Login",
     "maintenanceError": "Maintenance Error",
     "nameTooShort_one": "",
@@ -160,6 +269,9 @@
       "verifyButton": "Verify",
       "haventReceived": "Haven't received it?",
       "resendCode": "Resend a new code.",
+      "resendIn": "Resend available in",
+      "resendSuccess": "Verification email sent successfully",
+      "backToSignIn": "Back to Sign In",
       "validation": {
         "required": "Please enter the 6-digit code."
       }
@@ -170,6 +282,7 @@
     "passwordTooShort_one": "",
     "passwordTooShort_other": "",
     "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
     "signIn": "Sign In",
     "signOutConfirm": "Sign out",
     "signOutDescription": "Are you sure you want to sign out? You will need to sign in again to access your account.",
@@ -188,7 +301,7 @@
     "signUpPasswordPlaceholder": "********",
     "signUpRegistrationFailed": "Registration failed. Please check your information.",
     "signUpTitle": "Create an account",
-    "signUpWelcome": "Welcome {name}! Please check your email to verify your account.",
+    "signUpWelcome": "Welcome {{name}}! Please check your email to verify your account.",
     "testimonial": "\"This template has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.\"",
     "socialLogin": {
       "continueWith": "Continue with {{provider}}",
@@ -203,9 +316,45 @@
       "completingSignIn": "Completing sign in...",
       "pleaseWait": "Please wait while we complete your {{provider}} authentication"
     },
-    "terms": "Terms of Service",
     "unauthorized": "Unauthorized",
     "welcome": "Welcome!"
+  },
+  "chats": {
+    "title": "Inbox",
+    "searchLabel": "Search",
+    "searchPlaceholder": "Search chat...",
+    "messageInputLabel": "Chat Text Box",
+    "messageInputPlaceholder": "Type your messages...",
+    "sendButton": "Send",
+    "emptyState": {
+      "title": "Your messages",
+      "description": "Send a message to start a chat.",
+      "sendMessageButton": "Send message"
+    },
+    "newMessage": "New message",
+    "newMessageDescription": "newMessageDescription",
+    "to": "To",
+    "searchPeople": "Search people...",
+    "noPeopleFound": "No people found.",
+    "chat": "Chat"
+  },
+  "account": {
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "nameDescription": "This is the name that will be displayed on your profile and in emails.",
+    "nameRequired": "Please enter your name.",
+    "nameMinLength": "Name must be at least 2 characters.",
+    "nameMaxLength": "Name must not be longer than 30 characters.",
+    "dateOfBirth": "Date of birth",
+    "dobDescription": "Your date of birth is used to calculate your age.",
+    "dobRequired": "Please select your date of birth.",
+    "language": "Language",
+    "languageDescription": "This is the language that will be used in the dashboard.",
+    "languageRequired": "Please select a language.",
+    "selectLanguage": "Select language",
+    "searchLanguage": "Search language...",
+    "noLanguageFound": "No language found.",
+    "updateAccount": "Update account"
   },
   "billing": {
     "cancelScheduled": "Your subscription will be canceled at the end of the billing period.",
@@ -243,7 +392,27 @@
     "title": "Billing & Subscription",
     "upgradePlan": "Upgrade Plan",
     "usage": "Usage",
-    "usageDescription": "Current usage of your plan resources"
+    "usageDescription": "Current usage of your plan resources",
+    "modalTitle": "Billing Information Required",
+    "modalDescription": "Please provide your billing details to {{action}}. This information will be used for invoices.",
+    "saveSuccess": "Billing information saved successfully!",
+    "saveError": "Failed to save billing information. Please try again.",
+    "saveAndContinue": "Save & Continue",
+    "requiredFieldsInfo": "All marked fields are required for invoice generation.",
+    "fields": {
+      "companyName": "Name / Company Name",
+      "taxId": "Tax ID / VAT Number",
+      "taxIdDescription": "VAT, GST, EIN, CPF, CNPJ or other tax identification number",
+      "country": "Country",
+      "addressStreet": "Street Address",
+      "addressCity": "City",
+      "addressState": "State / Province",
+      "addressPostalCode": "Postcode / ZIP"
+    },
+    "placeholders": {
+      "companyName": "Your name or company name",
+      "country": "Select your country"
+    }
   },
   "dataTable": {
     "pagination": {
@@ -292,7 +461,13 @@
     "reset": "Reset",
     "searchPlaceholder": "Search...",
     "tryAgain": "Try again",
-    "close": "Close"
+    "close": "Close",
+    "uploadImage": "Upload image",
+    "changeImage": "Change image",
+    "removeImage": "Remove image",
+    "dragDropImage": "Drag and drop an image here, or click to select",
+    "imageUploading": "Uploading image...",
+    "imageProcessing": "Processing image..."
   },
   "theme": {
     "title": "Theme",
@@ -308,6 +483,8 @@
   "profile": {
     "profile": "Profile",
     "billing": "Billing",
+    "appearance": "Appearance",
+    "notifications": "Notifications",
     "settings": "Settings",
     "newTeam": "New Team",
     "signOut": "Sign out"
@@ -321,6 +498,11 @@
     "goBack": "Go Back",
     "backToHome": "Back to Home",
     "learnMore": "Learn more",
+    "fileTooLarge": "File is too large. Maximum size is {{maxSize}}MB.",
+    "invalidFileType": "Invalid file type. Allowed types: {{types}}.",
+    "imageUploadFailed": "Failed to upload image. Please try again.",
+    "imageDeleteFailed": "Failed to delete image. Please try again.",
+    "imageOptimizationFailed": "Failed to optimise image. Please try again.",
     "notFound": {
       "title": "Oops! Page Not Found!",
       "description": "It seems like the page you're looking for",
@@ -350,43 +532,86 @@
   "accessibility": {
     "skipToMain": "Skip to Main"
   },
-  "account": {
-    "name": "Name",
-    "namePlaceholder": "Your name",
-    "nameDescription": "This is the name that will be displayed on your profile and in emails.",
-    "nameRequired": "Please enter your name.",
-    "nameMinLength": "Name must be at least 2 characters.",
-    "nameMaxLength": "Name must not be longer than 30 characters.",
-    "dateOfBirth": "Date of birth",
-    "dobDescription": "Your date of birth is used to calculate your age.",
-    "dobRequired": "Please select your date of birth.",
-    "language": "Language",
-    "languageDescription": "This is the language that will be used in the dashboard.",
-    "languageRequired": "Please select a language.",
-    "selectLanguage": "Select language",
-    "searchLanguage": "Search language...",
-    "noLanguageFound": "No language found.",
-    "updateAccount": "Update account"
-  },
-  "chats": {
-    "title": "Inbox",
-    "searchLabel": "Search",
-    "searchPlaceholder": "Search chat...",
-    "messageInputLabel": "Chat Text Box",
-    "messageInputPlaceholder": "Type your messages...",
-    "sendButton": "Send",
-    "emptyState": {
-      "title": "Your messages",
-      "description": "Send a message to start a chat.",
-      "sendMessageButton": "Send message"
+  "users": {
+    "title": "User List",
+    "description": "Manage your users and their roles here.",
+    "active": "Active",
+    "filterUsers": "Filter users...",
+    "inactive": "Inactive",
+    "invited": "",
+    "noResults": "",
+    "role": "",
+    "status": "",
+    "suspended": "",
+    "bulkActions": {
+      "activatingUsers": "Activating users...",
+      "activatedUsers": "Activated {{count}} {{count, plural, one {user} other {users}}}",
+      "deactivatingUsers": "Deactivating users...",
+      "deactivatedUsers": "Deactivated {{count}} {{count, plural, one {user} other {users}}}",
+      "invitingUsers": "Inviting users...",
+      "invitedUsers": "Invited {{count}} {{count, plural, one {user} other {users}}}",
+      "errorActivatingUsers": "Error activating users",
+      "errorDeactivatingUsers": "Error deactivating users",
+      "errorInvitingUsers": "Error inviting users",
+      "inviteSelectedUsers": "Invite selected users",
+      "activateSelectedUsers": "Activate selected users",
+      "deactivateSelectedUsers": "Deactivate selected users",
+      "deleteSelectedUsers": "Delete selected users"
     },
-    "newMessage": "New message",
-    "to": "To",
-    "searchPeople": "Search people...",
-    "noPeopleFound": "No people found.",
-    "chat": "Chat"
+    "deleteUser": "Delete User",
+    "deleteConfirmQuestion": "Are you sure you want to delete",
+    "deleteConfirmDescription": "This action will permanently remove the user with the role of",
+    "deleteConfirmWarning": "from the system. This cannot be undone.",
+    "usernameLabel": "Username:",
+    "usernamePlaceholder": "Enter username to confirm deletion.",
+    "warningTitle": "Warning!",
+    "warningDescription": "Please be careful, this operation can not be rolled back.",
+    "deleteSuccessMessage": "The following user has been deleted:",
+    "delete": {
+      "confirmWord": "DELETE",
+      "confirmPrompt": "Please type \"{{confirmWord}}\" to confirm.",
+      "deleting": "Deleting users...",
+      "success": "Deleted {{count}} {{count, plural, one {user} other {users}}}",
+      "title": "Delete {{count}} {{count, plural, one {user} other {users}}}",
+      "description": "Are you sure you want to delete the selected users?",
+      "warningDescription": "This action cannot be undone.",
+      "confirmLabel": "Confirm by typing \"{{confirmWord}}\":",
+      "confirmPlaceholder": "Type \"{{confirmWord}}\" to confirm.",
+      "warningTitle": "Warning!",
+      "confirmButton": "Delete"
+    },
+    "invite": {
+      "title": "Invite User",
+      "description": "Invite new user to join your team by sending them an email invitation. Assign a role to define their access level.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "eg: john.doe@gmail.com",
+      "roleLabel": "Role",
+      "rolePlaceholder": "Select a role",
+      "descriptionLabel": "Description (optional)",
+      "descriptionPlaceholder": "Add a personal note to your invitation (optional)",
+      "button": "Invite",
+      "validation": {
+        "emailRequired": "Please enter an email to invite.",
+        "roleRequired": "Role is required."
+      }
+    }
   },
   "dashboard": {
+    "demoTitle": "Dashboard Demo",
+    "demoSubtitle": "Static demo dashboard with sample data",
+    "subtitle": "Your comprehensive AI SaaS platform",
+    "aiFeatures": {
+      "documents": "Document Intelligence",
+      "documentsDesc": "Upload, process, and chat with documents using AI",
+      "content": "Content Generation",
+      "contentDesc": "Generate high-quality content with AI-powered templates",
+      "analytics": "AI Analytics",
+      "analyticsDesc": "Generate insights and visualizations from your data",
+      "open": "Open"
+    },
+    "filters": "Filters",
+    "export": "Export",
+    "generateReport": "Generate Report",
     "metrics": {
       "activeNow": "Active Now",
       "download": "Download",
@@ -397,14 +622,25 @@
       "sales": "Sales",
       "sinceLastHour": "+201 since last hour",
       "subscriptions": "Subscriptions",
-      "totalRevenue": "Total Revenue"
+      "totalRevenue": "Total Revenue",
+      "aiCredits": "AI Credits Used",
+      "thisMonth": "this month",
+      "documentsProcessed": "Documents Processed",
+      "today": "today",
+      "contentGenerated": "Content Generated",
+      "thisWeek": "this week",
+      "analyticsQueries": "Analytics Queries"
     },
     "tabs": {
+      "overview": "Overview",
       "analytics": "Analytics",
       "notifications": "Notifications",
-      "overview": "Overview",
-      "reports": "Reports"
+      "aiDocuments": "AI Documents",
+      "aiContent": "AI Content",
+      "aiAnalytics": "AI Analytics"
     },
+    "overview": "Overview",
+    "reports": "Reports",
     "title": "Dashboard"
   },
   "emailVerification": {
@@ -470,6 +706,11 @@
     "youHaveBeenInvited": "You have been invited to join this organization."
   },
   "navigation": {
+    "aiApplications": "AI Applications",
+    "aiAnalytics": "AI Analytics",
+    "aiContent": "AI Content",
+    "aiDocuments": "AI Documents",
+    "dashboardDemo": "Dashboard Demo",
     "staticPages": "Static Pages & Examples",
     "account": "Account",
     "apps": "Apps",
@@ -478,12 +719,14 @@
     "chats": "Chats",
     "dashboard": "Dashboard",
     "errors": "Errors",
+    "feedback": "feedback",
     "helpCenter": "Help Centre",
     "notifications": "Notifications",
     "organizations": "Organisations",
     "other": "Other",
     "pages": "Pages",
     "settings": "Settings",
+    "support": "support",
     "tasks": "Tasks",
     "upgradeToPro": "Upgrade to Pro",
     "users": "Users"
@@ -527,7 +770,17 @@
     "updateSuccess": "Organisation updated successfully",
     "updateError": "Failed to update organisation",
     "updating": "Updating...",
-    "updateOrganization": "Update Organisation"
+    "updateOrganization": "Update Organisation",
+    "logo": "Logo",
+    "logoDescription": "Upload a logo for your organisation.",
+    "logoUpdateDescription": "Update your organisation's logo.",
+    "uploadLogo": "Upload logo",
+    "changeLogo": "Change logo",
+    "removeLogo": "Remove logo",
+    "logoUploaded": "Logo uploaded successfully",
+    "logoDeleted": "Logo deleted successfully",
+    "logoUploadFailed": "Failed to upload logo",
+    "logoDeleteFailed": "Failed to delete logo"
   },
   "pricing": {
     "errors": {
@@ -586,51 +839,39 @@
     "description": "Manage your account settings and set e-mail preferences.",
     "nav": {
       "profile": "Profile",
+      "billing": "Billing",
       "account": "Account",
       "appearance": "Appearance",
       "notifications": "Notifications",
       "display": "Display"
     },
-    "account": {
-      "title": "Account",
-      "description": "Update your account settings. Set your preferred language and timezone."
-    },
-    "appearance": {
-      "title": "Appearance",
-      "description": "Customize the appearance of the app. Automatically switch between day and night themes.",
-      "fontLabel": "Font",
-      "fontDescription": "Set the font you want to use in the dashboard.",
-      "themeLabel": "Theme",
-      "themeDescription": "Select the theme for the dashboard.",
-      "light": "Light",
-      "dark": "Dark",
-      "updateButton": "Update preferences"
-    },
-    "display": {
-      "sidebarLabel": "Sidebar",
-      "sidebarDescription": "Select the items you want to display in the sidebar.",
-      "updateButton": "Update display",
-      "items": {
-        "recents": "Recents",
-        "home": "Home",
-        "applications": "Applications",
-        "desktop": "Desktop",
-        "downloads": "Downloads",
-        "documents": "Documents"
-      },
-      "validation": {
-        "atLeastOne": "You have to select at least one item."
-      }
-    },
-    "notifications": {
-      "title": "Notifications",
-      "description": "Configure how you receive notifications."
-    },
     "account": "Account",
     "appearance": "Appearance",
     "display": "Display",
+    "notifications": {
+      "notifyMeAbout": "Notify me about...",
+      "allNewMessages": "All new messages",
+      "directMessagesAndMentions": "Direct messages and mentions",
+      "nothing": "Nothing",
+      "emailNotifications": "Email Notifications",
+      "communicationEmails": "Communication emails",
+      "communicationEmailsDescription": "Receive emails about your account activity.",
+      "marketingEmails": "Marketing emails",
+      "marketingEmailsDescription": "Receive emails about new products, features, and more.",
+      "socialEmails": "Social emails",
+      "socialEmailsDescription": "Receive emails for friend requests, follows, and more.",
+      "securityEmails": "Security emails",
+      "securityEmailsDescription": "Receive emails about your account activity and security.",
+      "useDifferentSettingsForMobile": "Use different settings for my mobile devices",
+      "mobileSettingsDescription": "You can manage your mobile notifications in the",
+      "mobileSettings": "mobile settings",
+      "page": "page",
+      "updateNotifications": "Update notifications",
+      "validation": {
+        "typeRequired": "Please select a notification type."
+      }
+    },
     "language": "Language",
-    "notifications": "Notifications",
     "openThemeSettings": "Open theme settings",
     "themeSettings": "Theme Settings",
     "themeSettingsDescription": "Adjust the appearance and layout to suit your preferences.",
@@ -661,35 +902,27 @@
       "urlsDescription": "Add links to your website, blog, or social media profiles.",
       "addUrl": "Add URL",
       "updateProfile": "Update profile",
+      "profileImage": "Profile image",
+      "uploadProfileImage": "Upload profile image",
+      "changeProfileImage": "Change profile image",
+      "removeProfileImage": "Remove profile image",
+      "profileImageDescription": "Recommended formats: JPG, PNG, WebP. Maximum size: 5MB.",
+      "imageUploaded": "Profile image uploaded successfully",
+      "imageDeleted": "Profile image deleted successfully",
+      "updateSuccess": "Profile updated successfully",
+      "updateError": "Failed to update profile",
+      "fetchError": "Failed to fetch profile information",
       "validation": {
         "usernameRequired": "Please enter your username.",
         "usernameMinLength": "Username must be at least 2 characters.",
         "usernameMaxLength": "Username must not be longer than 30 characters.",
         "emailRequired": "Please select an email to display.",
-        "urlRequired": "Please enter a valid URL."
-      }
-    },
-    "notifications": {
-      "notifyMeAbout": "Notify me about...",
-      "allNewMessages": "All new messages",
-      "directMessagesAndMentions": "Direct messages and mentions",
-      "nothing": "Nothing",
-      "emailNotifications": "Email Notifications",
-      "communicationEmails": "Communication emails",
-      "communicationEmailsDescription": "Receive emails about your account activity.",
-      "marketingEmails": "Marketing emails",
-      "marketingEmailsDescription": "Receive emails about new products, features, and more.",
-      "socialEmails": "Social emails",
-      "socialEmailsDescription": "Receive emails for friend requests, follows, and more.",
-      "securityEmails": "Security emails",
-      "securityEmailsDescription": "Receive emails about your account activity and security.",
-      "useDifferentSettingsForMobile": "Use different settings for my mobile devices",
-      "mobileSettingsDescription": "You can manage your mobile notifications in the",
-      "mobileSettings": "mobile settings",
-      "page": "page",
-      "updateNotifications": "Update notifications",
-      "validation": {
-        "typeRequired": "Please select a notification type."
+        "emailInvalid": "Please enter a valid email address.",
+        "urlRequired": "Please enter a valid URL.",
+        "websiteInvalid": "Please enter a valid website URL.",
+        "nameMinLength": "Name must be at least 2 characters.",
+        "nameMaxLength": "Name must not be longer than 50 characters.",
+        "bioMaxLength": "Bio must not be longer than 500 characters."
       }
     },
     "floating": "Floating",
@@ -705,6 +938,12 @@
     "leftToRight": "Left to Right",
     "rightToLeft": "Right to Left",
     "directionDescription": "Choose between left-to-right or right-to-left site direction"
+  },
+  "sidebar": {
+    "currentPlan": "Current Plan",
+    "usage": "Usage",
+    "remaining": "remaining",
+    "upgradeToPro": "Upgrade to Pro"
   },
   "tasks": {
     "title": "Tasks",
@@ -812,70 +1051,83 @@
     "connected": "Connected",
     "connect": "Connect"
   },
-  "users": {
-    "title": "User List",
-    "description": "Manage your users and their roles here.",
-    "active": "Active",
-    "addUser": "Add User",
-    "filterUsers": "Filter users...",
-    "inactive": "Inactive",
-    "inviteUser": "Invite User",
-    "invited": "",
-    "noResults": "",
-    "role": "",
-    "status": "",
-    "suspended": "",
-    "bulkActions": {
-      "activatingUsers": "Activating users...",
-      "activatedUsers": "Activated {{count}} {{count, plural, one {user} other {users}}}",
-      "deactivatingUsers": "Deactivating users...",
-      "deactivatedUsers": "Deactivated {{count}} {{count, plural, one {user} other {users}}}",
-      "invitingUsers": "Inviting users...",
-      "invitedUsers": "Invited {{count}} {{count, plural, one {user} other {users}}}",
-      "errorActivatingUsers": "Error activating users",
-      "errorDeactivatingUsers": "Error deactivating users",
-      "errorInvitingUsers": "Error inviting users",
-      "inviteSelectedUsers": "Invite selected users",
-      "activateSelectedUsers": "Activate selected users",
-      "deactivateSelectedUsers": "Deactivate selected users",
-      "deleteSelectedUsers": "Delete selected users"
-    },
-    "deleteUser": "Delete User",
-    "deleteConfirmQuestion": "Are you sure you want to delete",
-    "deleteConfirmDescription": "This action will permanently remove the user with the role of",
-    "deleteConfirmWarning": "from the system. This cannot be undone.",
-    "usernameLabel": "Username:",
-    "usernamePlaceholder": "Enter username to confirm deletion.",
-    "warningTitle": "Warning!",
-    "warningDescription": "Please be careful, this operation can not be rolled back.",
-    "deleteSuccessMessage": "The following user has been deleted:",
-    "delete": {
-      "confirmWord": "DELETE",
-      "confirmPrompt": "Please type \"{{confirmWord}}\" to confirm.",
-      "deleting": "Deleting users...",
-      "success": "Deleted {{count}} {{count, plural, one {user} other {users}}}",
-      "title": "Delete {{count}} {{count, plural, one {user} other {users}}}",
-      "description": "Are you sure you want to delete the selected users?",
-      "warningDescription": "This action cannot be undone.",
-      "confirmLabel": "Confirm by typing \"{{confirmWord}}\":",
-      "confirmPlaceholder": "Type \"{{confirmWord}}\" to confirm.",
-      "warningTitle": "Warning!",
-      "confirmButton": "Delete"
-    },
-    "invite": {
-      "title": "Invite User",
-      "description": "Invite new user to join your team by sending them an email invitation. Assign a role to define their access level.",
-      "emailLabel": "Email",
-      "emailPlaceholder": "eg: john.doe@gmail.com",
-      "roleLabel": "Role",
-      "rolePlaceholder": "Select a role",
-      "descriptionLabel": "Description (optional)",
-      "descriptionPlaceholder": "Add a personal note to your invitation (optional)",
-      "button": "Invite",
-      "validation": {
-        "emailRequired": "Please enter an email to invite.",
-        "roleRequired": "Role is required."
-      }
-    }
+  "aiDocuments": {
+    "title": "AI Document Intelligence",
+    "description": "Upload, process, and chat with your documents using AI",
+    "uploadDocument": "Upload Document",
+    "upload": "Upload",
+    "library": "Library",
+    "chat": "Chat",
+    "settings": "Settings",
+    "selectDocumentToChat": "Select a document to start chatting",
+    "uploadDocuments": "Upload Documents",
+    "uploadDescription": "Upload PDF, DOCX, or TXT files to process with AI",
+    "dropFilesHere": "Drop files here...",
+    "dragDropFiles": "Drag & drop files here, or click to select",
+    "supportedFormats": "PDF, DOCX, TXT files up to 10MB",
+    "selectedFiles": "Selected Files",
+    "uploading": "Uploading...",
+    "uploadAll": "Upload All",
+    "pdfSupport": "PDF documents",
+    "docxSupport": "Word documents",
+    "txtSupport": "Text files",
+    "documentLibrary": "Document Library",
+    "libraryDescription": "Manage and interact with your AI-processed documents",
+    "refresh": "Refresh",
+    "searchDocuments": "Search documents...",
+    "all": "All",
+    "completed": "Completed",
+    "processing": "Processing",
+    "documents": "Documents",
+    "noDocuments": "No documents found",
+    "noDocumentsMatch": "No documents match your search",
+    "uploadFirstDocument": "Upload your first document to get started",
+    "name": "Name",
+    "status": "Status",
+    "size": "Size",
+    "created": "Created",
+    "view": "View",
+    "download": "Download",
+    "delete": "Delete",
+    "loadingDocuments": "Loading documents...",
+    "loadingDocument": "Loading document...",
+    "chatWithDocument": "Chat with Document",
+    "chatDescription": "Allow chatting with documents",
+    "startConversation": "Start a conversation",
+    "askQuestion": "Ask a question about the document to get started",
+    "thinking": "AI is thinking...",
+    "send": "Send",
+    "relevantSections": "Relevant sections:",
+    "tokens": "Tokens",
+    "cost": "Cost",
+    "noSummary": "No summary available",
+    "keyPoints": "Key Points",
+    "documentSettings": "Document Settings",
+    "settingsDescription": "Configure how documents are processed and analysed",
+    "saveSettings": "Save Settings",
+    "settingsSaved": "Settings saved successfully",
+    "processingSettings": "Processing Settings",
+    "processingDescription": "Configure how documents are chunked and processed",
+    "chunkSize": "Chunk Size",
+    "chunkSizeDescription": "Number of characters per chunk (100-2000)",
+    "chunkOverlap": "Chunk Overlap",
+    "chunkOverlapDescription": "Overlap between chunks for better context",
+    "maxTokensPerChunk": "Max Tokens per Chunk",
+    "maxTokensDescription": "Maximum tokens for AI processing per chunk",
+    "featureSettings": "Feature Settings",
+    "featureDescription": "Enable or disable AI features for documents",
+    "enableSummarization": "Enable Summarisation",
+    "summarizationDescription": "Automatically generate document summaries",
+    "enableKeyPoints": "Enable Key Points",
+    "keyPointsDescription": "Extract key points and insights",
+    "enableChat": "Enable Chat",
+    "autoProcess": "Auto Process",
+    "autoProcessDescription": "Automatically process documents on upload",
+    "usageStatistics": "Usage Statistics",
+    "usageDescription": "Current usage and limits for document features",
+    "totalTokens": "Total Tokens",
+    "totalCost": "Total Cost",
+    "loadingStats": "Loading statistics...",
+    "chats": "Chats"
   }
 }

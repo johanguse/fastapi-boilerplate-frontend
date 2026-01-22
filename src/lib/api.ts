@@ -16,8 +16,12 @@ const apiClient = axios.create({
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
   (config) => {
-    // Better Auth handles authentication via HTTP-only cookies automatically
-    // No need to manually add tokens
+    // Try to get token from auth store and add to Authorization header
+    const session = useAuthStore.getState().session
+    if (session?.session?.token) {
+      config.headers.Authorization = `Bearer ${session.session.token}`
+    }
+    // Also rely on HTTP-only cookies as fallback
     return config
   },
   (error) => Promise.reject(error)
@@ -94,10 +98,11 @@ export interface Organization {
   id: string
   name: string
   slug: string
-  logo?: string
+  logo?: string | null
+  description?: string | null
+  plan?: string // Organization plan (Free, Starter, Pro, etc.)
   metadata?: Record<string, unknown>
   createdAt?: string
-  plan?: string // Organization plan (Free, Starter, Pro, etc.)
   maxProjects?: number
   activeProjects?: number
 }
@@ -113,7 +118,21 @@ export interface User {
   is_superuser?: boolean
   created_at: string
   updated_at?: string
-  avatar_url?: string
+  image?: string | null // Profile image URL
+  avatar_url?: string // Alias for image (deprecated, use image)
+  // Profile fields
+  company?: string
+  job_title?: string
+  country?: string
+  phone?: string
+  bio?: string
+  website?: string
+  tax_id?: string
+  address_street?: string
+  address_city?: string
+  address_state?: string
+  address_postal_code?: string
+  company_name?: string
 }
 
 export interface PaginatedResponse<T> {
@@ -493,7 +512,9 @@ export const adminApi = {
 
   async getUsersGrowth(days: number = 30): Promise<{ data: ChartDataPoint[] }> {
     const response: AxiosResponse<{ data: ChartDataPoint[] }> =
-      await apiClient.get('/admin/analytics/users-growth', { params: { days } })
+      await apiClient.get('/admin/analytics/users-growth', {
+        params: { days },
+      })
     return response.data
   },
 

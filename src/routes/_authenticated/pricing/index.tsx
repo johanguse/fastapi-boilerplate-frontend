@@ -1,8 +1,10 @@
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { Check, Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import BillingInfoModal from '@/components/billing-info-modal'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -16,7 +18,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { useOrganizations } from '@/hooks/use-organizations'
-import { api } from '@/lib/api'
+import { api, authApi } from '@/lib/api'
 
 export const Route = createFileRoute('/_authenticated/pricing/')({
   component: PricingPage,
@@ -118,7 +120,51 @@ function PricingPage() {
   const { t, i18n } = useTranslation()
   const { activeOrganization } = useOrganizations()
   const [isYearly, setIsYearly] = useState(false)
-  const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null)
+  const [isBillingModalOpen, setIsBillingModalOpen] = useState(false)
+  const [pendingPlan, setPendingPlan] = useState<Plan | null>(null)
+  // Fetch latest user data to ensure we have the most recent billing info
+  const { data: currentUser } = useQuery({
+    queryKey: ['user', 'me'],
+    queryFn: () => authApi.getCurrentUser(),
+  })
+
+  const subscribeMutation = useMutation({
+    mutationFn: async ({
+      plan,
+      isYearly,
+    }: {
+      plan: Plan
+      isYearly: boolean
+    }) => {
+      const response = await api.post(
+        `/api/v1/subscriptions/organizations/${activeOrganization!.id}/checkout`,
+        {
+          price_id: `price_${plan.id}_${isYearly ? 'yearly' : 'monthly'}`,
+          success_url: `${window.location.origin}/settings?subscription=success`,
+          cancel_url: `${window.location.origin}/pricing?subscription=canceled`,
+        }
+      )
+      return response.data
+    },
+    onError: (error: unknown) => {
+      let errorMessage = t('pricing.errors.checkoutFailed')
+      if (
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        error.response &&
+        typeof error.response === 'object' &&
+        'data' in error.response &&
+        error.response.data &&
+        typeof error.response.data === 'object' &&
+        'detail' in error.response.data &&
+        typeof error.response.data.detail === 'string'
+      ) {
+        errorMessage = error.response.data.detail
+      }
+      toast.error(errorMessage)
+    },
+  })
 
   const getCurrency = () => {
     const lang = i18n.language
@@ -150,41 +196,57 @@ function PricingPage() {
     }).format(amount)
   }
 
-  const handleSubscribe = async (plan: Plan) => {
+  const handleSubscribe = (plan: Plan) => {
     if (!activeOrganization) {
       toast.error(t('pricing.errors.noOrganization'))
       return
     }
 
-    setLoadingPlanId(plan.id)
+    // Check if user has required billing info
+    const hasBillingInfo =
+      currentUser?.address_street &&
+      currentUser?.address_city &&
+      currentUser?.address_state &&
+      currentUser?.address_postal_code &&
+      currentUser?.country &&
+      currentUser?.company_name &&
+      currentUser?.tax_id
 
-    try {
-      // Create checkout session
-      const response = await api.post(
-        `/api/v1/subscriptions/organizations/${activeOrganization.id}/checkout`,
-        {
-          price_id: `price_${plan.id}_${isYearly ? 'yearly' : 'monthly'}`,
-          success_url: `${window.location.origin}/settings?subscription=success`,
-          cancel_url: `${window.location.origin}/pricing?subscription=canceled`,
-        }
-      )
-
-      // Redirect to Stripe checkout
-      if (response.data.checkout_url) {
-        window.location.href = response.data.checkout_url
-      }
-    } catch (error) {
-      const errorDetail = (
-        error as { response?: { data?: { detail?: string } } }
-      ).response?.data?.detail
-      toast.error(errorDetail || t('pricing.errors.checkoutFailed'))
-    } finally {
-      setLoadingPlanId(null)
+    if (!hasBillingInfo) {
+      setPendingPlan(plan)
+      setIsBillingModalOpen(true)
+      return
     }
+
+    subscribeMutation.mutate(
+      { plan, isYearly },
+      {
+        onSuccess: (data) => {
+          // Redirect to Stripe checkout
+          if (data.checkout_url) {
+            window.location.href = data.checkout_url
+          }
+        },
+      }
+    )
   }
 
   return (
     <div className='container mx-auto px-4 py-8'>
+      <BillingInfoModal
+        isOpen={isBillingModalOpen}
+        onClose={() => {
+          setIsBillingModalOpen(false)
+          setPendingPlan(null)
+        }}
+        onSuccess={() => {
+          setIsBillingModalOpen(false)
+          if (pendingPlan) {
+            handleSubscribe(pendingPlan)
+          }
+        }}
+        actionType='subscription'
+      />
       <div className='mx-auto max-w-6xl'>
         {/* Header */}
         <div className='mb-12 text-center'>
@@ -235,7 +297,7 @@ function PricingPage() {
               }
             >
               {plan.is_popular && (
-                <div className='-top-4 -translate-x-1/2 absolute left-1/2'>
+                <div className='absolute -top-4 left-1/2 -translate-x-1/2'>
                   <Badge className='px-4 py-1'>
                     {t('pricing.popular', 'Most Popular')}
                   </Badge>
@@ -301,9 +363,9 @@ function PricingPage() {
                   className='w-full'
                   variant={plan.is_popular ? 'default' : 'outline'}
                   onClick={() => handleSubscribe(plan)}
-                  disabled={loadingPlanId !== null}
+                  disabled={subscribeMutation.isPending}
                 >
-                  {loadingPlanId === plan.id ? (
+                  {subscribeMutation.isPending ? (
                     <>
                       <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                       {t('pricing.loading', 'Processing...')}

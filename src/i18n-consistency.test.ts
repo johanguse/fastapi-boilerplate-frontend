@@ -1,5 +1,4 @@
-// @ts-expect-error: Bun provides 'bun:test' at runtime
-import { expect, test } from 'bun:test'
+import { describe, expect, it } from 'vitest'
 import deDE from './i18n/locales/de-DE/translation.json'
 import enGB from './i18n/locales/en-GB/translation.json'
 import enUS from './i18n/locales/en-US/translation.json'
@@ -30,11 +29,13 @@ const locales = [
   { name: 'pt-PT', data: ptPT },
 ]
 
-for (const locale of locales) {
-  test(`${locale.name} has all keys from en-US`, () => {
-    const localeKeys = getKeys(locale.data as Record<string, unknown>)
-    for (const key of baseKeys) {
-      expect(localeKeys).toContain(key)
-    }
-  })
-}
+describe('i18n consistency', () => {
+  for (const locale of locales) {
+    it(`${locale.name} has all keys from en-US`, () => {
+      const localeKeys = getKeys(locale.data as Record<string, unknown>)
+      for (const key of baseKeys) {
+        expect(localeKeys).toContain(key)
+      }
+    })
+  }
+})

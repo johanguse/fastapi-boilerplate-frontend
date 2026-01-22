@@ -81,7 +81,7 @@ export function Chats() {
         <section className='flex h-full gap-6'>
           {/* Left Side */}
           <div className='flex w-full flex-col gap-2 sm:w-56 lg:w-72 2xl:w-80'>
-            <div className='-mx-4 sticky top-0 z-10 bg-background px-4 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none'>
+            <div className='sticky top-0 z-10 -mx-4 bg-background px-4 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none'>
               <div className='flex items-center justify-between py-2'>
                 <div className='flex gap-2'>
                   <h1 className='font-bold text-2xl'>
@@ -232,7 +232,7 @@ export function Chats() {
               {/* Conversation */}
               <div className='flex flex-1 flex-col gap-2 rounded-md px-4 pt-0 pb-4'>
                 <div className='flex size-full flex-1'>
-                  <div className='chat-text-container -me-4 relative flex flex-1 flex-col overflow-y-hidden'>
+                  <div className='chat-text-container relative -me-4 flex flex-1 flex-col overflow-y-hidden'>
                     <div className='chat-flex flex h-40 w-full grow flex-col-reverse justify-start gap-4 overflow-y-auto py-2 pe-4 pb-4'>
                       {currentMessage &&
                         Object.keys(currentMessage).map((key) => (

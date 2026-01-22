@@ -35,10 +35,24 @@ type NavGroup = {
   items: NavItem[]
 }
 
+type SecondaryNavItem = {
+  title: string
+  url: string
+  icon: React.ElementType
+}
+
 type SidebarData = {
   user: User
   teams: Team[]
   navGroups: NavGroup[]
+  secondaryNav?: SecondaryNavItem[]
 }
 
-export type { SidebarData, NavGroup, NavItem, NavCollapsible, NavLink }
+export type {
+  SidebarData,
+  NavGroup,
+  NavItem,
+  NavCollapsible,
+  NavLink,
+  SecondaryNavItem,
+}

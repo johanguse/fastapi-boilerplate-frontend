@@ -1,7 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { SignOutDialog } from '@/components/sign-out-dialog'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -13,6 +12,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { UserAvatar } from '@/components/ui/user-avatar'
 import useDialogState from '@/hooks/use-dialog-state'
 import { useAuth } from '@/stores/auth-store'
 
@@ -21,26 +21,15 @@ export function ProfileDropdown() {
   const [open, setOpen] = useDialogState()
   const { user } = useAuth()
 
-  // Use current user data
-  const currentUser = user
-  const userName = currentUser?.name || 'User'
-  const userEmail = currentUser?.email || 'user@example.com'
-  const userInitials = userName
-    .split(' ')
-    .map((name: string) => name[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2)
+  const userName = user?.name || 'User'
+  const userEmail = user?.email || 'user@example.com'
 
   return (
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost' className='relative h-8 w-8 rounded-full'>
-            <Avatar className='h-8 w-8'>
-              <AvatarImage src='/avatars/01.png' alt={userName} />
-              <AvatarFallback>{userInitials}</AvatarFallback>
-            </Avatar>
+            <UserAvatar image={user?.image} name={userName} size='sm' />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className='w-56' align='end' forceMount>
@@ -61,19 +50,22 @@ export function ProfileDropdown() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link to='/settings'>
+              <Link to='/settings/billing'>
                 {t('profile.billing', 'Billing')}
                 <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link to='/settings'>
-                {t('profile.settings', 'Settings')}
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+              <Link to='/settings/appearance'>
+                {t('profile.appearance', 'Appearance')}
+                <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              {t('profile.newTeam', 'New Team')}
+            <DropdownMenuItem asChild>
+              <Link to='/settings/notifications'>
+                {t('profile.notifications', 'Notifications')}
+                <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />

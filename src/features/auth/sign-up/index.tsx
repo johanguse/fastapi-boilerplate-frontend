@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useSearch } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import {
   Card,
@@ -13,6 +13,7 @@ import { SignUpForm } from './components/sign-up-form'
 
 export function SignUp() {
   const { t } = useTranslation()
+  const { email } = useSearch({ from: '/(auth)/sign-up' })
 
   return (
     <AuthLayout>
@@ -33,7 +34,7 @@ export function SignUp() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <SignUpForm />
+          <SignUpForm defaultEmail={email} />
         </CardContent>
         <CardFooter>
           <p className='px-8 text-center text-muted-foreground text-sm'>

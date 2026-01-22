@@ -1,16 +1,20 @@
 import {
   Activity,
+  BarChart3,
   Bell,
   Bug,
   Building2,
   Construction,
+  CreditCard,
+  FileText,
   FileX,
   HelpCircle,
   LayoutDashboard,
+  LifeBuoy,
   ListTodo,
   Lock,
+  MessageCircle,
   MessagesSquare,
-  Monitor,
   Package,
   Palette,
   ServerOff,
@@ -20,7 +24,6 @@ import {
   UserCog,
   Users,
   UserX,
-  Wrench,
 } from 'lucide-react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -66,27 +69,52 @@ export function useSidebarData(): SidebarData {
           ],
         },
         {
+          title: t('navigation.aiApplications', 'AI Applications'),
+          items: [
+            {
+              title: t('navigation.aiDocuments', 'AI Documents'),
+              url: '/ai-documents',
+              icon: FileText,
+            },
+            {
+              title: t('navigation.aiContent', 'AI Content'),
+              url: '/ai-content',
+              icon: MessagesSquare,
+            },
+            {
+              title: t('navigation.aiAnalytics', 'AI Analytics'),
+              url: '/ai-analytics',
+              icon: BarChart3,
+            },
+          ],
+        },
+        {
           title: t('navigation.staticPages', 'Static Pages & Examples'),
           items: [
             {
+              title: t('navigation.dashboardDemo', 'Dashboard Demo'),
+              url: '/demo/dashboard-demo',
+              icon: LayoutDashboard,
+            },
+            {
               title: t('navigation.tasks', 'Tasks'),
-              url: '/tasks',
+              url: '/demo/tasks',
               icon: ListTodo,
             },
             {
               title: t('navigation.apps', 'Apps'),
-              url: '/apps',
+              url: '/demo/apps',
               icon: Package,
             },
             {
               title: t('navigation.chats', 'Chats'),
-              url: '/chats',
+              url: '/demo/chats',
               badge: '3',
               icon: MessagesSquare,
             },
             {
               title: t('navigation.users', 'Users'),
-              url: '/users',
+              url: '/demo/users',
               icon: Users,
             },
             {
@@ -94,35 +122,25 @@ export function useSidebarData(): SidebarData {
               icon: Settings,
               items: [
                 {
-                  title: t('settings.profile', 'Profile'),
-                  url: '/settings',
+                  title: t('settings.nav.profile', 'Profile'),
+                  url: '/demo/settings',
                   icon: UserCog,
                 },
                 {
-                  title: t('settings.account', 'Account'),
-                  url: '/settings/account',
-                  icon: Wrench,
-                },
-                {
-                  title: t('settings.appearance', 'Appearance'),
-                  url: '/settings/appearance',
+                  title: t('settings.nav.appearance', 'Appearance'),
+                  url: '/demo/settings/appearance',
                   icon: Palette,
                 },
                 {
-                  title: t('settings.notifications', 'Notifications'),
-                  url: '/settings/notifications',
+                  title: t('settings.nav.notifications', 'Notifications'),
+                  url: '/demo/settings/notifications',
                   icon: Bell,
-                },
-                {
-                  title: t('settings.display', 'Display'),
-                  url: '/settings/display',
-                  icon: Monitor,
                 },
               ],
             },
             {
               title: t('navigation.helpCenter', 'Help Center'),
-              url: '/help-center',
+              url: '/demo/help-center',
               icon: HelpCircle,
             },
             {
@@ -146,7 +164,7 @@ export function useSidebarData(): SidebarData {
                   url: '/forgot-password',
                 },
                 {
-                  title: t('auth.otp', 'OTP'),
+                  title: t('auth.otp.title', 'Two-factor Authentication'),
                   url: '/otp',
                 },
               ],
@@ -184,24 +202,39 @@ export function useSidebarData(): SidebarData {
             },
           ],
         },
+        {
+          title: t('navigation.settings', 'Settings'),
+          items: [
+            {
+              title: t('settings.nav.profile', 'Profile'),
+              url: '/settings',
+              icon: UserCog,
+            },
+            {
+              title: t('settings.nav.billing', 'Billing'),
+              url: '/settings/billing',
+              icon: CreditCard,
+            },
+          ],
+        },
         // Admin section - only show for admins
         ...(isAdmin
           ? [
               {
-                title: t('admin.sideMenu.admin', 'Admin'),
+                title: t('admin.title', 'Admin'),
                 items: [
                   {
-                    title: t('admin.sideMenu.reports', 'Reports & Analytics'),
+                    title: t('admin.reports.title', 'Reports & Analytics'),
                     url: '/admin/reports',
                     icon: Shield,
                   },
                   {
-                    title: t('admin.sideMenu.users', 'All Users'),
+                    title: t('admin.users.title', 'User Management'),
                     url: '/admin/users',
                     icon: Users,
                   },
                   {
-                    title: t('admin.sideMenu.activity', 'Activity Logs'),
+                    title: t('admin.activityLogs.title', 'Activity Logs'),
                     url: '/admin/activity-logs',
                     icon: Activity,
                   },
@@ -209,6 +242,18 @@ export function useSidebarData(): SidebarData {
               },
             ]
           : []),
+      ],
+      secondaryNav: [
+        {
+          title: t('navigation.support', 'Support'),
+          url: '/support',
+          icon: LifeBuoy,
+        },
+        {
+          title: t('navigation.feedback', 'Feedback'),
+          url: '/feedback',
+          icon: MessageCircle,
+        },
       ],
     }),
     [t, user, isAdmin, activeOrganization]
