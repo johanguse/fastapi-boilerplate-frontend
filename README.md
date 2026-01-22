@@ -3,6 +3,7 @@
 Modern admin dashboard built with React, TypeScript, and Shadcn UI. Features internationalization, authentication with session persistence, and a comprehensive component library.
 
 This project serves as a complete frontend boilerplate that works with **two backend options**:
+
 - **FastAPI** (Python) - Port 8000
 - **Bun + Hono** (TypeScript) - Port 3000
 
@@ -144,20 +145,20 @@ This project uses Shadcn UI components, with some customized for better RTL supp
 
 ### Installation
 
-1. Clone the repository
+Clone the repository
 
 ```bash
 git clone <repository-url>
 cd boilerplate/frontend
 ```
 
-2. Install dependencies
+Install dependencies
 
 ```bash
 bun install
 ```
 
-3. Configure environment variables
+Configure environment variables
 
 ```bash
 # For FastAPI backend (default)
@@ -182,7 +183,7 @@ Key environment variables:
 | `VITE_API_URL_BUN` | Bun + Hono API URL | `http://localhost:3000/api/v1` |
 | `VITE_APP_NAME` | Application name | - |
 
-4. Generate the API client (Hey API)
+Generate the API client (Hey API)
 
 ```bash
 # With FastAPI backend running
@@ -192,7 +193,7 @@ bun run gen:api
 bun run gen:api:bun
 ```
 
-5. Start the development server
+Start the development server
 
 ```bash
 bun run dev
@@ -216,7 +217,7 @@ Run linting and formatting:
 bun run check
 
 # Auto-fix issues
-bun run check:write
+bun run check:fix
 
 # Format only
 bun run format
@@ -354,11 +355,12 @@ bun run dev              # Start development server with HMR
 bun run build            # Type-check and build for production
 bun run preview          # Preview production build locally
 
+
 # Code Quality (powered by Biome)
 bun run check            # Check linting & formatting (recommended for CI/CD)
-bun run check:write      # Auto-fix linting & formatting issues (recommended for development)
+bun run check:fix        # Auto-fix linting & formatting issues (recommended for development)
 bun run lint             # Run linter only
-bun run lint:write       # Run linter with auto-fix
+bun run lint:fix         # Run linter with auto-fix
 bun run format           # Format all code files
 bun run format:check     # Check formatting without modifying files
 
@@ -391,7 +393,7 @@ bun run knip             # Find unused dependencies and exports
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Run `bun run check:write` to ensure code quality
+4. Run `bun run check:fix` to ensure code quality
 5. Run `bun test` to verify all tests pass
 6. Commit your changes (`git commit -m 'Add amazing feature'`)
 7. Push to the branch (`git push origin feature/amazing-feature`)
