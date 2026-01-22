@@ -169,13 +169,13 @@ export function AddTodoForm() {
   return (
     <form onSubmit={handleSubmit}>
       <input
-        type="text"
-        name="title"
-        placeholder="New todo..."
+        type='text'
+        name='title'
+        placeholder='New todo...'
         required
         disabled={isPending}
       />
-      <button type="submit" disabled={isPending}>
+      <button type='submit' disabled={isPending}>
         {isPending ? 'Adding...' : 'Add Todo'}
       </button>
       {isError && <div>Error: {error.message}</div>}

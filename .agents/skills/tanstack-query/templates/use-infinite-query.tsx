@@ -17,7 +17,11 @@ type TodosPage = {
  *
  * In real API: cursor would be offset, page number, or last item ID
  */
-async function fetchTodosPage({ pageParam }: { pageParam: number }): Promise<TodosPage> {
+async function fetchTodosPage({
+  pageParam,
+}: {
+  pageParam: number
+}): Promise<TodosPage> {
   const limit = 20
   const start = pageParam * limit
   const end = start + limit
@@ -92,7 +96,7 @@ export function InfiniteTodosManual() {
           <ul>
             {page.data.map((todo) => (
               <li key={todo.id}>
-                <input type="checkbox" checked={todo.completed} readOnly />
+                <input type='checkbox' checked={todo.completed} readOnly />
                 {todo.title}
               </li>
             ))}
@@ -108,8 +112,8 @@ export function InfiniteTodosManual() {
         {isFetchingNextPage
           ? 'Loading more...'
           : hasNextPage
-          ? 'Load More'
-          : 'No more todos'}
+            ? 'Load More'
+            : 'No more todos'}
       </button>
     </div>
   )
@@ -165,7 +169,7 @@ export function InfiniteTodosAuto() {
         <div key={i}>
           {page.data.map((todo) => (
             <div key={todo.id}>
-              <input type="checkbox" checked={todo.completed} readOnly />
+              <input type='checkbox' checked={todo.completed} readOnly />
               {todo.title}
             </div>
           ))}

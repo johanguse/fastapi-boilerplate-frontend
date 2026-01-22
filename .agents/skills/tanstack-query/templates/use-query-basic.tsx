@@ -1,5 +1,5 @@
 // src/hooks/useTodos.ts
-import { useQuery, queryOptions } from '@tanstack/react-query'
+import { queryOptions, useQuery } from '@tanstack/react-query'
 
 /**
  * Type definitions
@@ -97,7 +97,7 @@ export function TodoList() {
       <ul>
         {data.map((todo) => (
           <li key={todo.id}>
-            <input type="checkbox" checked={todo.completed} readOnly />
+            <input type='checkbox' checked={todo.completed} readOnly />
             {todo.title}
           </li>
         ))}

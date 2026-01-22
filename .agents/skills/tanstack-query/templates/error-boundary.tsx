@@ -1,6 +1,7 @@
 // src/components/ErrorBoundary.tsx
-import { Component, type ReactNode } from 'react'
+
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
+import { Component, type ReactNode } from 'react'
 
 /**
  * Props and State types
@@ -143,11 +144,11 @@ export function CustomErrorBoundary({ children }: { children: ReactNode }) {
   return (
     <ErrorBoundary
       fallback={(error, reset) => (
-        <div className="error-container">
+        <div className='error-container'>
           <h1>Oops!</h1>
           <p>We encountered an error: {error.message}</p>
           <button onClick={reset}>Retry</button>
-          <a href="/">Go Home</a>
+          <a href='/'>Go Home</a>
         </div>
       )}
     >

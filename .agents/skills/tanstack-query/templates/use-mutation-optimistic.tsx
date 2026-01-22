@@ -122,9 +122,7 @@ export function useOptimisticUpdateTodo() {
 
       // Optimistic update
       queryClient.setQueryData<Todo[]>(['todos'], (old = []) =>
-        old.map((todo) =>
-          todo.id === id ? { ...todo, completed } : todo
-        )
+        old.map((todo) => (todo.id === id ? { ...todo, completed } : todo))
       )
 
       return { previousTodos }
@@ -194,15 +192,19 @@ export function useOptimisticDeleteTodo() {
  * Component usage example:
  */
 export function OptimisticTodoItem({ todo }: { todo: Todo }) {
-  const { mutate: updateTodo, isPending: isUpdating } = useOptimisticUpdateTodo()
-  const { mutate: deleteTodo, isPending: isDeleting } = useOptimisticDeleteTodo()
+  const { mutate: updateTodo, isPending: isUpdating } =
+    useOptimisticUpdateTodo()
+  const { mutate: deleteTodo, isPending: isDeleting } =
+    useOptimisticDeleteTodo()
 
   return (
     <li style={{ opacity: isUpdating || isDeleting ? 0.5 : 1 }}>
       <input
-        type="checkbox"
+        type='checkbox'
         checked={todo.completed}
-        onChange={(e) => updateTodo({ id: todo.id, completed: e.target.checked })}
+        onChange={(e) =>
+          updateTodo({ id: todo.id, completed: e.target.checked })
+        }
         disabled={isUpdating || isDeleting}
       />
       <span>{todo.title}</span>

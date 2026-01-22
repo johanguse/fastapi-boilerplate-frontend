@@ -1,8 +1,9 @@
 // src/main.tsx - Complete DevTools Setup
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 import App from './App'
 
 /**
@@ -32,13 +33,10 @@ createRoot(document.getElementById('root')!).render(
       <ReactQueryDevtools
         // Start collapsed (default: false)
         initialIsOpen={false}
-
         // Button position on screen
-        buttonPosition="bottom-right" // "top-left" | "top-right" | "bottom-left" | "bottom-right"
-
+        buttonPosition='bottom-right' // "top-left" | "top-right" | "bottom-left" | "bottom-right"
         // Panel position when open
-        position="bottom" // "top" | "bottom" | "left" | "right"
-
+        position='bottom' // "top" | "bottom" | "left" | "right"
         // Custom styles for toggle button
         toggleButtonProps={{
           style: {
@@ -46,7 +44,6 @@ createRoot(document.getElementById('root')!).render(
             marginRight: '1rem',
           },
         }}
-
         // Custom styles for panel
         panelProps={{
           style: {
@@ -70,9 +67,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
-      {import.meta.env.DEV && (
-        <ReactQueryDevtools initialIsOpen={false} />
-      )}
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   </StrictMode>
 )
