@@ -141,7 +141,7 @@ Type-safe URL search params with runtime validation:
 
 **Basic Pattern** (inline validation):
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export const Route = createFileRoute('/products')({
   validateSearch: (search) => z.object({
@@ -155,7 +155,7 @@ export const Route = createFileRoute('/products')({
 **Recommended Pattern** (Zod adapter with fallbacks):
 ```typescript
 import { zodValidator, fallback } from '@tanstack/zod-adapter'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const searchSchema = z.object({
   query: z.string().min(1).max(100),

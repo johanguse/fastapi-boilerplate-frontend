@@ -40,6 +40,7 @@ import { Route as AuthenticatedHelpCenterIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedChatsIndexRouteImport } from './routes/_authenticated/chats/index'
 import { Route as AuthenticatedAppsIndexRouteImport } from './routes/_authenticated/apps/index'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
+import { Route as AuthenticatedSettingsFiscalRouteImport } from './routes/_authenticated/settings/fiscal'
 import { Route as AuthenticatedSettingsBillingRouteImport } from './routes/_authenticated/settings/billing'
 import { Route as AuthenticatedSettingsAppearanceRouteImport } from './routes/_authenticated/settings/appearance'
 import { Route as AuthenticatedErrorsErrorRouteImport } from './routes/_authenticated/errors/$error'
@@ -227,6 +228,12 @@ const AuthenticatedSettingsNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedSettingsRouteRoute,
   } as any)
+const AuthenticatedSettingsFiscalRoute =
+  AuthenticatedSettingsFiscalRouteImport.update({
+    id: '/fiscal',
+    path: '/fiscal',
+    getParentRoute: () => AuthenticatedSettingsRouteRoute,
+  } as any)
 const AuthenticatedSettingsBillingRoute =
   AuthenticatedSettingsBillingRouteImport.update({
     id: '/billing',
@@ -359,6 +366,7 @@ const authOauthAppleCallbackRoute = authOauthAppleCallbackRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof AuthenticatedIndexRoute
   '/settings': typeof AuthenticatedSettingsRouteRouteWithChildren
   '/accept-invitation': typeof authAcceptInvitationRoute
   '/check-email': typeof authCheckEmailRoute
@@ -379,7 +387,6 @@ export interface FileRoutesByFullPath {
   '/ai-content': typeof AuthenticatedAiContentRoute
   '/ai-documents': typeof AuthenticatedAiDocumentsRoute
   '/dashboard-demo': typeof AuthenticatedDashboardDemoRoute
-  '/': typeof AuthenticatedIndexRoute
   '/demo/settings': typeof AuthenticatedDemoSettingsRouteRouteWithChildren
   '/admin/activity-logs': typeof AuthenticatedAdminActivityLogsRoute
   '/admin/reports': typeof AuthenticatedAdminReportsRoute
@@ -393,15 +400,16 @@ export interface FileRoutesByFullPath {
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/billing': typeof AuthenticatedSettingsBillingRoute
+  '/settings/fiscal': typeof AuthenticatedSettingsFiscalRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
-  '/apps': typeof AuthenticatedAppsIndexRoute
-  '/chats': typeof AuthenticatedChatsIndexRoute
-  '/help-center': typeof AuthenticatedHelpCenterIndexRoute
-  '/organizations': typeof AuthenticatedOrganizationsIndexRoute
-  '/pricing': typeof AuthenticatedPricingIndexRoute
+  '/apps/': typeof AuthenticatedAppsIndexRoute
+  '/chats/': typeof AuthenticatedChatsIndexRoute
+  '/help-center/': typeof AuthenticatedHelpCenterIndexRoute
+  '/organizations/': typeof AuthenticatedOrganizationsIndexRoute
+  '/pricing/': typeof AuthenticatedPricingIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
-  '/tasks': typeof AuthenticatedTasksIndexRoute
-  '/users': typeof AuthenticatedUsersIndexRoute
+  '/tasks/': typeof AuthenticatedTasksIndexRoute
+  '/users/': typeof AuthenticatedUsersIndexRoute
   '/oauth/apple/callback': typeof authOauthAppleCallbackRoute
   '/oauth/github/callback': typeof authOauthGithubCallbackRoute
   '/oauth/google/callback': typeof authOauthGoogleCallbackRoute
@@ -411,7 +419,7 @@ export interface FileRoutesByFullPath {
   '/demo/settings/display': typeof AuthenticatedDemoSettingsDisplayRoute
   '/demo/settings/notifications': typeof AuthenticatedDemoSettingsNotificationsRoute
   '/demo/settings/': typeof AuthenticatedDemoSettingsIndexRoute
-  '/organizations/$organizationId': typeof AuthenticatedOrganizationsOrganizationIdIndexRoute
+  '/organizations/$organizationId/': typeof AuthenticatedOrganizationsOrganizationIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/accept-invitation': typeof authAcceptInvitationRoute
@@ -446,6 +454,7 @@ export interface FileRoutesByTo {
   '/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/settings/billing': typeof AuthenticatedSettingsBillingRoute
+  '/settings/fiscal': typeof AuthenticatedSettingsFiscalRoute
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/apps': typeof AuthenticatedAppsIndexRoute
   '/chats': typeof AuthenticatedChatsIndexRoute
@@ -503,6 +512,7 @@ export interface FileRoutesById {
   '/_authenticated/errors/$error': typeof AuthenticatedErrorsErrorRoute
   '/_authenticated/settings/appearance': typeof AuthenticatedSettingsAppearanceRoute
   '/_authenticated/settings/billing': typeof AuthenticatedSettingsBillingRoute
+  '/_authenticated/settings/fiscal': typeof AuthenticatedSettingsFiscalRoute
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/_authenticated/apps/': typeof AuthenticatedAppsIndexRoute
   '/_authenticated/chats/': typeof AuthenticatedChatsIndexRoute
@@ -526,6 +536,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/settings'
     | '/accept-invitation'
     | '/check-email'
@@ -546,7 +557,6 @@ export interface FileRouteTypes {
     | '/ai-content'
     | '/ai-documents'
     | '/dashboard-demo'
-    | '/'
     | '/demo/settings'
     | '/admin/activity-logs'
     | '/admin/reports'
@@ -560,15 +570,16 @@ export interface FileRouteTypes {
     | '/errors/$error'
     | '/settings/appearance'
     | '/settings/billing'
+    | '/settings/fiscal'
     | '/settings/notifications'
-    | '/apps'
-    | '/chats'
-    | '/help-center'
-    | '/organizations'
-    | '/pricing'
+    | '/apps/'
+    | '/chats/'
+    | '/help-center/'
+    | '/organizations/'
+    | '/pricing/'
     | '/settings/'
-    | '/tasks'
-    | '/users'
+    | '/tasks/'
+    | '/users/'
     | '/oauth/apple/callback'
     | '/oauth/github/callback'
     | '/oauth/google/callback'
@@ -578,7 +589,7 @@ export interface FileRouteTypes {
     | '/demo/settings/display'
     | '/demo/settings/notifications'
     | '/demo/settings/'
-    | '/organizations/$organizationId'
+    | '/organizations/$organizationId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/accept-invitation'
@@ -613,6 +624,7 @@ export interface FileRouteTypes {
     | '/errors/$error'
     | '/settings/appearance'
     | '/settings/billing'
+    | '/settings/fiscal'
     | '/settings/notifications'
     | '/apps'
     | '/chats'
@@ -669,6 +681,7 @@ export interface FileRouteTypes {
     | '/_authenticated/errors/$error'
     | '/_authenticated/settings/appearance'
     | '/_authenticated/settings/billing'
+    | '/_authenticated/settings/fiscal'
     | '/_authenticated/settings/notifications'
     | '/_authenticated/apps/'
     | '/_authenticated/chats/'
@@ -718,7 +731,7 @@ declare module '@tanstack/react-router' {
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -872,14 +885,14 @@ declare module '@tanstack/react-router' {
     '/_authenticated/users/': {
       id: '/_authenticated/users/'
       path: '/users'
-      fullPath: '/users'
+      fullPath: '/users/'
       preLoaderRoute: typeof AuthenticatedUsersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/tasks/': {
       id: '/_authenticated/tasks/'
       path: '/tasks'
-      fullPath: '/tasks'
+      fullPath: '/tasks/'
       preLoaderRoute: typeof AuthenticatedTasksIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
@@ -893,35 +906,35 @@ declare module '@tanstack/react-router' {
     '/_authenticated/pricing/': {
       id: '/_authenticated/pricing/'
       path: '/pricing'
-      fullPath: '/pricing'
+      fullPath: '/pricing/'
       preLoaderRoute: typeof AuthenticatedPricingIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/organizations/': {
       id: '/_authenticated/organizations/'
       path: '/organizations'
-      fullPath: '/organizations'
+      fullPath: '/organizations/'
       preLoaderRoute: typeof AuthenticatedOrganizationsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/help-center/': {
       id: '/_authenticated/help-center/'
       path: '/help-center'
-      fullPath: '/help-center'
+      fullPath: '/help-center/'
       preLoaderRoute: typeof AuthenticatedHelpCenterIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/chats/': {
       id: '/_authenticated/chats/'
       path: '/chats'
-      fullPath: '/chats'
+      fullPath: '/chats/'
       preLoaderRoute: typeof AuthenticatedChatsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/apps/': {
       id: '/_authenticated/apps/'
       path: '/apps'
-      fullPath: '/apps'
+      fullPath: '/apps/'
       preLoaderRoute: typeof AuthenticatedAppsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
@@ -930,6 +943,13 @@ declare module '@tanstack/react-router' {
       path: '/notifications'
       fullPath: '/settings/notifications'
       preLoaderRoute: typeof AuthenticatedSettingsNotificationsRouteImport
+      parentRoute: typeof AuthenticatedSettingsRouteRoute
+    }
+    '/_authenticated/settings/fiscal': {
+      id: '/_authenticated/settings/fiscal'
+      path: '/fiscal'
+      fullPath: '/settings/fiscal'
+      preLoaderRoute: typeof AuthenticatedSettingsFiscalRouteImport
       parentRoute: typeof AuthenticatedSettingsRouteRoute
     }
     '/_authenticated/settings/billing': {
@@ -1026,7 +1046,7 @@ declare module '@tanstack/react-router' {
     '/_authenticated/organizations/$organizationId/': {
       id: '/_authenticated/organizations/$organizationId/'
       path: '/organizations/$organizationId'
-      fullPath: '/organizations/$organizationId'
+      fullPath: '/organizations/$organizationId/'
       preLoaderRoute: typeof AuthenticatedOrganizationsOrganizationIdIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
@@ -1099,6 +1119,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedSettingsRouteRouteChildren {
   AuthenticatedSettingsAppearanceRoute: typeof AuthenticatedSettingsAppearanceRoute
   AuthenticatedSettingsBillingRoute: typeof AuthenticatedSettingsBillingRoute
+  AuthenticatedSettingsFiscalRoute: typeof AuthenticatedSettingsFiscalRoute
   AuthenticatedSettingsNotificationsRoute: typeof AuthenticatedSettingsNotificationsRoute
   AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
 }
@@ -1107,6 +1128,7 @@ const AuthenticatedSettingsRouteRouteChildren: AuthenticatedSettingsRouteRouteCh
   {
     AuthenticatedSettingsAppearanceRoute: AuthenticatedSettingsAppearanceRoute,
     AuthenticatedSettingsBillingRoute: AuthenticatedSettingsBillingRoute,
+    AuthenticatedSettingsFiscalRoute: AuthenticatedSettingsFiscalRoute,
     AuthenticatedSettingsNotificationsRoute:
       AuthenticatedSettingsNotificationsRoute,
     AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,

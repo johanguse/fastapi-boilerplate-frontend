@@ -412,6 +412,15 @@
     "placeholders": {
       "companyName": "Your name or company name",
       "country": "Select your country"
+    },
+    "validation": {
+      "companyNameRequired": "Company name or full name is required",
+      "taxIdRequired": "Tax ID / VAT number is required",
+      "countryRequired": "Country is required",
+      "addressStreetRequired": "Street address is required",
+      "addressCityRequired": "City is required",
+      "addressStateRequired": "State or province is required",
+      "addressPostalCodeRequired": "Postcode / ZIP is required"
     }
   },
   "dataTable": {
@@ -531,6 +540,179 @@
   },
   "accessibility": {
     "skipToMain": "Skip to Main"
+  },
+  "fiscal": {
+    "modal": {
+      "title": "Tax Information Required",
+      "description": "Please provide your tax information to generate tax invoices (NFS-e)",
+      "saveAndContinue": "Save & Continue"
+    },
+    "fields": {
+      "country": "Country",
+      "countryPlaceholder": "Select your country",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Your full legal name",
+      "cpfCnpjHint": "CPF for individuals, CNPJ for companies",
+      "cep": "Postcode",
+      "state": "County",
+      "statePlaceholder": "Select county",
+      "city": "City",
+      "cityPlaceholder": "Select city",
+      "street": "Street",
+      "streetPlaceholder": "Street name",
+      "number": "Number",
+      "complement": "Additional Info",
+      "complementPlaceholder": "Flat, Suite, etc.",
+      "neighborhood": "Area",
+      "neighborhoodPlaceholder": "Area name",
+      "taxId": "Tax ID (NIF)",
+      "taxIdPlaceholder": "Your tax identification number",
+      "taxIdHint": "Optional – leave blank if you do not have a tax ID"
+    },
+    "validation": {
+      "countryRequired": "Country is required",
+      "nameRequired": "Full name is required",
+      "cpfCnpjRequired": "CPF/CNPJ is required",
+      "addressRequired": "Address is required",
+      "cityRequired": "City is required",
+      "stateRequired": "County is required",
+      "cepRequired": "Postcode is required",
+      "invalidDocument": "Invalid CPF or CNPJ",
+      "documentTypeRequired": "Please select a document type",
+      "documentNumberRequired": "Document number is required",
+      "invalidCpf": "Invalid CPF",
+      "invalidCnpj": "Invalid CNPJ",
+      "legalNameRequired": "Legal name is required",
+      "emailRequired": "Email is required",
+      "invalidEmail": "Invalid email address",
+      "postalCodeRequired": "Postcode is required"
+    },
+    "form": {
+      "save": "Save",
+      "update": "Update",
+      "saving": "Saving...",
+      "saveSuccess": "Tax information saved successfully",
+      "saveError": "Failed to save tax information. Please try again."
+    },
+    "billing": {
+      "title": "Tax Invoices (NFS-e)",
+      "description": "Your Brazilian tax invoices for all transactions",
+      "loading": "Loading invoices...",
+      "loadError": "Failed to load invoices. Please try again.",
+      "empty": "No invoices yet. Invoices will appear here after your first purchase.",
+      "downloadError": "Failed to download file",
+      "downloadPdf": "Download PDF",
+      "downloadXml": "Download XML",
+      "colNumber": "Number",
+      "colDate": "Date",
+      "colDescription": "Description",
+      "colValue": "Value",
+      "colStatus": "Status",
+      "colActions": "Actions"
+    },
+    "status": {
+      "processing": "Processing",
+      "authorized": "Authorised",
+      "error": "Error",
+      "cancelled": "Cancelled"
+    },
+    "settings": {
+      "title": "Tax Information",
+      "description": "Manage your tax information and view NFS-e invoices.",
+      "taxInfoSection": "Tax Details",
+      "taxInfoDesc": "Your tax information is used to generate NFS-e invoices for purchases.",
+      "invoiceSection": "Invoice History",
+      "invoiceDesc": "Download and review your past NFS-e tax invoices.",
+      "loading": "Loading tax information...",
+      "loadError": "Failed to load tax information. Please try again."
+    }
+  },
+  "fiscal": {
+    "modal": {
+      "title": "Tax Information Required",
+      "description": "Please provide your tax information before proceeding with the purchase. This is required for invoice generation.",
+      "close": "Close"
+    },
+    "fields": {
+      "documentType": "Document Type",
+      "documentTypePlaceholder": "Select document type",
+      "cpf": "CPF (Individual)",
+      "cnpj": "CNPJ (Company)",
+      "documentNumber": "Document Number",
+      "documentNumberPlaceholder": "Enter your document number",
+      "legalName": "Legal Name",
+      "legalNamePlaceholder": "Enter your legal name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "phone": "Phone",
+      "phonePlaceholder": "+55 (11) 99999-9999",
+      "postalCode": "Postal Code (CEP)",
+      "postalCodePlaceholder": "00000-000",
+      "state": "State",
+      "statePlaceholder": "Select a state",
+      "city": "City",
+      "cityPlaceholder": "Select a city",
+      "neighborhood": "Neighbourhood",
+      "neighborhoodPlaceholder": "Enter your neighbourhood",
+      "street": "Street",
+      "streetPlaceholder": "Enter your street address",
+      "number": "Number",
+      "numberPlaceholder": "123",
+      "complement": "Complement",
+      "complementPlaceholder": "Flat, Suite, etc."
+    },
+    "validation": {
+      "documentTypeRequired": "Please select a document type",
+      "documentNumberRequired": "Document number is required",
+      "invalidCpf": "Invalid CPF",
+      "invalidCnpj": "Invalid CNPJ",
+      "legalNameRequired": "Legal name is required",
+      "emailRequired": "Email is required",
+      "invalidEmail": "Invalid email address",
+      "postalCodeRequired": "Postal code is required"
+    },
+    "form": {
+      "save": "Save Tax Information",
+      "saving": "Saving...",
+      "successCreate": "Tax information saved successfully!",
+      "successUpdate": "Tax information updated successfully!",
+      "error": "Failed to save tax information. Please try again."
+    },
+    "billing": {
+      "title": "Invoice History",
+      "description": "View and download your NFS-e invoices.",
+      "empty": "No invoices found",
+      "emptyDescription": "Your NFS-e invoices will appear here after purchases.",
+      "columns": {
+        "number": "Number",
+        "date": "Date",
+        "description": "Description",
+        "amount": "Amount (BRL)",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "downloadPdf": "Download PDF",
+      "downloadXml": "Download XML",
+      "loading": "Loading invoices...",
+      "error": "Failed to load invoices",
+      "retry": "Retry"
+    },
+    "status": {
+      "authorized": "Authorised",
+      "pending": "Pending",
+      "cancelled": "Cancelled",
+      "error": "Error"
+    },
+    "settings": {
+      "title": "Tax Information",
+      "description": "Manage your tax information for invoice generation (NFS-e).",
+      "billingTitle": "Invoice History",
+      "billingDescription": "View and download your NFS-e invoices.",
+      "noInfo": "No tax information registered yet.",
+      "noInfoDescription": "Add your tax information to enable automatic invoice generation for your purchases.",
+      "editInfo": "Edit Tax Information",
+      "addInfo": "Add Tax Information"
+    }
   },
   "users": {
     "title": "User List",
@@ -840,6 +1022,7 @@
     "nav": {
       "profile": "Profile",
       "billing": "Billing",
+      "fiscal": "Tax Info",
       "account": "Account",
       "appearance": "Appearance",
       "notifications": "Notifications",
