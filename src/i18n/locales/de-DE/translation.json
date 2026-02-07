@@ -412,6 +412,15 @@
     "placeholders": {
       "companyName": "Ihr Name oder Firmenname",
       "country": "Wählen Sie Ihr Land"
+    },
+    "validation": {
+      "companyNameRequired": "Firmenname oder vollständiger Name ist erforderlich",
+      "taxIdRequired": "Steuernummer / Umsatzsteuer-ID ist erforderlich",
+      "countryRequired": "Land ist erforderlich",
+      "addressStreetRequired": "Straßenadresse ist erforderlich",
+      "addressCityRequired": "Stadt ist erforderlich",
+      "addressStateRequired": "Bundesland oder Provinz ist erforderlich",
+      "addressPostalCodeRequired": "Postleitzahl ist erforderlich"
     }
   },
   "dataTable": {
@@ -531,6 +540,101 @@
   },
   "accessibility": {
     "skipToMain": "Zum Hauptinhalt springen"
+  },
+  "fiscal": {
+    "modal": {
+      "title": "Steuerinformationen erforderlich",
+      "description": "Bitte geben Sie Ihre Steuerinformationen an, bevor Sie mit dem Kauf fortfahren. Dies ist für die Rechnungserstellung erforderlich.",
+      "close": "Schließen"
+    },
+    "fields": {
+      "documentType": "Dokumententyp",
+      "documentTypePlaceholder": "Dokumententyp auswählen",
+      "cpf": "CPF (Privatperson)",
+      "cnpj": "CNPJ (Unternehmen)",
+      "documentNumber": "Dokumentennummer",
+      "documentNumberPlaceholder": "Dokumentennummer eingeben",
+      "legalName": "Firmenname",
+      "legalNamePlaceholder": "Firmenname eingeben",
+      "email": "E-Mail",
+      "emailPlaceholder": "E-Mail-Adresse eingeben",
+      "phone": "Telefon",
+      "phonePlaceholder": "+55 (11) 99999-9999",
+      "postalCode": "Postleitzahl (CEP)",
+      "postalCodePlaceholder": "00000-000",
+      "state": "Bundesland",
+      "statePlaceholder": "Bundesland auswählen",
+      "city": "Stadt",
+      "cityPlaceholder": "Stadt auswählen",
+      "neighborhood": "Stadtteil",
+      "neighborhoodPlaceholder": "Stadtteil eingeben",
+      "street": "Straße",
+      "streetPlaceholder": "Straßenadresse eingeben",
+      "number": "Nummer",
+      "numberPlaceholder": "123",
+      "complement": "Zusatz",
+      "complementPlaceholder": "Wohnung, Suite, etc."
+    },
+    "validation": {
+      "countryRequired": "Land ist erforderlich",
+      "nameRequired": "Vollständiger Name ist erforderlich",
+      "cpfCnpjRequired": "CPF/CNPJ ist erforderlich",
+      "addressRequired": "Adresse ist erforderlich",
+      "cityRequired": "Stadt ist erforderlich",
+      "stateRequired": "Bundesland ist erforderlich",
+      "cepRequired": "Postleitzahl ist erforderlich",
+      "invalidDocument": "Ungültige CPF oder CNPJ",
+      "documentTypeRequired": "Bitte wählen Sie einen Dokumententyp",
+      "documentNumberRequired": "Dokumentennummer ist erforderlich",
+      "invalidCpf": "Ungültige CPF",
+      "invalidCnpj": "Ungültige CNPJ",
+      "legalNameRequired": "Firmenname ist erforderlich",
+      "emailRequired": "E-Mail ist erforderlich",
+      "invalidEmail": "Ungültige E-Mail-Adresse",
+      "postalCodeRequired": "Postleitzahl ist erforderlich"
+    },
+    "form": {
+      "save": "Steuerinformationen speichern",
+      "saving": "Wird gespeichert...",
+      "successCreate": "Steuerinformationen erfolgreich gespeichert!",
+      "successUpdate": "Steuerinformationen erfolgreich aktualisiert!",
+      "error": "Fehler beim Speichern der Steuerinformationen. Bitte versuchen Sie es erneut."
+    },
+    "billing": {
+      "title": "Rechnungsverlauf",
+      "description": "Ihre NFS-e-Rechnungen anzeigen und herunterladen.",
+      "empty": "Keine Rechnungen gefunden",
+      "emptyDescription": "Ihre NFS-e-Rechnungen werden hier nach Käufen angezeigt.",
+      "columns": {
+        "number": "Nummer",
+        "date": "Datum",
+        "description": "Beschreibung",
+        "amount": "Betrag (BRL)",
+        "status": "Status",
+        "actions": "Aktionen"
+      },
+      "downloadPdf": "PDF herunterladen",
+      "downloadXml": "XML herunterladen",
+      "loading": "Rechnungen werden geladen...",
+      "error": "Fehler beim Laden der Rechnungen",
+      "retry": "Erneut versuchen"
+    },
+    "status": {
+      "authorized": "Autorisiert",
+      "pending": "Ausstehend",
+      "cancelled": "Storniert",
+      "error": "Fehler"
+    },
+    "settings": {
+      "title": "Steuerinformationen",
+      "description": "Verwalten Sie Ihre Steuerinformationen für die Rechnungserstellung (NFS-e).",
+      "billingTitle": "Rechnungsverlauf",
+      "billingDescription": "Ihre NFS-e-Rechnungen anzeigen und herunterladen.",
+      "noInfo": "Noch keine Steuerinformationen hinterlegt.",
+      "noInfoDescription": "Fügen Sie Ihre Steuerinformationen hinzu, um die automatische Rechnungserstellung für Ihre Käufe zu aktivieren.",
+      "editInfo": "Steuerinformationen bearbeiten",
+      "addInfo": "Steuerinformationen hinzufügen"
+    }
   },
   "users": {
     "title": "Benutzerliste",
@@ -840,6 +944,7 @@
     "nav": {
       "profile": "Profil",
       "billing": "Abrechnung",
+      "fiscal": "Steuerinfo",
       "account": "Konto",
       "appearance": "Erscheinungsbild",
       "notifications": "Benachrichtigungen",

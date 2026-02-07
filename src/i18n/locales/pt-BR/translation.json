@@ -412,6 +412,15 @@
     "placeholders": {
       "companyName": "Seu nome ou razão social",
       "country": "Selecione seu país"
+    },
+    "validation": {
+      "companyNameRequired": "Nome da empresa ou nome completo é obrigatório",
+      "taxIdRequired": "CPF / CNPJ ou número de identificação fiscal é obrigatório",
+      "countryRequired": "País é obrigatório",
+      "addressStreetRequired": "Endereço é obrigatório",
+      "addressCityRequired": "Cidade é obrigatória",
+      "addressStateRequired": "Estado é obrigatório",
+      "addressPostalCodeRequired": "CEP é obrigatório"
     }
   },
   "dataTable": {
@@ -531,6 +540,101 @@
   },
   "accessibility": {
     "skipToMain": "Pular para o conteúdo principal"
+  },
+  "fiscal": {
+    "modal": {
+      "title": "Informações Fiscais Necessárias",
+      "description": "Por favor, forneça suas informações fiscais antes de prosseguir com a compra. Isso é necessário para a emissão de notas fiscais.",
+      "close": "Fechar"
+    },
+    "fields": {
+      "documentType": "Tipo de Documento",
+      "documentTypePlaceholder": "Selecione o tipo de documento",
+      "cpf": "CPF (Pessoa Física)",
+      "cnpj": "CNPJ (Pessoa Jurídica)",
+      "documentNumber": "Número do Documento",
+      "documentNumberPlaceholder": "Digite o número do documento",
+      "legalName": "Razão Social / Nome",
+      "legalNamePlaceholder": "Digite a razão social ou nome completo",
+      "email": "E-mail",
+      "emailPlaceholder": "Digite seu e-mail",
+      "phone": "Telefone",
+      "phonePlaceholder": "+55 (11) 99999-9999",
+      "postalCode": "CEP",
+      "postalCodePlaceholder": "00000-000",
+      "state": "Estado",
+      "statePlaceholder": "Selecione um estado",
+      "city": "Cidade",
+      "cityPlaceholder": "Selecione uma cidade",
+      "neighborhood": "Bairro",
+      "neighborhoodPlaceholder": "Digite seu bairro",
+      "street": "Rua",
+      "streetPlaceholder": "Digite seu endereço",
+      "number": "Número",
+      "numberPlaceholder": "123",
+      "complement": "Complemento",
+      "complementPlaceholder": "Apto, Sala, etc."
+    },
+    "validation": {
+      "countryRequired": "País é obrigatório",
+      "nameRequired": "Nome completo é obrigatório",
+      "cpfCnpjRequired": "CPF/CNPJ é obrigatório",
+      "addressRequired": "Endereço é obrigatório",
+      "cityRequired": "Cidade é obrigatória",
+      "stateRequired": "Estado é obrigatório",
+      "cepRequired": "CEP é obrigatório",
+      "invalidDocument": "CPF ou CNPJ inválido",
+      "documentTypeRequired": "Selecione um tipo de documento",
+      "documentNumberRequired": "Número do documento é obrigatório",
+      "invalidCpf": "CPF inválido",
+      "invalidCnpj": "CNPJ inválido",
+      "legalNameRequired": "Razão social é obrigatória",
+      "emailRequired": "E-mail é obrigatório",
+      "invalidEmail": "Endereço de e-mail inválido",
+      "postalCodeRequired": "CEP é obrigatório"
+    },
+    "form": {
+      "save": "Salvar Informações Fiscais",
+      "saving": "Salvando...",
+      "successCreate": "Informações fiscais salvas com sucesso!",
+      "successUpdate": "Informações fiscais atualizadas com sucesso!",
+      "error": "Falha ao salvar informações fiscais. Tente novamente."
+    },
+    "billing": {
+      "title": "Histórico de Notas Fiscais",
+      "description": "Visualize e baixe suas notas fiscais (NFS-e).",
+      "empty": "Nenhuma nota fiscal encontrada",
+      "emptyDescription": "Suas notas fiscais (NFS-e) aparecerão aqui após as compras.",
+      "columns": {
+        "number": "Número",
+        "date": "Data",
+        "description": "Descrição",
+        "amount": "Valor (BRL)",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "downloadPdf": "Baixar PDF",
+      "downloadXml": "Baixar XML",
+      "loading": "Carregando notas fiscais...",
+      "error": "Falha ao carregar notas fiscais",
+      "retry": "Tentar novamente"
+    },
+    "status": {
+      "authorized": "Autorizada",
+      "pending": "Pendente",
+      "cancelled": "Cancelada",
+      "error": "Erro"
+    },
+    "settings": {
+      "title": "Informações Fiscais",
+      "description": "Gerencie suas informações fiscais para emissão de notas fiscais (NFS-e).",
+      "billingTitle": "Histórico de Notas Fiscais",
+      "billingDescription": "Visualize e baixe suas notas fiscais (NFS-e).",
+      "noInfo": "Nenhuma informação fiscal cadastrada ainda.",
+      "noInfoDescription": "Adicione suas informações fiscais para habilitar a emissão automática de notas fiscais em suas compras.",
+      "editInfo": "Editar Informações Fiscais",
+      "addInfo": "Adicionar Informações Fiscais"
+    }
   },
   "users": {
     "title": "Lista de Usuários",
@@ -840,6 +944,7 @@
     "nav": {
       "profile": "Perfil",
       "billing": "Faturamento",
+      "fiscal": "Info Fiscal",
       "account": "Conta",
       "appearance": "Aparência",
       "notifications": "Notificações",

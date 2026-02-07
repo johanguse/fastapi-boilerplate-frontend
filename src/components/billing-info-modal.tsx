@@ -41,10 +41,10 @@ import {
 import { authApi } from '@/lib/api'
 import { COUNTRIES } from '@/lib/countries'
 import {
-  type BillingInfoFormData,
+  type BillingInfo,
   billingInfoDefaultValues,
-  billingInfoSchema,
-} from '@/types/billing.schema'
+  createBillingInfoSchema,
+} from '@/shared/entities/billing'
 
 interface BillingInfoModalProps {
   isOpen: boolean
@@ -62,6 +62,9 @@ export default function BillingInfoModal({
   const { t } = useTranslation()
   const queryClient = useQueryClient()
 
+  // Create schema with i18n support
+  const billingInfoSchema = createBillingInfoSchema(t)
+
   // Fetch user profile data with React Query
   const { data: user, isLoading: isLoadingUser } = useQuery({
     queryKey: ['user', 'me'],
@@ -70,7 +73,7 @@ export default function BillingInfoModal({
   })
 
   // Transform API data (snake_case) to form values (camelCase)
-  const formValues: BillingInfoFormData = user
+  const formValues: BillingInfo = user
     ? {
         companyName: user.company_name || user.name || '',
         taxId: user.tax_id || '',
@@ -82,7 +85,7 @@ export default function BillingInfoModal({
       }
     : billingInfoDefaultValues
 
-  const form = useForm<BillingInfoFormData>({
+  const form = useForm<BillingInfo>({
     resolver: zodResolver(billingInfoSchema),
     values: formValues,
     mode: 'onChange',
@@ -92,7 +95,7 @@ export default function BillingInfoModal({
 
   // Mutation for updating profile
   const updateProfileMutation = useMutation({
-    mutationFn: (data: BillingInfoFormData) =>
+    mutationFn: (data: BillingInfo) =>
       authApi.updateProfile({
         company_name: data.companyName.trim(),
         tax_id: data.taxId.trim(),
@@ -119,7 +122,7 @@ export default function BillingInfoModal({
     },
   })
 
-  const onSubmit = (data: BillingInfoFormData) => {
+  const onSubmit = (data: BillingInfo) => {
     updateProfileMutation.mutate(data)
   }
 

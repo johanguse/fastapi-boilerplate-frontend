@@ -414,6 +414,15 @@
     "placeholders": {
       "companyName": "Your name or company name",
       "country": "Select your country"
+    },
+    "validation": {
+      "companyNameRequired": "Company name or full name is required",
+      "taxIdRequired": "Tax ID / VAT number is required",
+      "countryRequired": "Country is required",
+      "addressStreetRequired": "Street address is required",
+      "addressCityRequired": "City is required",
+      "addressStateRequired": "State or province is required",
+      "addressPostalCodeRequired": "Postcode / ZIP is required"
     }
   },
   "dataTable": {
@@ -533,6 +542,92 @@
   },
   "accessibility": {
     "skipToMain": "Skip to Main"
+  },
+  "fiscal": {
+    "modal": {
+      "title": "Tax Information Required",
+      "description": "Please provide your tax information to generate tax invoices (NFS-e)",
+      "saveAndContinue": "Save & Continue"
+    },
+    "fields": {
+      "country": "Country",
+      "countryPlaceholder": "Select your country",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Your full legal name",
+      "cpfCnpjHint": "CPF for individuals, CNPJ for companies",
+      "cep": "CEP",
+      "state": "State",
+      "statePlaceholder": "Select state",
+      "city": "City",
+      "cityPlaceholder": "Select city",
+      "street": "Street",
+      "streetPlaceholder": "Street name",
+      "number": "Number",
+      "complement": "Complement",
+      "complementPlaceholder": "Apt, Suite, etc.",
+      "neighborhood": "Neighborhood",
+      "neighborhoodPlaceholder": "Bairro",
+      "taxId": "Tax ID (NIF)",
+      "taxIdPlaceholder": "Your tax identification number",
+      "taxIdHint": "Optional – leave blank if you do not have a tax ID"
+    },
+    "validation": {
+      "countryRequired": "Country is required",
+      "nameRequired": "Full name is required",
+      "cpfCnpjRequired": "CPF/CNPJ is required",
+      "addressRequired": "Address is required",
+      "cityRequired": "City is required",
+      "stateRequired": "State is required",
+      "cepRequired": "CEP is required",
+      "invalidDocument": "Invalid CPF or CNPJ",
+      "documentTypeRequired": "Please select a document type",
+      "documentNumberRequired": "Document number is required",
+      "invalidCpf": "Invalid CPF",
+      "invalidCnpj": "Invalid CNPJ",
+      "legalNameRequired": "Legal name is required",
+      "emailRequired": "Email is required",
+      "invalidEmail": "Invalid email address",
+      "postalCodeRequired": "Postal code is required"
+    },
+    "form": {
+      "save": "Save",
+      "update": "Update",
+      "saving": "Saving...",
+      "saveSuccess": "Tax information saved successfully",
+      "saveError": "Failed to save tax information. Please try again."
+    },
+    "billing": {
+      "title": "Tax Invoices (NFS-e)",
+      "description": "Your Brazilian tax invoices for all transactions",
+      "loading": "Loading invoices...",
+      "loadError": "Failed to load invoices. Please try again.",
+      "empty": "No invoices yet. Invoices will appear here after your first purchase.",
+      "downloadError": "Failed to download file",
+      "downloadPdf": "Download PDF",
+      "downloadXml": "Download XML",
+      "colNumber": "Number",
+      "colDate": "Date",
+      "colDescription": "Description",
+      "colValue": "Value",
+      "colStatus": "Status",
+      "colActions": "Actions"
+    },
+    "status": {
+      "processing": "Processing",
+      "authorized": "Authorized",
+      "error": "Error",
+      "cancelled": "Cancelled"
+    },
+    "settings": {
+      "title": "Tax Information",
+      "description": "Manage your tax information and view NFS-e invoices.",
+      "taxInfoSection": "Tax Details",
+      "taxInfoDesc": "Your tax information is used to generate NFS-e invoices for purchases.",
+      "invoiceSection": "Invoice History",
+      "invoiceDesc": "Download and review your past NFS-e tax invoices.",
+      "loading": "Loading tax information...",
+      "loadError": "Failed to load tax information. Please try again."
+    }
   },
   "users": {
     "inviteUser": "Invite User",
@@ -783,6 +878,7 @@
     "nav": {
       "profile": "Profile",
       "billing": "Billing",
+      "fiscal": "Tax Info",
       "account": "Account",
       "appearance": "Appearance",
       "notifications": "Notifications",
