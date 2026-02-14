@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   Building2,
   CheckCircle2,
@@ -11,6 +11,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -29,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { authApi } from '@/lib/api'
 import { COUNTRIES } from '@/lib/countries'
 import {
@@ -36,19 +38,16 @@ import {
   billingInfoDefaultValues,
   createBillingInfoSchema,
 } from '@/shared/entities/billing'
+import { useAuth } from '@/stores/auth-store'
 
 export function BillingForm() {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
+  const { user } = useAuth()
+  const turnstile = useTurnstile()
 
   // Create schema with i18n support
   const billingInfoSchema = createBillingInfoSchema(t)
-
-  // Fetch user profile data
-  const { data: user, isLoading: isLoadingUser } = useQuery({
-    queryKey: ['user', 'me'],
-    queryFn: () => authApi.getCurrentUser(),
-  })
 
   // Transform snake_case from API to camelCase for form
   const formValues: BillingInfo = user
@@ -85,8 +84,9 @@ export function BillingForm() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user', 'me'] })
       toast.success(
-        t('billing.saveSuccess', 'Billing information saved successfully!')
+        t('settings.billing.success', 'Billing information updated.')
       )
+      turnstile.reset()
     },
     onError: () => {
       toast.error(
@@ -102,7 +102,7 @@ export function BillingForm() {
     updateProfileMutation.mutate(data)
   }
 
-  if (isLoadingUser) {
+  if (!user) {
     return (
       <div className='flex h-40 items-center justify-center'>
         <Loader2 className='h-8 w-8 animate-spin text-muted-foreground' />
@@ -276,9 +276,20 @@ export function BillingForm() {
         />
 
         <div className='pt-4'>
+          <TurnstileWidget
+            ref={turnstile.ref}
+            onSuccess={turnstile.onSuccess}
+            onExpire={turnstile.onExpire}
+            onError={turnstile.onError}
+            className='mt-2'
+          />
           <Button
             type='submit'
-            disabled={updateProfileMutation.isPending || !isValid}
+            disabled={
+              updateProfileMutation.isPending ||
+              !isValid ||
+              !turnstile.isVerified
+            }
             className='gap-2'
           >
             {updateProfileMutation.isPending ? (

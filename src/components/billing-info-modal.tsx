@@ -12,6 +12,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -38,6 +39,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { authApi } from '@/lib/api'
 import { COUNTRIES } from '@/lib/countries'
 import {
@@ -60,6 +62,7 @@ export default function BillingInfoModal({
   actionType = 'subscription',
 }: BillingInfoModalProps) {
   const { t } = useTranslation()
+  const turnstile = useTurnstile()
   const queryClient = useQueryClient()
 
   // Create schema with i18n support
@@ -91,8 +94,6 @@ export default function BillingInfoModal({
     mode: 'onChange',
   })
 
-  const { isValid } = form.formState
-
   // Mutation for updating profile
   const updateProfileMutation = useMutation({
     mutationFn: (data: BillingInfo) =>
@@ -107,9 +108,8 @@ export default function BillingInfoModal({
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user', 'me'] })
-      toast.success(
-        t('billing.saveSuccess', 'Billing information saved successfully!')
-      )
+      toast.success(t('billing.modal.success', 'Billing information updated.'))
+      turnstile.reset()
       onSuccess()
     },
     onError: () => {
@@ -336,10 +336,19 @@ export default function BillingInfoModal({
                 >
                   {t('common.cancel', 'Cancel')}
                 </Button>
+                <TurnstileWidget
+                  ref={turnstile.ref}
+                  onSuccess={turnstile.onSuccess}
+                  onExpire={turnstile.onExpire}
+                  onError={turnstile.onError}
+                  className='mt-2'
+                />
                 <Button
                   type='submit'
-                  disabled={updateProfileMutation.isPending || !isValid}
-                  className='gap-2'
+                  disabled={
+                    updateProfileMutation.isPending || !turnstile.isVerified
+                  }
+                  className='w-full'
                 >
                   {updateProfileMutation.isPending ? (
                     <>

@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -30,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { api } from '@/lib/api'
 import type {
   BrazilianCity,
@@ -64,6 +66,7 @@ export function TaxInfoForm({
 }: TaxInfoFormProps) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
+  const turnstile = useTurnstile()
 
   // Local state for cascading selects
   const [selectedState, setSelectedState] = useState(initialData?.state ?? '')
@@ -163,6 +166,7 @@ export function TaxInfoForm({
       toast.success(
         t('fiscal.form.saveSuccess', 'Tax information saved successfully')
       )
+      turnstile.reset()
       onSuccess?.()
     },
     onError: () => {
@@ -530,9 +534,16 @@ export function TaxInfoForm({
 
         {/* Submit */}
         <div className='pt-4'>
+          <TurnstileWidget
+            ref={turnstile.ref}
+            onSuccess={turnstile.onSuccess}
+            onExpire={turnstile.onExpire}
+            onError={turnstile.onError}
+            className='mt-4'
+          />
           <Button
             type='submit'
-            disabled={saveMutation.isPending}
+            disabled={saveMutation.isPending || !turnstile.isVerified}
             className='gap-2'
           >
             {saveMutation.isPending ? (

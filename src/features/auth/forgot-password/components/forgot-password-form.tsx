@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -17,6 +18,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { formatTime, useTimer } from '@/hooks/use-timer'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { cn } from '@/lib/utils'
 
 export function ForgotPasswordForm({
@@ -26,6 +28,7 @@ export function ForgotPasswordForm({
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
+  const turnstile = useTurnstile()
   const [canSubmit, setCanSubmit] = useState(true)
 
   // Rate limiting timer (5 minutes = 300 seconds)
@@ -102,6 +105,7 @@ export function ForgotPasswordForm({
         timer.reset()
         timer.start()
         form.reset()
+        turnstile.reset()
 
         // Redirect to check-email page with better UI
         navigate({
@@ -152,6 +156,14 @@ export function ForgotPasswordForm({
           )}
         />
 
+        <TurnstileWidget
+          ref={turnstile.ref}
+          onSuccess={turnstile.onSuccess}
+          onExpire={turnstile.onExpire}
+          onError={turnstile.onError}
+          className='mt-2'
+        />
+
         {!canSubmit && (
           <div className='text-center text-muted-foreground text-sm'>
             <p>
@@ -164,7 +176,10 @@ export function ForgotPasswordForm({
           </div>
         )}
 
-        <Button className='mt-2' disabled={isLoading || !canSubmit}>
+        <Button
+          className='mt-2'
+          disabled={isLoading || !canSubmit || !turnstile.isVerified}
+        >
           {t('auth.forgotPasswordContinue', 'Continue')}
           {isLoading ? <Loader2 className='animate-spin' /> : <ArrowRight />}
         </Button>
