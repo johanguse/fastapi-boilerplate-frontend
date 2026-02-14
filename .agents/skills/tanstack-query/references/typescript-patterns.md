@@ -137,7 +137,7 @@ if (error) {
 ## 6. Zod Schema Validation
 
 ```tsx
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const TodoSchema = z.object({
   id: z.number(),

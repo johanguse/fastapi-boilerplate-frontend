@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { z } from 'zod/v4'
 import { SocialLogin } from '@/components/auth/social-login'
 import { PasswordInput } from '@/components/password-input'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -25,6 +26,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { getLoginSchema, type LoginFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/stores/auth-store'
@@ -58,6 +60,7 @@ export function UserAuthForm({
   const { login, checkSession } = useAuth()
   const [useOtp, setUseOtp] = useState(false)
   const [otpStep, setOtpStep] = useState<'email' | 'code'>('email')
+  const turnstile = useTurnstile()
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(getLoginSchema()),
@@ -105,6 +108,7 @@ export function UserAuthForm({
     },
     onSuccess: () => {
       setOtpStep('code')
+      turnstile.reset()
       toast.success(t('auth.otp.sent', 'Verification code sent to your email'))
     },
     onError: (error: Error) => {
@@ -135,6 +139,7 @@ export function UserAuthForm({
       return response.json()
     },
     onSuccess: async (data) => {
+      turnstile.reset()
       if (data.user) {
         // Refresh session to update auth state
         await checkSession()
@@ -164,6 +169,7 @@ export function UserAuthForm({
   const loginMutation = useMutation({
     mutationFn: ({ email, password }: LoginFormData) => login(email, password),
     onSuccess: async (user) => {
+      turnstile.reset()
       // Clear any form errors on success
       form.clearErrors()
 
@@ -252,6 +258,7 @@ export function UserAuthForm({
       form.clearErrors('root')
     }
     loginMutation.mutate(data)
+    turnstile.reset()
   }
 
   function onSendOtp() {
@@ -312,9 +319,20 @@ export function UserAuthForm({
                   </FormItem>
                 )}
               />
+              <TurnstileWidget
+                ref={turnstile.ref}
+                onSuccess={turnstile.onSuccess}
+                onExpire={turnstile.onExpire}
+                onError={turnstile.onError}
+                className='mt-2'
+              />
               <Button
                 className='mt-2'
-                disabled={sendOtpMutation.isPending || !otpEmail}
+                disabled={
+                  sendOtpMutation.isPending ||
+                  !otpEmail ||
+                  !turnstile.isVerified
+                }
               >
                 {sendOtpMutation.isPending ? (
                   <Loader2 className='animate-spin' />
@@ -362,9 +380,20 @@ export function UserAuthForm({
                   </FormItem>
                 )}
               />
+              <TurnstileWidget
+                ref={turnstile.ref}
+                onSuccess={turnstile.onSuccess}
+                onExpire={turnstile.onExpire}
+                onError={turnstile.onError}
+                className='mt-2'
+              />
               <Button
                 className='mt-2'
-                disabled={verifyOtpMutation.isPending || otpCode?.length !== 6}
+                disabled={
+                  verifyOtpMutation.isPending ||
+                  otpCode?.length !== 6 ||
+                  !turnstile.isVerified
+                }
               >
                 {verifyOtpMutation.isPending ? (
                   <Loader2 className='animate-spin' />
@@ -470,14 +499,24 @@ export function UserAuthForm({
               <FormMessage />
               <Link
                 to='/forgot-password'
-                className='absolute end-0 -top-0.5 font-medium text-muted-foreground text-sm hover:opacity-75'
+                className='-top-0.5 absolute end-0 font-medium text-muted-foreground text-sm hover:opacity-75'
               >
                 {t('auth.forgotPassword', 'Forgot password?')}
               </Link>
             </FormItem>
           )}
         />
-        <Button className='mt-2' disabled={loginMutation.isPending}>
+        <TurnstileWidget
+          ref={turnstile.ref}
+          onSuccess={turnstile.onSuccess}
+          onExpire={turnstile.onExpire}
+          onError={turnstile.onError}
+          className='mt-2'
+        />
+        <Button
+          className='mt-2'
+          disabled={loginMutation.isPending || !turnstile.isVerified}
+        >
           {loginMutation.isPending ? (
             <Loader2 className='animate-spin' />
           ) : (
