@@ -74,7 +74,6 @@ export interface Session {
     id: string
     userId: string
     expiresAt: Date
-    token: string
     ipAddress?: string | null
     userAgent?: string | null
     activeOrganizationId?: string | null
