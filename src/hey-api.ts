@@ -39,7 +39,8 @@ export const createClientConfig: CreateClientConfig = (config: any) => ({
   // Auth function to get the current token
   auth: () => {
     const session = useAuthStore.getState().session
-    return session?.session?.token || ''
+    // biome-ignore lint/suspicious/noExplicitAny: Legacy token support
+    return (session?.session as any)?.token || ''
   },
 })
 
