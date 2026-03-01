@@ -71,7 +71,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
   const sendOtpMutation = useMutation({
     mutationFn: async (email: string) => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/send`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/otp/send`,
         {
           method: 'POST',
           headers: {
@@ -110,7 +110,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
       name?: string
     }) => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/verify`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/otp/verify`,
         {
           method: 'POST',
           headers: {

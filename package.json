@@ -16,7 +16,7 @@
     "preview": "vite preview",
     "gen:routes": "tsr generate",
     "gen:api": "openapi-ts",
-    "gen:api:bun": "OPENAPI_FILE=http://localhost:3000/openapi.json openapi-ts",
+    "gen:api:bun": "OPENAPI_FILE=${VITE_API_URL_BUN}/openapi.json openapi-ts",
     "gen:api:watch": "openapi-ts --watch",
     "gen:api:check": "openapi-ts && git diff --exit-code src/client/",
     "knip": "knip",

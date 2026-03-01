@@ -79,7 +79,7 @@ export function ForgotPasswordForm({
     try {
       // Call the backend forgot password endpoint directly
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/forgot-password`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/forgot-password`,
         {
           method: 'POST',
           headers: {

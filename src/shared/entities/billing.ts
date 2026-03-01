@@ -21,19 +21,31 @@ export function createBillingInfoSchema(
       .string()
       .min(
         2,
-        t('billing.validation.companyNameRequired', 'Company name or full name is required')
+        t(
+          'billing.validation.companyNameRequired',
+          'Company name or full name is required'
+        )
       )
       .max(255),
     taxId: z
       .string()
-      .min(3, t('billing.validation.taxIdRequired', 'Tax ID / VAT number is required'))
+      .min(
+        3,
+        t('billing.validation.taxIdRequired', 'Tax ID / VAT number is required')
+      )
       .max(100),
     country: z
       .string()
       .min(2, t('billing.validation.countryRequired', 'Country is required')),
     addressStreet: z
       .string()
-      .min(5, t('billing.validation.addressStreetRequired', 'Street address is required'))
+      .min(
+        5,
+        t(
+          'billing.validation.addressStreetRequired',
+          'Street address is required'
+        )
+      )
       .max(255),
     addressCity: z
       .string()
@@ -41,11 +53,23 @@ export function createBillingInfoSchema(
       .max(100),
     addressState: z
       .string()
-      .min(2, t('billing.validation.addressStateRequired', 'State or province is required'))
+      .min(
+        2,
+        t(
+          'billing.validation.addressStateRequired',
+          'State or province is required'
+        )
+      )
       .max(100),
     addressPostalCode: z
       .string()
-      .min(3, t('billing.validation.addressPostalCodeRequired', 'Postcode / ZIP is required'))
+      .min(
+        3,
+        t(
+          'billing.validation.addressPostalCodeRequired',
+          'Postcode / ZIP is required'
+        )
+      )
       .max(20),
   })
 }

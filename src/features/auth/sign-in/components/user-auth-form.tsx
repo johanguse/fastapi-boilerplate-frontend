@@ -86,7 +86,7 @@ export function UserAuthForm({
   const sendOtpMutation = useMutation({
     mutationFn: async (email: string) => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/send`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/otp/send`,
         {
           method: 'POST',
           headers: {
@@ -120,7 +120,7 @@ export function UserAuthForm({
   const verifyOtpMutation = useMutation({
     mutationFn: async ({ email, code }: { email: string; code: string }) => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/verify`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/otp/verify`,
         {
           method: 'POST',
           headers: {
