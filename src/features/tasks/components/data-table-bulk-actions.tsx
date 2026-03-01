@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/tooltip'
 import { sleep } from '@/lib/utils'
 import { priorities, statuses } from '../data/data'
-import { type Task } from '../data/schema'
+import { type Task } from '../entities/task'
 import { TasksMultiDeleteDialog } from './tasks-multi-delete-dialog'
 
 type DataTableBulkActionsProps<TData> = {

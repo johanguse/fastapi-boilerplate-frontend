@@ -1,8 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -23,6 +26,7 @@ import {
 import { ImageUpload } from '@/components/ui/image-upload'
 import { Input } from '@/components/ui/input'
 import { useOrganizations } from '@/hooks/use-organizations'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { api } from '@/lib/api'
 
 const formSchema = z.object({
@@ -45,6 +49,7 @@ export function CreateOrganizationDialog({
   const [logo, setLogo] = useState<File | null>(null)
   const { t } = useTranslation()
   const { createOrganizationAsync, isCreating } = useOrganizations()
+  const turnstile = useTurnstile()
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -76,7 +81,7 @@ export function CreateOrganizationDialog({
       if (logo && newOrg?.id) {
         const formData = new FormData()
         formData.append('file', logo)
-        await api.post(`/organizations/${newOrg.id}/upload-logo`, formData, {
+        await api.post(`/organizations/${newOrg.id}/logo`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -86,6 +91,10 @@ export function CreateOrganizationDialog({
       form.reset()
       setLogo(null)
       onOpenChange(false)
+      toast.success(
+        t('organizations.createSuccess', 'Organization created successfully!')
+      )
+      turnstile.reset()
     } catch (error: unknown) {
       const axiosError = error as {
         response?: { data?: { detail?: { message?: string } } }
@@ -101,6 +110,7 @@ export function CreateOrganizationDialog({
       form.reset()
       setError(null)
       setLogo(null)
+      turnstile.reset()
     }
     onOpenChange(newOpen)
   }
@@ -205,7 +215,15 @@ export function CreateOrganizationDialog({
               )}
             />
 
-            <DialogFooter>
+            <TurnstileWidget
+              ref={turnstile.ref}
+              onSuccess={turnstile.onSuccess}
+              onExpire={turnstile.onExpire}
+              onError={turnstile.onError}
+              className='mt-2'
+            />
+
+            <DialogFooter className='gap-y-2'>
               <Button
                 type='button'
                 variant='outline'
@@ -214,13 +232,18 @@ export function CreateOrganizationDialog({
               >
                 {t('common.cancel', 'Cancel')}
               </Button>
-              <Button type='submit' disabled={isCreating}>
-                {isCreating
-                  ? t('organizations.creating', 'Creating...')
-                  : t(
-                      'organizations.createOrganization',
-                      'Create Organization'
-                    )}
+              <Button
+                type='submit'
+                disabled={isCreating || !turnstile.isVerified}
+              >
+                {isCreating ? (
+                  <>
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                    {t('organizations.creating', 'Creating...')}
+                  </>
+                ) : (
+                  t('organizations.createOrganization', 'Create Organization')
+                )}
               </Button>
             </DialogFooter>
           </form>

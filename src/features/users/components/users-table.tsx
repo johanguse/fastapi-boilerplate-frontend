@@ -24,7 +24,7 @@ import {
 import { type NavigateFn, useTableUrlState } from '@/hooks/use-table-url-state'
 import { cn } from '@/lib/utils'
 import { roles } from '../data/data'
-import { type User } from '../data/schema'
+import { type User } from '../entities/user'
 import { DataTableBulkActions } from './data-table-bulk-actions'
 import { usersColumns as columns } from './users-columns'
 

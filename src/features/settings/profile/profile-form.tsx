@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -25,6 +26,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { api } from '@/lib/api'
 import { useAuth } from '@/stores/auth-store'
 
@@ -103,6 +105,7 @@ type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>
 export function ProfileForm() {
   const { t } = useTranslation()
   const { user, checkSession } = useAuth()
+  const turnstile = useTurnstile()
   const [isLoading, setIsLoading] = useState(false)
   const [isFetching, setIsFetching] = useState(true)
   const [profileImage, setProfileImage] = useState<File | null>(null)
@@ -175,8 +178,9 @@ export function ProfileForm() {
       await checkSession()
 
       toast.success(
-        t('settings.profile.updateSuccess', 'Profile updated successfully!')
+        t('settings.profile.profileUpdated', 'Profile updated successfully.')
       )
+      turnstile.reset()
     } catch (_error) {
       toast.error(
         t(
@@ -422,7 +426,14 @@ export function ProfileForm() {
           )}
         />
 
-        <Button type='submit' disabled={isLoading}>
+        <TurnstileWidget
+          ref={turnstile.ref}
+          onSuccess={turnstile.onSuccess}
+          onExpire={turnstile.onExpire}
+          onError={turnstile.onError}
+          className='mt-2'
+        />
+        <Button type='submit' disabled={isLoading || !turnstile.isVerified}>
           {isLoading ? (
             <>
               <Loader2 className='mr-2 h-4 w-4 animate-spin' />

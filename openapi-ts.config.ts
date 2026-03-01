@@ -4,7 +4,7 @@ export default defineConfig({
   // Use local file if available, otherwise fetch from running backend
   // To generate: 1) Start backend, 2) Run: curl http://localhost:8000/openapi.json > openapi.json
   // Or just run: bun run gen:api (with backend running)
-  input: process.env.OPENAPI_FILE || 'http://localhost:8000/openapi.json',
+  input: process.env.OPENAPI_FILE || `${process.env.VITE_API_URL}/openapi.json`,
   output: {
     path: 'src/client',
     format: 'biome',

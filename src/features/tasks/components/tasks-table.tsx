@@ -24,7 +24,7 @@ import {
 } from '@/components/ui/table'
 import { useTableUrlState } from '@/hooks/use-table-url-state'
 import { priorities, statuses } from '../data/data'
-import { type Task } from '../data/schema'
+import { type Task } from '../entities/task'
 import { DataTableBulkActions } from './data-table-bulk-actions'
 import { tasksColumns as columns } from './tasks-columns'
 

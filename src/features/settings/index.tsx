@@ -1,5 +1,5 @@
 import { Outlet } from '@tanstack/react-router'
-import { Bell, CreditCard, Palette, UserCog } from 'lucide-react'
+import { Bell, CreditCard, Palette, ReceiptText, UserCog } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
 import { Header } from '@/components/layout/header'
@@ -33,6 +33,11 @@ export function Settings() {
       title: t('settings.nav.billing', 'Billing'),
       href: '/settings/billing',
       icon: <CreditCard size={18} />,
+    },
+    {
+      title: t('settings.nav.fiscal', 'Tax Info'),
+      href: '/settings/fiscal',
+      icon: <ReceiptText size={18} />,
     },
   ]
 
