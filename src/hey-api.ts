@@ -21,9 +21,8 @@ const BACKEND_TYPE = import.meta.env.VITE_BACKEND_TYPE || 'fastapi'
 
 // Default URLs for each backend
 const API_URLS = {
-  fastapi:
-    import.meta.env.VITE_API_URL_FASTAPI || 'http://localhost:8000/api/v1',
-  bun: import.meta.env.VITE_API_URL_BUN || 'http://localhost:3000/api/v1',
+  fastapi: import.meta.env.VITE_API_URL_FASTAPI,
+  bun: import.meta.env.VITE_API_URL_BUN,
 }
 
 // Use explicit VITE_API_URL if set, otherwise select based on backend type
@@ -39,7 +38,8 @@ export const createClientConfig: CreateClientConfig = (config: any) => ({
   // Auth function to get the current token
   auth: () => {
     const session = useAuthStore.getState().session
-    return session?.session?.token || ''
+    // biome-ignore lint/suspicious/noExplicitAny: Legacy token support
+    return (session?.session as any)?.token || ''
   },
 })
 

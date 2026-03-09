@@ -33,7 +33,7 @@ export function EmailVerificationBanner({
       }
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/resend-verification`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/resend-verification`,
         {
           method: 'POST',
           headers: {

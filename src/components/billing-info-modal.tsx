@@ -12,6 +12,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -38,13 +39,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { authApi } from '@/lib/api'
 import { COUNTRIES } from '@/lib/countries'
 import {
-  type BillingInfoFormData,
+  type BillingInfo,
   billingInfoDefaultValues,
-  billingInfoSchema,
-} from '@/types/billing.schema'
+  createBillingInfoSchema,
+} from '@/shared/entities/billing'
 
 interface BillingInfoModalProps {
   isOpen: boolean
@@ -60,7 +62,11 @@ export default function BillingInfoModal({
   actionType = 'subscription',
 }: BillingInfoModalProps) {
   const { t } = useTranslation()
+  const turnstile = useTurnstile()
   const queryClient = useQueryClient()
+
+  // Create schema with i18n support
+  const billingInfoSchema = createBillingInfoSchema(t)
 
   // Fetch user profile data with React Query
   const { data: user, isLoading: isLoadingUser } = useQuery({
@@ -70,7 +76,7 @@ export default function BillingInfoModal({
   })
 
   // Transform API data (snake_case) to form values (camelCase)
-  const formValues: BillingInfoFormData = user
+  const formValues: BillingInfo = user
     ? {
         companyName: user.company_name || user.name || '',
         taxId: user.tax_id || '',
@@ -82,17 +88,15 @@ export default function BillingInfoModal({
       }
     : billingInfoDefaultValues
 
-  const form = useForm<BillingInfoFormData>({
+  const form = useForm<BillingInfo>({
     resolver: zodResolver(billingInfoSchema),
     values: formValues,
     mode: 'onChange',
   })
 
-  const { isValid } = form.formState
-
   // Mutation for updating profile
   const updateProfileMutation = useMutation({
-    mutationFn: (data: BillingInfoFormData) =>
+    mutationFn: (data: BillingInfo) =>
       authApi.updateProfile({
         company_name: data.companyName.trim(),
         tax_id: data.taxId.trim(),
@@ -104,9 +108,8 @@ export default function BillingInfoModal({
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user', 'me'] })
-      toast.success(
-        t('billing.saveSuccess', 'Billing information saved successfully!')
-      )
+      toast.success(t('billing.modal.success', 'Billing information updated.'))
+      turnstile.reset()
       onSuccess()
     },
     onError: () => {
@@ -119,7 +122,7 @@ export default function BillingInfoModal({
     },
   })
 
-  const onSubmit = (data: BillingInfoFormData) => {
+  const onSubmit = (data: BillingInfo) => {
     updateProfileMutation.mutate(data)
   }
 
@@ -333,10 +336,19 @@ export default function BillingInfoModal({
                 >
                   {t('common.cancel', 'Cancel')}
                 </Button>
+                <TurnstileWidget
+                  ref={turnstile.ref}
+                  onSuccess={turnstile.onSuccess}
+                  onExpire={turnstile.onExpire}
+                  onError={turnstile.onError}
+                  className='mt-2'
+                />
                 <Button
                   type='submit'
-                  disabled={updateProfileMutation.isPending || !isValid}
-                  className='gap-2'
+                  disabled={
+                    updateProfileMutation.isPending || !turnstile.isVerified
+                  }
+                  className='w-full'
                 >
                   {updateProfileMutation.isPending ? (
                     <>

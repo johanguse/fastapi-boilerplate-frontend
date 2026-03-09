@@ -1,10 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -24,6 +26,7 @@ import {
 } from '@/components/ui/form'
 import { ImageUpload } from '@/components/ui/image-upload'
 import { Input } from '@/components/ui/input'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { api, type Organization, organizationApi } from '@/lib/api'
 
 const getFormSchema = (t: (key: string, defaultValue: string) => string) =>
@@ -52,6 +55,7 @@ export function EditOrganizationDialog({
   const [logo, setLogo] = useState<File | null>(null)
   const { t } = useTranslation()
   const queryClient = useQueryClient()
+  const turnstile = useTurnstile()
 
   const form = useForm<FormData>({
     resolver: zodResolver(getFormSchema(t)),
@@ -77,10 +81,11 @@ export function EditOrganizationDialog({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['organizations'] })
       toast.success(
-        t('organizations.updateSuccess', 'Organization updated successfully')
+        t('organizations.updateSuccess', 'Organization updated successfully!')
       )
       setError(null)
       onOpenChange(false)
+      turnstile.reset()
     },
     onError: (error: unknown) => {
       const axiosError = error as {
@@ -241,7 +246,15 @@ export function EditOrganizationDialog({
               )}
             />
 
-            <DialogFooter>
+            <TurnstileWidget
+              ref={turnstile.ref}
+              onSuccess={turnstile.onSuccess}
+              onExpire={turnstile.onExpire}
+              onError={turnstile.onError}
+              className='mt-2'
+            />
+
+            <DialogFooter className='gap-y-2'>
               <Button
                 type='button'
                 variant='outline'
@@ -250,13 +263,18 @@ export function EditOrganizationDialog({
               >
                 {t('common.cancel', 'Cancel')}
               </Button>
-              <Button type='submit' disabled={updateMutation.isPending}>
-                {updateMutation.isPending
-                  ? t('organizations.updating', 'Updating...')
-                  : t(
-                      'organizations.updateOrganization',
-                      'Update Organization'
-                    )}
+              <Button
+                type='submit'
+                disabled={updateMutation.isPending || !turnstile.isVerified}
+              >
+                {updateMutation.isPending ? (
+                  <>
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                    {t('organizations.updating', 'Updating...')}
+                  </>
+                ) : (
+                  t('organizations.updateOrganization', 'Update Organization')
+                )}
               </Button>
             </DialogFooter>
           </form>

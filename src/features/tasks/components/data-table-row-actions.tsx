@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { labels } from '../data/data'
-import { taskSchema } from '../data/schema'
+import { TaskSchema } from '../entities/task'
 import { useTasks } from './tasks-provider'
 
 type DataTableRowActionsProps<TData> = {
@@ -28,7 +28,7 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const { t } = useTranslation()
-  const task = taskSchema.parse(row.original)
+  const task = TaskSchema.parse(row.original)
 
   const { setOpen, setCurrentRow } = useTasks()
 
