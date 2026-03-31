@@ -31,7 +31,7 @@ const createFormSchema = (t: (key: string, defaultValue: string) => string) =>
   z.object({
     email: z
       .string()
-      .email(t('auth.email.invalid', 'Please enter a valid email address')),
+      .email(t('auth.emailInvalid', 'Please enter a valid email address')),
     otp: z
       .string()
       .min(

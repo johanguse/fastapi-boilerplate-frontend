@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Building2, Loader2 } from 'lucide-react'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type UseFormReturn, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
@@ -32,6 +32,175 @@ const organizationSchema = z.object({
 })
 
 type OrganizationFormData = z.infer<typeof organizationSchema>
+
+interface OrganizationFormFieldsProps {
+  form: UseFormReturn<OrganizationFormData>
+  setOrgLogo: (file: File | null) => void
+  isLoading: boolean
+  turnstile: ReturnType<typeof useTurnstile>
+}
+
+function OrganizationFormFields({
+  form,
+  setOrgLogo,
+  isLoading,
+  turnstile,
+}: OrganizationFormFieldsProps) {
+  const { t } = useTranslation()
+  return (
+    <>
+      {/* Organization Logo Upload */}
+      <div className='flex justify-center'>
+        <ImageUpload
+          type='logo'
+          value={null}
+          onChange={setOrgLogo}
+          size='xl'
+          name={form.watch('name')}
+          className='flex flex-col items-center justify-center'
+        />
+      </div>
+
+      <FormField
+        control={form.control}
+        name='name'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              {t('onboarding.organization.name', 'Organization Name')} *
+            </FormLabel>
+            <FormControl>
+              <Input
+                placeholder={t(
+                  'onboarding.organization.namePlaceholder',
+                  'Enter your organization name'
+                )}
+                {...field}
+                onChange={(e) => {
+                  field.onChange(e)
+                  const autoSlug = e.target.value
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/(^-|-$)/g, '')
+                  form.setValue('slug', autoSlug, { shouldValidate: true })
+                }}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name='slug'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              {t('onboarding.organization.slug', 'URL Slug')}
+            </FormLabel>
+            <FormControl>
+              <Input
+                placeholder={t(
+                  'onboarding.organization.slugPlaceholder',
+                  'my-organization'
+                )}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+            <p className='text-muted-foreground text-sm'>
+              {t(
+                'onboarding.organization.slugHelp',
+                'Optional: A unique identifier for your organization URL'
+              )}
+            </p>
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name='description'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              {t('onboarding.organization.description', 'Description')}
+            </FormLabel>
+            <FormControl>
+              <Textarea
+                placeholder={t(
+                  'onboarding.organization.descriptionPlaceholder',
+                  'Tell us about your organization...'
+                )}
+                className='min-h-[100px]'
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <div className='rounded-lg bg-muted/50 p-4'>
+        <h4 className='mb-2 font-medium'>
+          {t('onboarding.organization.benefits.title', "What you'll get:")}
+        </h4>
+        <ul className='space-y-1 text-muted-foreground text-sm'>
+          <li>
+            •{' '}
+            {t(
+              'onboarding.organization.benefits.team',
+              'Team collaboration tools'
+            )}
+          </li>
+          <li>
+            •{' '}
+            {t(
+              'onboarding.organization.benefits.projects',
+              'Project management'
+            )}
+          </li>
+          <li>
+            •{' '}
+            {t(
+              'onboarding.organization.benefits.analytics',
+              'Analytics and insights'
+            )}
+          </li>
+          <li>
+            •{' '}
+            {t('onboarding.organization.benefits.support', 'Priority support')}
+          </li>
+        </ul>
+      </div>
+
+      <TurnstileWidget
+        ref={turnstile.ref}
+        onSuccess={turnstile.onSuccess}
+        onExpire={turnstile.onExpire}
+        onError={turnstile.onError}
+        className='mt-2'
+      />
+
+      <div className='flex justify-end pt-4'>
+        <Button type='submit' disabled={isLoading || !turnstile.isVerified}>
+          {isLoading ? (
+            <>
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              {t('onboarding.organization.creating', 'Creating...')}
+            </>
+          ) : (
+            <>
+              <Building2 className='mr-2 h-4 w-4' />
+              {t('onboarding.organization.continue', 'Create Organization')}
+            </>
+          )}
+        </Button>
+      </div>
+    </>
+  )
+}
 
 interface OnboardingOrganizationProps {
   onComplete: () => void
@@ -227,161 +396,12 @@ export function OnboardingOrganization({
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-          {/* Organization Logo Upload */}
-          <div className='flex justify-center'>
-            <ImageUpload
-              type='logo'
-              value={null}
-              onChange={setOrgLogo}
-              size='xl'
-              name={form.watch('name')}
-              className='flex flex-col items-center justify-center'
-            />
-          </div>
-
-          <FormField
-            control={form.control}
-            name='name'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('onboarding.organization.name', 'Organization Name')} *
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t(
-                      'onboarding.organization.namePlaceholder',
-                      'Enter your organization name'
-                    )}
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(e)
-                      // Auto-generate slug as user types
-                      const autoSlug = e.target.value
-                        .toLowerCase()
-                        .replace(/[^a-z0-9]+/g, '-')
-                        .replace(/(^-|-$)/g, '')
-                      form.setValue('slug', autoSlug, {
-                        shouldValidate: true,
-                      })
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+          <OrganizationFormFields
+            form={form}
+            setOrgLogo={setOrgLogo}
+            isLoading={isLoading}
+            turnstile={turnstile}
           />
-
-          <FormField
-            control={form.control}
-            name='slug'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('onboarding.organization.slug', 'URL Slug')}
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t(
-                      'onboarding.organization.slugPlaceholder',
-                      'my-organization'
-                    )}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-                <p className='text-muted-foreground text-sm'>
-                  {t(
-                    'onboarding.organization.slugHelp',
-                    'Optional: A unique identifier for your organization URL'
-                  )}
-                </p>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='description'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('onboarding.organization.description', 'Description')}
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder={t(
-                      'onboarding.organization.descriptionPlaceholder',
-                      'Tell us about your organization...'
-                    )}
-                    className='min-h-[100px]'
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className='rounded-lg bg-muted/50 p-4'>
-            <h4 className='mb-2 font-medium'>
-              {t('onboarding.organization.benefits.title', "What you'll get:")}
-            </h4>
-            <ul className='space-y-1 text-muted-foreground text-sm'>
-              <li>
-                •{' '}
-                {t(
-                  'onboarding.organization.benefits.team',
-                  'Team collaboration tools'
-                )}
-              </li>
-              <li>
-                •{' '}
-                {t(
-                  'onboarding.organization.benefits.projects',
-                  'Project management'
-                )}
-              </li>
-              <li>
-                •{' '}
-                {t(
-                  'onboarding.organization.benefits.analytics',
-                  'Analytics and insights'
-                )}
-              </li>
-              <li>
-                •{' '}
-                {t(
-                  'onboarding.organization.benefits.support',
-                  'Priority support'
-                )}
-              </li>
-            </ul>
-          </div>
-
-          <TurnstileWidget
-            ref={turnstile.ref}
-            onSuccess={turnstile.onSuccess}
-            onExpire={turnstile.onExpire}
-            onError={turnstile.onError}
-            className='mt-2'
-          />
-
-          <div className='flex justify-end pt-4'>
-            <Button type='submit' disabled={isLoading || !turnstile.isVerified}>
-              {isLoading ? (
-                <>
-                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                  {t('onboarding.organization.creating', 'Creating...')}
-                </>
-              ) : (
-                <>
-                  <Building2 className='mr-2 h-4 w-4' />
-                  {t('onboarding.organization.continue', 'Create Organization')}
-                </>
-              )}
-            </Button>
-          </div>
         </form>
       </Form>
     </div>

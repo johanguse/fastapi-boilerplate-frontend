@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { CheckCircle2, Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type UseFormReturn, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { TurnstileWidget } from '@/components/turnstile-widget'
@@ -53,6 +53,250 @@ interface TaxInfoFormProps {
   onSuccess?: () => void
   /** Optional label for the submit button. Falls back to Save / Update. */
   submitLabel?: string
+}
+
+// ---------------------------------------------------------------------------
+// Brazilian address fields sub-component
+// ---------------------------------------------------------------------------
+
+interface BrazilianFieldsProps {
+  form: UseFormReturn<TaxInfoFormData>
+  states: BrazilianState[] | undefined
+  cities: BrazilianCity[] | undefined
+  selectedState: string
+  onValidateDocument: (value: string) => Promise<void>
+}
+
+function BrazilianFields({
+  form,
+  states,
+  cities,
+  selectedState,
+  onValidateDocument,
+}: BrazilianFieldsProps) {
+  const { t } = useTranslation()
+  return (
+    <>
+      {/* CPF / CNPJ */}
+      <FormField
+        control={form.control}
+        name='cpfCnpj'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              CPF / CNPJ <span className='text-destructive'>*</span>
+            </FormLabel>
+            <FormControl>
+              <Input
+                placeholder='000.000.000-00 or 00.000.000/0000-00'
+                maxLength={18}
+                {...field}
+                onBlur={(e) => {
+                  field.onBlur()
+                  onValidateDocument(e.target.value)
+                }}
+              />
+            </FormControl>
+            <FormDescription>
+              {t(
+                'fiscal.fields.cpfCnpjHint',
+                'CPF for individuals, CNPJ for companies'
+              )}
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      {/* CEP + State */}
+      <div className='grid grid-cols-2 gap-3'>
+        <FormField
+          control={form.control}
+          name='postalCode'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t('fiscal.fields.cep', 'CEP')}{' '}
+                <span className='text-destructive'>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder='00000-000' maxLength={9} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='state'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t('fiscal.fields.state', 'State')}{' '}
+                <span className='text-destructive'>*</span>
+              </FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder={t(
+                        'fiscal.fields.statePlaceholder',
+                        'Select state'
+                      )}
+                    />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {states?.map((s) => (
+                    <SelectItem key={s.code} value={s.code}>
+                      {s.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      {/* City */}
+      <FormField
+        control={form.control}
+        name='cityCode'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              {t('fiscal.fields.city', 'City')}{' '}
+              <span className='text-destructive'>*</span>
+            </FormLabel>
+            <Select
+              onValueChange={(value) => {
+                field.onChange(value)
+                const city = cities?.find((c) => c.id.toString() === value)
+                if (city) form.setValue('city', city.name)
+              }}
+              value={field.value}
+              disabled={!selectedState}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder={t(
+                      'fiscal.fields.cityPlaceholder',
+                      'Select city'
+                    )}
+                  />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {cities?.map((c) => (
+                  <SelectItem key={c.id} value={c.id.toString()}>
+                    {c.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      {/* Street + Number */}
+      <div className='grid grid-cols-3 gap-3'>
+        <div className='col-span-2'>
+          <FormField
+            control={form.control}
+            name='address'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t('fiscal.fields.street', 'Street')}{' '}
+                  <span className='text-destructive'>*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder={t(
+                      'fiscal.fields.streetPlaceholder',
+                      'Street name'
+                    )}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name='number'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t('fiscal.fields.number', 'Number')}{' '}
+                <span className='text-destructive'>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder='123' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      {/* Complement + Neighborhood */}
+      <div className='grid grid-cols-2 gap-3'>
+        <FormField
+          control={form.control}
+          name='complement'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t('fiscal.fields.complement', 'Complement')}
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t(
+                    'fiscal.fields.complementPlaceholder',
+                    'Apt, Suite, etc.'
+                  )}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='neighborhood'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t('fiscal.fields.neighborhood', 'Neighborhood')}{' '}
+                <span className='text-destructive'>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t(
+                    'fiscal.fields.neighborhoodPlaceholder',
+                    'Bairro'
+                  )}
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+    </>
+  )
 }
 
 // ---------------------------------------------------------------------------
@@ -279,228 +523,13 @@ export function TaxInfoForm({
 
         {/* ---- Brazilian-specific fields ---- */}
         {isBrazilian ? (
-          <>
-            {/* CPF / CNPJ */}
-            <FormField
-              control={form.control}
-              name='cpfCnpj'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    CPF / CNPJ <span className='text-destructive'>*</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder='000.000.000-00 or 00.000.000/0000-00'
-                      maxLength={18}
-                      {...field}
-                      onBlur={(e) => {
-                        field.onBlur()
-                        handleValidateDocument(e.target.value)
-                      }}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    {t(
-                      'fiscal.fields.cpfCnpjHint',
-                      'CPF for individuals, CNPJ for companies'
-                    )}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* CEP + State */}
-            <div className='grid grid-cols-2 gap-3'>
-              <FormField
-                control={form.control}
-                name='postalCode'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t('fiscal.fields.cep', 'CEP')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder='00000-000' maxLength={9} {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name='state'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t('fiscal.fields.state', 'State')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue
-                            placeholder={t(
-                              'fiscal.fields.statePlaceholder',
-                              'Select state'
-                            )}
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {states?.map((s) => (
-                          <SelectItem key={s.code} value={s.code}>
-                            {s.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            {/* City */}
-            <FormField
-              control={form.control}
-              name='cityCode'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t('fiscal.fields.city', 'City')}{' '}
-                    <span className='text-destructive'>*</span>
-                  </FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value)
-                      const city = cities?.find(
-                        (c) => c.id.toString() === value
-                      )
-                      if (city) form.setValue('city', city.name)
-                    }}
-                    value={field.value}
-                    disabled={!selectedState}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder={t(
-                            'fiscal.fields.cityPlaceholder',
-                            'Select city'
-                          )}
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {cities?.map((c) => (
-                        <SelectItem key={c.id} value={c.id.toString()}>
-                          {c.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Street + Number */}
-            <div className='grid grid-cols-3 gap-3'>
-              <div className='col-span-2'>
-                <FormField
-                  control={form.control}
-                  name='address'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {t('fiscal.fields.street', 'Street')}{' '}
-                        <span className='text-destructive'>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder={t(
-                            'fiscal.fields.streetPlaceholder',
-                            'Street name'
-                          )}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <FormField
-                control={form.control}
-                name='number'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t('fiscal.fields.number', 'Number')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder='123' {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            {/* Complement + Neighborhood */}
-            <div className='grid grid-cols-2 gap-3'>
-              <FormField
-                control={form.control}
-                name='complement'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t('fiscal.fields.complement', 'Complement')}
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder={t(
-                          'fiscal.fields.complementPlaceholder',
-                          'Apt, Suite, etc.'
-                        )}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name='neighborhood'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t('fiscal.fields.neighborhood', 'Neighborhood')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder={t(
-                          'fiscal.fields.neighborhoodPlaceholder',
-                          'Bairro'
-                        )}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </>
+          <BrazilianFields
+            form={form}
+            states={states}
+            cities={cities}
+            selectedState={selectedState}
+            onValidateDocument={handleValidateDocument}
+          />
         ) : (
           /* ---- International fields ---- */
           <FormField

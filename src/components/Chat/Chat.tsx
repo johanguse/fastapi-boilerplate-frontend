@@ -116,13 +116,7 @@ export function Chat() {
       </ScrollArea>
 
       <div className='p-4 border-t bg-background rounded-b-xl'>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            handleSubmit(e)
-          }}
-          className='flex gap-2'
-        >
+        <form onSubmit={handleSubmit} className='flex gap-2'>
           <Input
             value={input}
             onChange={handleInputChange}

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Loader2 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
@@ -59,21 +59,11 @@ export function EditOrganizationDialog({
 
   const form = useForm<FormData>({
     resolver: zodResolver(getFormSchema(t)),
-    defaultValues: {
+    values: {
       name: organization.name,
-      slug: organization.slug,
+      slug: organization.slug ?? '',
     },
   })
-
-  // Update form when organization changes
-  useEffect(() => {
-    if (organization) {
-      form.reset({
-        name: organization.name,
-        slug: organization.slug,
-      })
-    }
-  }, [organization, form])
 
   const updateMutation = useMutation({
     mutationFn: (data: FormData) =>

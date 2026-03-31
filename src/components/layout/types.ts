@@ -49,10 +49,10 @@ type SidebarData = {
 }
 
 export type {
-  SidebarData,
+  NavCollapsible,
   NavGroup,
   NavItem,
-  NavCollapsible,
   NavLink,
   SecondaryNavItem,
+  SidebarData,
 }

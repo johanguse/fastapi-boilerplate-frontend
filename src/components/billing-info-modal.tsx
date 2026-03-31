@@ -9,7 +9,7 @@ import {
   Loader2,
   MapPin,
 } from 'lucide-react'
-import { useForm } from 'react-hook-form'
+import { type UseFormReturn, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { TurnstileWidget } from '@/components/turnstile-widget'
@@ -47,6 +47,226 @@ import {
   billingInfoDefaultValues,
   createBillingInfoSchema,
 } from '@/shared/entities/billing'
+
+interface BillingFormBodyProps {
+  form: UseFormReturn<BillingInfo>
+  isPending: boolean
+  onClose: () => void
+  onSubmit: (data: BillingInfo) => void
+  turnstile: ReturnType<typeof useTurnstile>
+}
+
+function BillingFormBody({
+  form,
+  isPending,
+  onClose,
+  onSubmit,
+  turnstile,
+}: BillingFormBodyProps) {
+  const { t } = useTranslation()
+  return (
+    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 py-4'>
+      <FormField
+        control={form.control}
+        name='companyName'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className='flex items-center gap-2'>
+              <Building2 className='h-4 w-4' />
+              {t('billing.fields.companyName', 'Name / Company Name')}{' '}
+              <span className='text-destructive'>*</span>
+            </FormLabel>
+            <FormControl>
+              <Input
+                placeholder={t(
+                  'billing.placeholders.companyName',
+                  'Your name or company name'
+                )}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name='taxId'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className='flex items-center gap-2'>
+              <Hash className='h-4 w-4' />
+              {t('billing.fields.taxId', 'Tax ID / VAT Number')}{' '}
+              <span className='text-destructive'>*</span>
+            </FormLabel>
+            <FormControl>
+              <Input
+                placeholder='e.g., GB123456789, EU123456789, 12-3456789'
+                {...field}
+              />
+            </FormControl>
+            <FormDescription>
+              {t(
+                'billing.fields.taxIdDescription',
+                'VAT, GST, EIN, CPF, CNPJ or other tax identification number'
+              )}
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name='country'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className='flex items-center gap-2'>
+              <Globe className='h-4 w-4' />
+              {t('billing.fields.country', 'Country')}{' '}
+              <span className='text-destructive'>*</span>
+            </FormLabel>
+            <Select onValueChange={field.onChange} value={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder={t(
+                      'billing.placeholders.country',
+                      'Select your country'
+                    )}
+                  />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {COUNTRIES.map((country) => (
+                  <SelectItem key={country.code} value={country.code}>
+                    {country.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name='addressStreet'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className='flex items-center gap-2'>
+              <MapPin className='h-4 w-4' />
+              {t('billing.fields.addressStreet', 'Street Address')}{' '}
+              <span className='text-destructive'>*</span>
+            </FormLabel>
+            <FormControl>
+              <Input placeholder='123 Main St, Suite 100' {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <div className='grid grid-cols-2 gap-3'>
+        <FormField
+          control={form.control}
+          name='addressCity'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t('billing.fields.addressCity', 'City')}{' '}
+                <span className='text-destructive'>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder='New York' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='addressState'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t('billing.fields.addressState', 'State / Province')}{' '}
+                <span className='text-destructive'>*</span>
+              </FormLabel>
+              <FormControl>
+                <Input placeholder='NY' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <FormField
+        control={form.control}
+        name='addressPostalCode'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              {t('billing.fields.addressPostalCode', 'Postcode / ZIP')}{' '}
+              <span className='text-destructive'>*</span>
+            </FormLabel>
+            <FormControl>
+              <Input placeholder='10001' {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <p className='text-muted-foreground text-xs'>
+        <span className='text-destructive'>*</span>{' '}
+        {t(
+          'billing.requiredFieldsInfo',
+          'All marked fields are required for invoice generation.'
+        )}
+      </p>
+
+      <DialogFooter className='gap-2 sm:gap-0'>
+        <Button
+          type='button'
+          variant='outline'
+          onClick={onClose}
+          disabled={isPending}
+        >
+          {t('common.cancel', 'Cancel')}
+        </Button>
+        <TurnstileWidget
+          ref={turnstile.ref}
+          onSuccess={turnstile.onSuccess}
+          onExpire={turnstile.onExpire}
+          onError={turnstile.onError}
+          className='mt-2'
+        />
+        <Button
+          type='submit'
+          disabled={isPending || !turnstile.isVerified}
+          className='w-full'
+        >
+          {isPending ? (
+            <>
+              <Loader2 className='h-4 w-4 animate-spin' />
+              {t('common.saving', 'Saving...')}
+            </>
+          ) : (
+            <>
+              <CheckCircle2 className='h-4 w-4' />
+              {t('billing.saveAndContinue', 'Save & Continue')}
+            </>
+          )}
+        </Button>
+      </DialogFooter>
+    </form>
+  )
+}
 
 interface BillingInfoModalProps {
   isOpen: boolean
@@ -152,218 +372,13 @@ export default function BillingInfoModal({
           </div>
         ) : (
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className='space-y-4 py-4'
-            >
-              {/* Name / Company Name */}
-              <FormField
-                control={form.control}
-                name='companyName'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='flex items-center gap-2'>
-                      <Building2 className='h-4 w-4' />
-                      {t('billing.fields.companyName', 'Name / Company Name')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder={t(
-                          'billing.placeholders.companyName',
-                          'Your name or company name'
-                        )}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Tax ID */}
-              <FormField
-                control={form.control}
-                name='taxId'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='flex items-center gap-2'>
-                      <Hash className='h-4 w-4' />
-                      {t('billing.fields.taxId', 'Tax ID / VAT Number')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder='e.g., GB123456789, EU123456789, 12-3456789'
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      {t(
-                        'billing.fields.taxIdDescription',
-                        'VAT, GST, EIN, CPF, CNPJ or other tax identification number'
-                      )}
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Country */}
-              <FormField
-                control={form.control}
-                name='country'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='flex items-center gap-2'>
-                      <Globe className='h-4 w-4' />
-                      {t('billing.fields.country', 'Country')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue
-                            placeholder={t(
-                              'billing.placeholders.country',
-                              'Select your country'
-                            )}
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {COUNTRIES.map((country) => (
-                          <SelectItem key={country.code} value={country.code}>
-                            {country.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Street Address */}
-              <FormField
-                control={form.control}
-                name='addressStreet'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className='flex items-center gap-2'>
-                      <MapPin className='h-4 w-4' />
-                      {t('billing.fields.addressStreet', 'Street Address')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder='123 Main St, Suite 100' {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* City and State - Two columns */}
-              <div className='grid grid-cols-2 gap-3'>
-                <FormField
-                  control={form.control}
-                  name='addressCity'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {t('billing.fields.addressCity', 'City')}{' '}
-                        <span className='text-destructive'>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder='New York' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name='addressState'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        {t('billing.fields.addressState', 'State / Province')}{' '}
-                        <span className='text-destructive'>*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input placeholder='NY' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Postcode */}
-              <FormField
-                control={form.control}
-                name='addressPostalCode'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      {t('billing.fields.addressPostalCode', 'Postcode / ZIP')}{' '}
-                      <span className='text-destructive'>*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder='10001' {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Info text */}
-              <p className='text-muted-foreground text-xs'>
-                <span className='text-destructive'>*</span>{' '}
-                {t(
-                  'billing.requiredFieldsInfo',
-                  'All marked fields are required for invoice generation.'
-                )}
-              </p>
-
-              <DialogFooter className='gap-2 sm:gap-0'>
-                <Button
-                  type='button'
-                  variant='outline'
-                  onClick={onClose}
-                  disabled={updateProfileMutation.isPending}
-                >
-                  {t('common.cancel', 'Cancel')}
-                </Button>
-                <TurnstileWidget
-                  ref={turnstile.ref}
-                  onSuccess={turnstile.onSuccess}
-                  onExpire={turnstile.onExpire}
-                  onError={turnstile.onError}
-                  className='mt-2'
-                />
-                <Button
-                  type='submit'
-                  disabled={
-                    updateProfileMutation.isPending || !turnstile.isVerified
-                  }
-                  className='w-full'
-                >
-                  {updateProfileMutation.isPending ? (
-                    <>
-                      <Loader2 className='h-4 w-4 animate-spin' />
-                      {t('common.saving', 'Saving...')}
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle2 className='h-4 w-4' />
-                      {t('billing.saveAndContinue', 'Save & Continue')}
-                    </>
-                  )}
-                </Button>
-              </DialogFooter>
-            </form>
+            <BillingFormBody
+              form={form}
+              isPending={updateProfileMutation.isPending}
+              onClose={onClose}
+              onSubmit={onSubmit}
+              turnstile={turnstile}
+            />
           </Form>
         )}
       </DialogContent>
