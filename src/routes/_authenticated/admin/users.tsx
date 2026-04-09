@@ -16,11 +16,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
+import { PageLayout } from '@/components/layout/page-layout'
 import { Search as SearchBar } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -198,51 +195,36 @@ function AdminUsersPage() {
 
   if (!isAdmin) {
     return (
-      <>
-        <Header fixed>
-          <SearchBar />
-          <div className='ms-auto flex items-center space-x-4'>
-            <ThemeSwitch />
-            <ConfigDrawer />
-            <ProfileDropdown />
+      <PageLayout
+        headerContent={<SearchBar />}
+        headerActions={<ConfigDrawer />}
+      >
+        <div className='flex h-full items-center justify-center'>
+          <div className='text-center'>
+            <Shield className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
+            <h1 className='font-bold text-2xl'>
+              {t('admin.accessDeniedTitle', 'Access Denied')}
+            </h1>
+            <p className='mt-2 text-muted-foreground'>
+              {t(
+                'admin.accessDeniedDescription',
+                "You don't have permission to access this page."
+              )}
+            </p>
           </div>
-        </Header>
-
-        <Main>
-          <div className='flex h-full items-center justify-center'>
-            <div className='text-center'>
-              <Shield className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
-              <h1 className='font-bold text-2xl'>
-                {t('admin.accessDeniedTitle', 'Access Denied')}
-              </h1>
-              <p className='mt-2 text-muted-foreground'>
-                {t(
-                  'admin.accessDeniedDescription',
-                  "You don't have permission to access this page."
-                )}
-              </p>
-            </div>
-          </div>
-        </Main>
-      </>
+        </div>
+      </PageLayout>
     )
   }
 
   const totalPages = usersData ? Math.ceil(usersData.total / pageSize) : 1
 
   return (
-    <>
-      <Header fixed>
-        <SearchBar />
-        <div className='ms-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <ConfigDrawer />
-          <ProfileDropdown />
-        </div>
-      </Header>
-
-      <Main>
-        <div className='space-y-6'>
+    <PageLayout
+      headerContent={<SearchBar />}
+      headerActions={<ConfigDrawer />}
+    >
+      <div className='space-y-6'>
           <div className='flex items-center justify-between'>
             <div>
               <h1 className='flex items-center gap-2 font-bold text-3xl'>
@@ -870,7 +852,6 @@ function AdminUsersPage() {
             </DialogContent>
           </Dialog>
         </div>
-      </Main>
-    </>
+    </PageLayout>
   )
 }

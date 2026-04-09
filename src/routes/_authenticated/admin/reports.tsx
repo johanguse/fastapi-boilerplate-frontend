@@ -10,11 +10,8 @@ import {
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
+import { PageLayout } from '@/components/layout/page-layout'
 import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import {
   Card,
   CardContent,
@@ -56,49 +53,28 @@ function AdminReportsPage() {
 
   if (!isAdmin) {
     return (
-      <>
-        <Header fixed>
-          <Search />
-          <div className='ms-auto flex items-center space-x-4'>
-            <ThemeSwitch />
-            <ConfigDrawer />
-            <ProfileDropdown />
+      <PageLayout headerContent={<Search />} headerActions={<ConfigDrawer />}>
+        <div className='flex h-full items-center justify-center'>
+          <div className='text-center'>
+            <Shield className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
+            <h1 className='font-bold text-2xl'>
+              {t('admin.accessDeniedTitle', 'Access Denied')}
+            </h1>
+            <p className='mt-2 text-muted-foreground'>
+              {t(
+                'admin.accessDeniedDescription',
+                "You don't have permission to access this page."
+              )}
+            </p>
           </div>
-        </Header>
-
-        <Main>
-          <div className='flex h-full items-center justify-center'>
-            <div className='text-center'>
-              <Shield className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
-              <h1 className='font-bold text-2xl'>
-                {t('admin.accessDeniedTitle', 'Access Denied')}
-              </h1>
-              <p className='mt-2 text-muted-foreground'>
-                {t(
-                  'admin.accessDeniedDescription',
-                  "You don't have permission to access this page."
-                )}
-              </p>
-            </div>
-          </div>
-        </Main>
-      </>
+        </div>
+      </PageLayout>
     )
   }
 
   return (
-    <>
-      <Header fixed>
-        <Search />
-        <div className='ms-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <ConfigDrawer />
-          <ProfileDropdown />
-        </div>
-      </Header>
-
-      <Main>
-        <div className='space-y-6'>
+    <PageLayout headerContent={<Search />} headerActions={<ConfigDrawer />}>
+      <div className='space-y-6'>
           {/* Header */}
           <div>
             <h1 className='flex items-center gap-2 font-bold text-3xl'>
@@ -428,7 +404,6 @@ function AdminReportsPage() {
             </CardContent>
           </Card>
         </div>
-      </Main>
-    </>
+    </PageLayout>
   )
 }
