@@ -29,7 +29,6 @@ import { DataTableBulkActions } from './data-table-bulk-actions'
 import { usersColumns as columns } from './users-columns'
 
 declare module '@tanstack/react-table' {
-  // biome-ignore lint/correctness/noUnusedVariables: Type parameters required by TanStack Table
   interface ColumnMeta<TData, TValue> {
     className: string
   }

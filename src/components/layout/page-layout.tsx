@@ -38,7 +38,7 @@ export function PageLayout({
     <>
       <Header fixed={fixed} className={headerClassName}>
         {title && (
-          <h1 className='text-lg font-semibold leading-none tracking-tight'>
+          <h1 className='font-semibold text-lg leading-none tracking-tight'>
             {title}
           </h1>
         )}

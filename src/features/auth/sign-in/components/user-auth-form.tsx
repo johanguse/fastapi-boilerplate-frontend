@@ -442,7 +442,7 @@ function PasswordLoginForm({
               <FormMessage />
               <Link
                 to='/forgot-password'
-                className='-top-0.5 absolute end-0 font-medium text-muted-foreground text-sm hover:opacity-75'
+                className='absolute end-0 -top-0.5 font-medium text-muted-foreground text-sm hover:opacity-75'
               >
                 {t('auth.forgotPassword', 'Forgot password?')}
               </Link>

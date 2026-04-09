@@ -21,14 +21,14 @@ export function Chat() {
     })
 
   return (
-    <Card className='flex flex-col h-[600px] w-full max-w-2xl mx-auto shadow-soft-xl border-border'>
-      <div className='flex items-center justify-between p-4 border-b'>
-        <h3 className='text-lg font-semibold flex items-center gap-2'>
-          <Bot className='w-5 h-5 text-primary' />
+    <Card className='mx-auto flex h-[600px] w-full max-w-2xl flex-col border-border shadow-soft-xl'>
+      <div className='flex items-center justify-between border-b p-4'>
+        <h3 className='flex items-center gap-2 font-semibold text-lg'>
+          <Bot className='h-5 w-5 text-primary' />
           AI Assistant
         </h3>
         <select
-          className='text-sm border rounded p-1 bg-background'
+          className='rounded border bg-background p-1 text-sm'
           value={apiEndpoint}
           onChange={(e) => setApiEndpoint(e.target.value)}
         >
@@ -50,7 +50,7 @@ export function Chat() {
 
       <ScrollArea className='flex-1 p-4'>
         {messages.length === 0 ? (
-          <div className='h-full flex items-center justify-center text-muted-foreground'>
+          <div className='flex h-full items-center justify-center text-muted-foreground'>
             <p>Send a message to start the conversation.</p>
           </div>
         ) : (
@@ -63,16 +63,16 @@ export function Chat() {
                 }`}
               >
                 {m.role !== 'user' && (
-                  <div className='w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0'>
-                    <Bot className='w-5 h-5 text-primary' />
+                  <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10'>
+                    <Bot className='h-5 w-5 text-primary' />
                   </div>
                 )}
 
                 <div
-                  className={`px-4 py-3 rounded-2xl max-w-[80%] ${
+                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     m.role === 'user'
                       ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted/50 text-foreground border border-border/50'
+                      : 'border border-border/50 bg-muted/50 text-foreground'
                   }`}
                 >
                   {m.role === 'user' ? (
@@ -87,27 +87,27 @@ export function Chat() {
                 </div>
 
                 {m.role === 'user' && (
-                  <div className='w-8 h-8 rounded-full bg-secondary flex items-center justify-center shrink-0'>
-                    <User className='w-5 h-5 text-secondary-foreground' />
+                  <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary'>
+                    <User className='h-5 w-5 text-secondary-foreground' />
                   </div>
                 )}
               </div>
             ))}
             {isLoading && (
-              <div className='flex gap-3 justify-start'>
-                <div className='w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0'>
-                  <Bot className='w-5 h-5 text-primary' />
+              <div className='flex justify-start gap-3'>
+                <div className='flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10'>
+                  <Bot className='h-5 w-5 text-primary' />
                 </div>
-                <div className='px-4 py-3 rounded-2xl bg-muted/50 border border-border/50 flex items-center gap-2'>
-                  <Loader2 className='w-4 h-4 animate-spin text-muted-foreground' />
-                  <span className='text-sm text-muted-foreground'>
+                <div className='flex items-center gap-2 rounded-2xl border border-border/50 bg-muted/50 px-4 py-3'>
+                  <Loader2 className='h-4 w-4 animate-spin text-muted-foreground' />
+                  <span className='text-muted-foreground text-sm'>
                     Thinking...
                   </span>
                 </div>
               </div>
             )}
             {error && (
-              <div className='p-3 rounded bg-destructive/10 text-destructive text-sm mt-4'>
+              <div className='mt-4 rounded bg-destructive/10 p-3 text-destructive text-sm'>
                 An error occurred: {error.message}
               </div>
             )}
@@ -115,7 +115,7 @@ export function Chat() {
         )}
       </ScrollArea>
 
-      <div className='p-4 border-t bg-background rounded-b-xl'>
+      <div className='rounded-b-xl border-t bg-background p-4'>
         <form onSubmit={handleSubmit} className='flex gap-2'>
           <Input
             value={input}
@@ -126,9 +126,9 @@ export function Chat() {
           />
           <Button type='submit' disabled={isLoading || !input.trim()}>
             {isLoading ? (
-              <Loader2 className='w-4 h-4 animate-spin' />
+              <Loader2 className='h-4 w-4 animate-spin' />
             ) : (
-              <SendHorizontal className='w-4 h-4' />
+              <SendHorizontal className='h-4 w-4' />
             )}
             <span className='sr-only'>Send</span>
           </Button>
