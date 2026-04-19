@@ -21,6 +21,7 @@ import { useCallback, useRef, useState } from 'react'
  * ```
  */
 export function useTurnstile() {
+  const isEnabled = Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY)
   const [token, setToken] = useState<string | null>(null)
   const ref = useRef<TurnstileInstance>(null)
 
@@ -44,8 +45,11 @@ export function useTurnstile() {
   return {
     /** The current Turnstile verification token (null if not verified) */
     token,
-    /** Whether the Turnstile challenge has been completed */
-    isVerified: !!token,
+    /**
+     * Whether the Turnstile requirement is satisfied.
+     * If Turnstile is not configured (no site key), treat as verified.
+     */
+    isVerified: !isEnabled || !!token,
     /** Ref to attach to the TurnstileWidget for programmatic control */
     ref,
     /** Reset the Turnstile widget (call after form submission) */
