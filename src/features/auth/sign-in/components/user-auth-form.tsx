@@ -44,7 +44,12 @@ const createOtpFormSchema = (
     email: z
       .string()
       .email(t('auth.emailInvalid', 'Please enter a valid email address')),
-    otp: z.string().optional(),
+    otp: z
+      .string()
+      .length(
+        6,
+        t('auth.otp.validation.required', 'Please enter the 6-digit code')
+      ),
   })
 
 // ---------------------------------------------------------------------------
