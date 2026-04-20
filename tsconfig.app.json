@@ -16,6 +16,7 @@
     "jsx": "react-jsx",
 
     /* Alias */
+    "ignoreDeprecations": "6.0", // baseUrl Option 'baseUrl' is deprecated and will stop functioning in TypeScript 7.0.
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
