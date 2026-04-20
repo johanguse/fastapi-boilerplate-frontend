@@ -7,6 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -19,13 +20,14 @@ type ConfirmDialogProps = {
   cancelBtnText?: string
   confirmText?: React.ReactNode
   destructive?: boolean
-  handleConfirm: () => void
+  handleConfirm: () => void | Promise<void>
   isLoading?: boolean
   className?: string
   children?: React.ReactNode
 }
 
 export function ConfirmDialog(props: ConfirmDialogProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const {
     title,
     desc,
@@ -39,6 +41,18 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
     handleConfirm,
     ...actions
   } = props
+
+  const loading = isLoading || isSubmitting
+
+  const onConfirm = async () => {
+    try {
+      setIsSubmitting(true)
+      await Promise.resolve(handleConfirm())
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <AlertDialog {...actions}>
       <AlertDialogContent className={cn(className && className)}>
@@ -50,13 +64,14 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
         </AlertDialogHeader>
         {children}
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isLoading}>
+          <AlertDialogCancel disabled={loading}>
             {cancelBtnText ?? 'Cancel'}
           </AlertDialogCancel>
           <Button
             variant={destructive ? 'destructive' : 'default'}
-            onClick={handleConfirm}
-            disabled={disabled || isLoading}
+            onClick={onConfirm}
+            disabled={disabled || loading}
+            loading={loading}
           >
             {confirmText ?? 'Continue'}
           </Button>

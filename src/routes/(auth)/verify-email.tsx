@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { CheckCircle2, Loader2, Mail, XCircle } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -29,6 +29,7 @@ function VerifyEmailPage() {
     token?: string
   }
   const hasVerified = useRef(false)
+  const [isResendingVerification, setIsResendingVerification] = useState(false)
 
   const verifyMutation = useMutation({
     mutationFn: async (verificationToken: string) => {
@@ -239,6 +240,7 @@ function VerifyEmailPage() {
                 variant='outline'
                 className='w-full'
                 onClick={async () => {
+                  setIsResendingVerification(true)
                   // Try resending verification email if user is logged in
                   const { user } = useAuthStore.getState()
                   if (user && !user.emailVerified) {
@@ -254,9 +256,15 @@ function VerifyEmailPage() {
                       )
                     } catch {
                       // Ignore errors
+                    } finally {
+                      setIsResendingVerification(false)
                     }
+                  } else {
+                    setIsResendingVerification(false)
                   }
                 }}
+                loading={isResendingVerification}
+                disabled={isResendingVerification}
               >
                 {t(
                   'emailVerification.resendEmail',

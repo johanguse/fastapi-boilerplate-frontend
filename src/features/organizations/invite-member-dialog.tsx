@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import { Mail, UserPlus } from 'lucide-react'
+import { Loader2, Mail, Send } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -34,6 +35,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { api } from '@/lib/api'
 
 const invitationSchema = z.object({
@@ -59,6 +61,7 @@ export function InviteMemberDialog({
 }: InviteMemberDialogProps) {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
+  const turnstile = useTurnstile()
 
   const form = useForm<InvitationFormData>({
     resolver: zodResolver(invitationSchema),
@@ -73,7 +76,7 @@ export function InviteMemberDialog({
     mutationFn: async (data: InvitationFormData) => {
       const response = await api.post(
         `/api/v1/invitations/organizations/${organizationId}/invitations`,
-        data
+        { ...data, turnstileToken: turnstile.token }
       )
       return response.data
     },
@@ -84,6 +87,7 @@ export function InviteMemberDialog({
           `Invitation sent to ${variables.email}`,
       })
 
+      turnstile.reset()
       form.reset()
       setOpen(false)
       onSuccess?.()
@@ -110,6 +114,7 @@ export function InviteMemberDialog({
       toast.error(t('common.error', 'An error occurred'), {
         description: errorMessage,
       })
+      turnstile.reset()
     },
   })
 
@@ -122,7 +127,7 @@ export function InviteMemberDialog({
       <DialogTrigger asChild>
         {trigger || (
           <Button>
-            <UserPlus className='mr-2 h-4 w-4' />
+            <Send className='mr-2 h-4 w-4' />
             {t('invitations.inviteMember', 'Invite Member')}
           </Button>
         )}
@@ -142,7 +147,11 @@ export function InviteMemberDialog({
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='space-y-4'
+            id='invite-member-form'
+          >
             <FormField
               control={form.control}
               name='email'
@@ -285,7 +294,15 @@ export function InviteMemberDialog({
               )}
             />
 
-            <DialogFooter>
+            <TurnstileWidget
+              ref={turnstile.ref}
+              onSuccess={turnstile.onSuccess}
+              onExpire={turnstile.onExpire}
+              onError={turnstile.onError}
+              className='mt-2'
+            />
+
+            <DialogFooter className='gap-y-2'>
               <Button
                 type='button'
                 variant='outline'
@@ -293,10 +310,22 @@ export function InviteMemberDialog({
               >
                 {t('common.cancel', 'Cancel')}
               </Button>
-              <Button type='submit' disabled={inviteMutation.isPending}>
-                {inviteMutation.isPending
-                  ? t('common.loading', 'Loading...')
-                  : t('invitations.sendInvite', 'Send Invite')}
+              <Button
+                type='submit'
+                form='invite-member-form'
+                disabled={inviteMutation.isPending || !turnstile.isVerified}
+              >
+                {inviteMutation.isPending ? (
+                  <>
+                    <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                    {t('common.loading', 'Loading...')}
+                  </>
+                ) : (
+                  <>
+                    <Send className='mr-2 h-4 w-4' />
+                    {t('invitations.sendInvite', 'Send Invite')}
+                  </>
+                )}
               </Button>
             </DialogFooter>
           </form>

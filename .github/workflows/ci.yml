@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+env:
+  VITE_API_URL: ${{ vars.VITE_API_URL || 'http://localhost:8000' }}
+
 jobs:
   quality-checks:
     name: Code Quality & Tests

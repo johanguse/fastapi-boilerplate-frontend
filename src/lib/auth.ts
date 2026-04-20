@@ -5,7 +5,7 @@ import i18n from '@/lib/i18n'
 
 // Better Auth client configuration with organization plugin
 export const authClient = createAuthClient({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000', // Your FastAPI backend
+  baseURL: import.meta.env.VITE_API_URL?.replace('/api/v1', '') || 'http://localhost:8000',
   basePath: '/api/v1/auth', // Match the FastAPI backend auth routes with API prefix
   fetchOptions: {
     // Send cookies for session persistence across refreshes
@@ -74,7 +74,6 @@ export interface Session {
     id: string
     userId: string
     expiresAt: Date
-    token: string
     ipAddress?: string | null
     userAgent?: string | null
     activeOrganizationId?: string | null

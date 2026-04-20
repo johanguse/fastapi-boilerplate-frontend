@@ -97,39 +97,23 @@ This frontend supports two backends:
 
 ### Switching Backends
 
-Set `VITE_BACKEND_TYPE` in your `.env` file:
+Set `VITE_API_URL` in `frontend/.env` to point at whichever backend you're running:
 
 ```bash
-# Use FastAPI backend (default)
-VITE_BACKEND_TYPE=fastapi
+# FastAPI backend (Python, port 8000)
+VITE_API_URL=http://localhost:8000/api/v1
 
-# Use Bun + Hono backend
-VITE_BACKEND_TYPE=bun
-```
-
-Pre-configured `.env` files are available:
-- `.env.fastapi` - FastAPI configuration
-- `.env.bun` - Bun + Hono configuration
-
-Copy the appropriate file to `.env`:
-
-```bash
-# For FastAPI
-cp .env.fastapi .env
-
-# For Bun + Hono
-cp .env.bun .env
+# Bun + Hono backend (TypeScript, port 3000)
+VITE_API_URL=http://localhost:3000/api/v1
 ```
 
 ### Environment Variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `VITE_BACKEND_TYPE` | Backend type: `fastapi` or `bun` | `fastapi` |
-| `VITE_API_URL_FASTAPI` | FastAPI API URL | `http://localhost:8000/api/v1` |
-| `VITE_API_URL_BUN` | Bun + Hono API URL | `http://localhost:3000/api/v1` |
-| `VITE_API_URL` | Override URL (takes precedence) | - |
-| `OPENAPI_FILE` | OpenAPI spec URL for SDK generation | Based on backend |
+| `VITE_API_URL` | Active backend API URL | `http://localhost:8000/api/v1` |
+| `VITE_APP_NAME` | Application name | - |
+| `OPENAPI_FILE` | OpenAPI spec URL for SDK generation | `http://localhost:8000/openapi.json` |
 
 ### Frontend Configuration
 
@@ -161,7 +145,7 @@ export default defineConfig({
 
 The client is configured in [src/hey-api.ts](src/hey-api.ts) with:
 
-- Dynamic backend URL selection based on `VITE_BACKEND_TYPE`
+- Backend URL from `VITE_API_URL`
 - Auth token injection
 - Error handling interceptors
 - Development logging to show active backend

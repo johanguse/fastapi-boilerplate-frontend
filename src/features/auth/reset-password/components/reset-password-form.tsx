@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
 import { PasswordInput } from '@/components/password-input'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -16,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { authApi } from '@/lib/api'
 
 type ResetPasswordFormProps = {
@@ -26,6 +28,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [isLoading, setIsLoading] = useState(false)
+  const turnstile = useTurnstile()
 
   const formSchema = z
     .object({
@@ -60,6 +63,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
+    turnstile.reset()
 
     try {
       await authApi.resetPassword(token, data.password)
@@ -150,7 +154,18 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           )}
         />
 
-        <Button type='submit' className='mt-2' disabled={isLoading}>
+        <TurnstileWidget
+          ref={turnstile.ref}
+          onSuccess={turnstile.onSuccess}
+          onExpire={turnstile.onExpire}
+          onError={turnstile.onError}
+          className='mt-2'
+        />
+        <Button
+          type='submit'
+          className='mt-2'
+          disabled={isLoading || !turnstile.isVerified}
+        >
           {isLoading ? (
             <>
               <Loader2 className='mr-2 h-4 w-4 animate-spin' />

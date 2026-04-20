@@ -35,6 +35,18 @@ vi.mock('sonner', () => ({
   },
 }))
 
+vi.mock('@/hooks/use-turnstile', () => ({
+  useTurnstile: () => ({
+    token: 'mock-token',
+    isVerified: true,
+    ref: { current: null },
+    reset: vi.fn(),
+    onSuccess: vi.fn(),
+    onExpire: vi.fn(),
+    onError: vi.fn(),
+  }),
+}))
+
 // Mock useAuth store
 const mockUser: User = {
   id: '1',

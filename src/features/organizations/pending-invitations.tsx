@@ -215,11 +215,12 @@ export function PendingInvitations({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>
+            <AlertDialogCancel disabled={deleteMutation.isPending}>
               {t('common.cancel', 'Cancel')}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={() => deleteId && deleteMutation.mutate(deleteId)}
+              disabled={deleteMutation.isPending}
               className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
             >
               {deleteMutation.isPending

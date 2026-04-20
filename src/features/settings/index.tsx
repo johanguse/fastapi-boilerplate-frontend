@@ -1,12 +1,9 @@
 import { Outlet } from '@tanstack/react-router'
-import { Bell, CreditCard, Palette, UserCog } from 'lucide-react'
+import { Bell, CreditCard, Palette, ReceiptText, UserCog } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
+import { PageLayout } from '@/components/layout/page-layout'
 import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import { Separator } from '@/components/ui/separator'
 import { SidebarNav } from './components/sidebar-nav'
 
@@ -34,42 +31,40 @@ export function Settings() {
       href: '/settings/billing',
       icon: <CreditCard size={18} />,
     },
+    {
+      title: t('settings.nav.fiscal', 'Tax Info'),
+      href: '/settings/fiscal',
+      icon: <ReceiptText size={18} />,
+    },
   ]
 
   return (
-    <>
-      {/* ===== Top Heading ===== */}
-      <Header>
-        <Search />
-        <div className='ms-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <ConfigDrawer />
-          <ProfileDropdown />
+    <PageLayout
+      fixed={false}
+      fixedMain
+      headerContent={<Search />}
+      headerActions={<ConfigDrawer />}
+    >
+      <div className='space-y-0.5'>
+        <h1 className='font-bold text-2xl tracking-tight md:text-3xl'>
+          {t('settings.title', 'Settings')}
+        </h1>
+        <p className='text-muted-foreground'>
+          {t(
+            'settings.description',
+            'Manage your account settings and set e-mail preferences.'
+          )}
+        </p>
+      </div>
+      <Separator className='my-4 lg:my-6' />
+      <div className='flex flex-1 flex-col space-y-2 overflow-hidden md:space-y-2 lg:flex-row lg:space-x-12 lg:space-y-0'>
+        <aside className='top-0 lg:sticky lg:w-1/5'>
+          <SidebarNav items={sidebarNavItems} />
+        </aside>
+        <div className='flex w-full overflow-y-hidden p-1'>
+          <Outlet />
         </div>
-      </Header>
-
-      <Main fixed>
-        <div className='space-y-0.5'>
-          <h1 className='font-bold text-2xl tracking-tight md:text-3xl'>
-            {t('settings.title', 'Settings')}
-          </h1>
-          <p className='text-muted-foreground'>
-            {t(
-              'settings.description',
-              'Manage your account settings and set e-mail preferences.'
-            )}
-          </p>
-        </div>
-        <Separator className='my-4 lg:my-6' />
-        <div className='flex flex-1 flex-col space-y-2 overflow-hidden md:space-y-2 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <aside className='top-0 lg:sticky lg:w-1/5'>
-            <SidebarNav items={sidebarNavItems} />
-          </aside>
-          <div className='flex w-full overflow-y-hidden p-1'>
-            <Outlet />
-          </div>
-        </div>
-      </Main>
-    </>
+      </div>
+    </PageLayout>
   )
 }
