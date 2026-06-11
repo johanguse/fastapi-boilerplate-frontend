@@ -1,4 +1,5 @@
-import { Item, Root as Radio } from '@radix-ui/react-radio-group'
+import { Radio as RadioItem } from '@base-ui/react/radio'
+import { RadioGroup } from '@base-ui/react/radio-group'
 import { CircleCheck, RotateCcw, Settings } from 'lucide-react'
 import { type SVGProps } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -135,7 +136,7 @@ function RadioGroupItem({
   isTheme?: boolean
 }) {
   return (
-    <Item
+    <RadioItem.Root
       value={item.value}
       className={cn('group outline-none', 'transition duration-200 ease-in')}
       aria-label={`Select ${item.label.toLowerCase()}`}
@@ -144,7 +145,7 @@ function RadioGroupItem({
       <div
         className={cn(
           'relative rounded-[6px] ring-[1px] ring-border',
-          'group-data-[state=checked]:shadow-2xl group-data-[state=checked]:ring-primary',
+          'group-data-[checked]:shadow-2xl group-data-[checked]:ring-primary',
           'group-focus-visible:ring-2'
         )}
         role='img'
@@ -154,7 +155,7 @@ function RadioGroupItem({
         <CircleCheck
           className={cn(
             'size-6 fill-primary stroke-white',
-            'group-data-[state=unchecked]:hidden',
+            'group-data-[unchecked]:hidden',
             'absolute top-0 right-0 translate-x-1/2 -translate-y-1/2'
           )}
           aria-hidden='true'
@@ -162,7 +163,7 @@ function RadioGroupItem({
         <item.icon
           className={cn(
             !isTheme &&
-              'fill-primary stroke-primary group-data-[state=unchecked]:fill-muted-foreground group-data-[state=unchecked]:stroke-muted-foreground'
+              'fill-primary stroke-primary group-data-[unchecked]:fill-muted-foreground group-data-[unchecked]:stroke-muted-foreground'
           )}
           aria-hidden='true'
         />
@@ -174,7 +175,7 @@ function RadioGroupItem({
       >
         {item.label}
       </div>
-    </Item>
+    </RadioItem.Root>
   )
 }
 
@@ -188,7 +189,7 @@ function ThemeConfig() {
         showReset={theme !== defaultTheme}
         onReset={() => setTheme(defaultTheme)}
       />
-      <Radio
+      <RadioGroup
         value={theme}
         onValueChange={setTheme}
         className='grid w-full max-w-md grid-cols-3 gap-4'
@@ -217,7 +218,7 @@ function ThemeConfig() {
         ].map((item) => (
           <RadioGroupItem key={item.value} item={item} isTheme />
         ))}
-      </Radio>
+      </RadioGroup>
       <div id='theme-description' className='sr-only'>
         {t(
           'settings.themeDescription',
@@ -238,7 +239,7 @@ function SidebarConfig() {
         showReset={defaultVariant !== variant}
         onReset={() => setVariant(defaultVariant)}
       />
-      <Radio
+      <RadioGroup
         value={variant}
         onValueChange={setVariant}
         className='grid w-full max-w-md grid-cols-3 gap-4'
@@ -264,7 +265,7 @@ function SidebarConfig() {
         ].map((item) => (
           <RadioGroupItem key={item.value} item={item} />
         ))}
-      </Radio>
+      </RadioGroup>
       <div id='sidebar-description' className='sr-only'>
         {t(
           'settings.sidebarDescription',
@@ -292,7 +293,7 @@ function LayoutConfig() {
           setCollapsible(defaultCollapsible)
         }}
       />
-      <Radio
+      <RadioGroup
         value={radioState}
         onValueChange={(v) => {
           if (v === 'default') {
@@ -325,7 +326,7 @@ function LayoutConfig() {
         ].map((item) => (
           <RadioGroupItem key={item.value} item={item} />
         ))}
-      </Radio>
+      </RadioGroup>
       <div id='layout-description' className='sr-only'>
         {t(
           'settings.layoutDescription',
@@ -346,7 +347,7 @@ function DirConfig() {
         showReset={defaultDir !== dir}
         onReset={() => setDir(defaultDir)}
       />
-      <Radio
+      <RadioGroup
         value={dir}
         onValueChange={setDir}
         className='grid w-full max-w-md grid-cols-3 gap-4'
@@ -371,7 +372,7 @@ function DirConfig() {
         ].map((item) => (
           <RadioGroupItem key={item.value} item={item} />
         ))}
-      </Radio>
+      </RadioGroup>
       <div id='direction-description' className='sr-only'>
         {t(
           'settings.directionDescription',

@@ -1,4 +1,4 @@
-import { DirectionProvider as RdxDirProvider } from '@radix-ui/react-direction'
+import { DirectionProvider as BaseUiDirProvider } from '@base-ui/react/direction-provider'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { getCookie, removeCookie, setCookie } from '@/lib/cookies'
 
@@ -46,7 +46,7 @@ export function DirectionProvider({ children }: { children: React.ReactNode }) {
         resetDir,
       }}
     >
-      <RdxDirProvider dir={dir}>{children}</RdxDirProvider>
+      <BaseUiDirProvider direction={dir}>{children}</BaseUiDirProvider>
     </DirectionContext>
   )
 }
