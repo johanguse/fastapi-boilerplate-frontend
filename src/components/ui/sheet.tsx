@@ -31,9 +31,26 @@ function SheetTrigger({
 }
 
 function SheetClose({
+  asChild,
+  children,
   ...props
-}: React.ComponentProps<typeof SheetPrimitive.Close>) {
-  return <SheetPrimitive.Close data-slot='sheet-close' {...props} />
+}: React.ComponentProps<typeof SheetPrimitive.Close> & {
+  asChild?: boolean
+}) {
+  if (asChild && React.isValidElement(children)) {
+    return (
+      <SheetPrimitive.Close
+        data-slot='sheet-close'
+        render={children as React.ReactElement<Record<string, unknown>>}
+        {...props}
+      />
+    )
+  }
+  return (
+    <SheetPrimitive.Close data-slot='sheet-close' {...props}>
+      {children}
+    </SheetPrimitive.Close>
+  )
 }
 
 function SheetPortal({

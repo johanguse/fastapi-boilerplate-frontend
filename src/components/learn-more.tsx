@@ -8,7 +8,8 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
-type LearnMoreProps = React.ComponentProps<typeof Popover> & {
+type LearnMoreProps = Omit<React.ComponentProps<typeof Popover>, 'children'> & {
+  children?: React.ReactNode
   contentProps?: React.ComponentProps<typeof PopoverContent>
   triggerProps?: React.ComponentProps<typeof PopoverTrigger>
 }

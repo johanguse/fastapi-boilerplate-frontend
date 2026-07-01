@@ -45,7 +45,7 @@ export function LongText({
   return (
     <>
       <div className='hidden sm:block'>
-        <TooltipProvider delayDuration={0}>
+        <TooltipProvider delay={0}>
           <Tooltip>
             <TooltipTrigger asChild>
               <div ref={ref} className={cn('truncate', className)}>

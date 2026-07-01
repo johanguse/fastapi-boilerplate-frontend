@@ -52,7 +52,6 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
 
       <ScrollArea
         orientation='horizontal'
-        type='always'
         className='hidden w-full min-w-40 bg-background px-1 py-2 md:block'
       >
         <nav

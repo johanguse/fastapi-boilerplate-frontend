@@ -41,9 +41,26 @@ function DialogPortal({
 }
 
 function DialogClose({
+  asChild,
+  children,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Close>) {
-  return <DialogPrimitive.Close data-slot='dialog-close' {...props} />
+}: React.ComponentProps<typeof DialogPrimitive.Close> & {
+  asChild?: boolean
+}) {
+  if (asChild && React.isValidElement(children)) {
+    return (
+      <DialogPrimitive.Close
+        data-slot='dialog-close'
+        render={children as React.ReactElement<Record<string, unknown>>}
+        {...props}
+      />
+    )
+  }
+  return (
+    <DialogPrimitive.Close data-slot='dialog-close' {...props}>
+      {children}
+    </DialogPrimitive.Close>
+  )
 }
 
 function DialogOverlay({

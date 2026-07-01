@@ -3,10 +3,19 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 
-function Select({
+function Select<T extends string = string>({
+  onValueChange,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  return <SelectPrimitive.Root data-slot='select' {...props} />
+}: Omit<React.ComponentProps<typeof SelectPrimitive.Root>, 'onValueChange'> & {
+  onValueChange?: (value: T) => void
+}) {
+  return (
+    <SelectPrimitive.Root
+      data-slot='select'
+      onValueChange={onValueChange ? (value) => onValueChange(value as T) : undefined}
+      {...props}
+    />
+  )
 }
 
 function SelectGroup({
@@ -50,14 +59,18 @@ function SelectContent({
   children,
   position = 'popper',
   sideOffset = 4,
+  side,
+  align,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Popup> & {
   position?: 'popper' | 'item-aligned'
   sideOffset?: number
+  side?: 'top' | 'right' | 'bottom' | 'left'
+  align?: 'start' | 'center' | 'end'
 }) {
   return (
     <SelectPrimitive.Portal>
-      <SelectPrimitive.Positioner sideOffset={sideOffset}>
+      <SelectPrimitive.Positioner sideOffset={sideOffset} side={side} align={align}>
         <SelectPrimitive.Popup
           data-slot='select-content'
           className={cn(
