@@ -5,10 +5,12 @@ import { ConfigDrawer } from '@/components/config-drawer'
 import { PageLayout } from '@/components/layout/page-layout'
 import { Search } from '@/components/search'
 import { Separator } from '@/components/ui/separator'
+import { usePublicConfig } from '@/hooks/use-public-config'
 import { SidebarNav } from './components/sidebar-nav'
 
 export function Settings() {
   const { t } = useTranslation()
+  const { data: publicConfig } = usePublicConfig()
 
   const sidebarNavItems = [
     {
@@ -31,11 +33,15 @@ export function Settings() {
       href: '/settings/billing',
       icon: <CreditCard size={18} />,
     },
-    {
-      title: t('settings.nav.fiscal', 'Tax Info'),
-      href: '/settings/fiscal',
-      icon: <ReceiptText size={18} />,
-    },
+    ...(publicConfig?.fiscal_enabled
+      ? [
+          {
+            title: t('settings.nav.fiscal', 'Tax Info'),
+            href: '/settings/fiscal',
+            icon: <ReceiptText size={18} />,
+          },
+        ]
+      : []),
   ]
 
   return (

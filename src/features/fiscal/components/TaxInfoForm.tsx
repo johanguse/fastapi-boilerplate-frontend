@@ -356,9 +356,7 @@ export function TaxInfoForm({
   const { data: states } = useQuery<BrazilianState[]>({
     queryKey: ['brazilian-states'],
     queryFn: async () => {
-      const res = await api.get<BrazilianState[]>(
-        '/api/v1/fiscal/brazilian-states'
-      )
+      const res = await api.get<BrazilianState[]>('/fiscal/brazilian-states')
       return res.data
     },
     enabled: isBrazilian,
@@ -368,7 +366,7 @@ export function TaxInfoForm({
     queryKey: ['brazilian-cities', selectedState],
     queryFn: async () => {
       const res = await api.get<BrazilianCity[]>(
-        `/api/v1/fiscal/brazilian-cities/${selectedState}`
+        `/fiscal/brazilian-cities/${selectedState}`
       )
       return res.data
     },
@@ -399,10 +397,10 @@ export function TaxInfoForm({
       }
 
       if (isEditing) {
-        const res = await api.put('/api/v1/fiscal/tax-info', payload)
+        const res = await api.put('/fiscal/tax-info', payload)
         return res.data
       }
-      const res = await api.post('/api/v1/fiscal/tax-info', payload)
+      const res = await api.post('/fiscal/tax-info', payload)
       return res.data
     },
     onSuccess: () => {
@@ -431,7 +429,7 @@ export function TaxInfoForm({
     if (!value || !isBrazilian) return
     try {
       const res = await api.get<{ valid: boolean; message?: string }>(
-        `/api/v1/fiscal/validate-cpf-cnpj/${encodeURIComponent(value)}`
+        `/fiscal/validate-cpf-cnpj/${encodeURIComponent(value)}`
       )
       if (!res.data.valid) {
         form.setError('cpfCnpj', {

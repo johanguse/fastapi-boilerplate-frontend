@@ -13,7 +13,7 @@ export function useTaxInfo() {
     queryKey: ['tax-info'],
     queryFn: async () => {
       try {
-        const res = await api.get<UserTaxInfo>('/api/v1/fiscal/tax-info')
+        const res = await api.get<UserTaxInfo>('/fiscal/tax-info')
         return res.data
       } catch (error: unknown) {
         // 404 means no tax info yet

@@ -5,14 +5,21 @@
  * Reuses the shared TaxInfoForm component.
  */
 
+import { Navigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { Separator } from '@/components/ui/separator'
+import { usePublicConfig } from '@/hooks/use-public-config'
 import { ContentSection } from '../components/content-section'
 import { BillingHistorySection } from './billing-history-section'
 import { TaxInfoSection } from './tax-info-section'
 
 export default function SettingsFiscal() {
   const { t } = useTranslation()
+  const { data: publicConfig, isLoading } = usePublicConfig()
+
+  if (!isLoading && !publicConfig?.fiscal_enabled) {
+    return <Navigate to='/settings' />
+  }
 
   return (
     <ContentSection

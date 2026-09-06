@@ -84,7 +84,7 @@ export function BillingHistoryPage() {
   } = useQuery<NFSe[]>({
     queryKey: ['nfse-invoices'],
     queryFn: async () => {
-      const res = await api.get<NFSe[]>('/api/v1/fiscal/nfse')
+      const res = await api.get<NFSe[]>('/fiscal/nfse')
       return res.data
     },
   })
