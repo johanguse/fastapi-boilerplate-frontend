@@ -27,10 +27,7 @@ function AlertDialogTrigger({
     )
   }
   return (
-    <AlertDialogPrimitive.Trigger
-      data-slot='alert-dialog-trigger'
-      {...props}
-    >
+    <AlertDialogPrimitive.Trigger data-slot='alert-dialog-trigger' {...props}>
       {children}
     </AlertDialogPrimitive.Trigger>
   )

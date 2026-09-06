@@ -12,7 +12,9 @@ function Select<T extends string = string>({
   return (
     <SelectPrimitive.Root
       data-slot='select'
-      onValueChange={onValueChange ? (value) => onValueChange(value as T) : undefined}
+      onValueChange={
+        onValueChange ? (value) => onValueChange(value as T) : undefined
+      }
       {...props}
     />
   )
@@ -49,7 +51,9 @@ function SelectTrigger({
       {...props}
     >
       {children}
-      <SelectPrimitive.Icon render={<ChevronDownIcon className='size-4 opacity-50' />} />
+      <SelectPrimitive.Icon
+        render={<ChevronDownIcon className='size-4 opacity-50' />}
+      />
     </SelectPrimitive.Trigger>
   )
 }
@@ -70,7 +74,11 @@ function SelectContent({
 }) {
   return (
     <SelectPrimitive.Portal>
-      <SelectPrimitive.Positioner sideOffset={sideOffset} side={side} align={align}>
+      <SelectPrimitive.Positioner
+        sideOffset={sideOffset}
+        side={side}
+        align={align}
+      >
         <SelectPrimitive.Popup
           data-slot='select-content'
           className={cn(
@@ -82,10 +90,7 @@ function SelectContent({
         >
           <SelectScrollUpButton />
           <SelectPrimitive.List
-            className={cn(
-              'p-1',
-              position === 'popper' && 'scroll-my-1'
-            )}
+            className={cn('p-1', position === 'popper' && 'scroll-my-1')}
           >
             {children}
           </SelectPrimitive.List>

@@ -26,9 +26,7 @@ function ScrollArea({
           orientation === 'horizontal' && 'overflow-x-auto!'
         )}
       >
-        <ScrollAreaPrimitive.Content>
-          {children}
-        </ScrollAreaPrimitive.Content>
+        <ScrollAreaPrimitive.Content>{children}</ScrollAreaPrimitive.Content>
       </ScrollAreaPrimitive.Viewport>
       <ScrollBar orientation={orientation} />
       <ScrollAreaPrimitive.Corner />

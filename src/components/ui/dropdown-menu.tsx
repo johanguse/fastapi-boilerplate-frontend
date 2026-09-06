@@ -12,9 +12,7 @@ function DropdownMenu({
 function DropdownMenuPortal({
   ...props
 }: React.ComponentProps<typeof MenuPrimitive.Portal>) {
-  return (
-    <MenuPrimitive.Portal data-slot='dropdown-menu-portal' {...props} />
-  )
+  return <MenuPrimitive.Portal data-slot='dropdown-menu-portal' {...props} />
 }
 
 function DropdownMenuTrigger({
@@ -53,7 +51,11 @@ function DropdownMenuContent({
 }) {
   return (
     <MenuPrimitive.Portal>
-      <MenuPrimitive.Positioner sideOffset={sideOffset} align={align} side={side}>
+      <MenuPrimitive.Positioner
+        sideOffset={sideOffset}
+        align={align}
+        side={side}
+      >
         <MenuPrimitive.Popup
           data-slot='dropdown-menu-content'
           className={cn(
@@ -70,9 +72,7 @@ function DropdownMenuContent({
 function DropdownMenuGroup({
   ...props
 }: React.ComponentProps<typeof MenuPrimitive.Group>) {
-  return (
-    <MenuPrimitive.Group data-slot='dropdown-menu-group' {...props} />
-  )
+  return <MenuPrimitive.Group data-slot='dropdown-menu-group' {...props} />
 }
 
 function DropdownMenuItem({

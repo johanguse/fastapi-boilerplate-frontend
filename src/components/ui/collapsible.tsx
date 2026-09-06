@@ -34,10 +34,7 @@ function CollapsibleContent({
   ...props
 }: React.ComponentProps<typeof CollapsiblePrimitive.Panel>) {
   return (
-    <CollapsiblePrimitive.Panel
-      data-slot='collapsible-content'
-      {...props}
-    />
+    <CollapsiblePrimitive.Panel data-slot='collapsible-content' {...props} />
   )
 }
 

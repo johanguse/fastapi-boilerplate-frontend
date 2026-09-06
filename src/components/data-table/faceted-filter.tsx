@@ -1,5 +1,5 @@
-import { Check, PlusCircle } from 'lucide-react'
 import { type Column } from '@tanstack/react-table'
+import { Check, PlusCircle } from 'lucide-react'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
