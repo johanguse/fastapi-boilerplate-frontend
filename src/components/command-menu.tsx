@@ -39,7 +39,7 @@ export function CommandMenu() {
         )}
       />
       <CommandList>
-        <ScrollArea type='hover' className='h-72 pe-1'>
+        <ScrollArea className='h-72 pe-1'>
           <CommandEmpty>
             {t('commandMenu.noResults', 'No results found.')}
           </CommandEmpty>

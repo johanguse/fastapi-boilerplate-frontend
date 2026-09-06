@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { type UseFormReturn, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -25,6 +26,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { api } from '@/lib/api'
 import { useAuth } from '@/stores/auth-store'
 
@@ -100,11 +102,118 @@ const createProfileFormSchema = (
 
 type ProfileFormValues = z.infer<ReturnType<typeof createProfileFormSchema>>
 
+interface FieldGroupProps {
+  form: UseFormReturn<ProfileFormValues>
+}
+
+function WorkInfoFields({ form }: FieldGroupProps) {
+  const { t } = useTranslation()
+  return (
+    <div className='grid gap-4 md:grid-cols-2'>
+      <FormField
+        control={form.control}
+        name='company'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t('settings.profile.company', 'Company')}</FormLabel>
+            <FormControl>
+              <Input
+                placeholder={t(
+                  'settings.profile.companyPlaceholder',
+                  'Your company name'
+                )}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name='job_title'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t('settings.profile.jobTitle', 'Job Title')}</FormLabel>
+            <FormControl>
+              <Input
+                placeholder={t(
+                  'settings.profile.jobTitlePlaceholder',
+                  'e.g., Software Engineer'
+                )}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
+  )
+}
+
+function LocationContactFields({ form }: FieldGroupProps) {
+  const { t } = useTranslation()
+  return (
+    <div className='grid gap-4 md:grid-cols-2'>
+      <FormField
+        control={form.control}
+        name='country'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t('settings.profile.country', 'Country')}</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder={t(
+                      'settings.profile.countryPlaceholder',
+                      'Select your country'
+                    )}
+                  />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {countries.map((country) => (
+                  <SelectItem key={country} value={country}>
+                    {country}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name='phone'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{t('settings.profile.phone', 'Phone')}</FormLabel>
+            <FormControl>
+              <Input
+                placeholder={t(
+                  'settings.profile.phonePlaceholder',
+                  '+1 (555) 123-4567'
+                )}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
+  )
+}
+
 export function ProfileForm() {
   const { t } = useTranslation()
   const { user, checkSession } = useAuth()
+  const turnstile = useTurnstile()
   const [isLoading, setIsLoading] = useState(false)
-  const [isFetching, setIsFetching] = useState(true)
+  const isFetching = !user
   const [profileImage, setProfileImage] = useState<File | null>(null)
 
   const profileFormSchema = createProfileFormSchema(t)
@@ -123,16 +232,9 @@ export function ProfileForm() {
     mode: 'onChange',
   })
 
-  // Fetch user profile data - update form when user data changes
+  // Reset form with current user data when user changes
   useEffect(() => {
-    if (!user) {
-      setIsFetching(true)
-      return
-    }
-
-    setIsFetching(true)
-
-    // Reset form with current user data
+    if (!user) return
     form.reset({
       name: user.name || '',
       email: user.email || '',
@@ -143,13 +245,7 @@ export function ProfileForm() {
       phone: user.phone || '',
       website: user.website || '',
     })
-
-    setIsFetching(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    user, // Reset form with current user data
-    form.reset,
-  ]) // Only re-run when user object changes
+  }, [user, form.reset])
 
   const onSubmit = async (data: ProfileFormValues) => {
     setIsLoading(true)
@@ -175,8 +271,9 @@ export function ProfileForm() {
       await checkSession()
 
       toast.success(
-        t('settings.profile.updateSuccess', 'Profile updated successfully!')
+        t('settings.profile.profileUpdated', 'Profile updated successfully.')
       )
+      turnstile.reset()
     } catch (_error) {
       toast.error(
         t(
@@ -269,109 +366,10 @@ export function ProfileForm() {
         />
 
         {/* Company & Job Title */}
-        <div className='grid gap-4 md:grid-cols-2'>
-          <FormField
-            control={form.control}
-            name='company'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('settings.profile.company', 'Company')}
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t(
-                      'settings.profile.companyPlaceholder',
-                      'Your company name'
-                    )}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='job_title'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('settings.profile.jobTitle', 'Job Title')}
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t(
-                      'settings.profile.jobTitlePlaceholder',
-                      'e.g., Software Engineer'
-                    )}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <WorkInfoFields form={form} />
 
         {/* Country & Phone */}
-        <div className='grid gap-4 md:grid-cols-2'>
-          <FormField
-            control={form.control}
-            name='country'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t('settings.profile.country', 'Country')}
-                </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue
-                        placeholder={t(
-                          'settings.profile.countryPlaceholder',
-                          'Select your country'
-                        )}
-                      />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {countries.map((country) => (
-                      <SelectItem key={country} value={country}>
-                        {country}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name='phone'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('settings.profile.phone', 'Phone')}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={t(
-                      'settings.profile.phonePlaceholder',
-                      '+1 (555) 123-4567'
-                    )}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <LocationContactFields form={form} />
 
         {/* Website */}
         <FormField
@@ -422,7 +420,14 @@ export function ProfileForm() {
           )}
         />
 
-        <Button type='submit' disabled={isLoading}>
+        <TurnstileWidget
+          ref={turnstile.ref}
+          onSuccess={turnstile.onSuccess}
+          onExpire={turnstile.onExpire}
+          onError={turnstile.onError}
+          className='mt-2'
+        />
+        <Button type='submit' disabled={isLoading || !turnstile.isVerified}>
           {isLoading ? (
             <>
               <Loader2 className='mr-2 h-4 w-4 animate-spin' />

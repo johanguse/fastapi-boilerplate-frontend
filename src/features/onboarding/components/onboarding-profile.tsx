@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -24,8 +25,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { useOnboarding } from '@/features/onboarding/context/onboarding-context'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import type { User as UserType } from '@/lib/auth'
-import { useOnboarding } from '../context/onboarding-context'
 
 const profileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -78,6 +80,7 @@ export function OnboardingProfile({
 }: OnboardingProfileProps) {
   const { t } = useTranslation()
   const { profile, updateProfile } = useOnboarding()
+  const turnstile = useTurnstile()
   const [isLoading, setIsLoading] = useState(false)
   const [profileImage, setProfileImage] = useState<File | null>(null)
 
@@ -337,8 +340,16 @@ export function OnboardingProfile({
             )}
           />
 
+          <TurnstileWidget
+            ref={turnstile.ref}
+            onSuccess={turnstile.onSuccess}
+            onExpire={turnstile.onExpire}
+            onError={turnstile.onError}
+            className='mt-2'
+          />
+
           <div className='flex justify-end pt-4'>
-            <Button type='submit' disabled={isLoading}>
+            <Button type='submit' disabled={isLoading || !turnstile.isVerified}>
               {isLoading ? (
                 <>
                   <Loader2 className='mr-2 h-4 w-4 animate-spin' />

@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { sleep } from '@/lib/utils'
-import { type User } from '../data/schema'
+import { type User } from '../entities/user'
 import { UsersMultiDeleteDialog } from './users-multi-delete-dialog'
 
 type DataTableBulkActionsProps<TData> = {

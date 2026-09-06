@@ -25,7 +25,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { showSubmittedData } from '@/lib/show-submitted-data'
 import { roles } from '../data/data'
-import { type User } from '../data/schema'
+import { type User } from '../entities/user'
 
 const formSchema = z
   .object({

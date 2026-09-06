@@ -1,4 +1,3 @@
-import { type Content, type Root, type Trigger } from '@radix-ui/react-popover'
 import { CircleQuestionMark } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
@@ -9,9 +8,10 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
-type LearnMoreProps = React.ComponentProps<typeof Root> & {
-  contentProps?: React.ComponentProps<typeof Content>
-  triggerProps?: React.ComponentProps<typeof Trigger>
+type LearnMoreProps = Omit<React.ComponentProps<typeof Popover>, 'children'> & {
+  children?: React.ReactNode
+  contentProps?: React.ComponentProps<typeof PopoverContent>
+  triggerProps?: React.ComponentProps<typeof PopoverTrigger>
 }
 
 export function LearnMore({

@@ -178,9 +178,7 @@ Key environment variables:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `VITE_BACKEND_TYPE` | Backend type: `fastapi` or `bun` | `fastapi` |
-| `VITE_API_URL_FASTAPI` | FastAPI API URL | `http://localhost:8000/api/v1` |
-| `VITE_API_URL_BUN` | Bun + Hono API URL | `http://localhost:3000/api/v1` |
+| `VITE_API_URL` | Backend API URL (FastAPI or Bun) | `http://localhost:8000/api/v1` |
 | `VITE_APP_NAME` | Application name | - |
 
 Generate the API client (Hey API)

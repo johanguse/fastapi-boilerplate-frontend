@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { SocialLogin } from '@/components/auth/social-login'
 import { PasswordInput } from '@/components/password-input'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -17,6 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { getRegisterSchema, type RegisterFormData } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/stores/auth-store'
@@ -31,6 +33,7 @@ export function SignUpForm({
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { register } = useAuth()
+  const turnstile = useTurnstile()
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(getRegisterSchema()),
@@ -46,6 +49,7 @@ export function SignUpForm({
     mutationFn: ({ name, email, password }: RegisterFormData) =>
       register(email, password, name),
     onSuccess: async () => {
+      turnstile.reset()
       // Clear any form errors on success
       form.clearErrors()
 
@@ -181,6 +185,7 @@ export function SignUpForm({
       password: data.password,
       confirmPassword: data.confirmPassword,
     })
+    turnstile.reset()
   }
 
   return (
@@ -275,7 +280,17 @@ export function SignUpForm({
             </FormItem>
           )}
         />
-        <Button className='mt-2' disabled={registerMutation.isPending}>
+        <TurnstileWidget
+          ref={turnstile.ref}
+          onSuccess={turnstile.onSuccess}
+          onExpire={turnstile.onExpire}
+          onError={turnstile.onError}
+          className='mt-2'
+        />
+        <Button
+          className='mt-2'
+          disabled={registerMutation.isPending || !turnstile.isVerified}
+        >
           {registerMutation.isPending ? (
             <Loader2 className='animate-spin' />
           ) : (

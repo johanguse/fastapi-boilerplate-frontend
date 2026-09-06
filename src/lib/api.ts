@@ -2,7 +2,7 @@ import axios, { type AxiosResponse } from 'axios'
 import { deleteCookie as deleteCookieUtil } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth-store'
 
-const API_BASE_URL = 'http://localhost:8000/api/v1'
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/v1`
 
 // Create axios instance with default configuration
 const apiClient = axios.create({
@@ -18,8 +18,10 @@ apiClient.interceptors.request.use(
   (config) => {
     // Try to get token from auth store and add to Authorization header
     const session = useAuthStore.getState().session
-    if (session?.session?.token) {
-      config.headers.Authorization = `Bearer ${session.session.token}`
+    // biome-ignore lint/suspicious/noExplicitAny: Legacy token support
+    const token = (session?.session as any)?.token
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
     }
     // Also rely on HTTP-only cookies as fallback
     return config

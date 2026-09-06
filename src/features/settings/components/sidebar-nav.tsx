@@ -35,7 +35,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
       <div className='p-1 md:hidden'>
         <Select value={val} onValueChange={handleSelect}>
           <SelectTrigger className='h-12 sm:w-48'>
-            <SelectValue placeholder={t('settings.sidebar.theme', 'Theme')} />
+            <SelectValue placeholder={t('settings.sidebarTheme', 'Theme')} />
           </SelectTrigger>
           <SelectContent>
             {items.map((item) => (
@@ -52,7 +52,6 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
 
       <ScrollArea
         orientation='horizontal'
-        type='always'
         className='hidden w-full min-w-40 bg-background px-1 py-2 md:block'
       >
         <nav

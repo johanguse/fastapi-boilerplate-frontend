@@ -1,6 +1,5 @@
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { type Row } from '@tanstack/react-table'
-import { Trash2 } from 'lucide-react'
+import { Ellipsis, Trash2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { labels } from '../data/data'
-import { taskSchema } from '../data/schema'
+import { TaskSchema } from '../entities/task'
 import { useTasks } from './tasks-provider'
 
 type DataTableRowActionsProps<TData> = {
@@ -28,7 +27,7 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const { t } = useTranslation()
-  const task = taskSchema.parse(row.original)
+  const task = TaskSchema.parse(row.original)
 
   const { setOpen, setCurrentRow } = useTasks()
 
@@ -37,9 +36,9 @@ export function DataTableRowActions<TData>({
       <DropdownMenuTrigger asChild>
         <Button
           variant='ghost'
-          className='flex h-8 w-8 p-0 data-[state=open]:bg-muted'
+          className='flex h-8 w-8 p-0 data-[popup-open]:bg-muted'
         >
-          <DotsHorizontalIcon className='h-4 w-4' />
+          <Ellipsis className='h-4 w-4' />
           <span className='sr-only'>{t('common.openMenu', 'Open menu')}</span>
         </Button>
       </DropdownMenuTrigger>

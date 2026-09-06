@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { ChevronDown } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod/v4'
@@ -78,7 +78,7 @@ export function AppearanceForm() {
                     ))}
                   </select>
                 </FormControl>
-                <ChevronDownIcon className='absolute end-3 top-2.5 h-4 w-4 opacity-50' />
+                <ChevronDown className='absolute end-3 top-2.5 h-4 w-4 opacity-50' />
               </div>
               <FormDescription className='font-manrope'>
                 {t(
@@ -111,7 +111,7 @@ export function AppearanceForm() {
                 className='grid max-w-md grid-cols-2 gap-8 pt-2'
               >
                 <FormItem>
-                  <FormLabel className='[&:has([data-state=checked])>div]:border-primary'>
+                  <FormLabel className='[&:has([data-checked])>div]:border-primary'>
                     <FormControl>
                       <RadioGroupItem value='light' className='sr-only' />
                     </FormControl>
@@ -137,7 +137,7 @@ export function AppearanceForm() {
                   </FormLabel>
                 </FormItem>
                 <FormItem>
-                  <FormLabel className='[&:has([data-state=checked])>div]:border-primary'>
+                  <FormLabel className='[&:has([data-checked])>div]:border-primary'>
                     <FormControl>
                       <RadioGroupItem value='dark' className='sr-only' />
                     </FormControl>

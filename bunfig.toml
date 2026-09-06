@@ -1,5 +1,6 @@
 [install]
 module = true
+linker = "isolated"
 
 [test]
 # Use Bun's test runner

@@ -67,7 +67,7 @@ function CheckEmailPage() {
         : '/api/v1/auth/resend-verification'
 
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${endpoint}`,
+        `${import.meta.env.VITE_API_URL}${endpoint}`,
         {
           method: 'POST',
           headers: {

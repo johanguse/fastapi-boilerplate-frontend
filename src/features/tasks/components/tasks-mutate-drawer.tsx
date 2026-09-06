@@ -24,7 +24,7 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
 import { showSubmittedData } from '@/lib/show-submitted-data'
-import { type Task } from '../data/schema'
+import { type Task } from '../entities/task'
 
 type TaskMutateDrawerProps = {
   open: boolean

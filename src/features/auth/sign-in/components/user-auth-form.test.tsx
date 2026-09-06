@@ -24,6 +24,18 @@ vi.mock('@tanstack/react-router', () => ({
   ),
 }))
 
+vi.mock('@/hooks/use-turnstile', () => ({
+  useTurnstile: () => ({
+    token: 'mock-token',
+    isVerified: true,
+    ref: { current: null },
+    reset: vi.fn(),
+    onSuccess: vi.fn(),
+    onExpire: vi.fn(),
+    onError: vi.fn(),
+  }),
+}))
+
 vi.mock('@tanstack/react-query', () => ({
   useMutation: ({
     mutationFn,

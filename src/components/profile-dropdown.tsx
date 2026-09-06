@@ -32,7 +32,7 @@ export function ProfileDropdown() {
             <UserAvatar image={user?.image} name={userName} size='sm' />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='w-56' align='end' forceMount>
+        <DropdownMenuContent className='w-56' align='end'>
           <DropdownMenuLabel className='font-normal'>
             <div className='flex flex-col gap-1.5'>
               <p className='font-medium text-sm leading-none'>{userName}</p>

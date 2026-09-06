@@ -1,9 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { ProfileDropdown } from '@/components/profile-dropdown'
+import { PageLayout } from '@/components/layout/page-layout'
 import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import { ForbiddenError } from '@/features/errors/forbidden'
 import { GeneralError } from '@/features/errors/general-error'
 import { MaintenanceError } from '@/features/errors/maintenance-error'
@@ -24,21 +22,16 @@ function RouteComponent() {
     'internal-server-error': GeneralError,
     'maintenance-error': MaintenanceError,
   }
-  const ErrorComponent = errorMap[error] || NotFoundError
+  const ErrorComponent = errorMap[error] ?? NotFoundError
 
   return (
-    <>
-      <Header fixed className='border-b'>
-        <Search />
-        <div className='ms-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <ConfigDrawer />
-          <ProfileDropdown />
-        </div>
-      </Header>
-      <div className='flex-1 [&>div]:h-full'>
-        <ErrorComponent />
-      </div>
-    </>
+    <PageLayout
+      headerContent={<Search />}
+      headerActions={<ConfigDrawer />}
+      headerClassName='border-b'
+      className='flex-1 [&>div]:h-full'
+    >
+      <ErrorComponent />
+    </PageLayout>
   )
 }

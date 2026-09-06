@@ -124,7 +124,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-in/email`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/sign-in/email`,
         {
           method: 'POST',
           headers: {
@@ -174,7 +174,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-up/email`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/sign-up/email`,
         {
           method: 'POST',
           headers: {
@@ -223,13 +223,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     set({ isLoading: true })
 
     try {
-      await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/sign-out`,
-        {
-          method: 'POST',
-          credentials: 'include',
-        }
-      )
+      await fetch(`${import.meta.env.VITE_API_URL}/api/v1/auth/sign-out`, {
+        method: 'POST',
+        credentials: 'include',
+      })
       set({ user: null, session: null, isInitialized: true })
     } catch (e: unknown) {
       // Even if logout fails on server, clear local state
@@ -246,7 +243,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/session`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/session`,
         {
           method: 'GET',
           credentials: 'include',

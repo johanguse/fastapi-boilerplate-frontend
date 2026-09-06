@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { z } from 'zod/v4'
+import { TurnstileWidget } from '@/components/turnstile-widget'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -22,6 +23,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp'
+import { useTurnstile } from '@/hooks/use-turnstile'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth-store'
 
@@ -29,7 +31,7 @@ const createFormSchema = (t: (key: string, defaultValue: string) => string) =>
   z.object({
     email: z
       .string()
-      .email(t('auth.email.invalid', 'Please enter a valid email address')),
+      .email(t('auth.emailInvalid', 'Please enter a valid email address')),
     otp: z
       .string()
       .min(
@@ -50,6 +52,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
   const navigate = useNavigate()
   const [step, setStep] = useState<'email' | 'otp'>('email')
   const [userExists, setUserExists] = useState<boolean | null>(null)
+  const turnstile = useTurnstile()
 
   const formSchema = createFormSchema(t)
   const form = useForm<z.infer<typeof formSchema>>({
@@ -68,7 +71,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
   const sendOtpMutation = useMutation({
     mutationFn: async (email: string) => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/send`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/otp/send`,
         {
           method: 'POST',
           headers: {
@@ -91,6 +94,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
     onSuccess: (data) => {
       setUserExists(data.user_exists)
       setStep('otp')
+      turnstile.reset()
       toast.success(t('auth.otp.sent', 'Verification code sent to your email'))
     },
     onError: (error: Error) => {
@@ -106,7 +110,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
       name?: string
     }) => {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/v1/auth/otp/verify`,
+        `${import.meta.env.VITE_API_URL}/api/v1/auth/otp/verify`,
         {
           method: 'POST',
           headers: {
@@ -125,6 +129,7 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
       return response.json()
     },
     onSuccess: async (data) => {
+      turnstile.reset()
       // Set user in auth store
       const authState = useAuthStore.getState()
       authState.setUser(data.user)
@@ -206,9 +211,18 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
               )}
             />
 
+            <TurnstileWidget
+              ref={turnstile.ref}
+              onSuccess={turnstile.onSuccess}
+              onExpire={turnstile.onExpire}
+              onError={turnstile.onError}
+              className='mt-2'
+            />
             <Button
               type='submit'
-              disabled={!email || sendOtpMutation.isPending}
+              disabled={
+                !email || sendOtpMutation.isPending || !turnstile.isVerified
+              }
               className='w-full'
             >
               {sendOtpMutation.isPending
@@ -299,9 +313,20 @@ export function OtpForm({ className, ...props }: OtpFormProps) {
               />
             )}
 
+            <TurnstileWidget
+              ref={turnstile.ref}
+              onSuccess={turnstile.onSuccess}
+              onExpire={turnstile.onExpire}
+              onError={turnstile.onError}
+              className='mt-2'
+            />
             <Button
               type='submit'
-              disabled={otp.length < 6 || verifyOtpMutation.isPending}
+              disabled={
+                otp.length < 6 ||
+                verifyOtpMutation.isPending ||
+                !turnstile.isVerified
+              }
               className='w-full'
             >
               {verifyOtpMutation.isPending

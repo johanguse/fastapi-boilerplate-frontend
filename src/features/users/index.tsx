@@ -1,11 +1,8 @@
 import { getRouteApi } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
+import { PageLayout } from '@/components/layout/page-layout'
 import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import { UsersDialogs } from './components/users-dialogs'
 import { UsersPrimaryButtons } from './components/users-primary-buttons'
 import { UsersProvider } from './components/users-provider'
@@ -21,16 +18,7 @@ export function Users() {
 
   return (
     <UsersProvider>
-      <Header fixed>
-        <Search />
-        <div className='ms-auto flex items-center space-x-4'>
-          <ThemeSwitch />
-          <ConfigDrawer />
-          <ProfileDropdown />
-        </div>
-      </Header>
-
-      <Main>
+      <PageLayout headerContent={<Search />} headerActions={<ConfigDrawer />}>
         <div className='mb-2 flex flex-wrap items-center justify-between space-y-2'>
           <div>
             <h2 className='font-bold text-2xl tracking-tight'>
@@ -48,7 +36,7 @@ export function Users() {
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
           <UsersTable data={users} search={search} navigate={navigate} />
         </div>
-      </Main>
+      </PageLayout>
 
       <UsersDialogs />
     </UsersProvider>
